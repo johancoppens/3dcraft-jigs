@@ -13,7 +13,7 @@ The document is in inches (the holes stay 16 mm). Licence: CC-BY-4.0.
 | Tabs per cell | Joints | 2 | 1 to 3 |
 
 The size is capped at 48 × 36 in so that a change regenerates quickly, also in the browser (single
-threaded). Native release: median about 26 ms, at most about 100 ms per regeneration over the whole range.
+threaded). Native release: median about 26 to 50 ms, at most about 130 ms per regeneration over the whole range.
 The rib spacing (about 6 in), plate thickness (1/4 in), height (6 in) and tab and slot sizes are fixed in
 the design; edit them with *Open for editing* if you need other stock.
 

@@ -26,6 +26,6 @@ SVG, with the face set "Cut sheet" lays all six panels on one sheet at true size
 `craft3d-cli convert box.3dcraft box.dxf --set "Cut sheet"`).
 
 **Checked.** `check-range` passes at the default, all 512 corners and random points (also with
-`--deep`). Regeneration 50 to 450 ms native release.
+`--deep`). Regeneration median about 90 ms, at most about 700 ms native release.
 
 Source: the showcase model of 3DCraft's `plan/laserbox.md` (2026-10-16), made into a Jig.
