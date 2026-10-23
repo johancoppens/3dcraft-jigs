@@ -19,6 +19,7 @@ files, the range check); this repository holds Jigs.
 | [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle), with an optional hub | CC-BY-4.0 |
 | [`pot-knob`](jigs/pot-knob/) | A knob for a potentiometer or encoder shaft (D-shaft or round), with grip grooves | CC-BY-4.0 |
 | [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
+| [`phone-stand`](jigs/phone-stand/) | A phone or tablet stand: angle, device thickness, optional cable slot | CC-BY-4.0 |
 
 ## Using a Jig
 
