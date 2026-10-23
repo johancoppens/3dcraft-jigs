@@ -16,6 +16,8 @@ files, the range check); this repository holds Jigs.
 | [`laser-box`](jigs/laser-box/) | A finger-jointed box with a loose lid, cut from sheet | CC-BY-4.0 |
 | [`welding-table`](jigs/welding-table/) | A fixture welding table: perforated top plate on half-lapped ribs with weld tabs | CC-BY-4.0 |
 | [`gt2-pulley`](jigs/gt2-pulley/) | A GT2 (2 mm pitch) timing pulley with optional flanges and hub | CC-BY-SA-4.0 |
+| [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle), with an optional hub | CC-BY-4.0 |
+| [`pot-knob`](jigs/pot-knob/) | A knob for a potentiometer or encoder shaft (D-shaft or round), with grip grooves | CC-BY-4.0 |
 
 ## Using a Jig
 
