@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3DCraft Jigs</title>
+<style>
+:root { --bg: #ebe9e5; --panel: #f7f6f3; --text: #1b1a19; --dim: #68645e;
+        --chrome: #151413; --chrome-text: #ede9e4; --gold: #e0a93e; --line: #d9d5ce; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+       font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+header { background: var(--chrome); color: var(--chrome-text); padding: 20px 16px; }
+header h1 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+header h1 span { color: var(--gold); }
+header p { margin: 4px 0 0; color: #9e998f; font-size: .95rem; }
+main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px;
+       display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+        overflow: hidden; display: flex; flex-direction: column; }
+.card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--chrome); }
+.body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card h2 { margin: 0; font-size: 1.15rem; }
+.desc { margin: 0; color: var(--dim); font-size: .92rem; }
+.params { margin: 0; font-size: .85rem; color: var(--dim); }
+.params b { color: var(--text); font-weight: 600; }
+.meta { font-size: .8rem; color: var(--dim); }
+.meta a { color: var(--dim); }
+.actions { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 7px 14px; border-radius: 4px; text-decoration: none;
+       font-size: .92rem; font-weight: 600; border: 1px solid var(--chrome); }
+.open { background: var(--gold); color: var(--chrome); border-color: var(--gold); }
+.download { color: var(--text); background: transparent; }
+.btn:focus-visible { outline: 2px solid var(--chrome); outline-offset: 2px; }
+footer { text-align: center; color: var(--dim); font-size: .8rem; padding: 0 16px 32px; }
+</style>
+</head>
+<body>
+<header>
+<h1>3DCraft <span>Jigs</span></h1>
+<p>Parametric generators for 3DCraft: open one, set its parameters, export the result. No AI needed.</p>
+</header>
+<main>
+<article class="card">
+<img src="thumbs/gt2-pulley.png" alt="GT2 pulley (2 mm pitch)" width="400" height="300" loading="lazy">
+<div class="body">
+<h2>GT2 pulley (2 mm pitch)</h2>
+<p class="desc">A timing pulley for GT2 belts with 2 mm pitch: set the teeth, the belt width and the bore, with or without flanges and a hub. Pitch diameter = teeth x 2 mm / pi; the outside diameter is 0.508 mm less. Belt fit widens the grooves for 3D printing. Export it with File &gt; Export... (STL or 3MF to print, STEP for CAD). Tooth outline from droftarts&#x27; Parametric Pulley (thingiverse.com/thing:16627), CC BY-SA 4.0; this Jig is shared under the same licence.</p>
+<p class="params"><b>Parameters:</b> Teeth, Belt width, Belt fit, Bore, Hub, Hub diameter, Hub length, Flanges</p>
+<p class="meta">3DCraft Jigs (tooth outline: droftarts, thing:16627) · <a href="https://spdx.org/licenses/CC-BY-SA-4.0.html">CC-BY-SA-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/gt2-pulley">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/gt2-pulley.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="gt2-pulley.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<img src="thumbs/laser-box.png" alt="Laser-cut box" width="400" height="300" loading="lazy">
+<div class="body">
+<h2>Laser-cut box</h2>
+<p class="desc">A finger-jointed box with a loose lid, for laser cutting from sheet. Set the outside size, the sheet thickness, the finger width and your laser&#x27;s kerf. To cut it: File &gt; Export..., choose DXF or SVG and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;box.svg&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}): all six panels on one sheet at true size, kerf included.</p>
+<p class="params"><b>Parameters:</b> Width, Depth, Height, Sheet thickness, Finger width, Kerf, Clearance, Thumb notch radius, Lid hole radius</p>
+<p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/laser-box">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/laser-box.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="laser-box.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<img src="thumbs/welding-table.png" alt="Welding table" width="400" height="300" loading="lazy">
+<div class="body">
+<h2>Welding table</h2>
+<p class="desc">A fixture welding table to cut from 1/4 in steel plate: a top plate with a 2 in grid of 16 mm holes on a grid of half-lapped ribs, joined by tabs in slots shaped for plug welds. Set the plate size (capped at 48 x 36 in so it stays quick, also in the browser), your cutter&#x27;s kerf and the slot clearance. To cut it: File &gt; Export..., choose DXF or SVG and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;table.dxf&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}): the plate and every rib on one sheet at true size, kerf included.</p>
+<p class="params"><b>Parameters:</b> Length, Width, Kerf, Clearance, Tabs per cell</p>
+<p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/welding-table">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/welding-table.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="welding-table.3dcraftjig" download>Download</a>
+</div></div></article>
+</main>
+<footer>Each Jig carries its own licence, shown on its card. Made with 3DCraft.</footer>
+</body>
+</html>
