@@ -34,10 +34,9 @@ diameter less four modules), so a hub never runs into the teeth when you change 
   root disc plus, per tooth, the radial foot |φs| (rs² − rf²) and the involute part
   2 rb² [I(t)] from t0 to ta, with I(t) = u t²/2 − t³/3 + ((t² + 1) atan t − t)/2 (u = −g), plus the hub,
   less the bore. It holds to 1e-6 relative at every point checked.
-- `check-range` passes for every module and pressure angle (each made the default in turn, since
-  `check-range` keeps a choice taken from a table at its default in 3DCraft 0.1.0).
-- The deep check (`--deep`) waits on a 3DCraft fix: at 0.1.0 it needs far more memory on this Jig than it
-  should.
+- `check-range` passes, choices from the tables included: 90 of 90 points with `--deep` (64 corners, 9
+  choices, 16 random; 3DCraft at baf6c1f5, which fixed a memory blow-up in booleans on these flanks and
+  made `check-range` vary choices taken from a table).
 
 Ideas from the gear example of 3DCraft (`docs/examples/gear.json`, MIT): the involute formula and the
 closed form of the tooth area, extended here to a tooth whose foot starts above the base circle.
