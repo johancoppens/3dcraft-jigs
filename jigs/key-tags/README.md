@@ -33,3 +33,5 @@ bed's width, the export starts a new row there. Add the names to engrave in your
 and 32 random points, also with `--deep`; regeneration median about 5 ms, at most about 40 ms native.
 SVG and DXF of the default sheet: 6 closed outlines with 6 holes, outer size 50.15 × 20.15 mm (kerf 0.15),
 holes 4.85 mm.
+
+**Colour.** Plywood (#D9B98A), from the Jigs palette.

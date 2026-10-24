@@ -43,7 +43,7 @@ for k in range(SPANS + 1):
     sections.append({"sketch": name, "start": "e3"})
 steps += [
     ["feature.loft", {"sections": sections, "name": "Vase"}],
-    ["body.appearance", {"body": "Vase", "color": "#3f8f86", "roughness": 0.5}],
+    ["body.appearance", {"body": "Vase", "color": "#C2694B", "roughness": 0.6}],
     ["assert.add", {"name": "one body", "measure": "count", "of": {"kind": "body"}, "eq": "1"}],
 ]
 params = [

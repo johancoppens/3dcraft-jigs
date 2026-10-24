@@ -34,3 +34,5 @@ narrowed while checking: more than 12 waves or more than 90° of twist on a shor
 
 `build.json` was written by `python3 gen.py > build.json`; edit `gen.py` and run it again to change the
 model.
+
+**Colour.** Terracotta (#C2694B), from the Jigs palette.

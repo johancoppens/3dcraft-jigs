@@ -30,7 +30,7 @@
 ["sketch.curve", {"sketch": "Section4", "x": "r4 * (1 + wavePct / 100 * cos(waves * t)) * cos(t + tw * 4 / 4)", "y": "r4 * (1 + wavePct / 100 * cos(waves * t)) * sin(t + tw * 4 / 4)", "t": [0, "pi"]}],
 ["sketch.curve", {"sketch": "Section4", "x": "r4 * (1 + wavePct / 100 * cos(waves * t)) * cos(t + tw * 4 / 4)", "y": "r4 * (1 + wavePct / 100 * cos(waves * t)) * sin(t + tw * 4 / 4)", "t": ["pi", "2 * pi"], "start": "e2", "end": "e1"}],
 ["feature.loft", {"sections": [{"sketch": "Section0", "start": "e3"}, {"sketch": "Section1", "start": "e3"}, {"sketch": "Section2", "start": "e3"}, {"sketch": "Section3", "start": "e3"}, {"sketch": "Section4", "start": "e3"}], "name": "Vase"}],
-["body.appearance", {"body": "Vase", "color": "#3f8f86", "roughness": 0.5}],
+["body.appearance", {"body": "Vase", "color": "#C2694B", "roughness": 0.6}],
 ["assert.add", {"name": "one body", "measure": "count", "of": {"kind": "body"}, "eq": "1"}],
 ["variable.publish", {"name": "bottomD", "label": "Bottom diameter", "group": "Shape", "order": 1, "min": "40 mm", "max": "150 mm", "step": "1 mm", "unit": "mm", "description": "Mean diameter at the foot"}],
 ["variable.publish", {"name": "topD", "label": "Top diameter", "group": "Shape", "order": 2, "min": "40 mm", "max": "180 mm", "step": "1 mm", "unit": "mm", "description": "Mean diameter at the rim"}],

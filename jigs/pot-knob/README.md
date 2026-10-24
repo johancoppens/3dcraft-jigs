@@ -29,3 +29,5 @@ off); a circular pattern whose count is a formula; a chamfer on a circular edge.
 `--deep`; regeneration median about 20 ms, at most about 160 ms native. Because `check-range` keeps a
 choice taken from a table at its default (a 3DCraft limitation at 0.1.0), each shaft was checked as the
 default in turn. STL export closed, bounding box as set.
+
+**Colour.** Slate blue (#5B7299) with a cream (#E8DFCC) skirt, from the Jigs palette: a printed part (print the skirt in a second colour, or all in one).
