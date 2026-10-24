@@ -3,133 +3,301 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151413">
 <title>3DCraft Jigs</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
 <style>
-:root { --bg: #ebe9e5; --panel: #f7f6f3; --text: #1b1a19; --dim: #68645e;
-        --chrome: #151413; --chrome-text: #ede9e4; --gold: #e0a93e; --line: #d9d5ce; }
+:root { color-scheme: light;
+        --bg: #ebe9e5; --panel: #f7f6f3; --text: #1b1a19; --dim: #68645e; --line: #d9d5ce;
+        --chrome: #151413; --chrome-text: #ede9e4; --chrome-dim: #9e998f;
+        --gold: #e0a93e; --gold-hover: #eab95a;
+        --indigo: #4c5aa6; --indigo-ink: #3c4890; --indigo-soft: #e2e5f4; --indigo-light: #a9b3ec; }
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--text);
        font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-header { background: var(--chrome); color: var(--chrome-text); padding: 20px 16px; }
-header h1 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+a { color: var(--indigo-ink); }
+header { background: var(--chrome); color: var(--chrome-text); padding: 22px 16px 24px; }
+.top { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+.top img { width: 56px; height: 56px; flex: none; }
+header h1 { margin: 0; font-size: 1.5rem; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
 header h1 span { color: var(--gold); }
-header p { margin: 4px 0 0; color: #9e998f; font-size: .95rem; }
-main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px;
-       display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
-        overflow: hidden; display: flex; flex-direction: column; }
-.card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--chrome); }
-.body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.card h2 { margin: 0; font-size: 1.15rem; }
-.desc { margin: 0; color: var(--dim); font-size: .92rem; }
-.params { margin: 0; font-size: .85rem; color: var(--dim); }
-.params b { color: var(--text); font-weight: 600; }
-.meta { font-size: .8rem; color: var(--dim); }
-.meta a { color: var(--dim); }
+header p { margin: 4px 0 0; color: var(--chrome-dim); font-size: .95rem; max-width: 60ch; }
+header p a { color: var(--indigo-light); }
+.intro { max-width: 1100px; margin: 0 auto; padding: 22px 16px 0; display: flex; align-items: center; gap: 10px;
+         color: var(--dim); font-size: .92rem; }
+.intro::before { content: ""; width: 3px; height: 15px; border-radius: 2px; background: var(--indigo); }
+main { max-width: 1100px; margin: 0 auto; padding: 14px 16px 48px;
+       display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+        overflow: hidden; display: flex; flex-direction: column;
+        transition: box-shadow .12s, border-color .12s; }
+.card:hover, .card:focus-within { border-color: var(--indigo); box-shadow: 0 0 0 1px var(--indigo); }
+.shot { display: block; background: var(--bg); }
+.shot img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+.card h2 { margin: 0; font-size: 1.1rem; line-height: 1.3; font-weight: 600; }
+.desc { margin: 0; color: var(--dim); font-size: .92rem; line-height: 1.45;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 2px 10px 2px 8px;
+        background: var(--indigo-soft); color: var(--indigo-ink); font-size: .8rem; font-weight: 600; }
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--indigo); }
+.meta { margin: 0; font-size: .8rem; color: var(--dim); }
+.meta a { color: var(--indigo-ink); text-decoration: none; }
+.meta a:hover { text-decoration: underline; }
 .actions { display: flex; gap: 8px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
-.btn { display: inline-block; padding: 7px 14px; border-radius: 4px; text-decoration: none;
-       font-size: .92rem; font-weight: 600; border: 1px solid var(--chrome); }
-.open { background: var(--gold); color: var(--chrome); border-color: var(--gold); }
-.download { color: var(--text); background: transparent; }
-.btn:focus-visible { outline: 2px solid var(--chrome); outline-offset: 2px; }
-footer { text-align: center; color: var(--dim); font-size: .8rem; padding: 0 16px 32px; }
+.btn { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border-radius: 6px;
+       text-decoration: none; font-size: .92rem; font-weight: 600; border: 1px solid transparent; }
+.open { background: var(--gold); color: var(--chrome); }
+.open:hover { background: var(--gold-hover); }
+.download { color: var(--text); background: transparent; border-color: var(--line); }
+.download:hover { border-color: var(--dim); }
+.btn:focus-visible, .shot:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+footer { max-width: 1100px; margin: 0 auto; color: var(--dim); font-size: .8rem; padding: 0 16px 32px; text-align: center; }
+footer img { width: 20px; height: 20px; vertical-align: -5px; margin-right: 6px; }
+@media (max-width: 480px) {
+  header { padding: 16px 16px 18px; }
+  .top img { width: 44px; height: 44px; }
+  header h1 { font-size: 1.3rem; }
+  main { gap: 14px; grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
 </style>
 </head>
 <body>
 <header>
+<div class="top">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAACXBIWXMAAAdhAAAHYQGVw7i2AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAE5xJREFUeJztnXlwHNWdx7+vj5nWHBpdtnX4QJZ1WJYNGGHAJoA3KVJZQqgslWRNgGwSnJCzCIEiWZIQlmR3CSFUtjYhyRIMicthSQUqTgwb4yBsTMDmMFiyZqSRRrdG58xIc6jvt38IiK2R5OnRjOZQf6rmn+73+r2Z9+3p3/u93/s1oZTCZOXCZLoDJpnFFMAKxxTACodLdwOEEK6urvoKBvwHdF2vByF1hJAKhsBFQeyUUj7dfchmCCEKAY3qFFOg+jCl8DIM49FV9eVOn+81Sqma1vbTYQTu3LmzIBic+DjV8WlCyNWqqtoVRYGmadB1/f2PaYDOQggBwzDvf1iWBc/z4DguolP6EsPgQHl51bMtLS1iyttO5SA0NjZWUKrdDYrPKYriEkURiqKYA50khBDwPA9BEGDh+RAleJwQ9sft7e3+lLWRisGpqalxcRz3AAHdK0mSMDMzA13XU9JBk1kYhkFBQQGsVqsIgl9qGv2e1+udXup1lyyAhobamwklPxYlaY058OnnPSEIguAHoXe53Z0HlnK9pAXQ3Nxsi0UiD6uaenskEoGqptVWMZkDz/Ow2+0Awe8sFuELbW1tkWSuk5QAtm6trVEV5pAoivWxWMx8xmcIQgjsdjssVqsbonSdp7e3x/A1jA7e1oaGbSro85FIpFKSJKPtmaQBQRBgt9lGVV3+iNfbe8pIXUMCaGqqu0hV0BKJRIpkWU6mryZpwmKxwOl0BqGoV7u7u1sTrZewJ3Djxo0bNJX82Rz87ESWZYTD4WLw3OGtW2trEq2XkACampocVgv/l0gkUmUOfvYiyzKi0Wi5KjMHL7zwQnsidRISgKrKvxRFsd585mc/oihCkqVGMRb7eSLlzyuAhobam3VNvykWi6WkgybpJxqNgoLeunlz3Z7zlV3UCKytrS3kWMYzNTVVYc7zcwue51HodI7Kqlbf3d09tVC5Rf8BGIb5oSiK5uDnIIqiQJSkNTzPfn+xcgv+AzQ2NlbomuoLhUKC6d7NTRiGQVFR0QzHWza2tbWNzFtmocqUaneLomgOfg6j6zokSSpQVfmbC5WZVwA7d+4soDr9nCimfPnZZJkRRREE5PO7d+8W5js/rwACgfF/UlXVZd79uY+maVAUpdg/OHj9fOfnfwRQcpN59+cPkiQBLLllvnNxAiCEcISQqxRFWZbOmaQfWZZBQHYTQuJiQOMEUFdXfYWqqg5ziTd/oJRCVVXHpk2bLp17Lk4ADPgrM333X1BZiLtvuwLX7qqGlWcz2pd8QVEUsCyumns87i9B1/XNmqYtW8fOhhBg7ye249aPNaFyjRMAMDYZg7cvAN9AEG+c8ePwcR8kJTP9y2U0TQPVacPc4/H7AgipzYT1X7uhBN/euxNX7VgPhpD3j68utWF1qQ27tq/FLTdsxehkFJ6eAPqHQni9zY/Dr3RDVszZyvnQdR2EkLq5x+M8gQ0N9f2hYHDdcomAYxl85aZm3PTRLVhVYjNcf3wyhvaeSXT1BfBGqx8tJ3tMQcwDy7JwuYr6PB0dF5x9PE4AjZsbApOTk8XLYQQ2N1Xi7s9fjkubKlJyPV2nGB4Pw+MLYDIYw70/fQm6bhqzeDd+sLi4ZNLT0VF29vG4RwClsKd78K08izs/dzk++eEGuJzzOqiSgmEIqlYXwsqzKHQICIZF/OixV1N2/Vxmdkypc+7xeQRALensyDWXrsed/3IZmupWp/zagWkRmqZjVclsMMynP9qEN1r9ePFEb8rbyk1I3Ngu++7gyUAIZKodp06+Cnd7JyLRpQeaqJoO/0QUThuPVcV/tyOcdgvu+cJOlLgKltxGvrLsAmjtnsYv/jiE9UUSVnPDmBk4AfcbR/HOm2+g2+tDLDZj6HrBaRHhmIyKMjt4Lt5nULu+GD/4+tUp/Ab5RUbyAxw6EcJzJ0KzHWAIVhdSrHVGUET7EemfFcSbJ1+Hz9eHhZxSmqpjLBCF02ZB8XnsiA/tqsZtN16clu+S66Q9P8BCPPi/fmy5wIYNa859LLEMsLqQAogCag8mvD4EYywk2OAsWoX16ysxFVHBcQSrSxIKfAXHMtj7qYtxyuPHm2fmjYtYsWQsQ0hM0vHdJwagqIvPOCwcwZpCHesLIyjWezDhPQ4xGkRxobHZw6riAtx7+y4IFtO1fDYZTRHj7hfxs4NjhupYeQJlsgPh6ajh9i5qKMf9X4tzh69oMp4j6MCLEzjWGjZUx2Uj6Ot4J6n2bvhQPfb8Y1NSdfORjAuAUuCB/UMYnzIWeVzhktHe5jbcnoVj8eWbtmPjWpfhuvlIxgUAAKGIhu/sG4Bm0G1bwoxgcNC4UVe1xokHvn4NODYrvn5GyZpf4C1vDL95YcJQHZ4jiI56IMnG4xeuuHgt7tm703C9fCNrBAAAvzo0jnd8xjyDZU6g8/RbSbX3qY9sxrW7NiZVN1/IKgGoGsW9jw9iKmos4KOycAZud6fh9hw2C+767GXnuI9XGlklAAAYDSr49wPDhus51CGMjwcN19u0oQQ/uONqnBWDsqLIOgEAwItvT+OZ48YG02YlGOs9DTWJcLYPXl6NL+25xHC9fCArBQAAD//ej65hY3sTyl0U7tOnDbfFMASf/fhFuHRrpeG6uU7WCkBWZ+0BUTY2NSy3TaG7u89we6VFAu77ygfgsK+s1MVZKwAA8PklPPKMsayoDAFIuBvTYeOu4saaMtz35ZXlKs5qAQDAMy8HcfhNYxlRXTYGAx2nkExk28f+oQ43X79yXMVZLwAA+M+nhuEPGEtOVV6oor21zXBbPMfgS3suQe0FJYbr5iI5IYBwTMO3fz0IVTN2S5dy4xgYMO4qrljlwANfuwo8lxM/z5LImW94pncGjz03bqgOzxGI425EY8azm+3YVoV//WL+u4pzRgAAsO8v43i9w5hxV+Ig8LkNZU99nxuvbcS1uxLOuZiT5JQAdAp8Z98gAmFjS8eVThHu9g7D7TlsPO7ZewUqV8eF0+cNOSUAAAiEVdz/m2HDFn6hPowRv7HVRgCornLh3756Vd66inNOAADwt/Ywnnpp0lAdwUIQHGqDnMTS8TWXbcDXb9lhuF4ukJMCAID/enYUZ3qN7SFYXQh0tCbnKv7MDdtw5fa1hutmOzkrAFWj+O4Tg4iKxnYCVzjC6OzoNtxeUaEV3/rCLjjtad05t+zkrAAAYGBcxkNPG3MVEwJYxX4EQ8bft9RYU4YH8myXUU4LAHN2GSWKo4DA3/UOdM14HoFtdWWoLMufvYY5LwC8u8uob9SYq3hNoQa3AVexpGg4+monbr3zDxieMGZ7ZDN5IYCYpOPnB0cN11slBNDbM3jecl294/iPR/6Mvff9HwaD+fXCjIztDUwlTdU2fOufjQdzsAyghbwIh0vgdMbHBUZjMl4+0YFHHj2CriAPivzbVpbzAvjgxYW4/zNrYeWT89QU2Ql6O97G1uZz/f5nOkew/3dH0XKyH2Ny/gaN5rQA9uwuxR03loNZopeuslCG+4wbm7dsRmhaxEvH2/Grx1/AWIxDQMnfwUeuCoDnCO7dU4nrLi9K2TULMYLX3+Lx26eO44xnBOOyFREtv+b885FzAii0sXhw7zo01yWWGyARKAWebRnGn478DbLOYEyyYUbPuZ8mKXLqW1aV8XjkSxtQXW5N2TVnZB0/3e/Fac8EZnQWo6INCs0/Y28hckYATdU2/OSL61HsTN3gBKYVPLjPg4GhacR0Dn7RDp3m6bLfAuSEAJZq6c9Hr1/EQ/vaEQjOYFq1YFy2YSWmlMx6AaTK0j+btzqn8bP9bkRmVEwpAiaV1CWrzDWyVgDpsPQB4IUT43jyGS9kncGEYkNYyX9LfzGyUgDpsvSfemEIfzrSC0VnMCoVGLL015TawTIEw+ORlPUpG8g6AaTD0ldUHf/9dA9ef3sEos5iRLJB0RM3Jm+5fis+e+OFKC+zo2cwhHbfJNq9Y3juWDdGJ43vQMom4tPF19fTQMBYuFWqSIelPxVV8fATnejqCxq29DeuK8J3b78SVzavBzuPESKKKnzDIbR2jKOrL4Dnj3djeNRYwqvlpKSkFJ6OjnO+SNYIIB2W/tC4hAcfd2N8MoqwasGYlJilTwiw95OX4DM3bEXFqsQfQ6Koos8/hbaucbR6xnDoWBcmQ9mzdJy1AkiHpX+mJ4qf/qYd4YiMoCpgUk7M0t9cU4Z7brsCV16y7pw3lyTDdERCv38aHb2TaOsYw8EWL4LTmXsdX9YJIF2W/rFTQTz2+w6ICsWEIiRk6XMsgztu3YFPfKQRq4rTE/EzFZbgGwzC1x+Cu2cCzxzpQGhq+QSRVQJIp6X/57/2QtJYjCVo6V+ypRx33HoZdi1z1G9oWkLXQAB9g1Nw90zgD4c9mAob38aWKPMJICOzgHRY+qpG8fOnfXj11AiiGo8xyQYtQWPvrk9UwM5NY3wsgFWrl29XcFGhFc1bKtC8pQKgwIfqefz2OQ+ef3v5pprLLoC1ZRb8+q5qlDhT1/R0TMNDT3agvWsaAdWOiGosy4fLEsMqQQZCY+j1UwRneHC2YlRUVqKsrDhl/VyIwFgQxw61QJ6agBhZ3lfiLbsABidkfPw+L5qqbdhRb8eOBgfq1wlJG4DDEzJ+tK8d3X4ZY5IDOpZmuDkLCJwFKoBxIDCO3iGKadkCYi1CRVUVykpTaK9Q4JUXX0VfqxsWoqbUCE6UjDwCYpKOk54ITnoiwB9HUeRgsa3ahm0bbdjR4EDDOiGhvXju3igeesKNngCHiJY6W+JsZgWhzApichxdfUBMs4IVXCivrEJpaXI5h0eGRnH8Ly+DTgdgyeACZFZ4AkMRDcdaw7NZw/84ihInh+2b7Li0wY6LamzYWBFvK7zyThAPH/BhMCKALvGuN0KxAyiGBGAMmBxDVx9FWBVgKyxDVVUlHM7FhahTHUeffwXDnR2wEj3jm06zQgBzCYRVHDk1hSOnpgAA5SU8Lqmz49I6O5rr7HjprUk8enAMUTXzq3jFDvKuIIYg+Ycw0gVMSVYUOEqxbsPac6KNh3qH8bcjx0GiIVizJOwgKwUwl5GAgkOvhXDotdDsHUORtSHaxXag2C4BGIY4NITBKANRtyE0EYXf44WFya6og5wQwNnk0lvtGYZgtXP2/Uf9nWNZN/jIl51BJsljCmCFYwpghZNzNkA6uPPRPjTX29Fc58DFNTbYhMzcFwMhCu/E8toJpgAAeAZEeAZE7D8yCZYhqFtrxY4GBy6ssWP7JhvsaRZETAHeGdJxsF1DEikLloQpgDloOoW7X4S7XwQwAY4lqK2aFcSOejsu2mSHhUvdJL4/pOOQW0fPZGZmCKYAzoOq/V0QTx6OF8TFm+zgkxBERAZO9us43KHB4MvSUkqcAAghMoCVHSu9CHMFIVgItm2048KaAly00XZeQVAA3gmK59wqhqeWr99k1oMWl91iHgEgSgixzA0UMZkfUaZ/X9gCUGBhsHWj7d3HhQ1bNhSAY2cFMSUCJ/p0/LVLW3aH1qwASFzEapwAdE0PE0KKTQEkx4ysnyMIp43F9k02XODScfBNFcFYZn7XWQEgLtIkTgAUGGZZdr2uL7M5mqeEYxqOng7jaIb7wTAMAD0uIVL8/IZS72xhk3yCYRhQSr1xx+cp6GbZ7FxpM0kelmVBGOKZezxOALqqvszzK+vNWSsBnuehaTg293icADp9vtc4jgubj4H8gRACjuOmu7q6Ts49FzfKlFJVp/Qox5k+onzBYrFA1/QWSmlcyPG8tznD4IAgZD7cyiQ1WK1WEGD/fOfmFUB5edWzFp4PmcZg7sOyLHieD3Z0dR2c7/y8AmhpaREpwePmv0DuIwgCqE7/h9J4NzAWCwhhWf4hq9UqmsZg7sIwDKxW6wxvtf5kwTILnWhraxsBwS8LCvInN/5Kw2azgTDk0dbW1gVTqS96e2sa/Z4gCH7TL5B78DwPq9U6TCn5/mLlFhWA1+udBqF32e329xYTTHIAQgjsdjuopn/D4/EsmrPmvA94t7vzAAHZb7enZ++dSeqx2+1gCNnn8XqfPl/ZhCw8wWa73WK1us1ZQfYjCAJ43nLGUej6aiLl4zKELERNTc16C8+9Eg6H18pyfr02JV+wWCxwOp1+Kkq7PL29PYnUSXiO193d3U9l5Tqn0xm0WMyIsWzDYrHA4XQGZEX9cKKDD6MbQzw+32lZUa92Op1D5uMgexAEAU6HY1TX5Q92d3e3Gqmb8CPgbKqrqy8QLJZDkiw1RqNRmOFjmeE9a5/nLWcUVb3O5/P1Gb1GUm6+np6e3uLS0mYLb3nU5XLB9BMsPzzPw+VygeO53wkFBZclM/hI9h/gbDZvrtsDSh6WJKkiFovBjCVMLwzDwGazzTp5NP0biUz1FmPJAgCA2traQpYl94Pii5IkFYiiCE1b3mxX+Q7LshAEAYJgjYGQX1BKvn8+J08ipEQA79HU1FSuqvI3QXGbqqpFkiRBURTzXyFJGIZ5z6ULnueDVKeP8Vbrw4v59o2SUgG8x+7duwX/4ODHwJKbCcg1qqo6FUWBpmnQdf39j2k8zkIIAcMw73/eXcMHx3HTuqa3EGB/R1fXwYWWdJfUdroHgRDCNtTUXKaz7FWgWj0hpBYgVQzDuCiFnVK6op0KhBCZEER1XZ8C6BCl1EsY4tE0HOvq6jo5XxhXSts378KVjRntscIxBbDCMQWwwvl/yG5GUWlU29kAAAAASUVORK5CYII=" alt="3DCraft logo" width="56" height="56">
+<div>
 <h1>3DCraft <span>Jigs</span></h1>
 <p>Parametric generators for 3DCraft: open one, set its parameters, export the result. No AI needed.</p>
+</div>
+</div>
 </header>
+<div class="intro">20 Jigs, each a 3DCraft document with a form of parameters</div>
 <main>
 <article class="card">
-<img src="thumbs/gt2-pulley.png" alt="GT2 pulley (2 mm pitch)" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/drag-chain.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/drag-chain.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Cable drag chain</h2>
+<p class="desc" title="A cable drag chain (energy chain) for a 3D printer or CNC machine, to print: links with snap-in hinge pins and clip-on top bridges, so cables can be laid in. Set the cable space (inner width and height), the link pitch, the chain length and the bend radius; the chain is shown as it runs, bent round its radius, or straight. Export it with File &gt; Export... (STL or 3MF; the links and the bridges are separate bodies).">A cable drag chain (energy chain) for a 3D printer or CNC machine, to print: links with snap-in hinge pins and clip-on top bridges, so cables can be laid in.</p>
+<div class="chips"><span class="chip" title="Inner width, Inner height, Link pitch, Chain length, Bend radius, Layout">6 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/drag-chain">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/drag-chain.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="drag-chain.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/electronics-enclosure.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/electronics-enclosure.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Electronics enclosure</h2>
+<p class="desc" title="A box for a circuit board with a lid: set the board&#x27;s size and its mounting holes (standoffs for M2 to M3 screws or heat-set inserts), the room above it, the walls and two port cut-outs (USB-C, micro-USB, DC jack, toggle or slide switch) on any side. The lid screws onto corner posts or snaps in. Box and lid are laid out side by side to print, the lid upside down. Export it with File &gt; Export... (STL or 3MF).">A box for a circuit board with a lid: set the board&#x27;s size and its mounting holes (standoffs for M2 to M3 screws or heat-set inserts), the room above it, the walls and two port cut-outs (USB-C, micro-USB, DC jack, toggle or slide switch) on any side.</p>
+<div class="chips"><span class="chip" title="PCB width, PCB depth, PCB thickness, Holes from side, Holes from front, Screws, Standoff height, Room above PCB, Wall, Clearance, Lid, Port 1, Port 1 side, Port 1 offset, Port 2, Port 2 side, Port 2 offset">17 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/electronics-enclosure">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/electronics-enclosure.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="electronics-enclosure.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/flatpack-stool.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/flatpack-stool.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Flat-pack stool</h2>
+<p class="desc" title="A stool or side table cut from one sheet of plywood and put together without screws or glue: two legs cross with a half-lap joint and their tabs go through the seat. Set the height, the seat size, the leg style, the sheet thickness, your cutter&#x27;s kerf and the clearance of the slots. To cut it: File &gt; Export..., DXF or SVG with the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;stool.svg&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}): the seat and both legs at true size, kerf included.">A stool or side table cut from one sheet of plywood and put together without screws or glue: two legs cross with a half-lap joint and their tabs go through the seat.</p>
+<div class="chips"><span class="chip" title="Height, Seat size, Leg style, Hand-hold slot, Sheet thickness, Kerf, Clearance">7 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/flatpack-stool">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/flatpack-stool.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="flatpack-stool.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/gridfinity-bin.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/gridfinity-bin.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Gridfinity bin</h2>
+<p class="desc" title="A storage bin for the Gridfinity system: set the width and depth in 42 mm grid units, the height in 7 mm units, the compartments, and switch the label ledge, the stacking lip and the magnet holes on or off. The base and the lip follow the Gridfinity profiles, so the bin fits any Gridfinity baseplate and stacks on other bins. Print it standing on its feet, without supports. Export it with File &gt; Export... (STL or 3MF). Gridfinity is by Zack Freedman (MIT).">A storage bin for the Gridfinity system: set the width and depth in 42 mm grid units, the height in 7 mm units, the compartments, and switch the label ledge, the stacking lip and the magnet holes on or off.</p>
+<div class="chips"><span class="chip" title="Width, Depth, Height, Compartments across, Compartments deep, Label ledge, Stacking lip, Magnet holes, Wall">9 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/gridfinity-bin">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/gridfinity-bin.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="gridfinity-bin.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/gt2-pulley.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/gt2-pulley.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>GT2 pulley (2 mm pitch)</h2>
-<p class="desc">A timing pulley for GT2 belts with 2 mm pitch: set the teeth, the belt width and the bore, with or without flanges and a hub. Pitch diameter = teeth x 2 mm / pi; the outside diameter is 0.508 mm less. Belt fit widens the grooves for 3D printing. Export it with File &gt; Export... (STL or 3MF to print, STEP for CAD). Tooth outline from droftarts&#x27; Parametric Pulley (thingiverse.com/thing:16627), CC BY-SA 4.0; this Jig is shared under the same licence.</p>
-<p class="params"><b>Parameters:</b> Teeth, Belt width, Belt fit, Bore, Hub, Hub diameter, Hub length, Flanges</p>
+<p class="desc" title="A timing pulley for GT2 belts with 2 mm pitch: set the teeth, the belt width and the bore (round, D-shaft or keyway), with or without flanges and a hub with one or two set screws (M2.5, M3 or M4, optionally in captive nuts). Pitch diameter = teeth x 2 mm / pi; the outside diameter is 0.508 mm less. Belt fit widens the grooves for 3D printing. Export it with File &gt; Export... (STL or 3MF to print, STEP for CAD). Tooth outline from droftarts&#x27; Parametric Pulley (thingiverse.com/thing:16627), CC BY-SA 4.0; this Jig is shared under the same licence.">A timing pulley for GT2 belts with 2 mm pitch: set the teeth, the belt width and the bore (round, D-shaft or keyway), with or without flanges and a hub with one or two set screws (M2.5, M3 or M4, optionally in captive nuts).</p>
+<div class="chips"><span class="chip" title="Teeth, Belt width, Belt fit, Bore, Bore type, D-flat depth, Hub, Hub diameter, Hub length, Flanges, Set screw, Screw size, Screws, Captive nut">14 parameters</span></div>
 <p class="meta">3DCraft Jigs (tooth outline: droftarts, thing:16627) · <a href="https://spdx.org/licenses/CC-BY-SA-4.0.html">CC-BY-SA-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/gt2-pulley">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/gt2-pulley.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="gt2-pulley.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/key-tags.png" alt="Key tags" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/joint-drawer.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/joint-drawer.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Dovetail and finger-joint drawer</h2>
+<p class="desc" title="A drawer or box for woodworkers, joined with through dovetails or finger joints: set the inside width, depth and height, the board thickness, the number of tails and the slope (1:6 softwood, 1:8 hardwood), with the bottom in a groove and a brass knob. Export STEP or STL for CAD or a CNC; the face set &quot;Marking templates&quot; (File &gt; Export..., SVG or DXF) gives the front&#x27;s tails and a side&#x27;s sockets at true size, to print and mark out by hand.">A drawer or box for woodworkers, joined with through dovetails or finger joints: set the inside width, depth and height, the board thickness, the number of tails and the slope (1:6 softwood, 1:8 hardwood), with the bottom in a groove and a brass knob.</p>
+<div class="chips"><span class="chip" title="Inner width, Inner depth, Inner height, Board thickness, Joint, Tails (fingers), Dovetail slope, Bottom in a groove, Knob">9 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/joint-drawer">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/joint-drawer.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="joint-drawer.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/key-tags.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/key-tags.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Key tags</h2>
-<p class="desc">A sheet of key tags or name-tag blanks to laser-cut (or 3D-print): a rounded rectangle, a circle or a hexagon with a key-ring hole, as many columns and rows as you like (one per student), kerf included. To cut it: File &gt; Export..., choose SVG or DXF and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;tags.svg&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}); engrave names on the tags in your laser software.</p>
-<p class="params"><b>Parameters:</b> Shape, Width, Height, Corner radius, Ring hole, Hole margin, Sheet thickness, Columns, Rows, Kerf</p>
+<p class="desc" title="A sheet of key tags or name-tag blanks to laser-cut (or 3D-print): a rounded rectangle, a circle or a hexagon with a key-ring hole, as many columns and rows as you like (one per student), kerf included. To cut it: File &gt; Export..., choose SVG or DXF and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;tags.svg&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}); engrave names on the tags in your laser software.">A sheet of key tags or name-tag blanks to laser-cut (or 3D-print): a rounded rectangle, a circle or a hexagon with a key-ring hole, as many columns and rows as you like (one per student), kerf included.</p>
+<div class="chips"><span class="chip" title="Shape, Width, Height, Corner radius, Ring hole, Hole margin, Sheet thickness, Columns, Rows, Kerf">10 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/key-tags">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/key-tags.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="key-tags.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/laser-box.png" alt="Laser-cut box" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/laser-box.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/laser-box.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Laser-cut box</h2>
-<p class="desc">A finger-jointed box with a loose lid, for laser cutting from sheet. Set the outside size, the sheet thickness, the finger width and your laser&#x27;s kerf. To cut it: File &gt; Export..., choose DXF or SVG and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;box.svg&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}): all six panels on one sheet at true size, kerf included.</p>
-<p class="params"><b>Parameters:</b> Width, Depth, Height, Sheet thickness, Finger width, Kerf, Clearance, Thumb notch radius, Lid hole radius</p>
+<p class="desc" title="A finger-jointed box with a loose lid, for laser cutting from sheet. Set the outside size, the sheet thickness, the finger width and your laser&#x27;s kerf. To cut it: File &gt; Export..., choose DXF or SVG and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;box.svg&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}): all six panels on one sheet at true size, kerf included.">A finger-jointed box with a loose lid, for laser cutting from sheet.</p>
+<div class="chips"><span class="chip" title="Width, Depth, Height, Sheet thickness, Finger width, Kerf, Clearance, Thumb notch radius, Lid grip, Grip size, Divider, Divider position, Show the lid lifted">13 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/laser-box">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/laser-box.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="laser-box.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/phone-stand.png" alt="Phone and tablet stand" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/phone-stand.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/phone-stand.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Phone and tablet stand</h2>
-<p class="desc">A stand that holds a phone or tablet at the angle you choose: set the device&#x27;s thickness (with its case), the angle, the length of the back rest and the lip, the width, and whether a charging cable passes through the front. Print it lying on its side (the profile on the bed) for strength, without supports. Export it with File &gt; Export... (STL or 3MF).</p>
-<p class="params"><b>Parameters:</b> Angle, Device thickness, Back rest length, Lip height, Width, Wall thickness, Cable slot, Cable slot width</p>
+<p class="desc" title="A stand that holds a phone or tablet at the angle you choose: a slanted back rest carried by a curved strut, with an open back and rounded edges. Set the device&#x27;s thickness (with its case), the angle, the length of the back rest and the lip, the width, and whether a charging cable passes through the front. Print it lying on its side (the profile on the bed) for strength, without supports. Export it with File &gt; Export... (STL or 3MF).">A stand that holds a phone or tablet at the angle you choose: a slanted back rest carried by a curved strut, with an open back and rounded edges.</p>
+<div class="chips"><span class="chip" title="Angle, Device thickness, Back rest length, Lip height, Width, Wall thickness, Back window, Cable slot, Cable slot width">9 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/phone-stand">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/phone-stand.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="phone-stand.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/pot-knob.png" alt="Potentiometer knob" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/pillow-block.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/pillow-block.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Pillow block bearing housing</h2>
+<p class="desc" title="A pillow block (plummer block) for a deep-groove ball bearing chosen from a table of real sizes (608, 6000 to 6005, 6200 to 6205): the housing, its wall, base and mounting bolts (M4 to M8) follow the bearing. Set the centre height, the seat allowance for printing, slotted or round mounting holes and an optional grease nipple boss. The bearing is pressed in from the front against a shoulder that bears on its outer ring only. Export STL or 3MF to print, STEP for CAD (the bearing and nipple are separate bodies: leave them out with the bodies option).">A pillow block (plummer block) for a deep-groove ball bearing chosen from a table of real sizes (608, 6000 to 6005, 6200 to 6205): the housing, its wall, base and mounting bolts (M4 to M8) follow the bearing.</p>
+<div class="chips"><span class="chip" title="Bearing, Seat allowance, Centre height, Slots, Slot length, Grease nipple">6 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/pillow-block">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/pillow-block.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="pillow-block.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/planetary-gearbox.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/planetary-gearbox.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Planetary gearbox</h2>
+<p class="desc" title="A planetary gear set with true involute teeth: a sun, 3 to 6 planets, an internal ring gear and a carrier with pins and an output shaft, each its own body. Choose the module and the teeth of the sun and the ring; the planets&#x27; teeth are (ring - sun) / 2. The ring&#x27;s range and step keep the set assemblable ((sun + ring) / planets whole), the planets clear of each other and the ring&#x27;s tips clear of the planets&#x27; feet, and assertions check that on the model. Reduction with the ring held: 1 + ring / sun (variable ratio). Export STL or 3MF to print (choose the bodies), STEP for CAD.">A planetary gear set with true involute teeth: a sun, 3 to 6 planets, an internal ring gear and a carrier with pins and an output shaft, each its own body.</p>
+<div class="chips"><span class="chip" title="Module, Planets, Sun teeth, Ring teeth, Face width, Backlash">6 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/planetary-gearbox">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/planetary-gearbox.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="planetary-gearbox.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/pot-knob.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/pot-knob.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Potentiometer knob</h2>
-<p class="desc">A grippy knob for a potentiometer, rotary encoder or switch: choose the shaft (6 mm or 1/4 in, D-shaft or round), tune the fit, set the size, the grip spacing (the number of grooves follows the circumference), a skirt and a pointer. Print it upside down (top on the bed) or standing with the skirt down. Export it with File &gt; Export... (STL or 3MF).</p>
-<p class="params"><b>Parameters:</b> Shaft, Fit, Hole depth, Diameter, Height, Grip spacing, Skirt, Pointer</p>
+<p class="desc" title="A grippy knob for a potentiometer, rotary encoder or switch: choose the shaft (6 mm or 1/4 in, D-shaft or round), tune the fit, set the size, the grip spacing (the number of grooves follows the circumference), a skirt and a pointer. Print it upside down (top on the bed) or standing with the skirt down. Export it with File &gt; Export... (STL or 3MF).">A grippy knob for a potentiometer, rotary encoder or switch: choose the shaft (6 mm or 1/4 in, D-shaft or round), tune the fit, set the size, the grip spacing (the number of grooves follows the circumference), a skirt and a pointer.</p>
+<div class="chips"><span class="chip" title="Shaft, Fit, Hole depth, Diameter, Height, Grip spacing, Skirt, Pointer">8 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/pot-knob">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/pot-knob.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="pot-knob.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/spur-gear.png" alt="Involute spur gear" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/print-in-place-hinge.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/print-in-place-hinge.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Print-in-place hinge</h2>
+<p class="desc" title="A hinge that prints in one piece and turns straight off the bed: set its length, leaf width and thickness, the knuckles and their conical pins, the clearance between the moving parts, and countersunk screw holes. The pins and their sockets are 45 degree cones, so it prints flat without supports. Export both leaves together with File &gt; Export... (STL or 3MF) and print them as they lie.">A hinge that prints in one piece and turns straight off the bed: set its length, leaf width and thickness, the knuckles and their conical pins, the clearance between the moving parts, and countersunk screw holes.</p>
+<div class="chips"><span class="chip" title="Length, Leaf width, Leaf thickness, Knuckle diameter, Knuckles, Pin diameter, Clearance, Screw holes, Screw diameter">9 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/print-in-place-hinge">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/print-in-place-hinge.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="print-in-place-hinge.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/screw-jar.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/screw-jar.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Screw jar</h2>
+<p class="desc" title="A jar with a screw-on lid and a real thread: set the opening, the height and the wall, the thread&#x27;s pitch, turns and clearance; the lid follows the jar. Optional grip ribs round the lid. The lid lies upside down beside the jar, both print without supports. Export it with File &gt; Export... (STL or 3MF).">A jar with a screw-on lid and a real thread: set the opening, the height and the wall, the thread&#x27;s pitch, turns and clearance; the lid follows the jar.</p>
+<div class="chips"><span class="chip" title="Opening, Height, Wall, Thread pitch, Turns, Clearance, Grip ribs">7 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/screw-jar">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/screw-jar.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="screw-jar.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/shelf-32mm.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/shelf-32mm.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>32 mm shelf system (IKEA compatible)</h2>
+<p class="desc" title="A bookcase or wardrobe carcass on the European 32 mm system: the sides drilled for 5 mm shelf pins on a 32 mm pitch, 37 mm from the front and the back edge, so IKEA-compatible shelf pins and fittings fit. Choose a real IKEA carcass size (BILLY, PAX) or your own, the panel thickness, adjustable shelves, a fixed middle shelf, a back in a groove or a rebate and a plinth. To cut it: File &gt; Export..., DXF or SVG with the face set &quot;Cut sheet&quot; (every panel, the sides with their holes and back slot) or &quot;Side drilling&quot; (one side, a drilling template). IKEA is a trademark of Inter IKEA Systems B.V.; this Jig is not affiliated with or endorsed by IKEA.">A bookcase or wardrobe carcass on the European 32 mm system: the sides drilled for 5 mm shelf pins on a 32 mm pitch, 37 mm from the front and the back edge, so IKEA-compatible shelf pins and fittings fit.</p>
+<div class="chips"><span class="chip" title="Size, Width (Custom), Depth (Custom), Height (Custom), Panel thickness, Back panel, Back fixing, Adjustable shelves, Fixed middle shelf, Plinth height">10 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/shelf-32mm">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/shelf-32mm.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="shelf-32mm.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/spur-gear.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/spur-gear.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Involute spur gear</h2>
-<p class="desc">A spur gear with true involute teeth, drawn from the involute&#x27;s formula: choose the module and the pressure angle, set the number of teeth, the face width and the bore, with or without a hub. Pitch diameter = module x teeth, outside diameter = module x (teeth + 2); two gears mesh when they share module and pressure angle, at a centre distance of module x (teeth1 + teeth2) / 2. Export it with File &gt; Export... (STL or 3MF to print, STEP for CAD).</p>
-<p class="params"><b>Parameters:</b> Module, Teeth, Pressure angle, Face width, Bore, Hub, Hub diameter, Hub length</p>
+<p class="desc" title="A spur gear with true involute teeth, drawn from the involute&#x27;s formula: choose the module and the pressure angle, set the number of teeth, the face width and the bore (round, D-shaft or keyway), with or without a hub with one or two set screws (M2.5, M3 or M4, optionally in captive nuts), and lighten a large gear with a web and holes. Pitch diameter = module x teeth, outside diameter = module x (teeth + 2); two gears mesh when they share module and pressure angle, at a centre distance of module x (teeth1 + teeth2) / 2. Export it with File &gt; Export... (STL or 3MF to print, STEP for CAD).">A spur gear with true involute teeth, drawn from the involute&#x27;s formula: choose the module and the pressure angle, set the number of teeth, the face width and the bore (round, D-shaft or keyway), with or without a hub with one or two set screws (M2.5, M3 or M4, optionally in captive nuts), and lighten a large gear with a web and holes.</p>
+<div class="chips"><span class="chip" title="Module, Teeth, Pressure angle, Face width, Bore, Bore type, D-flat depth, Hub, Hub diameter, Hub length, Disc, Set screw, Screw size, Screws, Captive nut">15 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/spur-gear">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/spur-gear.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="spur-gear.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/wavy-vase.png" alt="Wavy vase" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/wall-bracket.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/wall-bracket.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Wall bracket sized by its load</h2>
+<p class="desc" title="A shelf or console bracket whose plate thickness and gusset depth are worked out from the load: set the load per bracket in kg, the arm length, the material (steel, stainless, aluminium or a 3D print) and the screws. The bending moment at the wall sets the section (t x D^2 / 6 against the material&#x27;s yield strength and safety factor); the upper screws are placed high enough for their pull. The load&#x27;s range stops at what the material, the arm and the screws can carry, and two assertions check the built bracket against the load. Read t, D, sigma and utilisation in the variables. Export STL or 3MF to print, STEP for a metal shop.">A shelf or console bracket whose plate thickness and gusset depth are worked out from the load: set the load per bracket in kg, the arm length, the material (steel, stainless, aluminium or a 3D print) and the screws.</p>
+<div class="chips"><span class="chip" title="Load per bracket, Arm length, Material, Screws, Shelf screw holes">5 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/wall-bracket">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/wall-bracket.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="wall-bracket.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/wavy-vase.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/wavy-vase.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Wavy vase</h2>
-<p class="desc">A vase or plant-pot cover whose wall waves and twists, drawn from a formula: r = R (1 + depth x cos(waves x t)), each height turned a little further. Set the diameters, the height and the belly, the number and depth of the waves and the twist. The model is solid: print it in your slicer&#x27;s vase mode (spiralize outer contour) for a thin, watertight wall with a closed bottom. Export it with File &gt; Export... (STL or 3MF).</p>
-<p class="params"><b>Parameters:</b> Bottom diameter, Top diameter, Height, Belly, Waves, Wave depth, Twist</p>
+<p class="desc" title="A vase or plant-pot cover whose wall waves and twists, drawn from a formula: r = R (1 + depth x cos(waves x t)), each height turned a little further. Set the diameters, the height and the belly, the number and depth of the waves and the twist. The model is solid: print it in your slicer&#x27;s vase mode (spiralize outer contour) for a thin, watertight wall with a closed bottom. Export it with File &gt; Export... (STL or 3MF).">A vase or plant-pot cover whose wall waves and twists, drawn from a formula: r = R (1 + depth x cos(waves x t)), each height turned a little further.</p>
+<div class="chips"><span class="chip" title="Bottom diameter, Top diameter, Height, Belly, Waves, Wave depth, Twist">7 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/wavy-vase">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/wavy-vase.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="wavy-vase.3dcraftjig" download>Download</a>
 </div></div></article>
 <article class="card">
-<img src="thumbs/welding-table.png" alt="Welding table" width="400" height="300" loading="lazy">
+<a class="shot" href="../3dcraft/?open=/jigs/welded-table-frame.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/welded-table-frame.png" alt="" width="400" height="300" loading="lazy"></a>
+<div class="body">
+<h2>Welded table frame</h2>
+<p class="desc" title="A welded steel table frame of square or rectangular tube or angle iron: set the length, width and height, pick the profile from a table of common sizes, mitred or butt top corners, a ring of cross rails and levelling feet. Every piece is a body of its own; the named sets Legs, Top rails, Cross rails, End plates and Levelling feet are the cut list, and the assertions (assert.list) give each piece&#x27;s quantity and cut length. Variables topMitre and crossMitre are the mitre angles. Export STEP for CAD or STL to look at it.">A welded steel table frame of square or rectangular tube or angle iron: set the length, width and height, pick the profile from a table of common sizes, mitred or butt top corners, a ring of cross rails and levelling feet.</p>
+<div class="chips"><span class="chip" title="Length, Width, Height, Profile, Mitred top corners, Cross rails, Cross rail height, Levelling feet">8 parameters</span></div>
+<p class="meta">Johan Coppens · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/welded-table-frame">source</a></p>
+<div class="actions">
+<a class="btn open" href="../3dcraft/?open=/jigs/welded-table-frame.3dcraftjig">Open in 3DCraft</a>
+<a class="btn download" href="welded-table-frame.3dcraftjig" download>Download</a>
+</div></div></article>
+<article class="card">
+<a class="shot" href="../3dcraft/?open=/jigs/welding-table.3dcraftjig" tabindex="-1" aria-hidden="true"><img src="thumbs/welding-table.png" alt="" width="400" height="300" loading="lazy"></a>
 <div class="body">
 <h2>Welding table</h2>
-<p class="desc">A fixture welding table to cut from 1/4 in steel plate: a top plate with a 2 in grid of 16 mm holes on a grid of half-lapped ribs, joined by tabs in slots shaped for plug welds. Set the plate size (capped at 48 x 36 in so it stays quick, also in the browser), your cutter&#x27;s kerf and the slot clearance. To cut it: File &gt; Export..., choose DXF or SVG and the face set &quot;Cut sheet&quot; (file.export {&quot;path&quot;: &quot;table.dxf&quot;, &quot;set&quot;: &quot;Cut sheet&quot;}): the plate and every rib on one sheet at true size, kerf included.</p>
-<p class="params"><b>Parameters:</b> Length, Width, Kerf, Clearance, Tabs per cell</p>
+<p class="desc" title="A system welding table in the style of the 16 mm and 28 mm block tables: a top plate with a grid of system holes, side plates on all four edges carrying the same grid, half-lapped ribs under the top, and legs with a frame if you want them. Choose the system and the size. To cut the plates: File &gt; Export..., DXF or SVG with the face set &quot;Cut sheet&quot; (the top, the four sides and every rib at true size); STEP for the whole table.">A system welding table in the style of the 16 mm and 28 mm block tables: a top plate with a grid of system holes, side plates on all four edges carrying the same grid, half-lapped ribs under the top, and legs with a frame if you want them.</p>
+<div class="chips"><span class="chip" title="System, Length, Width, Rib spacing, Lap clearance, Base, Working height">7 parameters</span></div>
 <p class="meta">3DCraft Jigs · <a href="https://spdx.org/licenses/CC-BY-4.0.html">CC-BY-4.0</a> · <a href="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/welding-table">source</a></p>
 <div class="actions">
 <a class="btn open" href="../3dcraft/?open=/jigs/welding-table.3dcraftjig">Open in 3DCraft</a>
 <a class="btn download" href="welding-table.3dcraftjig" download>Download</a>
 </div></div></article>
 </main>
-<footer>Each Jig carries its own licence, shown on its card. Made with 3DCraft.</footer>
+<footer><img src="data:image/png;base64,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" alt="" width="20" height="20">Each Jig carries its own licence, shown on its card. Made with <a href="https://github.com/johancoppens/3dcraft">3DCraft</a>.</footer>
 </body>
 </html>

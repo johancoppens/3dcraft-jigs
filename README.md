@@ -82,7 +82,7 @@ it after changing a `build.json` or upgrading 3DCraft, and commit the result tog
 ## Building and checking
 
 You need `craft3d-cli` from 3DCraft, any build that has `jig.export` and `check-range` (the files in `dist/`
-were built and checked with 3DCraft `main` at 5a87fd70, format version 32). Put it on `PATH` or point `CRAFT3D_CLI` at it.
+were built and checked with 3DCraft `main` at abb1cd51, format version 35). Put it on `PATH` or point `CRAFT3D_CLI` at it.
 
 ```sh
 export CRAFT3D_CLI=/path/to/craft3d-cli
