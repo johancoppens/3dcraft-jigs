@@ -13,14 +13,26 @@ files, the range check); this repository holds Jigs.
 
 | Jig | What it makes | Licence |
 |---|---|---|
-| [`laser-box`](jigs/laser-box/) | A finger-jointed box with a loose lid, cut from sheet | CC-BY-4.0 |
-| [`welding-table`](jigs/welding-table/) | A fixture welding table: perforated top plate on half-lapped ribs with weld tabs | CC-BY-4.0 |
-| [`gt2-pulley`](jigs/gt2-pulley/) | A GT2 (2 mm pitch) timing pulley with optional flanges and hub | CC-BY-SA-4.0 |
-| [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle), with an optional hub | CC-BY-4.0 |
-| [`pot-knob`](jigs/pot-knob/) | A knob for a potentiometer or encoder shaft (D-shaft or round), with grip grooves | CC-BY-4.0 |
-| [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
-| [`phone-stand`](jigs/phone-stand/) | A phone or tablet stand: angle, device thickness, optional cable slot | CC-BY-4.0 |
+| [`laser-box`](jigs/laser-box/) | A finger-jointed box with a loose lid, cut from sheet, with an optional divider and lid grip | CC-BY-4.0 |
 | [`key-tags`](jigs/key-tags/) | A sheet of key tags or name-tag blanks to laser-cut: rectangle, circle or hexagon | CC-BY-4.0 |
+| [`shelf-32mm`](jigs/shelf-32mm/) | A bookcase or wardrobe carcass on the 32 mm system (IKEA compatible): sides drilled for 5 mm shelf pins, shelves, back, plinth, cut sheets | CC-BY-4.0 |
+| [`flatpack-stool`](jigs/flatpack-stool/) | A screwless plywood stool or side table: cross-lap legs, tabs through the seat, hand-hold slot, cut sheet | CC-BY-4.0 |
+| [`joint-drawer`](jigs/joint-drawer/) | A drawer or box with through dovetails or finger joints, a bottom in a groove and a brass knob | CC-BY-4.0 |
+| [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style): perforated top, perforated side plates on all four edges, half-lapped ribs, optional legs and frame | CC-BY-4.0 |
+| [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
+| [`wall-bracket`](jigs/wall-bracket/) | A shelf bracket whose plate and gusset are sized from the load by formulas, with a load limit | CC-BY-4.0 |
+| [`gt2-pulley`](jigs/gt2-pulley/) | A GT2 (2 mm pitch) timing pulley: round, D-shaft or keyway bore, set screws with optional captive nuts, optional flanges and hub | CC-BY-SA-4.0 |
+| [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle): bore types, hub with set screws, web and lightening holes | CC-BY-4.0 |
+| [`planetary-gearbox`](jigs/planetary-gearbox/) | A planetary gear set (sun, planets, ring, carrier) with involute teeth and its assembly conditions | CC-BY-4.0 |
+| [`pillow-block`](jigs/pillow-block/) | A pillow block bearing housing for a deep-groove bearing from a table (608, 60xx, 62xx), with slots and a grease nipple | CC-BY-4.0 |
+| [`drag-chain`](jigs/drag-chain/) | A printable cable drag chain with snap-in hinge pins and clip-on bridges, laid out round its bend radius | CC-BY-4.0 |
+| [`pot-knob`](jigs/pot-knob/) | A knob for a potentiometer or encoder shaft (D-shaft or round), with grip grooves | CC-BY-4.0 |
+| [`gridfinity-bin`](jigs/gridfinity-bin/) | A Gridfinity storage bin: grid size, height, compartments, label ledge, stacking lip, magnet holes | CC-BY-4.0 |
+| [`electronics-enclosure`](jigs/electronics-enclosure/) | A box for a circuit board: standoffs, port cut-outs from a table, a screwed or snap-fit lid | CC-BY-4.0 |
+| [`print-in-place-hinge`](jigs/print-in-place-hinge/) | A hinge that prints in one piece on conical pins, with an adjustable clearance | CC-BY-4.0 |
+| [`screw-jar`](jigs/screw-jar/) | A jar with a helical thread and a screw-on lid that follows it, with grip ribs | CC-BY-4.0 |
+| [`phone-stand`](jigs/phone-stand/) | A phone or tablet stand with a curved strut and open back: angle, device thickness, optional cable slot | CC-BY-4.0 |
+| [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
 
 ## Using a Jig
 
@@ -53,6 +65,7 @@ jigs/<id>/README.md    what it makes, its parameters, sources and notes
 jigs/<id>/gen.py       (optional) the script that wrote build.json, when the batch is long and generated
 scripts/build.sh       build every Jig into dist/, then the gallery
 scripts/check.sh       prove every Jig over its parameter range (craft3d-cli check-range)
+scripts/shaftlib.py    shared bore and set-screw options (gt2-pulley, spur-gear gen.py)
 scripts/gallery.py     dist/index.html and dist/thumbs/ from the built Jigs (Python standard library only)
 dist/                  the built Jigs, their thumbnails and the gallery page
 ```
