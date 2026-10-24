@@ -12,6 +12,11 @@ licence). The outline is the *belt* tooth on the outside diameter's chord
 cut into the pulley once per tooth: the same construction as the original.
 """
 import json
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
+import shaftlib  # noqa: E402
 
 # GT2 2 mm belt tooth, (x, y) in mm, from thing:16627 (its points at
 # y = -0.5 below the chord are left out: here the chord ends meet the land
@@ -53,14 +58,7 @@ DERIVED = [
     ("rootR", "d - %g mm" % DEPTH),            # deepest point of a groove
     ("flangeT", "1 mm"),
     ("lip", "2 mm"),
-    # Without conditional features a flange or hub that is switched off is
-    # tucked inside the toothed part, where joining it changes nothing.
-    ("fR", "if(flanges, R + lip, rootR - 0.5 mm)"),
-    ("f1z", "if(flanges, -flangeT, L / 4 - flangeT / 2)"),
-    ("f2z", "if(flanges, L, 3 * L / 4 - flangeT / 2)"),
-    ("hubR", "if(hub, hubD / 2, rootR - 0.7 mm)"),
-    ("hubH", "if(hub, hubL, L / 4)"),
-    ("hubZ", "if(hub, if(flanges, -flangeT, 0 mm) - hubL, 3 * L / 8)"),
+    ("hubZ", "if(flanges, -flangeT, 0 mm) - hubL"),
     ("boreZ", "-flangeT - hubL - 1 mm"),
     ("boreH", "L + 2 * flangeT + hubL + 2 mm"),
 ]
@@ -70,7 +68,8 @@ SK = "ToothSketch"
 
 def main():
     steps = []
-    for name, expr in INPUTS + DERIVED:
+    steps += shaftlib.tables()
+    for name, expr in INPUTS + shaftlib.INPUTS + DERIVED + shaftlib.variables("hubD", "hub", "rootR"):
         steps.append(["variable.set", {"name": name, "expr": expr}])
 
     steps.append(["sketch.create", {"name": SK, "plane": "xy"}])
@@ -94,19 +93,29 @@ def main():
                                      "chain": [a_id, "e43"], "angle": "th",
                                      "center": "e42", "count": "teeth"}])
     steps.append(["feature.extrude", {"sketch": SK, "distance": "L", "name": "Toothed"}])
-    steps.append(["feature.cylinder", {"name": "Flange1", "radius": "fR", "height": "flangeT",
-                                       "position": ["0 mm", "0 mm", "f1z"]}])
-    steps.append(["feature.cylinder", {"name": "Flange2", "radius": "fR", "height": "flangeT",
-                                       "position": ["0 mm", "0 mm", "f2z"]}])
-    steps.append(["feature.cylinder", {"name": "Hub", "radius": "hubR", "height": "hubH",
+    steps.append(["feature.cylinder", {"name": "Flange1", "radius": "R + lip", "height": "flangeT",
+                                       "position": ["0 mm", "0 mm", "-flangeT"]}])
+    steps.append(["feature.cylinder", {"name": "Flange2", "radius": "R + lip", "height": "flangeT",
+                                       "position": ["0 mm", "0 mm", "L"]}])
+    steps.append(["feature.cylinder", {"name": "Hub", "radius": "hubD / 2", "height": "hubL",
                                        "position": ["0 mm", "0 mm", "hubZ"]}])
-    steps.append(["feature.boolean", {"op": "union", "target": "Toothed", "tool": "Flange1", "name": "U1"}])
-    steps.append(["feature.boolean", {"op": "union", "target": "U1", "tool": "Flange2", "name": "U2"}])
-    steps.append(["feature.boolean", {"op": "union", "target": "U2", "tool": "Hub", "name": "U3"}])
-    steps.append(["feature.cylinder", {"name": "BoreTool", "radius": "bore / 2", "height": "boreH",
-                                       "position": ["0 mm", "0 mm", "boreZ"]}])
-    steps.append(["feature.boolean", {"op": "subtract", "target": "U3", "tool": "BoreTool", "name": "Pulley"}])
-    steps.append(["body.appearance", {"body": "Pulley", "color": "#c9ccd1", "metallic": 0.6, "roughness": 0.4}])
+    # Broken edges, on each part before it is joined, so a part that is off takes its chamfer with it:
+    # the belt side of both flanges, the outside of the top one (F3, F4) and the hub's foot (F5).
+    steps.append(["feature.chamfer", {"name": "Flange1C", "distance": "0.3 mm", "edges": [["F3:face(0)", "F3:face(2)"]]}])
+    steps.append(["feature.chamfer", {"name": "Flange2C", "distance": "0.3 mm",
+                                      "edges": [["F4:face(0)", "F4:face(1)"], ["F4:face(0)", "F4:face(2)"]]}])
+    steps.append(["feature.chamfer", {"name": "HubC", "distance": "0.6 mm", "edges": [["F5:face(0)", "F5:face(1)"]]}])
+    for f, cond in (("Flange1", "flanges"), ("Flange2", "flanges"), ("Hub", "hub"),
+                    ("Flange1C", "flanges"), ("Flange2C", "flanges"), ("HubC", "hub")):
+        steps.append(["feature.when", {"feature": f, "expr": cond}])
+    steps.append(["feature.boolean", {"op": "union", "target": "Toothed", "tool": "Flange1C", "name": "U1"}])
+    steps.append(["feature.boolean", {"op": "union", "target": "U1", "tool": "Flange2C", "name": "U2"}])
+    steps.append(["feature.boolean", {"op": "union", "target": "U2", "tool": "HubC", "name": "U3"}])
+    steps += shaftlib.steps(bore_z0="boreZ", bore_h="boreH", scr_z="hubZ + hubL / 2",
+                            nut_z0="hubZ - 1 mm", nut_h="hubL / 2 + nutW / sqrt(3) + 1 mm",
+                            target="U3", name="Pulley")
+    steps.append(["body.appearance", {"body": "Pulley", "color": "#2E7D7A", "roughness": 0.45}])
+    steps.append(["assert.add", {"name": "one body", "measure": "count", "of": {"kind": "body"}, "eq": "1"}])
 
     pub = [
         ("teeth", dict(label="Teeth", description="Number of teeth (GT2, 2 mm pitch)", group="Pulley", order=1,
@@ -116,13 +125,18 @@ def main():
         ("beltFit", dict(label="Belt fit", description="Extra width of each groove (printer tuning); 0.2 mm fits most printers",
                          group="Pulley", order=3, min="0 mm", max="0.3 mm", step="0.01 mm", unit="mm")),
         ("bore", dict(label="Bore", description="Diameter of the shaft hole",
-                      group="Bore and hub", order=1, min="2 mm", max="OD - 4 mm", step="0.1 mm", unit="mm")),
-        ("hub", dict(label="Hub", description="A hub below the pulley (for a set screw you drill)",
-                     group="Bore and hub", order=2, kind="boolean")),
-        ("hubD", dict(label="Hub diameter", description="Outside diameter of the hub",
-                      group="Bore and hub", order=3, min="max(8 mm, bore + 4 mm)", max="60 mm", step="0.5 mm", unit="mm")),
-        ("hubL", dict(label="Hub length", description="Length of the hub",
-                      group="Bore and hub", order=4, min="3 mm", max="20 mm", step="0.5 mm", unit="mm")),
+                      group="Bore and hub", order=1, min="2 mm",
+                      max="OD - 4 mm",
+                      step="0.1 mm", unit="mm")),
+        ("hub", dict(label="Hub", description="A hub below the pulley, which holds the set screws",
+                     group="Bore and hub", order=4, kind="boolean")),
+        ("hubD", dict(label="Hub diameter", description="Outside diameter of the hub; at least the bore + 4 mm, and room "
+                                                         "for the keyway and the nut slots",
+                      group="Bore and hub", order=5, min="max(8 mm, %s)" % shaftlib.hub_d_min(), max="60 mm",
+                      step="0.5 mm", unit="mm")),
+        ("hubL", dict(label="Hub length", description="Length of the hub; long enough for the screw or the nut slot",
+                      group="Bore and hub", order=6, min=shaftlib.hub_l_min("3 mm"), max="20 mm", step="0.5 mm",
+                      unit="mm")),
         ("flanges", dict(label="Flanges", description="A 1 mm flange on each side, 2 mm above the teeth, that keeps the belt on",
                          group="Flanges", order=1, kind="boolean")),
     ]
@@ -130,10 +144,12 @@ def main():
         p = {"name": name}
         p.update(fields)
         steps.append(["variable.publish", p])
+    steps += shaftlib.publish("Bore and hub", 2, "hub")
     steps.append(["document.info", {
         "title": "GT2 pulley (2 mm pitch)",
-        "description": "A timing pulley for GT2 belts with 2 mm pitch: set the teeth, the belt width and the bore, "
-                       "with or without flanges and a hub. Pitch diameter = teeth x 2 mm / pi; the outside diameter is "
+        "description": "A timing pulley for GT2 belts with 2 mm pitch: set the teeth, the belt width and the bore "
+                       "(round, D-shaft or keyway), with or without flanges and a hub with one or two set screws "
+                       "(M2.5, M3 or M4, optionally in captive nuts). Pitch diameter = teeth x 2 mm / pi; the outside diameter is "
                        "0.508 mm less. Belt fit widens the grooves for 3D printing. Export it with File > Export... (STL or 3MF "
                        "to print, STEP for CAD). Tooth outline from droftarts' Parametric Pulley "
                        "(thingiverse.com/thing:16627), CC BY-SA 4.0; this Jig is shared under the same licence.",
