@@ -1,0 +1,7 @@
+[
+  ["file.open", {"path": "jigs/cubesat/source.3dcraft"}],
+  ["variable.set", {"name": "stack_room", "expr": "L - 2 * standoff - frame_t - 1 mm - base_spacer - 3 * pcb_t - 2 * mod_gap - bat_h - adcs_h"}],
+  ["variable.publish", {"name": "payload", "max": "if(stack_room >= cam_h, 1, 0)", "description": "Earth-observation camera looking out of the -Z face (2U and larger: it does not fit in a 1U)"}],
+  ["variable.publish", {"name": "n_boards", "max": "floor((stack_room - payload * cam_h) / stack_pitch) + 1", "description": "Number of boards in the PC/104 stack (0.600 in pitch); the most that fit between the floor (or the camera) and the battery, attitude control and antenna modules above"}],
+  ["file.save", {}]
+]

@@ -33,6 +33,7 @@ files, the range check); this repository holds Jigs.
 | [`screw-jar`](jigs/screw-jar/) | A jar with a helical thread and a screw-on lid that follows it, with grip ribs | CC-BY-4.0 |
 | [`phone-stand`](jigs/phone-stand/) | A phone or tablet stand with a curved strut and open back: angle, device thickness, optional cable slot | CC-BY-4.0 |
 | [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
+| [`cubesat`](jigs/cubesat/) | A CubeSat to the CDS Rev 14.1 and PC/104: 1U to 6U, stowed or deployed wings and antennas, a PC/104 stack as large as fits, optional camera, twelve assertions on the standard | CC-BY-4.0 |
 
 ## Using a Jig
 
@@ -59,7 +60,9 @@ craft3d-cli run dist/laser-box.3dcraftjig \
 ## Layout
 
 ```text
-jigs/<id>/build.json   the command batch that builds the Jig from nothing: the source of truth
+jigs/<id>/build.json   the command batch that builds the Jig (from nothing, or from source.3dcraft): the source of truth
+jigs/<id>/source.3dcraft  (optional) a document designed interactively, opened by build.json
+jigs/<id>/edits/       (optional) the command batches applied to source.3dcraft since, NN-<what>.json, in order
 jigs/<id>/new.json     (optional) params of file.new for the empty document; default {"units": "mm"}
 jigs/<id>/README.md    what it makes, its parameters, sources and notes
 jigs/<id>/gen.py       (optional) the script that wrote build.json, when the batch is long and generated
@@ -75,6 +78,13 @@ Each `build.json` is a JSON array of 3DCraft commands, run on an empty document 
 parameters (`variable.publish`: label, description, group, range, step, unit), sets the document info
 (`document.info`: title, description, author "3DCraft Jigs", licence, tags) and ends with
 `jig.export {"path": "dist/<id>.3dcraftjig"}`. The same 3DCraft version builds a bit-identical file.
+
+A Jig designed interactively (by hand or by an agent over MCP) can keep that document as
+`jigs/<id>/source.3dcraft`, with its parameters already published; its `build.json` starts with
+`file.open {"path": "jigs/<id>/source.3dcraft"}`, then sets the document info and exports. Change such a
+design with command batches that open `source.3dcraft`, make the edits and `file.save` it, run with
+`craft3d-cli run --script`, and keep each batch as `jigs/<id>/edits/NN-<what>.json` so the change can be
+reviewed (`cubesat` is built this way).
 
 `dist/` is committed (about 300 kB with thumbnails) so the Jigs can be used without building them. Rebuild
 it after changing a `build.json` or upgrading 3DCraft, and commit the result together with the source.

@@ -1,0 +1,5 @@
+[
+  ["file.open", {"path": "jigs/cubesat/source.3dcraft"}],
+  ["assert.edit", {"name": "CDS 2.2.14.2 nothing past standoffs when stowed", "max": "if(deployed, 10 m, L)"}],
+  ["file.save", {}]
+]

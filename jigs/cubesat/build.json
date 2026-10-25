@@ -1,0 +1,5 @@
+[
+  ["file.open", {"path": "jigs/cubesat/source.3dcraft"}],
+  ["document.info", {"title": "CubeSat (CDS Rev 14.1)", "description": "A parametric CubeSat built to the CubeSat Design Specification Rev 14.1 (Cal Poly SLO, 2022, Appendix B) and the PC/104 Specification v2.4: rails, frames, separation springs and RBF pin, a PC/104 stack, solar cells and two hinged wings, a turnstile antenna module tuned to its frequency, a battery and an attitude-control module, and an optional camera (2U and larger). Pick 1U to 6U, fold the wings and antennas out, grow the stack as far as it fits: twelve assertions check the standard (mass, rail envelope, protrusions, clearances). Origin at the geometric centre, Z along the rails.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/cubesat", "tags": ["cubesat", "space", "standard", "assembly"]}],
+  ["jig.export", {"path": "dist/cubesat.3dcraftjig"}]
+]
