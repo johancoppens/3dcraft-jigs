@@ -61,13 +61,13 @@ and nuts (ISO 4032), an M12 fill plug on the rear half and a drain plug on the f
 EN AC-42100; gears 42CrMo4, shafts C45, bearings 100Cr6.
 
 **What makes every point of the form a valid reducer.** The ranges are formulas of the other parameters,
-worked out so that a value the form allows always builds (checked over the whole discrete range with a
-script that mirrors the formulas: every module pair, ratio in steps of 0.1, every tooth count and both
-bearing series):
+worked out so that a value the form allows always builds. `python3 gen.py --sweep` mirrors the formulas
+and tries every module pair, the ratio in steps of 0.1, every tooth count and both bearing series
+(1 634 680 points: none fails; a wheel has at most 163 teeth):
 - Pinion 1 has at least 14 teeth and enough for a 10 mm shaft with its key and rim:
   z1 ≥ 2 (6.4 mm / m1 + 2.5 + 1.25) (21 teeth at 1 mm, 17 at 1.5 mm, 14 from 2 mm).
-- Pinion 2's range: at most `z3_hi` (it clears the input shaft's spacer: its tip circle stays 1 mm off,
-  with the largest shaft pinion 1 holds), at most 40; at least what holds a 10 mm shaft, and enough that
+- The second pinion's range: at most `z3_hi` (it clears the input shaft's spacer: its tip circle stays
+  1 mm off, with the largest shaft pinion 1 holds), at most 40; at least what holds a 10 mm shaft, and enough that
   wheel 2 clears the output shaft's collar (the output shaft as large as it can be at that point).
 - Stage 2's module is never smaller than stage 1's (it carries more torque, and a smaller one would put
   wheel 2 into the output shaft).
@@ -97,8 +97,6 @@ CHECKED_RESULTS
   can be told apart.
 - An `extent` assertion over spline faces after cuts measures too wide, so the overall size is not
   asserted.
-- `feature.fillet` takes edges by feature ids (`F<n>:face(k)`), not yet by feature names: `gen.py`
-  counts the ids as it writes the commands, so the housing's rounded corners name the right blocks.
 - `m` and `mod` are reserved names: the module is `mn`.
 
 **Changed from the test drive's model.** The gears are drawn as one outline per gear (the `spur-gear`

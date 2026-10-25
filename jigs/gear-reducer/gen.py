@@ -353,14 +353,12 @@ for name, expr in (
         ("z_cav_lo", "-s_gap"), ("z_cav_hi", "zB0"),
         ("z_h_lo", "z_cav_lo - wall_ax"), ("z_h_hi", "z_cav_hi + wall_ax")):
     var(name, expr)
-box = {}
 for tag, grow, z0, h in (("out", "t_w", "z_h_lo", "z_h_hi - z_h_lo"), ("in", "0 mm", "z_cav_lo", "z_cav_hi - z_cav_lo")):
-    box[tag] = cmd("feature.block", size=["xi_hi - xi_lo + 2 * %s" % grow, "2 * (yi + %s)" % grow, h],
+    cmd("feature.block", size=["xi_hi - xi_lo + 2 * %s" % grow, "2 * (yi + %s)" % grow, h],
                    position=["xi_lo - %s" % grow, "-(yi + %s)" % grow, z0], name="Box_" + tag)
-# The four edges along z rounded (a block's faces 2 to 5 are its sides; the ids are needed until
-# feature.fillet takes feature names).
+# The four edges along z rounded (a block's faces 2 to 5 are its sides).
 for tag, rad in (("out", "r_box + t_w"), ("in", "r_box")):
-    F = box[tag]
+    F = "Box_" + tag
     cmd("feature.fillet", edges=[["%s:face(4)" % F, "%s:face(2)" % F], ["%s:face(2)" % F, "%s:face(5)" % F],
                                  ["%s:face(5)" % F, "%s:face(3)" % F], ["%s:face(3)" % F, "%s:face(4)" % F]],
         radius=rad, name="Box_%s_r" % tag)
