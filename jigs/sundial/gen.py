@@ -221,8 +221,9 @@ def main():
         ("Rh", "size / 2"),
         ("rim", "0.035 * size"),
         ("w", "clamp(0.006 * size, 0.8 mm, 2 mm)"),
-        # The plate is two layers: a dark base and a brass top layer as deep as the engraving,
-        # so the floor of every cut shows dark. Cut through: the top layer is the whole plate.
+        # Engraved, the plate is two bodies: a dark base and a brass face as deep as the
+        # engraving, so the floor of every cut shows dark (and it prints in two colours).
+        # Cut through: the face is the whole plate.
         ("dTop", "if(through, T, min(depth, T / 2))"),
         ("kR", "if(vert, 0.7, 0.25)"),
         ("xR", "-kR * Rh * su"),                     # the root: where the style meets the dial
@@ -238,6 +239,7 @@ def main():
         ("r1", "max(0.08 * size, 2 * w / (0.2618 * sinSH))"),
         # Gnomon: run Ls along the substyle from the root, style height SH, two tabs.
         ("Bg", "Rh - rim"),
+        ("gap", "1 mm"),                             # least distance from a cut to a slot
     ]
     for n, e in derived:
         var(n, e)
@@ -299,21 +301,29 @@ def main():
 
     # One variable set per line: hour angle, direction (textbook), the side of the gnomon it
     # starts from, its length, and the independent check of where it lies.
-    def line_vars(k, check):
-        p = hour(k)
-        var(p + "H", "15 deg * (%s - 12) + dlon" % num(k))
+    def line_vars(k, check, p=None, H=None, side=None, cside=None):
+        p = p or hour(k)
+        var(p + "H", H or "15 deg * (%s - 12) + dlon" % num(k))
         var(p + "c", "cos(%sH - H0)" % p)
         var(p + "s", "sinSH * sin(%sH - H0)" % p)
         var(p + "n", "sqrt(%sc^2 + %ss^2)" % (p, p))
         var(p + "du", "(%sc * su + %ss * nu) / %sn" % (p, p, p))
         var(p + "dv", "(%sc * sv + %ss * nv) / %sn" % (p, p, p))
-        var(p + "side", "if(sin(%sH - H0) >= 0, 1, -1)" % p)
+        var(p + "side", side or "if(sin(%sH - H0) >= 0, 1, -1)" % p)
         var(p + "ox", "xR + %sside * T / 2 * nu" % p)
         var(p + "oy", "yR + %sside * T / 2 * nv" % p)
         tB = ray_to_boundary(p + "B", p + "ox", p + "oy", p + "du", p + "dv", "Bc", "Bs")
-        var(p + "tE", "max(%s - 0.85 * hN, r1 + 2 mm)" % tB)
-        var(p + "on", "abs(%sH) <= Hlim && (!vert || abs(%sH - H0) <= 90.000001 deg) && %s - 0.85 * hN >= r1 + 0.1 * size"
-            % (p, p, tB))
+        # Keep clear of the gnomon's slots: a line that is not yet `gap` beside them (rC) when
+        # it reaches them (rA) starts beyond their far end (rB).
+        var(p + "ds", "%sdu * su + %sdv * sv" % (p, p))
+        var(p + "dn", "%sside * (%sdu * nu + %sdv * nv)" % (p, p, p))
+        var(p + "rA", "if(%sds > 1e-9, (ta1 - slotL / 2 - gap) / %sds, 1000000 mm)" % (p, p))
+        var(p + "rB", "if(%sds > 1e-9, (ta2 + slotL / 2 + gap) / %sds, 0 mm)" % (p, p))
+        var(p + "rC", "if(%sdn > 1e-9, (w / 2 + clearance / 2 + gap) / %sdn, 1000000 mm)" % (p, p))
+        var(p + "rS", "if(%srC > max(%srA, r1), max(r1, %srB), r1)" % (p, p, p))
+        var(p + "tE", "max(%s - 0.85 * hN, %srS + 2 mm)" % (tB, p))
+        var(p + "on", "abs(%sH) <= Hlim && (!vert || abs(%sH - H0) <= 90.000001 deg) && "
+            "%s - 0.85 * hN >= max(r1 + 0.1 * size, %srS + 0.05 * size)" % (p, p, tB, p))
         if not check:
             return p
         # Independent: the shadow of the polar axis, in dial coordinates.
@@ -328,12 +338,12 @@ def main():
         var(p + "Ll", "sqrt(%sLu^2 + %sLv^2)" % (p, p))
         var(p + "cdu", "%sLu / %sLl" % (p, p))
         var(p + "cdv", "%sLv / %sLl" % (p, p))
-        var(p + "cside", "if(%scdu * cNu + %scdv * cNv >= 0, 1, -1)" % (p, p))
+        var(p + "cside", (cside or "if(%scdu * cNu + %scdv * cNv >= 0, 1, -1)") % (p, p))
         var(p + "cox", "xR + %scside * T / 2 * cNu" % p)
         var(p + "coy", "yR + %scside * T / 2 * cNv" % p)
-        var(p + "x1", "%scox + r1 * %scdu" % (p, p))
+        var(p + "x1", "%scox + %srS * %scdu" % (p, p, p))
         var(p + "x2", "%scox + %stE * %scdu" % (p, p, p))
-        var(p + "y1", "%scoy + r1 * %scdv" % (p, p))
+        var(p + "y1", "%scoy + %srS * %scdv" % (p, p, p))
         var(p + "y2", "%scoy + %stE * %scdv" % (p, p, p))
         var(p + "mx", "w / 2 * abs(%scdv) + slack" % p)
         var(p + "my", "w / 2 * abs(%scdu) + slack" % p)
@@ -347,25 +357,40 @@ def main():
     for k in HOURS:
         p = line_vars(k, True)
         sk = Sketch("Line%02dSketch" % k, "T + 0.5 mm")
-        sk.poly([at(p, "r1", "-w / 2"), at(p, "%stE" % p, "-w / 2"), at(p, "%stE" % p, "w / 2"),
-                 at(p, "r1", "w / 2")])
+        sk.poly([at(p, "%srS" % p, "-w / 2"), at(p, "%stE" % p, "-w / 2"), at(p, "%stE" % p, "w / 2"),
+                 at(p, "%srS" % p, "w / 2")])
         cond = "%son" % p
         cmd("feature.when", feature=sk.name, expr=cond)
         target = cut(sk, "Line%02dTool" % k, "Line%02d" % k, cond, target, p)
-        lines.append((k, p))
+        lines.append(("Line%02d" % k, "hour line %d" % k, p))
+
+    # When an hour falls exactly on the substyle (the 12 h line of a garden or south-wall dial
+    # in solar time, or with the longitude on the zone's meridian), the shadow of a thick
+    # gnomon's other edge falls along its other side: that line is drawn on both sides.
+    var("noonQ", "(H0 - dlon) / (15 deg)")
+    hTw = "15 deg * round(noonQ) + dlon"
+    p = line_vars(None, True, p="hTw", H=hTw, side="-if(sin(%s - H0) >= 0, 1, -1)" % hTw,
+                  cside="-if(%scdu * cNu + %scdv * cNv >= 0, 1, -1)")
+    var("twinOn", "abs(noonQ - round(noonQ)) < 1e-9 && round(noonQ) >= -10 && round(noonQ) <= 10 && hTwon")
+    sk = Sketch("LineTwinSketch", "T + 0.5 mm")
+    sk.poly([at(p, "hTwrS", "-w / 2"), at(p, "hTwtE", "-w / 2"), at(p, "hTwtE", "w / 2"), at(p, "hTwrS", "w / 2")])
+    cmd("feature.when", feature=sk.name, expr="twinOn")
+    target = cut(sk, "LineTwinTool", "LineTwin", "twinOn", target, p)
 
     # Half-hour ticks: the outer part of a line, between two hours that both have lines.
     for k in HOURS[:-1]:
         p = line_vars(k + 0.5, False)
         sk = Sketch("Tick%02dSketch" % k, "T + 0.5 mm")
-        sk.poly([at(p, "%stE - 0.6 * hN" % p, "-w / 2"), at(p, "%stE" % p, "-w / 2"),
-                 at(p, "%stE" % p, "w / 2"), at(p, "%stE - 0.6 * hN" % p, "w / 2")])
-        cond = "%son && %son" % (hour(k), hour(k + 1))
+        t0 = "max(%stE - 0.6 * hN, %srS)" % (p, p)
+        sk.poly([at(p, t0, "-w / 2"), at(p, "%stE" % p, "-w / 2"),
+                 at(p, "%stE" % p, "w / 2"), at(p, t0, "w / 2")])
+        cond = "%son && %son && %stE - %srS >= 0.3 * hN" % (hour(k), hour(k + 1), p, p)
         cmd("feature.when", feature=sk.name, expr=cond)
         target = cut(sk, "Tick%02dTool" % k, "Tick%02d" % k, cond, target, p)
 
     # Roman numerals beyond the end of each line, their tops pointing outwards.
-    for k, p in lines:
+    for k in HOURS:
+        p = hour(k)
         m = (k - 1) % 12 + 1
         sk = Sketch("Num%02dSketch" % k, "T + 0.5 mm")
         c = "%stE + 0.85 * hN" % p
@@ -375,10 +400,8 @@ def main():
         cmd("feature.when", feature=sk.name, expr=cond)
         target = cut(sk, "Num%02dTool" % k, "Num%02d" % k, cond, target, p)
 
-    cmd("feature.boolean", op="union", target="Base", tool=target, name="Plate")
-
     # The gnomon's two slots, drawn along +y about the origin, turned onto the substyle and
-    # moved to the root as the gnomon is, cut through the plate.
+    # moved to the root as the gnomon is, cut through both bodies of the plate.
     cmd("sketch.create", name="SlotSketch", plane="xy", offset="-1 mm")
     for ta in ("ta1", "ta2"):
         cmd("sketch.polyline", sketch="SlotSketch", closed=True, points=[
@@ -387,7 +410,9 @@ def main():
     cmd("feature.extrude", sketch="SlotSketch", distance="T + 2 mm", name="SlotTool")
     cmd("feature.transform", source="SlotTool", angle="gAng", axis=[0, 0, 1], translate=["xR", "yR", "0 mm"],
         name="SlotPlaced")
-    cmd("feature.boolean", op="subtract", target="Plate", tool="SlotPlaced", name="Dial")
+    cmd("feature.boolean", op="subtract", target="Base", tool="SlotPlaced", keepTool=True, name="DialBase",
+        when="!through")
+    cmd("feature.boolean", op="subtract", target=target, tool="SlotPlaced", name="Dial")
 
     # Gnomon: drawn on the yz plane (sketch x = world y along the substyle, sketch y = z),
     # extruded T thick about x = 0, turned onto the substyle and moved to the root.
@@ -413,10 +438,15 @@ def main():
         A.append(dict(name="gnomon on the substyle (the noon line of a horizontal dial): %s %s" % (sgn.lower(), ax),
                       measure="box" + sgn, of="Gnomon", axis=ax,
                       eq="%s + %s(0 mm, Ls * %s) %s T / 2 * abs(%s)" % (o, fn, s, pm, perp), tol="0.005 mm"))
+    A.append(dict(name="the high end of the style lies on the polar axis, away from the root", measure="count",
+                  of={"kind": "vertex", "where": {"all": [{"in": "Gnomon"}, {"inside": [
+                      ["xR + Ls * cSu - T / 2 * abs(cSv) - 0.05 mm", "yR + Ls * cSv - T / 2 * abs(cSu) - 0.05 mm",
+                       "T + Ls * cTan - 0.05 mm"],
+                      ["xR + Ls * cSu + T / 2 * abs(cSv) + 0.05 mm", "yR + Ls * cSv + T / 2 * abs(cSu) + 0.05 mm",
+                       "T + Ls * cTan + 0.05 mm"]]}]}}, eq="2"))
     A.append(dict(name="tabs reach through the dial", measure="boxMin", of="Gnomon", axis="z", eq="0 mm",
                   tol="0.005 mm"))
-    A.append(dict(name="gnomon stands in its slots without overlap", measure="overlap", of=["Gnomon", "Dial"],
-                  **{"is": False}))
+    A.append(dict(name="no parts overlap (the gnomon stands in its slots)", measure="overlap", **{"is": False}))
     A.append(dict(name="gnomon on the plate: north / top", measure="boxMax", of="Gnomon", axis="y",
                   max="if(vert, Rh, sqrt(Rh^2 - T^2 / 4))"))
     A.append(dict(name="gnomon on the plate: south / bottom", measure="boxMin", of="Gnomon", axis="y", min="-Rh"))
@@ -424,26 +454,38 @@ def main():
     A.append(dict(name="gnomon on the plate: west / left", measure="boxMin", of="Gnomon", axis="x", min="-Rh"))
     A.append(dict(name="the rim of the dial is whole", measure="extent", of="Dial", axis="x", eq="size",
                   tol="0.005 mm"))
-    A.append(dict(name="two parts", measure="count", of={"kind": "body"}, eq="2"))
-    for k, p in lines:
+    A.append(dict(name="the parts: dial (face and base when engraved) and gnomon", measure="count",
+                  of={"kind": "body"}, eq="if(through, 2, 3)"))
+    tools = ["%sTool" % n for n, _, _ in lines] + ["LineTwinTool"] + \
+        ["Tick%02dTool" % k for k in HOURS[:-1]] + ["Num%02dTool" % k for k in HOURS]
+    A.append(dict(name="no line, tick or numeral comes near the gnomon's slots", measure="distance",
+                  **{"from": {"kind": "face", "where": {"all": [{"in": "Dial"}, {"madeBy": "SlotTool"}]}}},
+                  to={"kind": "face", "where": {"all": [{"in": "Dial"},
+                                                        {"any": [{"madeBy": t} for t in tools]}]}},
+                  min="gap - 0.01 mm"))
+    lines.append(("LineTwin", "noon line on the other side of the gnomon", "hTw"))
+    for n, label, p in lines:
         box = [["min(%sx1, %sx2) - %smx" % (p, p, p), "min(%sy1, %sy2) - %smy" % (p, p, p), "-1 mm"],
                ["max(%sx1, %sx2) + %smx" % (p, p, p), "max(%sy1, %sy2) + %smy" % (p, p, p), "T + 1 mm"]]
-        A.append(dict(name="hour line %d where the shadow of the polar axis falls" % k, measure="count",
-                      of={"kind": "face", "where": {"all": [{"in": "Dial"}, {"madeBy": "Line%02dTool" % k},
+        on = "twinOn" if p == "hTw" else "%son" % p
+        A.append(dict(name="%s where the shadow of the polar axis falls" % label, measure="count",
+                      of={"kind": "face", "where": {"all": [{"in": "Dial"}, {"madeBy": "%sTool" % n},
                                                             {"inside": box}]}},
-                      eq="if(%son, 4, 0)" % p))
+                      eq="if(%s, 4, 0)" % on))
     for a in A:
         cmd("assert.add", **a)
 
+    # Both sets show the dial from the front, with the same outline, so the two files line up.
+    # Cut sheet: engraved, the front of the base (outline and slots); cut through, the dial's
+    # face with every cut. Engraving: the dial's face, the openings of the cuts inside its
+    # outline and slots.
     cmd("set.define", name="Cut sheet", kind="face", where={"any": [
-        # Engraved: the back of the dial (outline and slots). Cut through: its face, so the
-        # lines and numerals read the right way round.
-        {"in": "Dial", "normal": {"along": "-z"}, "below": {"z": "if(through, -1 mm, 0.01 mm)"}},
+        {"in": "DialBase", "normal": {"along": "z"}},
         {"in": "Dial", "normal": {"along": "z"}, "above": {"z": "if(through, T - 0.01 mm, 2 * T + 1 mm)"}},
         {"in": "Gnomon", "name": "*endCap*"},
     ]})
     cmd("set.define", name="Engraving", kind="face", where={"all": [
-        {"in": "Dial"}, {"normal": {"along": "z"}}, {"below": {"z": "T - 0.01 mm"}}]})
+        {"in": "Dial"}, {"normal": {"along": "z"}}, {"above": {"z": "if(through, 2 * T + 1 mm, T - 0.01 mm)"}}]})
 
 
     pub = [

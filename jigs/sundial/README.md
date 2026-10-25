@@ -58,13 +58,18 @@ afternoon, so the lines before 6 and after 18 o'clock (on a horizontal dial) com
 the root without a special case.
 
 **Which hours.** A line is drawn for the hours the sun can shine on the dial: up at midsummer
-(`|H| <= acos(-tan φ · tan 23.44°)`, capped at 125°) and, on a wall, in front of it (`|H - H0| <= 90°`).
+(`|H| <= acos(-tan φ · tan 23.44°)`, capped at 125°) and, on a wall, where the sun at the equinox is in
+front of it (`|H - H0| <= 90°`; in winter it reaches a little beyond, in summer it leaves a little before).
 At Gent the horizontal dial runs from 5 to 20 h (standard time), a south wall from 7 to 18 h.
 
 **A thick gnomon.** A gnomon of thickness T has two styles, its two sloping edges, T apart. The morning
 lines start from the root on one side of the gnomon, the afternoon lines from the other, so the dial is in
-effect split along the substyle by the gnomon's thickness (Waugh, Rohr). The lines start a little away
-from the root (where neighbours are two line widths apart) and end before the numerals.
+effect split along the substyle by the gnomon's thickness (Waugh, Rohr). An hour that falls exactly on the
+substyle (12 h on a garden or south-wall dial in solar time, or with the longitude on the zone's meridian)
+gets a line on both sides of the gnomon. The lines start a little away from the root (where neighbours are
+two line widths apart) and end before the numerals. A line that would pass within 1 mm of a gnomon slot
+(the lines nearest the substyle) starts beyond the far slot instead, so no cut ever opens into a slot and the
+gnomon stays tight.
 
 **Numerals** are Roman (IIII for four, as on most dials), their tops pointing outwards on a garden dial and
 towards the root on a wall dial; they are as large as the narrowest gap between two hour lines allows (at
@@ -87,12 +92,16 @@ above is used there.
   noon line: the gnomon spans exactly ±T/2 east and west of the root.
 - **Every hour line lies where the shadow of the polar axis falls**: the four walls of hour line t's groove
   lie inside the box spanned by its two ends on the line `root ± T/2 + r · L(H)`, widened only by half the
-  line width (0.02 mm to spare): a line turned by more than about 0.2° fails. With local solar time the 6
+  line width (0.02 mm to spare): a line turned by more than about 0.02° fails. With local solar time the 6
   and 18 h lines of a horizontal dial lie on the east-west line through the root and the 12 h line along the
   gnomon, as these boxes then require.
-- **Fit:** the gnomon's tabs reach through the dial (boxMin z = 0), the gnomon does not overlap the dial (the
-  slots are clearance wider and longer than the tabs), it stands on the plate, the rim of the dial is whole
-  (its extent is the dial size) and there are two parts.
+- **The high end of the style is on the polar axis**: the gnomon has its two top corners at
+  `root + Ls · (substyle) + Ls · tan SH` above the face (a vertex count in a 0.1 mm box), so it cannot
+  stand the wrong way round.
+- **Fit:** the gnomon's tabs reach through the dial (boxMin z = 0), no parts overlap (the slots are
+  clearance wider and longer than the tabs), no line, tick or numeral comes within 1 mm of a slot (a
+  distance assertion), the gnomon stands on the plate, the rim of the dial is whole (its extent is the dial
+  size), and there are the parts there should be.
 
 `check-range` passes 106 of 106 points (64 corners, every choice and every place, 16 random), also with `--deep`.
 
@@ -100,9 +109,11 @@ above is used there.
 
 **Laser or CNC.** File › Export… as DXF or SVG with the face set **Cut sheet**: the dial plate and the
 gnomon at true size. With engraved lines it holds the dial's outline and the two slots; with the lines cut
-through it is the dial's face, so the lines and numerals read the right way round. For engraved lines, the
-face set **Engraving** holds the floors of the lines, ticks and numerals, seen from the front: engrave those
-areas (or cut the lines as a stencil and back the dial with a plate of another colour). The slots are
+through, the dial with every cut. For engraved lines, the face set **Engraving** holds the dial's face: the
+outline and slots again, and inside them the openings of the lines, ticks and numerals to engrave. Both are
+seen from the front and the dial comes first in both, with the same outline, so the two files line up at
+the same origin: engrave the inner shapes of the Engraving file, then cut the Cut sheet. (Or cut the lines
+as a stencil and back the dial with a plate of another colour.) The slots are
 `clearance` wider and longer than the tabs; add your kerf to the clearance if your software does not
 compensate it, for instance:
 
@@ -115,17 +126,18 @@ craft3d-cli run dist/sundial.3dcraftjig \
 
 **3D printing.** STL or 3MF: print the dial flat, the gnomon on its side.
 
-In the model the plate is two layers, a dark base and the brass top layer as deep as the engraving, so the
-lines show dark; it is one solid.
+With engraved lines the dial is two bodies in the model, a dark base and the brass face as deep as the
+engraving, so the lines show dark; print it in two colours (3MF carries them), or as one part.
 
 ## Setting it up
 
 1. **Horizontal dial:** set it level (a spirit level on the plate, in two directions). **Wall dial:** fix it
-   flat on the wall with its top edge level; the gnomon points down and out.
+   flat on the wall with its top edge level; the style points down and out, to the south celestial pole.
 2. **Turn it to true north**, not magnetic north: the gnomon's high end points north (towards the
    Pole Star), the root south. Use the magnetic declination for your place with a compass, or set it by the
-   sun: at the moment of local solar noon (clock noon + the longitude correction + the equation of time
-   below) the shadow of a plumb line falls due north-south. For a wall dial, measure the wall's declination
+   sun: at local solar noon, `12:00 - 4 min × (longitude - zone meridian) + the table value below` in
+   standard time (Gent: about 12:45 CET, 13:45 CEST, give or take the table), the shadow of a plumb line
+   falls due north-south. For a wall dial, measure the wall's declination
    the same way before you build it.
 3. **Reading it:** the shadow edge of the style gives standard time, corrected for your longitude. Add one
    hour in summer time, and correct for the **equation of time** (the sun runs up to 16 minutes ahead of or
