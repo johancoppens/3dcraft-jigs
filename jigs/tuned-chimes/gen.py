@@ -9,8 +9,8 @@ frame, every tube or bar cut to the length of its note by the free-free
 Euler-Bernoulli beam: f = (22.373 / (2 pi L^2)) sqrt(E I / (rho A)).
 
 Coordinates: z up. Chime: the disc's underside at z = 0, the tubes on a circle
-of radius Rc round the z axis, their middles level at z = zc (the striker's
-height). Glockenspiel: the bars side by side along x, each along y and
+of radius Rc round the z axis, their middles level at z = zc (the striker 18 mm below
+them). Glockenspiel: the bars side by side along x, each along y and
 centred on y = 0, on a frame standing on z = 0.
 """
 import json
@@ -18,7 +18,7 @@ import math
 
 NMAX = 12          # most notes a Jig can have (features are built for each)
 BETA = 22.373      # (beta1 L)^2 of a free-free beam's first mode (4.7300^2)
-NODE = 0.224       # the first mode's nodes, as a fraction of the length from each end
+NODE = 0.2242      # the first mode's nodes, as a fraction of the length from each end
 
 # Scales: name, notes per octave, semitones above the lowest note (padded).
 SCALES = [
@@ -49,22 +49,23 @@ def max_notes(steps):
 
 NOTES = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"]
 
-# Tube materials: E (GPa), density (kg/m^3).
+# Tube materials: E (GPa), density (kg/m^3), shear modulus G (GPa).
 TUBE_MATERIALS = [
-    ("Aluminium EN AW-6060 T6", 69.5, 2700),
-    ("Steel conduit (EMT)", 200, 7850),
-    ("Stainless steel 1.4301", 193, 7900),
-    ("Copper Cu-DHP (EN 1057)", 117, 8940),
-    ("Brass CuZn37", 110, 8440),
+    ("Aluminium EN AW-6060 T6", 69.5, 2700, 26),
+    ("Steel conduit (EMT)", 200, 7850, 79),
+    ("Stainless steel 1.4301", 193, 7900, 77),
+    ("Copper Cu-DHP (EN 1057)", 117, 8940, 44),
+    ("Brass CuZn37", 110, 8440, 39),
 ]
-# Bar materials: E along the bar (GPa), density (kg/m^3).
+# Bar materials: E along the bar (GPa), density (kg/m^3), G (GPa; wood about
+# E / 14 along the grain). Wood E is the static modulus at 12 % moisture.
 BAR_MATERIALS = [
-    ("Aluminium flat bar EN AW-6060", 69.5, 2700),
-    ("Steel flat bar S235", 210, 7850),
-    ("Brass flat bar CuZn39Pb3", 97, 8470),
-    ("Padauk (African)", 11.72, 745),
-    ("Honduran rosewood", 22.0, 1025),
-    ("Hard maple", 12.62, 705),
+    ("Aluminium flat bar EN AW-6060", 69.5, 2700, 26),
+    ("Steel flat bar S235", 210, 7850, 81),
+    ("Brass flat bar CuZn39Pb3", 97, 8470, 39),
+    ("Padauk (African)", 11.72, 745, round(11.72 / 14, 3)),
+    ("Honduran rosewood", 22.0, 1025, round(22.0 / 14, 3)),
+    ("Hard maple", 12.62, 705, round(12.62 / 14, 3)),
 ]
 # Tube sizes: outside diameter and wall (mm).
 TUBE_SIZES = [
@@ -108,6 +109,16 @@ def when(feature, expr):
     cmd("feature.when", feature=feature, expr=expr)
 
 
+def timo(leb):
+    """The length whose Timoshenko pitch is the Euler-Bernoulli pitch of leb."""
+    return "sqrt((sqrt(Ct^2 * rg^4 + 4 * (%s)^4) - Ct * rg^2) / 2)" % leb
+
+
+def eb_of(l):
+    """The Euler-Bernoulli length with the same pitch as a real length l."""
+    return "sqrt(sqrt((%s)^4 + Ct * rg^2 * (%s)^2))" % (l, l)
+
+
 def box(lo, hi):
     return [list(lo), list(hi)]
 
@@ -120,8 +131,8 @@ def main():
         columns=["scale", "n"] + ["s%d" % i for i in range(1, 8)] + ["maxNotes"],
         rows=[[name, len(s)] + (s + [0] * 7)[:7] + [max_notes(s)] for name, s in SCALES])
     cmd("table.set", name="notes", columns=["note", "semi"], rows=[[n, i] for i, n in enumerate(NOTES)])
-    cmd("table.set", name="tubeMaterials", columns=["material", "E", "rho"], rows=[list(r) for r in TUBE_MATERIALS])
-    cmd("table.set", name="barMaterials", columns=["material", "E", "rho"], rows=[list(r) for r in BAR_MATERIALS])
+    cmd("table.set", name="tubeMaterials", columns=["material", "E", "rho", "G"], rows=[list(r) for r in TUBE_MATERIALS])
+    cmd("table.set", name="barMaterials", columns=["material", "E", "rho", "G"], rows=[list(r) for r in BAR_MATERIALS])
     cmd("table.set", name="tubeSizes",
         columns=["size", {"name": "od", "unit": "mm"}, {"name": "wall", "unit": "mm"}],
         rows=[list(r) for r in TUBE_SIZES])
@@ -152,6 +163,12 @@ def main():
     # bending through its thickness t / sqrt(12).
     var("rg", "if(chime, sqrt(OD^2 + ID^2) / 4, barT / sqrt(12))")
     var("Kc", "c * rg / 1 m")                                                      # sqrt(E I / (rho A)), m^2/s
+    # Timoshenko: shear and rotary inertia lower a short, fat piece's pitch.
+    # (f_EB / f_T)^2 = 1 + Ct (rg / L)^2, Ct = 47.7 + 11.7 E / (kappa G),
+    # kappa the shear coefficient (thin tube 0.53, rectangle 5/6).
+    var("G", "if(chime, tubeMaterials[tubeMat].G, barMaterials[barMat].G)")
+    var("kappa", "if(chime, 0.53, 5 / 6)")
+    var("Ct", "47.7 + 11.7 * E / (kappa * G)")
     var("beta", str(BETA))
     var("nodeFrac", str(NODE))
     # The notes: equal temperament, A4 = 440 Hz.
@@ -164,18 +181,25 @@ def main():
     for k in range(1, NMAX + 1):
         var("s%d" % k, "choose(mod(%d, n) + 1, %s) + 12 * floor(%d / n)" % (k - 1, ss, k - 1))
         var("f%d" % k, "fRoot * pow(2, s%d / 12)" % k)
-        # Free-free beam, first mode: L = sqrt(beta / (2 pi f) * sqrt(E I / (rho A))).
-        var("L%d" % k, "sqrt(beta / (2 * pi * f%d) * Kc) * 1 m" % k)
+        # Free-free beam, first mode (Euler-Bernoulli):
+        # LEB = sqrt(beta / (2 pi f) * sqrt(E I / (rho A))); with the Timoshenko
+        # factor the length solves L^4 + Ct rg^2 L^2 = LEB^4, a quadratic in L^2.
+        var("LEB%d" % k, "sqrt(beta / (2 * pi * f%d) * Kc) * 1 m" % k)
+        var("L%d" % k, timo("LEB%d" % k))
     var("span", "choose(N, %s)" % ", ".join("s%d" % k for k in range(1, NMAX + 1)))
     var("Llong", "L1")
     var("Lshort", "choose(N, %s)" % ", ".join("L%d" % k for k in range(1, NMAX + 1)))
     # Lengths a note may have: long enough to drill and hang (and to behave
     # as a beam), short enough to handle.
-    var("Lfloor", "if(chime, max(100 mm, 5 * OD), max(80 mm, 3 * barW, 8 * barT))")
+    # L / rg >= 30 keeps the Timoshenko factor in its accurate range and the
+    # first overtone near the slender beam's 2.76 times.
+    var("Lfloor", "if(chime, max(100 mm, 5 * OD, 30 * rg), max(80 mm, 3 * barW, 30 * rg))")
     var("Lceil", "if(chime, 1500 mm, 700 mm)")
+    var("LfloorEB", eb_of("Lfloor"))
+    var("LceilEB", eb_of("Lceil"))
     # The octaves that keep every note between them (L ~ 1 / sqrt(f)).
-    var("fTopMax", "beta / (2 * pi) * Kc / (Lfloor / 1 m)^2")
-    var("fBotMin", "beta / (2 * pi) * Kc / (Lceil / 1 m)^2")
+    var("fTopMax", "beta / (2 * pi) * Kc / (LfloorEB / 1 m)^2")
+    var("fBotMin", "beta / (2 * pi) * Kc / (LceilEB / 1 m)^2")
     var("octMax", "min(8, floor(4 + ln(fTopMax / 440) / ln(2) - (semi - 9) / 12 - span / 12))")
     var("octMin", "max(2, ceil(4 + ln(fBotMin / 440) / ln(2) - (semi - 9) / 12))")
 
@@ -189,7 +213,11 @@ def main():
     var("Rd", "Rc + OD / 2 + 15 mm")
     var("discT", "12 mm")
     var("hang", "40 mm")                                 # cord from the disc to the longest tube's top
-    var("zc", "-hang - Llong / 2")                       # every tube's middle, and the striker's
+    var("zc", "-hang - Llong / 2")                       # every tube's middle
+    # The striker hits 12 to 24 mm below the middles: off the first
+    # overtone's node at the middle (Hite's "dead zone").
+    var("strikeDrop", "18 mm")
+    var("zs", "zc - strikeDrop")
     var("sw", "clamp(1.2 * Rd, 80 mm, 250 mm)")
     var("sh", "1.3 * sw")
     var("sailT", "4 mm")
@@ -278,12 +306,12 @@ def main():
 
     # The striker, a puck on the centre cord at the tubes' middles.
     cmd("feature.cylinder", name="StrikerPuck", radius="Rs", height="strikerT",
-        position=["0 mm", "0 mm", "zc - strikerT / 2"], when="chime")
+        position=["0 mm", "0 mm", "zs - strikerT / 2"], when="chime")
     cmd("feature.fillet", name="StrikerRound", radius="2 mm",
         edges=[["StrikerPuck:face(0)", "StrikerPuck:face(1)"], ["StrikerPuck:face(0)", "StrikerPuck:face(2)"]],
         when="chime")
     cmd("feature.cylinder", name="StrikerHole", radius="cordD / 2 + 0.5 mm", height="strikerT + 2 mm",
-        position=["0 mm", "0 mm", "zc - strikerT / 2 - 1 mm"], when="chime")
+        position=["0 mm", "0 mm", "zs - strikerT / 2 - 1 mm"], when="chime")
     cmd("feature.boolean", op="subtract", target="StrikerRound", tool="StrikerHole", name="Striker", when="chime")
     cmd("body.appearance", body="Striker", **WALNUT)
 
@@ -357,7 +385,7 @@ def main():
     # ================= Assertions =================
     e = "0.01 mm"
     for k in range(1, NMAX + 1):
-        lphys = "(sqrt(beta / (2 * pi * fRoot * pow(2, s%d / 12)) * c * rg / 1 m) * 1 m)" % k
+        lphys = "(%s)" % timo("sqrt(beta / (2 * pi * fRoot * pow(2, s%d / 12)) * c * rg / 1 m) * 1 m" % k)
         # A tube: its box is the tube on the circle, its middle at zc, and
         # exactly as long as its note wants (both ends within 0.01 mm).
         lo = ["tx%d - OD / 2 - %s" % (k, e), "ty%d - OD / 2 - %s" % (k, e), "zc - %s / 2 - %s" % (lphys, e)]
@@ -369,7 +397,7 @@ def main():
                                           "not": {"any": [{"inside": box(short_top, hi)},
                                                           {"inside": box(lo, short_bot)}]}}},
             eq="if(chime && N >= %d, 1, 0)" % k)
-        zn = "(zc + %s / 2 - 0.224 * %s)" % (lphys, lphys)
+        zn = "(zc + %s / 2 - 0.2242 * %s)" % (lphys, lphys)
         cmd("assert.add", name="Tube %d: cord hole at the node" % k, measure="count",
             of={"kind": "face", "where": {"in": "Tube%d" % k, "hole": True, "radius": "holeD / 2",
                                           "inside": box(["-" + BIG, "-" + BIG, "%s - holeD / 2 - %s" % (zn, e)],
@@ -383,7 +411,7 @@ def main():
                                           "not": {"any": [{"inside": box([blo[0], "-%s / 2 + %s" % (lphys, e), blo[2]], bhi)},
                                                           {"inside": box(blo, [bhi[0], "%s / 2 - %s" % (lphys, e), bhi[2]])}]}}},
             eq="if(bars && N >= %d, 1, 0)" % k)
-        nd = "((0.5 - 0.224) * %s)" % lphys
+        nd = "((0.5 - 0.2242) * %s)" % lphys
         hb = lambda s: box(["x%d - barHoleD / 2 - %s" % (k, e), "%s%s - barHoleD / 2 - %s" % (s, nd, e), "-" + BIG],
                            ["x%d + barHoleD / 2 + %s" % (k, e), "%s%s + barHoleD / 2 + %s" % (s, nd, e), BIG])
         cmd("assert.add", name="Bar %d: holes at the nodes" % k, measure="count",
@@ -392,9 +420,9 @@ def main():
             eq="if(bars && N >= %d, 2, 0)" % k)
     # The longest note, measured as the body's extent.
     cmd("assert.add", name="Note 1: extent along its length", measure="extent", of={"set": "Note 1"},
-        axis="z", eq="if(chime, sqrt(beta / (2 * pi * fRoot) * Kc) * 1 m, barT)", tol="0.001 mm")
+        axis="z", eq="if(chime, %s, barT)" % timo("sqrt(beta / (2 * pi * fRoot) * Kc) * 1 m"), tol="0.001 mm")
     cmd("assert.add", name="Note 1: extent across", measure="extent", of={"set": "Note 1"},
-        axis="y", eq="if(chime, OD, sqrt(beta / (2 * pi * fRoot) * Kc) * 1 m)", tol="0.001 mm")
+        axis="y", eq="if(chime, OD, %s)" % timo("sqrt(beta / (2 * pi * fRoot) * Kc) * 1 m"), tol="0.001 mm")
     cmd("assert.add", name="Every note is there", measure="count", of={"set": "Notes"}, eq="N")
     cmd("assert.add", name="Node holes go through", measure="through",
         of={"kind": "face", "where": {"hole": True, "radius": "if(chime, holeD, barHoleD) / 2"}})
@@ -405,13 +433,22 @@ def main():
         from_={"set": "Notes"}, to={"set": "Notes"}, min="0.85 * if(chime, tubeGap, barGap)")
     cmd("assert.add", name="Nothing touches a note (cords and pins pass through the holes)", measure="overlap",
         of={"set": "Notes"}, to={"kind": "body", "where": {"not": {"set": "Notes"}}}, **{"is": False})
-    cmd("assert.add", name="Striker gap (chime) or felt gap (glockenspiel)", measure="clearance",
-        from_={"kind": "body", "where": {"any": [{"name": "Striker"}, {"name": "Frame"}]}}, to={"set": "Notes"},
-        min="0.5 * if(chime, strikeGap, min(feltT, (barHoleD - pinD) / 2))",
-        max="if(chime, strikeGap, min(feltT, (barHoleD - pinD) / 2)) + 0.001 mm")
+    # The striker: its box is a disc of radius Rc - OD/2 - strikeGap (so the
+    # gap to the tubes, whose places the tube assertions prove, is the striker
+    # gap), standing 12 to 25 mm below the tubes' middles.
+    rs = "(Rc - OD / 2 - strikeGap)"
+    cmd("assert.add", name="Striker: the striker gap from every tube, 12 to 25 mm below their middles",
+        measure="count",
+        of={"kind": "body", "where": {"name": "Striker",
+                                      "inside": box(["-%s - %s" % (rs, e), "-%s - %s" % (rs, e), "zc - 25 mm"],
+                                                    ["%s + %s" % (rs, e), "%s + %s" % (rs, e), "zc - 12 mm"]),
+                                      "not": {"any": [
+                                          {"inside": box(["-%s + %s" % (rs, e), "-" + BIG, "-" + BIG], [BIG, BIG, BIG])},
+                                          {"inside": box(["-" + BIG, "-" + BIG, "-" + BIG], ["%s - %s" % (rs, e), BIG, BIG])}]}}},
+        eq="if(chime, 1, 0)")
     cmd("assert.add", name="The striker reaches every tube", measure="count",
         of={"kind": "body", "where": {"set": "Tubes", "any": [
-            {"above": {"z": "zc - strikerT / 2 + 0.001 mm"}}, {"below": {"z": "zc + strikerT / 2 - 0.001 mm"}}]}},
+            {"above": {"z": "zs - strikerT / 2 + 0.001 mm"}}, {"below": {"z": "zs + strikerT / 2 - 0.001 mm"}}]}},
         eq="0")
     cmd("assert.add", name="Shortest note long enough to drill and hang", measure="count",
         of={"kind": "body", "where": {"any": [
@@ -445,13 +482,13 @@ def main():
                         min="octMin", max="octMax")),
         ("N", dict(label="Notes", description="How many tubes or bars, following the scale up; at most two octaves",
                    group="Notes", order=4, kind="integer", min="3", max="maxNotes")),
-        ("tubeMat", dict(label="Tube material", description="Young's modulus and density of the tube",
+        ("tubeMat", dict(label="Tube material", description="Young's modulus, density and shear modulus of the tube",
                          group="Wind chime", order=1, kind="choice", choicesFrom="tubeMaterials")),
         ("tubeSize", dict(label="Tube size", description="Outside diameter x wall in mm", group="Wind chime",
                           order=2, kind="choice", choicesFrom="tubeSizes")),
         ("strikeGap", dict(label="Striker gap", description="Gap between the striker and the tubes at rest",
                            group="Wind chime", order=3, min="5 mm", max="30 mm", step="1 mm", unit="mm")),
-        ("barMat", dict(label="Bar material", description="Young's modulus along the bar and density",
+        ("barMat", dict(label="Bar material", description="Young's modulus along the bar, density and shear modulus. Wood bars are straight (not undercut): a starting point, tune by ear",
                         group="Glockenspiel", order=1, kind="choice", choicesFrom="barMaterials")),
         ("barW", dict(label="Bar width", description="Width of the flat bars", group="Glockenspiel", order=2,
                       min="15 mm", max="60 mm", step="1 mm", unit="mm")),
@@ -466,10 +503,10 @@ def main():
         title="Tuned chimes",
         description="A wind chime of tubes, or a glockenspiel of bars, that is in tune before you cut it: pick "
                     "the scale, the lowest note, the number of notes, the material and the tube or bar size; "
-                    "every tube or bar gets the length of its note from the free-free beam (Euler-Bernoulli) and "
-                    "its cord or pin holes at the nodes, 22.4 % from each end. Variables f1..f12 are the "
+                    "every tube or bar gets the length of its note from the free-free beam (Euler-Bernoulli with "
+                    "the Timoshenko correction) and its cord or pin holes at the nodes, 0.2242 L from each end. Variables f1..f12 are the "
                     "frequencies (Hz) and L1..L12 the cut lengths; assert.list proves each length and hole. "
-                    "Cut a few mm long and file to pitch with a tuner. Export the face set \"Cut sheet\" as SVG "
+                    "Metal is within about a quarter semitone, wood is a starting point: cut long, then tune with a tuner. Export the face set \"Cut sheet\" as SVG "
                     "for the disc and sail (or the frame).",
         author="3DCraft Jigs", licence="CC-BY-4.0",
         url="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/tuned-chimes",
