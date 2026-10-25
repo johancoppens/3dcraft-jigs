@@ -24,24 +24,27 @@ cable i is the load at the top's edge right over it.
 import json
 
 # Sheet materials: name, rho: density in kg/m^3, fm: bending strength in MPa,
-# sf: safety factor, printed: 1 for a 3D printed part.
+# sf: safety factor (with creep under the permanent pretension), printed: 1 for a
+# 3D printed part, E: modulus of elasticity in MPa, tMin: thinnest sheet. MDF is
+# not offered: it creeps too much under a permanent load (EN 1995-1-1, kmod
+# permanent 0.2 against 0.6 for plywood). PETG is not offered either: with its
+# lower stiffness (about 2 GPa) the printed posts buckle before they carry a
+# useful load at the default size.
 MATERIALS = [
-    ("Birch plywood", 680, 40, 3, 0),
-    ("Poplar plywood", 450, 25, 3, 0),
-    ("MDF", 750, 20, 3, 0),
-    ("PLA, 3D printed", 750, 30, 4, 1),
-    ("PETG, 3D printed", 760, 25, 4, 1),
+    ("Birch plywood", 680, 40, 3.5, 0, 9000, 9),
+    ("Poplar plywood", 450, 25, 3.5, 0, 6000, 9),
+    ("PLA, 3D printed solid", 1240, 50, 5, 1, 3500, 12),
 ]
 # Cables and chain: name, d: diameter in mm, swl: safe working load in N.
-# Wire rope 7x7, grade 1770: minimum breaking force 0.332 d^2 1770 N
-# (EN 12385-4 form), safe load a fifth of it. Chain DIN 766 3 mm: breaking
-# force 4 kN, safe load an eighth of it.
+# Wire rope 7x7 (strand core), grade 1770: minimum breaking force K d^2 R with
+# K = 0.359 (EN 12385-4), safe load a fifth of it. Chain DIN 766 4 mm: working
+# load limit 200 kg for static suspended loads (supplier data, Carl Stahl).
 CABLES = [
-    ("Steel wire rope 1.5 mm", 1.5, 264),
-    ("Steel wire rope 2 mm", 2, 470),
-    ("Steel wire rope 3 mm", 3, 1058),
-    ("Steel wire rope 4 mm", 4, 1880),
-    ("Steel chain 3 mm (DIN 766)", 3, 500),
+    ("Steel wire rope 1.5 mm", 1.5, 286),
+    ("Steel wire rope 2 mm", 2, 508),
+    ("Steel wire rope 3 mm", 3, 1144),
+    ("Steel wire rope 4 mm", 4, 2033),
+    ("Steel chain 4 mm (DIN 766)", 4, 1962),
 ]
 
 INPUTS = [
@@ -54,7 +57,7 @@ INPUTS = [
     ("material", "1"),
     ("outer", "2"),          # outer cable type (row of the cables table)
     ("central", "3"),        # central cable type
-    ("load", "4"),           # kg on the table
+    ("load", "3"),           # kg on the table
     ("bed", "350 mm"),       # print bed, for printed parts
     ("clearance", "0.1 mm"),  # slots are this much wider than the tabs
 ]
@@ -65,13 +68,15 @@ DERIVED = [
     ("fm", "sheets[material].fm"),
     ("sf", "sheets[material].sf"),
     ("printed", "sheets[material].printed"),
-    ("n", "cables + 2"),
+    ("E", "sheets[material].E"),
+    ("Tmin", "sheets[material].tMin * 1 mm"),
+    ("n", "if(shape == 3, 3, cables + 2)"),           # a triangle always has 3 outer cables
     ("dO", "ropes[outer].d"),
     ("swlO", "ropes[outer].swl"),
     ("dC", "ropes[central].d"),
     ("swlC", "ropes[central].swl"),
     # Ranges that follow the other inputs.
-    ("Smin", "choose(shape, 150 mm, 150 mm, 230 mm)"),
+    ("Smin", "choose(shape, 160 mm, 160 mm, 240 mm)"),
     ("Smax", "if(printed, bed, 600 mm)"),
     # The top's outline.
     ("rc", "min(20 mm, S / 10)"),                                  # corner radius
@@ -81,11 +86,14 @@ DERIVED = [
     ("yEdge", "choose(shape, S / 2, S / 2, S / 3)"),               # edge of the top along the hooks' plane
     ("areaTop", "choose(shape, S^2 - (4 - pi) * rc^2, pi * S^2 / 4, sqrt(3) / 4 * S^2 - 3 * rc^2 * (sqrt(3) - pi / 3))"),
     # The hooks.
-    ("b", "clamp(0.25 * yEdge + 5 mm, 25 mm, 80 mm)"),             # depth of the arm and width of the post
-    ("tabW", "b / 3"),
     ("pOut", "yEdge - 12 mm - T / 2"),                             # outer face of a post
-    ("p", "pOut - b / 2"),                                         # lever of the central cable on a hook
     ("tipC", "5 mm"),                                              # the arm's straight underside reaches tipC past the centre
+    # depth of the arm and width of the post: deeper for printed parts, but leaving 6 mm between a
+    # hook's arm (its inside fillet b / 4 included) and the other hook's post
+    ("b", "max(25 mm, min(clamp(if(printed, 0.35, 0.25) * yEdge + 5 mm, 25 mm, 80 mm), (pOut - tipC - 6 mm) / 1.75))"),
+    ("rf", "b / 4"),                                               # inside fillet, arm to post
+    ("tabW", "b / 3"),
+    ("p", "pOut - b / 2"),                                         # lever of the central cable on a hook
     ("gapV", "15 mm"),                                             # a hook's arm to the other plate
     ("LcMin", "20 mm"),
     ("Hmin", "ceil(LcMin + 2 * b + 2 * T + 2 * gapV + 0.001 mm, 1 mm)"),
@@ -108,35 +116,48 @@ DERIVED += [
     ("A2", "b * (pOut - b + tipC)"), ("y2", "(pOut - b - tipC) / 2"),  # arm
     ("A3", "pi * b^2 / 8"), ("y3", "-tipC - 2 * b / (3 * pi)"),      # round end of the arm
     ("A4", "(1 - pi / 4) * (b / 2)^2"), ("y4", "pOut - 0.2234 * b / 2"),  # rounded outer corner (taken off)
-    ("aHook", "A1 + A2 + A3 - A4"),
-    ("yHook", "(A1 * y1 + A2 * y2 + A3 * y3 - A4 * y4) / aHook"),
+    ("A5", "(1 - pi / 4) * rf^2"), ("y5", "pOut - b - 0.2234 * rf"),     # inside fillet (added)
+    ("aHook", "A1 + A2 + A3 - A4 + A5"),
+    ("yHook", "(A1 * y1 + A2 * y2 + A3 * y3 - A4 * y4 + A5 * y5) / aHook"),
     # Stability: the top hook's post may grow (with H and Lc) only while the top's centre of mass
     # stays inside the anchor polygon, with 5 % to spare.
-    ("restA", "A2 + A3 - A4"),
-    ("restM", "A2 * y2 + A3 * y3 - A4 * y4"),
+    ("restA", "A2 + A3 - A4 + A5"),
+    ("restM", "A2 * y2 + A3 * y3 - A4 * y4 + A5 * y5"),
     ("A1max", "(0.95 * aIn * (areaTop + restA) - restM) / max(y1 - 0.95 * aIn, 1 mm)"),
-    ("Hmax", "floor(min(800 mm, 2 * (A1max / b + T - b) - LcMin, if(printed, 2 * bed - 2 * b - LcMin, 800 mm)) - 0.001 mm, 1 mm)"),
-    ("LcMax", "min(H - 2 * b - 2 * T - 2 * gapV, 2 * (A1max / b + T - b) - H, if(printed, 2 * bed - H - 2 * b, 1 m))"),
     ("eTop", "aHook * yHook / (areaTop + aHook)"),                  # the top's centre of mass, off centre along y
     ("eUse", "eTop + 2 mm"),                                        # ... as the statics take it
+    ("mPlate", "areaTop * T / (1 mm)^3 * rho * 1e-9"),               # kg
     ("mTop", "(areaTop + aHook) * T / (1 mm)^3 * rho * 1e-9"),       # kg
     ("Wt", "mTop * g"),                                             # N
     ("WQ", "load * g"),
-    # Statics, in N: D is the largest drop (or rise) of an outer cable's tension, with the load at
-    # the edge of the top over (or opposite) that cable.
+    # A hook in bending (arm and post, lever p) and its post in compression (Euler, a cantilever
+    # fixed in its plate: buckling length 2 Lp, out of the hook's plane, I = b T^3 / 12).
+    ("TcHook", "fm / sf * (T / 1 mm) * (b / 1 mm)^2 / 6 / (p / 1 mm)"),
+    ("Ib", "(b / 1 mm) * (T / 1 mm)^3 / 12"),
+    ("F0", "80 + 2 * mPlate * g"),                                  # what a post must carry at least (self-stress and the top)
+    ("LbMax", "pi / 2 * sqrt(E * Ib * max(1 / F0 - 1 / TcHook, 1e-9) / sf) * 1 mm"),
+    ("Hmax", "floor(min(800 mm, 2 * (A1max / b + T - b) - LcMin, 2 * (LbMax + T - b) - LcMin, if(printed, 2 * bed - 2 * b - LcMin, 800 mm)) - 0.001 mm, 1 mm)"),
+    ("LcMax", "min(H - 2 * b - 2 * T - 2 * gapV, 2 * (A1max / b + T - b) - H, 2 * (LbMax + T - b) - H, if(printed, 2 * bed - H - 2 * b, 1 m))"),
+    ("Lp", "H / 2 + Lc / 2 + b - T"),                               # free length of a post
+    ("Ncr", "pi^2 * E * Ib / (2 * Lp / 1 mm)^2"),
+    ("TcPost", "1 / (sf / Ncr + 1 / TcHook)"),                      # bending and buckling together
+    # Statics, in N. D is the largest change of an outer cable's tension from the moment of the top
+    # and of the load at the edge of the top over (or opposite) that cable. The vertical share of the
+    # load is taken as lost by the outer cables (the hooks bend more than the cables stretch).
     ("D", "2 / (n * rA) * (Wt * eUse + WQ * Rout)"),
-    ("T0", "1.25 * D + 10"),                                        # pretension of each outer cable, unloaded
-    ("TminW", "T0 - D"),                                            # least outer tension, worst load
+    ("T0", "1.25 * (D + WQ / n) + 10"),                             # pretension of each outer cable, unloaded
+    ("TminW", "T0 - D - WQ / n"),                                   # least outer tension, worst load
     ("ToutMax", "T0 + D"),                                          # most outer tension, worst load
     ("Tc", "n * T0 + Wt + WQ"),                                     # central cable
-    ("TcHook", "fm / sf * (T / 1 mm) * (b / 1 mm)^2 / 6 / (p / 1 mm)"),  # what a hook's arm and post carry in bending
     ("bReq", "sqrt(6 * Tc * (p / 1 mm) * sf / (fm * (T / 1 mm))) * 1 mm"),
+    ("Lbuck", "pi / 2 * sqrt(E * Ib * max(1 - Tc / TcHook, 0) / (sf * Tc)) * 1 mm"),  # longest post that carries Tc
     ("dReqO", "dO * sqrt(ToutMax / swlO)"),
     ("dReqC", "dC * sqrt(Tc / swlC)"),
     # The largest load the cables and hooks allow (it does not depend on the load).
-    ("capC", "min(swlC, TcHook)"),
-    ("qOut", "((swlO - 10) / 2.25 * n * rA / 2 - Wt * eUse) / Rout"),
-    ("qCen", "(capC - 10 * n - Wt - 2.5 * Wt * eUse / rA) / (1 + 2.5 * Rout / rA)"),
+    ("kD", "2 / (n * rA)"),
+    ("capC", "min(swlC, TcPost)"),
+    ("qOut", "(swlO - 10 - 2.25 * kD * Wt * eUse) / (2.25 * kD * Rout + 1.25 / n)"),
+    ("qCen", "(capC - 10 * n - Wt - 2.5 * Wt * eUse / rA) / (2.25 + 2.5 * Rout / rA)"),
     ("maxLoad", "clamp(floor(min(qOut, qCen) / g), 0, 50)"),
     ("Lout", "H - 2 * T"),                                          # outer cable length, eye to eye
 ]
@@ -241,7 +262,7 @@ def slots(sk, sign):
 
 def main():
     s = []
-    s.append(["table.set", {"name": "sheets", "columns": ["material", "rho", "fm", "sf", "printed"],
+    s.append(["table.set", {"name": "sheets", "columns": ["material", "rho", "fm", "sf", "printed", "E", "tMin"],
                             "rows": [list(r) for r in MATERIALS]}])
     s.append(["table.set", {"name": "ropes", "columns": ["cable", {"name": "d", "unit": "mm"}, "swl"],
                             "rows": [list(r) for r in CABLES]}])
@@ -269,7 +290,8 @@ def main():
     sk.path(["-pOut", "0 mm"], [
         ("line", ["-pOut + tabW", "0 mm"]), ("line", ["-pOut + tabW", "T"]),
         ("line", ["-pOut + b - tabW", "T"]), ("line", ["-pOut + b - tabW", "0 mm"]),
-        ("line", ["-pOut + b", "0 mm"]), ("line", ["-pOut + b", "zA"]),
+        ("line", ["-pOut + b", "0 mm"]), ("line", ["-pOut + b", "zA - rf"]),
+        ("arc", ["-pOut + b + rf", "zA"], ["-pOut + b + rf", "zA - rf"], True),
         ("line", ["tipC", "zA"]),
         ("arc", ["tipC", "zA + b"], ["tipC", "zA + b / 2"], False),
         ("line", ["-pOut + b / 2", "zA + b"]),
@@ -282,7 +304,8 @@ def main():
     sk.path(["pOut", "H"], [
         ("line", ["pOut - tabW", "H"]), ("line", ["pOut - tabW", "H - T"]),
         ("line", ["pOut - b + tabW", "H - T"]), ("line", ["pOut - b + tabW", "H"]),
-        ("line", ["pOut - b", "H"]), ("line", ["pOut - b", "zB"]),
+        ("line", ["pOut - b", "H"]), ("line", ["pOut - b", "zB + rf"]),
+        ("arc", ["pOut - b - rf", "zB"], ["pOut - b - rf", "zB + rf"], True),
         ("line", ["-tipC", "zB"]),
         ("arc", ["-tipC", "zB - b"], ["-tipC", "zB - b / 2"], False),
         ("line", ["pOut - b / 2", "zB - b"]),
@@ -347,8 +370,8 @@ def main():
     a("Central support inside the anchor polygon (y)", measure="boxMax", of="CentralCable", axis="y", max="aIn")
     a("Central support inside the anchor polygon (-y)", measure="boxMin", of="CentralCable", axis="y", min="-aIn")
     for ax in ("x", "y"):
-        a("Worst load position within the statics' reach (+%s)" % ax, measure="boxMax", of=tplate, axis=ax, max="Rout")
-        a("Worst load position within the statics' reach (-%s)" % ax, measure="boxMin", of=tplate, axis=ax, min="-Rout")
+        a("Top plate within the box of the statics' load reach Rout (+%s)" % ax, measure="boxMax", of=tplate, axis=ax, max="Rout")
+        a("Top plate within the box of the statics' load reach Rout (-%s)" % ax, measure="boxMin", of=tplate, axis=ax, min="-Rout")
     a("Outer cables stay taut with the load at the worst edge (TminW > 0)", measure="extent", of="OuterCable1", axis="z",
       min="if(TminW > 0, H - 0.01 mm, 2 * H)")
     a("Outer cable thick enough for its tension (ToutMax within the safe load)", measure="extent", of="OuterCable1",
@@ -357,6 +380,8 @@ def main():
       axis="x", min="dReqC - 0.001 mm")
     a("Top hook's arm deep enough for the central cable", measure="boxMin", of="TopHook", axis="z", max="zB - bReq + 0.001 mm")
     a("Base hook's arm deep enough for the central cable", measure="boxMax", of="BaseHook", axis="z", min="zA + bReq - 0.001 mm")
+    a("Base hook's post does not buckle (Euler with bending)", measure="extent", of="BaseHook", axis="z", max="T + Lbuck + 0.001 mm")
+    a("Top hook's post does not buckle (Euler with bending)", measure="extent", of="TopHook", axis="z", max="T + Lbuck + 0.001 mm")
     a("Printed parts fit the print bed (top plate, x)", measure="extent", of=tplate, axis="x", max="if(printed, bed, 10 m)")
     a("Printed parts fit the print bed (top plate, y)", measure="extent", of=tplate, axis="y", max="if(printed, bed, 10 m)")
     a("Printed parts fit the print bed (hook)", measure="extent", of="BaseHook", axis="z", max="if(printed, bed, 10 m)")
@@ -371,7 +396,7 @@ def main():
                    group="Size", order=3, min="Smin", max="Smax", step="1 mm", unit="mm")),
         ("Lc", dict(label="Central cable length", description="How far the two hooks overlap: the length of the central "
                     "cable between the arms", group="Size", order=4, min="LcMin", max="LcMax", step="1 mm", unit="mm")),
-        ("cables", dict(label="Outer cables", description="Three or four outer cables between the edges of top and base",
+        ("cables", dict(label="Outer cables", description="Three or four outer cables between the edges of top and base (a triangle always has three)",
                         group="Cables", order=1, kind="choice", choices=["3 cables", "4 cables"])),
         ("outer", dict(label="Outer cable type", description="Wire rope or chain for the outer cables (table ropes: "
                        "diameter and safe load)", group="Cables", order=2, kind="choice", choicesFrom="ropes")),
@@ -384,7 +409,7 @@ def main():
                           "sheets: density, bending strength, safety factor)", group="Material", order=1,
                           kind="choice", choicesFrom="sheets")),
         ("T", dict(label="Sheet thickness", description="Thickness of the plates and the hooks", group="Material",
-                   order=2, min="9 mm", max="24 mm", step="0.1 mm", unit="mm")),
+                   order=2, min="Tmin", max="24 mm", step="0.1 mm", unit="mm")),
         ("clearance", dict(label="Slot clearance", description="How much wider each slot is drawn than its tab: 0 is a "
                            "press fit (a laser's kerf adds about 0.1 mm), 0.2 to 0.3 mm slides", group="Material",
                            order=3, min="0 mm", max="0.6 mm", step="0.01 mm", unit="mm")),
