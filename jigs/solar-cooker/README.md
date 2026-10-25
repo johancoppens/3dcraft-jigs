@@ -64,8 +64,10 @@ apart.
 | holder clear of dish, pot clear of dish | The legs and the pot do not touch the dish |
 | nested petals clear | The turned petals stay at least 5 mm from the others on the sheet |
 
-`check-range` passes at the defaults, the corners and random points, also with `--deep` (see the commit
-message for the run).
+**Checked.** `check-range` passes 84 of 84 points (the default, 64 corners, every pot and 16 random
+points), also with `--deep`; regeneration median about 8 s, at most about 23 s (the clearance and overlap
+measures between freeform petals take most of it). Overlap between the nested flat petals cannot be measured
+by 3DCraft 0.1.0 (too many freeform faces for one boolean), so their spacing is checked with `clearance`.
 
 ## Using it
 
