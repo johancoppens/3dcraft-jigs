@@ -35,8 +35,8 @@ family are built into the history.
 import json
 
 NMAX = 12
-COL_X = "#D9B98A"   # plywood
-COL_Y = "#C2694B"   # terracotta
+COL_X = "#D4A24C"   # ochre
+COL_Y = "#2E7D7A"   # petrol
 
 SHEETS = [
     ["Plywood 3 mm", 3], ["Plywood 4 mm", 4], ["Plywood 6 mm", 6],
@@ -57,17 +57,17 @@ def V(name, expr):
 
 
 INPUTS = [
-    ("shape", "1"),
+    ("shape", "1"),        # the vase at build time (every slice valid); the saddle below
     ("sheet", "2"),
-    ("height", "300 mm"),
+    ("height", "220 mm"),
     ("width", "340 mm"),
     ("nx", str(NMAX)),     # all slices at build time; set to the default below
     ("ny", str(NMAX)),
     ("clearance", "0.15 mm"),
-    ("twist", "120 deg"),
-    ("ratio", "65"),
-    ("waist", "-10"),
-    ("relief", "25"),
+    ("twist", "180 deg"),
+    ("ratio", "70"),
+    ("waist", "25"),
+    ("relief", "40"),
     ("lamp", "1"),
     ("bulbD", "64 mm"),
     ("bulbH", "110 mm"),
@@ -89,12 +89,11 @@ DERIVED = [
     ("minS", "min(1, 1 - waist / 100) / sN"),
     ("bmin", "rb * A0 * minS"),
     ("Cz", "H / 2"),
-    # Relief used: as asked, at most what keeps two webs under the lowest point of the top and,
-    # so the slices stay buildable and the crossings sound, slopes of at most 1.5 (saddle: 2 D / A,
-    # wave: 1.5 pi D / A).
-    ("reliefMax", "min(40, 50 * (1 - 2 * Wv / H), if(shape == 3, 75 * A0 / H, 100 * A0 / (pi * H)))"),
-    ("reliefE", "min(relief, reliefMax)"),
-    ("Dz", "reliefE / 100 * H"),
+    # Most relief: two webs under the lowest point of the top, and slopes of at most 2.5 (saddle:
+    # 2 D / A, wave: 1.5 pi D / A), so the slots stay sound and the kernel cuts them reliably.
+    ("reliefMax", "min(40, 50 * (1 - 2 * Wv / H), if(shape == 3, 125 * A0 / H, "
+                  "if(shape == 4, 250 / (1.5 * pi) * A0 / H, 40)))"),
+    ("Dz", "relief / 100 * H"),
     ("zm", "choose(shape, if(lampOn, (bulbH + H) / 2, H / 2), H / 2, (H - 2 * Dz) / 2, (H - 2 * Dz) / 2)"),
     # Half-width of the crossing grid, per shape.
     ("gVase", "if(2 * bmin^2 > e^2, (sqrt(2 * bmin^2 - e^2) - e) / 2, 0 mm)"),
@@ -112,13 +111,12 @@ DERIVED = [
                  "2 * (gNeed + e), 2 * (gNeed + e)))"),
     ("nMax", "min(%d, floor(2 * g / sp) + 1)" % NMAX),
     ("nMin", "if(lampOn, max(3, ceil(2 * g / max(1 mm, g + w / 2 - 22 mm)) + 1), 3)"),
-    # The counts used: as asked, within what the sheet and the size leave room for.
-    ("nXe", "clamp(nx, nMin, nMax)"),
-    ("nYe", "clamp(ny, nMin, nMax)"),
+    ("nXe", "nx"),
+    ("nYe", "ny"),
     ("px", "2 * g / (nXe - 1)"),
     ("py", "2 * g / (nYe - 1)"),
-    ("bulbDMax", "2 * (g - max(px, py) + w / 2)"),
-    ("bD", "min(bulbD, bulbDMax)"),
+    ("bulbDMax", "if(lampOn, 2 * (g - max(px, py) + w / 2), 160 mm)"),
+    ("bD", "bulbD"),
     ("bulbHMax", "H - 2 * Wv"),
     # Lamp room: a square opening whose sides are the outer walls of the slots of the slices
     # nearest to bulbD / 2 (so the slices beside it are cut square), the next slices outside.
@@ -290,8 +288,9 @@ def main():
             s.append(["feature.boolean", {"op": "subtract", "target": nm + "Slotted", "tool": "LampRoom",
                                           "keepTool": not last_lamp, "name": nm, "when": cond}])
 
-    s.append(V("nx", "9"))
-    s.append(V("ny", "9"))
+    s.append(V("nx", "6"))
+    s.append(V("ny", "6"))
+    s.append(V("shape", "3"))
 
     def rest(col, slot, ax):
         """The edges of a slice that are not its slots and not its two sheet faces."""
@@ -302,6 +301,13 @@ def main():
         """The faces of q that lie on the meeting plane z = zm."""
         return {"kind": "face", "where": q["where"] + [{"above": {"z": "zm - 0.001 mm"}},
                                                        {"below": {"z": "zm + 0.001 mm"}}]}
+
+    def slot_floor(q, body, ax, lo, hi):
+        """The floors of q in body that lie between lo and hi along ax."""
+        w = q["where"] + [{"in": body}, {"below": {ax: hi}}]
+        if lo:
+            w.append({"above": {ax: lo}})
+        return {"kind": "face", "where": w}
 
     qx = {"kind": "body", "where": {"color": COL_X}}
     qy = {"kind": "body", "where": {"color": COL_Y}}
@@ -316,14 +322,22 @@ def main():
                         "of": on_plane(floors_y), "eq": "nXe * nYe"}],
         ["assert.add", {"name": "the two half-slots of a crossing meet", "measure": "distance",
                         "from": floors_x, "to": floors_y, "eq": "0 mm", "tol": "0.001 mm"}],
-        ["assert.add", {"name": "X slots are sheet + clearance wide", "measure": "distance",
-                        "from": {"kind": "face", "where": [{"in": "X1"}, {"madeBy": "SlotX"}, {"surface": "plane"}, {"normal": {"along": "y"}}]},
-                        "to": {"kind": "face", "where": [{"in": "X1"}, {"madeBy": "SlotX"}, {"surface": "plane"}, {"normal": {"along": "-y"}}]},
-                        "eq": "w", "tol": "0.001 mm"}],
-        ["assert.add", {"name": "Y slots are sheet + clearance wide", "measure": "distance",
-                        "from": {"kind": "face", "where": [{"in": "Y1"}, {"madeBy": "SlotY"}, {"surface": "plane"}, {"normal": {"along": "x"}}]},
-                        "to": {"kind": "face", "where": [{"in": "Y1"}, {"madeBy": "SlotY"}, {"surface": "plane"}, {"normal": {"along": "-x"}}]},
-                        "eq": "w", "tol": "0.001 mm"}],
+        # Slot width through the floors: each floor runs between the two reliefs, w - 2 rr wide and a
+        # sheet long, and is bounded by straight edges only, so its area is exact.
+        ["assert.add", {"name": "X slots are sheet + clearance wide", "measure": "area", "of": floors_x,
+                        "eq": "nXe * nYe * (w - 2 * rr) * T"}],
+        ["assert.add", {"name": "Y slots are sheet + clearance wide", "measure": "area", "of": floors_y,
+                        "eq": "nXe * nYe * (w - 2 * rr) * T"}],
+        # Fingers: the floors of the first two slots of slice 1 lie p - w + 2 rr apart; the finger between
+        # them is narrowest at the reliefs, p - w - 2 rr.
+        ["assert.add", {"name": "fingers between the X slots at least 2 x sheet", "measure": "distance",
+                        "from": slot_floor(floors_x, "X1", "y", None, "cy1 + py / 2"),
+                        "to": slot_floor(floors_x, "X1", "y", "cy1 + py / 2", "cy2 + py / 2"),
+                        "min": "Wmin + 4 * rr"}],
+        ["assert.add", {"name": "fingers between the Y slots at least 2 x sheet", "measure": "distance",
+                        "from": slot_floor(floors_y, "Y1", "x", None, "cx1 + px / 2"),
+                        "to": slot_floor(floors_y, "Y1", "x", "cx1 + px / 2", "cx2 + px / 2"),
+                        "min": "Wmin + 4 * rr"}],
         ["assert.add", {"name": "web round the X slots at least 2 x sheet", "measure": "distance",
                         "from": floors_x, "to": rest(COL_X, "SlotX", "x"), "min": "Wmin"}],
         ["assert.add", {"name": "web round the Y slots at least 2 x sheet", "measure": "distance",
@@ -348,12 +362,11 @@ def main():
                        "Its least follows the sheet, the shape and the lamp room: room for three slices with "
                        "webs of two sheet thicknesses", group="Shape", order=3,
                        min="widthMin", max="600 mm", step="1 mm", unit="mm")),
-        ("nx", dict(label="X slices", description="Number of slices across x. The model uses at most as many "
-                    "as leave a web of two sheet thicknesses between the slots (fewer on a small shape or a thick "
-                    "sheet; the count assertions say how many), and with the lamp room at least enough for a "
-                    "slice beside the room", group="Slices", order=1, kind="integer", min="3", max="12")),
+        ("nx", dict(label="X slices", description="Number of slices across x: at most as many as leave a "
+                    "finger of two sheet thicknesses between the slots, with the lamp room at least enough for a "
+                    "slice beside the room", group="Slices", order=1, kind="integer", min="nMin", max="nMax")),
         ("ny", dict(label="Y slices", description="Number of slices across y, limited as the X slices are",
-                    group="Slices", order=2, kind="integer", min="3", max="12")),
+                    group="Slices", order=2, kind="integer", min="nMin", max="nMax")),
         ("sheet", dict(label="Sheet", description="Material and thickness of the sheet (table sheets)",
                        group="Material", order=1, kind="choice", choicesFrom="sheets")),
         ("clearance", dict(label="Slot clearance", description="Slot width = sheet thickness + clearance. "
@@ -370,13 +383,14 @@ def main():
                       "holder (40 mm ring) and the bulb", group="Lamp", order=1, kind="boolean")),
         ("bulbD", dict(label="Lamp room width", description="Least width of the opening: 44 mm passes the "
                        "40 mm holder ring; 64 mm an A60 bulb. It snaps outward to the slots of the slices "
-                       "beside it, and is at most what leaves a slice outside it", group="Lamp", order=2,
-                       min="44 mm", max="120 mm", step="1 mm", unit="mm")),
+                       "beside it; at most what leaves a slice outside it", group="Lamp", order=2,
+                       min="44 mm", max="bulbDMax", step="1 mm", unit="mm")),
         ("bulbH", dict(label="Lamp room height", description="Height of the opening from the foot",
                        group="Lamp", order=3, min="40 mm", max="bulbHMax", step="1 mm", unit="mm")),
         ("relief", dict(label="Relief", description="Saddle and wave: how far the top rises and falls, "
                         "in % of the height; at most what keeps two webs under the lowest point and slopes "
-                        "of at most 1.5 (a tall, narrow shape gets less)", group="Saddle and wave", order=1, min="5", max="40",
+                        "of at most 2.5 (a tall, narrow shape gets less)", group="Saddle and wave", order=1,
+                        min="min(5, reliefMax)", max="reliefMax",
                         step="1")),
     ]
     for name, fields in pub:
@@ -385,10 +399,10 @@ def main():
         s.append(["variable.publish", p])
 
     s.append(["document.info", {
-        "title": "Sliceform",
-        "description": "A sliceform lamp shade or sculpture: two families of flat slices that slide into each "
+        "title": "Sliceform sculpture",
+        "description": "A sliceform sculpture, or a lamp shade: two families of flat slices that slide into each "
                        "other with half-lap slots and together show a shape from a formula. Choose the shape "
-                       "(a twisted vase or lamp shade, an ellipsoid or sphere, a saddle, a wave), its size, the "
+                       "(a saddle, a wave, an ellipsoid or sphere, or a twisted vase or lamp shade), its size, the "
                        "number of slices each way, the sheet and the slot clearance; the vase can have a room "
                        "in its foot for an E27 lamp holder. Every outline is the exact section of the shape. "
                        "To cut it: File > Export..., SVG or DXF with the face set \"Cut sheet\" "
@@ -396,7 +410,7 @@ def main():
                        "each slice is on a layer named after it (X1, X2, ... and Y1, Y2, ...).",
         "author": "3DCraft Jigs", "licence": "CC-BY-4.0",
         "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/sliceform",
-        "tags": ["sliceform", "lamp", "laser", "plywood", "formula", "sculpture", "mathematics"]}])
+        "tags": ["sliceform", "sculpture", "lamp", "laser", "plywood", "formula", "sculpture", "mathematics"]}])
     s.append(["jig.export", {"path": "dist/sliceform.3dcraftjig"}])
     return s
 
