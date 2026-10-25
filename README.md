@@ -22,7 +22,7 @@ standard.
 | [`flatpack-stool`](jigs/flatpack-stool/) | A screwless plywood stool or side table: cross-lap legs, tabs through the seat, hand-hold slot, cut sheet | CC-BY-4.0 |
 | [`tensegrity-table`](jigs/tensegrity-table/) | A floating (tensegrity) table: top hung from the base's hook by a central cable, held level by 3 or 4 outer cables, with tensions and the load limit from statics, cut sheet | CC-BY-4.0 |
 | [`joint-drawer`](jigs/joint-drawer/) | A drawer or box with through dovetails or finger joints, a bottom in a groove and a brass knob | CC-BY-4.0 |
-| [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style): perforated top, perforated side plates on all four edges, half-lapped ribs, optional legs and frame | CC-BY-4.0 |
+| [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style) to laser cut and MIG weld: perforated top and skirts, half-lapped ribs, every joint tab and slot with dogbone reliefs and plug-weld pockets, legs and frame of square tube from a table, cut sheet and tube cut list | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
 | [`wall-bracket`](jigs/wall-bracket/) | A shelf bracket whose plate and gusset are sized from the load by formulas, with a load limit | CC-BY-4.0 |
 | [`gt2-pulley`](jigs/gt2-pulley/) | A GT2 (2 mm pitch) timing pulley: round, D-shaft or keyway bore, set screws with optional captive nuts, optional flanges and hub | CC-BY-SA-4.0 |
