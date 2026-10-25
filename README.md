@@ -11,6 +11,9 @@ licence) and a thumbnail.
 Jigs are not part of 3DCraft. 3DCraft provides the mechanism (public parameters, the form, `.3dcraftjig`
 files, the range check); this repository holds Jigs.
 
+Grouped by workshop: laser cutting and woodwork, metalwork, mechanisms, 3D printing, and assemblies to a
+standard.
+
 | Jig | What it makes | Licence |
 |---|---|---|
 | [`laser-box`](jigs/laser-box/) | A finger-jointed box with a loose lid, cut from sheet, with an optional divider and lid grip | CC-BY-4.0 |

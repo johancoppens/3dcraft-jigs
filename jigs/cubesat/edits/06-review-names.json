@@ -1,0 +1,10 @@
+[
+  ["file.open", {"path": "jigs/cubesat/source.3dcraft"}],
+  ["assert.edit", {"name": "CDS 2.2.3 protrusions X (6.5 mm)", "rename": "CDS 2.2.3 protrusions X (6.5 mm, stowed, both sides together)"}],
+  ["assert.edit", {"name": "CDS 2.2.3 protrusions Y (6.5 mm)", "rename": "CDS 2.2.3 protrusions Y (6.5 mm, stowed, both sides together)"}],
+  ["assert.edit", {"name": "CDS 2.2.10 mass", "rename": "CDS 2.2.10 mass (typical maximum, Table 1)"}],
+  ["variable.set", {"name": "wing_angle", "expr": "90 deg"}],
+  ["variable.publish", {"name": "deployed", "description": "Off: stowed in the dispenser; on: deployed in orbit"}],
+  ["assert.list", {}],
+  ["file.save", {}]
+]
