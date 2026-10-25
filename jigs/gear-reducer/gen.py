@@ -25,18 +25,18 @@ KEYS = [("6-8", 2, 2, 1.2, 1.0), ("8-10", 3, 3, 1.8, 1.4), ("10-12", 4, 4, 2.5, 
         ("44-50", 14, 9, 5.5, 3.8)]
 KEY_ROW = "1 + ({d} > 8 mm) + ({d} > 10 mm) + ({d} > 12 mm) + ({d} > 17 mm) + ({d} > 22 mm) + ({d} > 30 mm)" \
           " + ({d} > 38 mm) + ({d} > 44 mm)"
-# ISO 15 deep-groove ball bearings, series 60 and 62: bore d, outside diameter D and width B.
-BEARINGS = [("00", 10, 26, 8, 30, 9), ("01", 12, 28, 8, 32, 10), ("02", 15, 32, 9, 35, 11), ("03", 17, 35, 10, 40, 12),
+# ISO 15 deep-groove ball bearings, series 60 and 62 (608 and 628 for 8 mm): bore d, outside diameter D and width B.
+BEARINGS = [("8", 8, 22, 7, 24, 8), ("00", 10, 26, 8, 30, 9), ("01", 12, 28, 8, 32, 10), ("02", 15, 32, 9, 35, 11), ("03", 17, 35, 10, 40, 12),
             ("04", 20, 42, 12, 47, 14), ("05", 25, 47, 12, 52, 15), ("06", 30, 55, 13, 62, 16)]
-# The bearing row under a gear seat: the largest bore below the seat (a seat of 17 mm or more may take
-# a bearing of its own diameter, the gears then going on from the other end).
-BRG_ROW = "1 + ({s} >= 14 mm) + ({s} >= 17 mm) + ({s} >= 19 mm) + ({s} >= 22 mm) + ({s} >= 27 mm) + ({s} >= 32 mm)"
+# The bearing row under a gear seat: the largest bore smaller than the seat, so the shaft always steps
+# down from the gear seat to the bearing seat.
+BRG_ROW = " + ".join("({s} > %d mm)" % r[1] for r in BEARINGS)
 # Standard shaft diameters the gear seats are chosen from, with the hub keyway depth t2 of each.
 SHAFTS = [10, 12, 15, 17, 20, 25, 30, 35, 40]
 
 
 def brg_row(d):
-    return 1 + sum(d >= x for x in (14, 17, 19, 22, 27, 32))
+    return sum(d > r[1] for r in BEARINGS)
 
 
 def t2_of(d):
@@ -93,8 +93,8 @@ cmd("table.set", name="steps", columns=["step"], rows=[["same as stage 1"], ["on
 
 for name, expr in (
         # public inputs
-        ("i_total", "10"), ("z_1", "18"), ("z_3", "17"), ("mi_1", str(DEFAULT_MODULE)), ("up_2", "3"),
-        ("b_1", "14 mm"), ("b_3", "20 mm"), ("ser", "2"), ("c_w", "5 mm"), ("t_w", "6 mm"), ("theta_in", "0 deg"),
+        ("i_total", "10"), ("teeth1", "18"), ("teeth3", "17"), ("mi_1", str(DEFAULT_MODULE)), ("up_2", "3"),
+        ("width1", "14 mm"), ("width3", "20 mm"), ("ser", "2"), ("c_w", "5 mm"), ("t_w", "6 mm"), ("theta_in", "0 deg"),
         # fixed design values
         ("alpha", "20 deg"),       # ISO 53 pressure angle
         ("jt", "0.12 mm"),         # circumferential backlash per mesh, on the pitch circle
@@ -139,10 +139,34 @@ def fits(g):
     return " + ".join("(%g mm <= rf%s - rim_k * mn%s)" % (d / 2 + t2_of(d), g, g) for d in SHAFTS)
 
 
+# The teeth and widths asked for, kept where the reducer fits (see the parameters' ranges below).
+var("z_1", "max(teeth1, max(14, ceil(2 * (6.4 mm / mn_1 + rim_k + 1.25))))")
+var("b_1", "clamp(width1, max(8 mm, 5 * mn_1), 15 * mn_1)")
+var("b_3", "clamp(width3, max(8 mm, 5 * mn_3), 15 * mn_3)")
 gear_vars("_1", "mn_1", "b_1", "z_1")
 var("z_2", "round(z_1 * i_1)")
 gear_vars("_2", "mn_1", "b_1", "z_2")
 var("a12", "mn_1 * (z_1 + z_2) / 2")
+# Bounds for the second pinion, independent of it: the input shaft is at most what pinion 1 holds, the
+# intermediate one at most what wheel 2 holds and what leaves its bearing room beside the input one's.
+var("nfit_1", fits("_1"))
+var("nfit_2", fits("_2"))
+var("ji_cap1", BRG_ROW.format(s="shafts[max(1, nfit_1)].d"))
+var("brg_Dcap1", "if(ser == 1, brg[ji_cap1].D60, brg[ji_cap1].D62)")
+var("nfit_b", " + ".join("(if(ser == 1, %g mm, %g mm) / 2 + brg_Dcap1 / 2 + 2 mm <= a12)"
+                         % (BEARINGS[brg_row(d) - 1][2], BEARINGS[brg_row(d) - 1][4]) for d in SHAFTS))
+var("d_cap1", "shafts[max(1, nfit_1)].d")
+# Pinion 3 at most z3_hi teeth (it must clear the input shaft's spacer), so the shafts it sets are at most
+# what such a pinion holds.
+var("z3_hi", "min(40, floor(2 * ((a12 - d_cap1 / 2 - 4 mm) / mn_3 - 1)))")
+var("nfit_3hi", fits("_3").replace("rf_3", "(mn_3 * (z3_hi / 2 - 1.25))"))
+var("d_cap3", "shafts[min(max(1, min(min(nfit_2, nfit_3hi), nfit_b)) + 2, %d)].d" % len(SHAFTS))
+var("i_2n", "i_total * z_1 / z_2")
+# At least what holds a 10 mm shaft with its key, and enough that wheel 2 clears the output shaft's
+# collar (that shaft as large as it may be; wheel 4's teeth rounded: a quarter module).
+var("z3_lo", "max(max(14, ceil(2 * (6.4 mm / mn_3 + rim_k + 1.25))),"
+             " ceil((2 * (ra_2 + d_cap3 / 2 + 3.5 mm) / mn_3 + 0.5) / (1 + i_2n)))")
+var("z_3", "min(max(teeth3, z3_lo), z3_hi)")
 gear_vars("_3", "mn_3", "b_3", "z_3")
 var("z_4", "round(z_3 * i_total * z_1 / z_2)")
 gear_vars("_4", "mn_3", "b_3", "z_4")
@@ -151,28 +175,14 @@ var("i_actual", "z_2 / z_1 * z_4 / z_3")
 
 # Shaft diameters: the largest standard one each gear holds; the intermediate shaft the smaller of its
 # two gears', the input shaft no larger than it, the output shaft at most two sizes larger.
-for g in ("_1", "_2", "_3", "_4"):
+for g in ("_3", "_4"):
     var("nfit" + g, fits(g))
-# The intermediate shaft's bearing must also fit beside the input shaft's (as large as pinion 1 allows).
-var("ji_cap1", BRG_ROW.format(s="shafts[max(1, nfit_1)].d"))
-var("brg_Dcap1", "if(ser == 1, brg[ji_cap1].D60, brg[ji_cap1].D62)")
-var("nfit_b", " + ".join("(if(ser == 1, %g mm, %g mm) / 2 + brg_Dcap1 / 2 + 2 mm <= a12)"
-                         % (BEARINGS[brg_row(d) - 1][2], BEARINGS[brg_row(d) - 1][4], ) for d in SHAFTS))
 var("ix_s2", "max(1, min(min(nfit_2, nfit_3), nfit_b))")
 var("ix_s1", "max(1, min(nfit_1, ix_s2))")
 var("ix_s3", "max(1, min(nfit_4, ix_s2 + 2))")
 var("d_s1", "shafts[ix_s1].d")
 var("d_s2", "shafts[ix_s2].d")
 var("d_s3", "shafts[ix_s3].d")
-# The bounds the tooth ranges use, independent of z_3: the input shaft is at most what pinion 1 holds,
-# the output shaft at most two sizes over the intermediate one's bound.
-var("d_cap1", "shafts[max(1, nfit_1)].d")
-# Pinion 3 at most z3_hi teeth (it must clear the input shaft's spacer), so the shafts it sets are at most
-# what such a pinion holds.
-var("z3_hi", "min(40, floor(2 * ((a12 - d_cap1 / 2 - 4 mm) / mn_3 - 1)))")
-var("nfit_3hi", fits("_3").replace("rf_3", "(mn_3 * (z3_hi / 2 - 1.25))"))
-var("d_cap3", "shafts[min(max(1, min(min(nfit_2, nfit_3hi), nfit_b)) + 2, %d)].d" % len(SHAFTS))
-var("i_2n", "i_total * z_1 / z_2")
 
 GEAR_SHAFT = {"_1": "d_s1", "_2": "d_s2", "_3": "d_s2", "_4": "d_s3"}
 for g, d in GEAR_SHAFT.items():
@@ -492,32 +502,25 @@ cmd("assert.add", name="Pinion 3 clears the input shaft", measure="interference"
 
 # ---------------------------------------------------------------- parameters
 
-# Tooth ranges: at least 14 teeth, and enough for the smallest shaft (10 mm with its keyway) and a rim of
-# rim_k modules; pinion 3 small enough to clear the input shaft's spacer, and large enough that wheel 2
-# clears the output shaft's collar (the wheel's teeth rounded: a quarter module).
-Z1_MIN = "max(14, ceil(2 * (6.4 mm / mn_1 + rim_k + 1.25)))"
-Z3_MIN = ("max(max(14, ceil(2 * (6.4 mm / mn_3 + rim_k + 1.25))),"
-          " ceil((2 * (ra_2 + d_cap3 / 2 + 3.5 mm) / mn_3 + 0.5) / (1 + i_2n)))")
-Z3_MAX = "z3_hi"
 params = [
     dict(name="i_total", label="Target ratio", group="Ratio", order=1, min="5", max="20", step="0.5",
          description="The reduction you want, input turns per output turn. Stage 1 takes 1.1 x its square root, "
                      "stage 2 the rest; the teeth are whole, so the ratio built (i_actual) is close to it"),
-    dict(name="z_1", label="Pinion teeth, stage 1", group="Ratio", order=2, kind="integer", min=Z1_MIN, max="30",
-         description="Teeth of the input pinion; the wheel gets the ratio of stage 1 times as many. At least 14, "
-                     "and enough that the pinion holds a 10 mm shaft with its key"),
-    dict(name="z_3", label="Pinion teeth, stage 2", group="Ratio", order=3, kind="integer", min=Z3_MIN, max=Z3_MAX,
-         description="Teeth of the second pinion. The range keeps it clear of the input shaft and its wheel 2 clear "
-                     "of the output shaft"),
+    dict(name="teeth1", label="Pinion teeth, stage 1", group="Ratio", order=2, kind="integer", min="14", max="30",
+         description="Teeth of the input pinion; the wheel gets the ratio of stage 1 times as many. Raised where "
+                     "needed so the pinion holds a 10 mm shaft with its key (21 teeth at module 1, 17 at 1.5)"),
+    dict(name="teeth3", label="Pinion teeth, stage 2", group="Ratio", order=3, kind="integer", min="14", max="40",
+         description="Teeth of the second pinion, kept where it clears the input shaft and wheel 2 clears the "
+                     "output shaft (z3_lo to z3_hi)"),
     dict(name="mi_1", label="Module, stage 1", group="Gears", order=1, kind="choice", choicesFrom="iso54",
          description="Tooth size of the first stage (ISO 54): pitch diameter = module x teeth"),
     dict(name="up_2", label="Module, stage 2", group="Gears", order=2, kind="choice", choicesFrom="steps",
          description="The second stage carries more torque: the same module, or one or two sizes up the ISO 54 "
                      "series (at most 4 mm)"),
-    dict(name="b_1", label="Face width, stage 1", group="Gears", order=3, min="max(8 mm, 5 * mn_1)", max="15 * mn_1",
-         step="0.5 mm", unit="mm", description="Width of the teeth of stage 1: 5 to 15 modules (at least 8 mm)"),
-    dict(name="b_3", label="Face width, stage 2", group="Gears", order=4, min="max(8 mm, 5 * mn_3)", max="15 * mn_3",
-         step="0.5 mm", unit="mm", description="Width of the teeth of stage 2: 5 to 15 modules (at least 8 mm)"),
+    dict(name="width1", label="Face width, stage 1", group="Gears", order=3, min="8 mm", max="60 mm",
+         step="0.5 mm", unit="mm", description="Width of the teeth of stage 1, kept between 5 and 15 modules (at least 8 mm)"),
+    dict(name="width3", label="Face width, stage 2", group="Gears", order=4, min="8 mm", max="60 mm",
+         step="0.5 mm", unit="mm", description="Width of the teeth of stage 2, kept between 5 and 15 modules (at least 8 mm)"),
     dict(name="ser", label="Bearing series", group="Shafts", order=1, kind="choice", choicesFrom="series",
          description="ISO 15 deep-groove ball bearings, chosen by the shaft: 60xx light or 62xx medium"),
     dict(name="c_w", label="Gear-to-wall clearance", group="Housing", order=1, min="2 mm", max="30 mm",
