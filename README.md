@@ -24,6 +24,7 @@ standard.
 | [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style): perforated top, perforated side plates on all four edges, half-lapped ribs, optional legs and frame | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
 | [`wall-bracket`](jigs/wall-bracket/) | A shelf bracket whose plate and gusset are sized from the load by formulas, with a load limit | CC-BY-4.0 |
+| [`tuned-chimes`](jigs/tuned-chimes/) | A wind chime of tubes or a glockenspiel of bars, each cut to its note by the free-free beam formula, with holes at the nodes, a cut list and a cut sheet | CC-BY-4.0 |
 | [`gt2-pulley`](jigs/gt2-pulley/) | A GT2 (2 mm pitch) timing pulley: round, D-shaft or keyway bore, set screws with optional captive nuts, optional flanges and hub | CC-BY-SA-4.0 |
 | [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle): bore types, hub with set screws, web and lightening holes | CC-BY-4.0 |
 | [`planetary-gearbox`](jigs/planetary-gearbox/) | A planetary gear set (sun, planets, ring, carrier) with involute teeth and its assembly conditions | CC-BY-4.0 |
