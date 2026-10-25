@@ -20,6 +20,7 @@ standard.
 | [`key-tags`](jigs/key-tags/) | A sheet of key tags or name-tag blanks to laser-cut: rectangle, circle or hexagon | CC-BY-4.0 |
 | [`shelf-32mm`](jigs/shelf-32mm/) | A bookcase or wardrobe carcass on the 32 mm system (IKEA compatible): sides drilled for 5 mm shelf pins, shelves, back, plinth, cut sheets | CC-BY-4.0 |
 | [`flatpack-stool`](jigs/flatpack-stool/) | A screwless plywood stool or side table: cross-lap legs, tabs through the seat, hand-hold slot, cut sheet | CC-BY-4.0 |
+| [`sliceform`](jigs/sliceform/) | A sliceform lamp shade or sculpture: two families of laser-cut slices with half-lap slots showing a twisted vase, an ellipsoid, a saddle or a wave from its formula | CC-BY-4.0 |
 | [`joint-drawer`](jigs/joint-drawer/) | A drawer or box with through dovetails or finger joints, a bottom in a groove and a brass knob | CC-BY-4.0 |
 | [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style): perforated top, perforated side plates on all four edges, half-lapped ribs, optional legs and frame | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
