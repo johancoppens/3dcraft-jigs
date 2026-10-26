@@ -11,20 +11,20 @@ checked and exported like every other part.
 
 | Parameter | Group | Default | Range |
 |---|---|---|---|
-| Target ratio | Ratio | 10 | 5 to 20, step 0.5 |
-| Pinion teeth, stage 1 | Ratio | 18 | at least 14 and what a 10 mm shaft needs (see below) to 30 |
-| Pinion teeth, stage 2 | Ratio | 17 | `z3` min to `z3_hi` (see below), at most 40 |
-| Module, stage 1 | Gears | 1.5 mm | 1, 1.25, 1.5, 2, 2.5, 3 or 4 mm (table `iso54`) |
-| Module, stage 2 | Gears | two sizes up (2.5 mm) | the same as stage 1, one or two sizes up the table (at most 4 mm) |
-| Face width, stage 1 | Gears | 14 mm | max(8 mm, 5 modules) to 15 modules, step 0.5 mm |
-| Face width, stage 2 | Gears | 20 mm | max(8 mm, 5 modules) to 15 modules, step 0.5 mm |
-| Bearing series | Shafts | 62xx (medium) | 60xx (light) or 62xx (medium) |
-| Gear-to-wall clearance | Housing | 5 mm | 2 to 30 mm, step 0.5 mm |
-| Wall thickness | Housing | 6 mm | 3 to 20 mm, step 0.5 mm |
-| Input shaft angle | Motion | 0° | −360° to 360°, step 1°: turn the input and every gear and shaft follows |
+| Target ratio (`i_total`) | Ratio | 10 | 5 to 20, step 0.5 |
+| Pinion teeth, stage 1 (`teeth1`) | Ratio | 18 | 14 to 30; raised to what a 10 mm shaft needs (see below) |
+| Pinion teeth, stage 2 (`teeth3`) | Ratio | 17 | 14 to 40; kept between `z3_lo` and `z3_hi` (see below) |
+| Module, stage 1 (`mi_1`) | Gears | 1.5 mm | 1, 1.25, 1.5, 2, 2.5, 3 or 4 mm (table `iso54`) |
+| Module, stage 2 (`up_2`) | Gears | two sizes up (2.5 mm) | the same as stage 1, one or two sizes up the table (at most 4 mm) |
+| Face width, stage 1 (`width1`) | Gears | 14 mm | 8 to 60 mm, step 0.5 mm; kept between max(8 mm, 5 modules) and 15 modules |
+| Face width, stage 2 (`width3`) | Gears | 20 mm | 8 to 60 mm, step 0.5 mm; kept between max(8 mm, 5 modules) and 15 modules |
+| Bearing series (`ser`) | Shafts | 62xx (medium) | 60xx (light) or 62xx (medium) |
+| Gear-to-wall clearance (`c_w`) | Housing | 5 mm | 2 to 30 mm, step 0.5 mm |
+| Wall thickness (`t_w`) | Housing | 6 mm | 3 to 20 mm, step 0.5 mm |
+| Input shaft angle (`theta_in`) | Motion | 0° | −360° to 360°, step 1°: turn the input and every gear and shaft follows |
 
 At the defaults: 18 / 63 and 17 / 49 teeth, ratio 63/18 × 49/17 = 10.09 (`i_actual`), shafts of 12, 17
-and 25 mm, bearings 6200, 6203 and 6204, centre distances 60.75 and 82.5 mm.
+and 25 mm, bearings 6200, 6202 and 6204, centre distances 60.75 and 82.5 mm.
 
 **Ratio.** Stage 1 takes i1 = 1.1 √i (rounded to 0.01), stage 2 the rest: z2 = round(z1 · i1),
 z4 = round(z3 · i · z1 / z2). The teeth are whole numbers, so the ratio built is close to the target
@@ -49,9 +49,9 @@ bores are 0.01 mm over their seats (`fit_cl`, see *Limits*). Each shaft is a rev
 seat, collar, gear seat, bearing seat, with the input shaft's end out of the top and the output shaft's
 out of the bottom (30 mm each). Spacers hold the gears against the collars.
 
-**Bearings** (ISO 15 deep-groove ball bearings, series 60 and 62, bores 10 to 30 mm; table `brg`). Each
-shaft gets the bearing with the largest bore below its gear seat (a seat of 17 mm or more may take a
-bearing of its own diameter), in the end walls, 5 mm from the cavity. A bearing is drawn as an inner
+**Bearings** (ISO 15 deep-groove ball bearings, series 60 and 62, bores 8 to 30 mm; table `brg`). Each
+shaft gets the bearing with the largest bore smaller than its gear seat (608 or 628 under a 10 mm seat), so
+the shaft always steps down from the gear to the bearing, in the end walls, 5 mm from the cavity. A bearing is drawn as an inner
 and an outer ring and eight balls.
 
 **Housing.** A cast box split on the shafts' plane, its four corners along the shafts rounded (the input
@@ -60,18 +60,26 @@ bearing seats, end walls as thick as the widest bearing + 4 mm, four bolting ear
 and nuts (ISO 4032), an M12 fill plug on the rear half and a drain plug on the front half. Cast aluminium
 EN AC-42100; gears 42CrMo4, shafts C45, bearings 100Cr6.
 
-**What makes every point of the form a valid reducer.** The ranges are formulas of the other parameters,
-worked out so that a value the form allows always builds. `python3 gen.py --sweep` mirrors the formulas
-and tries every module pair, the ratio in steps of 0.1, every tooth count and both bearing series
-(1 634 680 points: none fails; a wheel has at most 163 teeth):
-- Pinion 1 has at least 14 teeth and enough for a 10 mm shaft with its key and rim:
-  z1 ≥ 2 (6.4 mm / m1 + 2.5 + 1.25) (21 teeth at 1 mm, 17 at 1.5 mm, 14 from 2 mm).
-- The second pinion's range: at most `z3_hi` (it clears the input shaft's spacer: its tip circle stays
-  1 mm off, with the largest shaft pinion 1 holds), at most 40; at least what holds a 10 mm shaft, and enough that
-  wheel 2 clears the output shaft's collar (the output shaft as large as it can be at that point).
+**What makes every point of the form a valid reducer.** The published ranges are fixed; where a value
+would not fit the gears it is kept in place by a formula (the model uses `z_1`, `z_3`, `b_1`, `b_3`,
+which `document.inspect` shows), as the `spur-gear` Jig keeps its hub. Ranges that follow the module were
+tried first, but a range check sets one choice at a time with the others at their defaults, and 18
+teeth or 14 mm are outside such ranges at other modules. The formulas:
+- Pinion 1: at least 14 teeth and enough for a 10 mm shaft with its key and a rim of 2.5 modules:
+  z1 ≥ 2 (6.4 mm / m1 + 2.5 + 1.25) (21 teeth at 1 mm, 18 at 1.25 mm, 17 at 1.5 mm, 14 from 2 mm).
+- Pinion 3: at most `z3_hi` (its tip stays 1 mm off the input shaft's spacer, with the largest shaft
+  pinion 1 holds) and 40; at least `z3_lo`: what holds a 10 mm shaft, and enough that wheel 2 clears the
+  output shaft's collar (that shaft as large as it may be at that point).
 - Stage 2's module is never smaller than stage 1's (it carries more torque, and a smaller one would put
   wheel 2 into the output shaft).
-- The face width is at least 8 mm so the longest key (12 mm wide, 40 mm shaft) fits its seat.
+- Face widths between 5 and 15 modules and at least 8 mm, so the longest key (12 mm wide, 40 mm shaft)
+  fits its seat.
+
+`python3 gen.py --sweep` mirrors these formulas and tries every module pair, the ratio in steps of 0.1,
+every tooth count the formulas let through and both bearing series against the conditions they are made
+for (no gear without a shaft, no keyway through a hub or rim, pinion 3, wheel 2 and wheel 4 clear of the
+other shafts, bearing seats apart, every key fits its seat, the housing's end no wider than the
+housing): 1 634 388 points, none failing; a wheel has at most 163 teeth.
 
 **Checked by assertions** (22, at every regeneration):
 - per gear: its key does not interfere with the gear or the shaft; the gear does not interfere with its
@@ -103,7 +111,7 @@ CHECKED_RESULTS
 Jig's chained pattern) instead of cutting each tooth space with a boolean, which makes a regeneration
 several times lighter; the root has the radial foot of `spur-gear` instead of a root fillet of 0.38
 modules. The shaft diameters (12, 17 and 25 mm there) follow the gears; the housing's ends grow with the
-bearings; the bolting ears overlap the walls by 4 mm; a pinion-3 assertion was added; the modules run
+bearings; the bolting ears reach through the wall to 0.5 mm short of the cavity; a pinion-3 assertion was added; the modules run
 from 1 to 4 mm (0.5 to 8 mm there), the ratio from 5 to 20 (4 to 30 there), the second module is chosen
 relative to the first, and the tooth and width ranges are formulas (see above).
 

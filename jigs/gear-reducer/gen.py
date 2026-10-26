@@ -380,8 +380,10 @@ var("zE2", "z_h_hi - 10 mm")
 prev = "H_shell"
 ears = [("xL", "zE1"), ("xL", "zE2"), ("xR", "zE1"), ("xR", "zE2")]
 for i, (x, z) in enumerate(ears):
-    lo = "%s - 8 mm" % x if x == "xL" else "%s - 12 mm" % x
-    cmd("feature.block", size=["20 mm", "24 mm", "16 mm"], position=[lo, "-12 mm", "%s - 8 mm" % z], name="Ear%d" % i)
+    # From 8 mm past the bolt to 0.5 mm short of the cavity: into the wall, never into the cavity.
+    lo = "%s - 8 mm" % x if x == "xL" else "xi_hi + 0.5 mm"
+    cmd("feature.block", size=["t_w + 15.5 mm", "24 mm", "16 mm"], position=[lo, "-12 mm", "%s - 8 mm" % z],
+        name="Ear%d" % i)
     cmd("feature.boolean", op="union", target=prev, tool="Ear%d" % i, name="H_e%d" % i)
     prev = "H_e%d" % i
 cut = []
