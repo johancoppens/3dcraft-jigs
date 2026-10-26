@@ -16,7 +16,7 @@ import sys
 
 # ---------------------------------------------------------------- data
 
-# ISO 54 modules (first and second series, the range this Jig offers).
+# ISO 54 modules (first series only, 1 to 4 mm: the range this Jig offers).
 MODULES = [("1 mm", 1), ("1.25 mm", 1.25), ("1.5 mm", 1.5), ("2 mm", 2), ("2.5 mm", 2.5), ("3 mm", 3), ("4 mm", 4)]
 DEFAULT_MODULE = 3  # 1.5 mm
 # DIN 6885-1 form A parallel keys by shaft diameter: width b, height h, depth in the shaft t1, in the hub t2.
@@ -99,7 +99,7 @@ for name, expr in (
         ("alpha", "20 deg"),       # ISO 53 pressure angle
         ("jt", "0.12 mm"),         # circumferential backlash per mesh, on the pitch circle
         ("hub_l", "10 mm"),        # hub length of every gear
-        ("s_gap", "5 mm"),         # bearing to cavity
+        ("s_gap", "max(5 mm, c_w)"),  # gears to the end walls (at least c_w, as round them)
         ("st_gap", "4 mm"),        # between the stages along the shafts
         ("ext_len", "30 mm"),      # input and output shaft ends outside the housing
         ("fit_cl", "0.01 mm"),     # radial fit of bores, keys and seats (makes the touching pairs decidable)
@@ -491,8 +491,8 @@ moving = gears + ["Shaft_s1", "Shaft_s2", "Shaft_s3", "FeatherKey_1", "FeatherKe
                   "Spacer_s1", "Spacer_s2a", "Spacer_s2b", "Spacer_s3"]
 cmd("assert.add", name="Moving parts clear the housing", measure="interference", of=["HousingTop", "HousingBottom"],
     to=moving, **{"is": True})
-cmd("assert.add", name="Gear-to-housing clearance >= c_w", measure="clearance", to=["HousingTop", "HousingBottom"],
-    min="min(c_w, s_gap) - 0.1 mm", **{"from": gears})
+cmd("assert.add", name="Gears clear the housing by c_w - 0.1 mm (round and along the shafts)", measure="clearance",
+    to=["HousingTop", "HousingBottom"], min="c_w - 0.1 mm", **{"from": gears})
 cmd("assert.add", name="Bearings seated in housing", measure="clearance", to=["HousingTop", "HousingBottom"],
     max="0.02 mm", **{"from": ["BearingA_s1", "BearingB_s1", "BearingA_s2", "BearingB_s2", "BearingA_s3", "BearingB_s3"]})
 cmd("assert.add", name="Wheel 2 clears the output shaft", measure="interference", of="Gear_2",
@@ -509,24 +509,28 @@ params = [
          description="The reduction you want, input turns per output turn. Stage 1 takes 1.1 x its square root, "
                      "stage 2 the rest; the teeth are whole, so the ratio built (i_actual) is close to it"),
     dict(name="teeth1", label="Pinion teeth, stage 1", group="Ratio", order=2, kind="integer", min="14", max="30",
-         description="Teeth of the input pinion; the wheel gets the ratio of stage 1 times as many. Raised where "
-                     "needed so the pinion holds a 10 mm shaft with its key (21 teeth at module 1, 17 at 1.5)"),
+         description="Teeth of the input pinion; the wheel gets the ratio of stage 1 times as many. The model raises "
+                     "it where needed so the pinion holds a 10 mm shaft with its key: at least 21 teeth at module 1, "
+                     "18 at 1.25, 17 at 1.5, 14 from 2 (the value used is z_1)"),
     dict(name="teeth3", label="Pinion teeth, stage 2", group="Ratio", order=3, kind="integer", min="14", max="40",
-         description="Teeth of the second pinion, kept where it clears the input shaft and wheel 2 clears the "
-                     "output shaft (z3_lo to z3_hi)"),
+         description="Teeth of the second pinion. The model raises or lowers it so the pinion clears the input shaft "
+                     "and wheel 2 clears the output shaft (z3_lo to z3_hi; the value used is z_3): at least 20 to 31 "
+                     "teeth when both stages have the same module, 14 to 22 with stage 2 two sizes up"),
     dict(name="mi_1", label="Module, stage 1", group="Gears", order=1, kind="choice", choicesFrom="iso54",
          description="Tooth size of the first stage (ISO 54): pitch diameter = module x teeth"),
     dict(name="up_2", label="Module, stage 2", group="Gears", order=2, kind="choice", choicesFrom="steps",
          description="The second stage carries more torque: the same module, or one or two sizes up the ISO 54 "
                      "series (at most 4 mm)"),
     dict(name="width1", label="Face width, stage 1", group="Gears", order=3, min="8 mm", max="60 mm",
-         step="0.5 mm", unit="mm", description="Width of the teeth of stage 1, kept between 5 and 15 modules (at least 8 mm)"),
+         step="0.5 mm", unit="mm", description="Width of the teeth of stage 1. The model keeps it between 5 and 15 modules and at least 8 mm "
+                     "(8 to 22.5 mm at module 1.5; the value used is b_1)"),
     dict(name="width3", label="Face width, stage 2", group="Gears", order=4, min="8 mm", max="60 mm",
-         step="0.5 mm", unit="mm", description="Width of the teeth of stage 2, kept between 5 and 15 modules (at least 8 mm)"),
+         step="0.5 mm", unit="mm", description="Width of the teeth of stage 2. The model keeps it between 5 and 15 modules and at least 8 mm "
+                     "(12.5 to 37.5 mm at module 2.5; the value used is b_3)"),
     dict(name="ser", label="Bearing series", group="Shafts", order=1, kind="choice", choicesFrom="series",
          description="ISO 15 deep-groove ball bearings, chosen by the shaft: 60xx light or 62xx medium"),
     dict(name="c_w", label="Gear-to-wall clearance", group="Housing", order=1, min="2 mm", max="30 mm",
-         step="0.5 mm", unit="mm", description="Room between the gears' tips and the housing wall"),
+         step="0.5 mm", unit="mm", description="Room between the gears and the housing: round their tips and along the shafts"),
     dict(name="t_w", label="Wall thickness", group="Housing", order=2, min="3 mm", max="20 mm", step="0.5 mm",
          unit="mm", description="Wall of the cast housing"),
     dict(name="theta_in", label="Input shaft angle", group="Motion", order=1, min="-360 deg", max="360 deg",
@@ -630,6 +634,47 @@ def sweep():
     return not bad
 
 
+def table():
+    """python3 gen.py --table: what each stage-1 module allows (the README's table), with the formulas of
+    the model: the least pinion-1 teeth, the face width, and the pinion-3 teeth z3_lo to z3_hi for teeth1 =
+    18 (raised where needed) and 62xx bearings, at ratios 5, 10 and 20, for each choice of stage 2."""
+    def nfit(rf, mn):
+        return sum(d / 2 + t2_of(d) <= rf - 2.5 * mn for d in SHAFTS)
+
+    def bearing_D(d):
+        return BEARINGS[brg_row(d) - 1][4]
+
+    print("| Module 1 | Pinion 1 teeth from | Face width 1 | Pinion 3 teeth (z3_lo-z3_hi) at ratio 5 / 10 / 20: "
+          "same module | one size up | two sizes up |")
+    print("|---|---|---|---|---|---|")
+    for mi1 in range(1, len(MODULES) + 1):
+        m1 = MODULES[mi1 - 1][1]
+        z1 = max(18, 14, math.ceil(2 * (6.4 / m1 + 3.75)))
+        z1min = max(14, math.ceil(2 * (6.4 / m1 + 3.75)))
+        cells = []
+        for up in (1, 2, 3):
+            m3 = MODULES[min(mi1 + up - 1, len(MODULES)) - 1][1]
+            rng = []
+            for it in (5, 10, 20):
+                i1 = round(1.1 * math.sqrt(it), 2)
+                z2 = math.floor(z1 * i1 + 0.5)
+                a12 = m1 * (z1 + z2) / 2
+                n1, n2 = nfit(m1 * (z1 / 2 - 1.25), m1), nfit(m1 * (z2 / 2 - 1.25), m1)
+                dcap1 = SHAFTS[max(1, n1) - 1]
+                z3hi = min(40, math.floor(2 * ((a12 - dcap1 / 2 - 4) / m3 - 1)))
+                n3hi = nfit(m3 * (z3hi / 2 - 1.25), m3)
+                nb = sum(bearing_D(d) / 2 + bearing_D(dcap1) / 2 + 2 <= a12 for d in SHAFTS)
+                dcap3 = SHAFTS[min(max(1, min(n2, n3hi, nb)) + 2, len(SHAFTS)) - 1]
+                z3lo = max(14, math.ceil(2 * (6.4 / m3 + 3.75)),
+                           math.ceil((2 * (m1 * (z2 / 2 + 1) + dcap3 / 2 + 3.5) / m3 + 0.5) / (1 + it * z1 / z2)))
+                rng.append("%d-%d" % (z3lo, z3hi))
+            cells.append(" / ".join(rng) + " (%g mm)" % m3)
+        print("| %g mm | %d | %g to %g mm | %s |" % (m1, z1min, max(8, 5 * m1), 15 * m1, " | ".join(cells)))
+
+
+if "--table" in sys.argv:
+    table()
+    sys.exit(0)
 if "--sweep" in sys.argv:
     sys.exit(0 if sweep() else 1)
 print("[\n" + ",\n".join(json.dumps(s) for s in steps) + "\n]")

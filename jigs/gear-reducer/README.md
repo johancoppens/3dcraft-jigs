@@ -39,6 +39,17 @@ with an even number of teeth is turned half a pitch so a space faces its pinion'
 turns pinion 1, and each gear follows by its ratio. Every gear has a hub of 10 mm (diameter
 min(2 d + 6 mm, root diameter − 2 modules)).
 
+**Undercut.** Pinions of 14 to 16 teeth without profile shift are undercut when they are hobbed with the
+ISO 53 rack (the theoretical limit is 17 teeth at 20°). The radial foot drawn below the base circle is
+not a manufactured root, and its sharp corner at the root circle is a stress raiser. A real 14 to 16
+tooth pinion needs a profile shift x ≥ (17 − z) / 17 or accepts a slight undercut. The mating tip clears
+the drawn foot with the 0.12 mm backlash: the mesh interference assertions hold at every checked point,
+and a review simulated the meshes through a pitch without contact.
+
+**No load rating.** The sizes follow from geometry only: modules, shaft seats, keys and bearings are
+chosen so the parts fit, not from a torque. There is no tooth strength calculation (ISO 6336), no shaft
+torsion or bending check and no bearing life; size a real reducer for its load before making it.
+
 **Shafts and keys.** The gear seats are standard diameters (10, 12, 15, 17, 20, 25, 30, 35, 40 mm; table
 `shafts`): each gear holds the largest one whose DIN 6885 hub keyway leaves a rim of 2.5 modules under
 the teeth. The intermediate shaft takes the smaller of its two gears' and no more than leaves room for
@@ -51,18 +62,21 @@ out of the bottom (30 mm each). Spacers hold the gears against the collars.
 
 **Bearings** (ISO 15 deep-groove ball bearings, series 60 and 62, bores 8 to 30 mm; table `brg`). Each
 shaft gets the bearing with the largest bore smaller than its gear seat (608 or 628 under a 10 mm seat), so
-the shaft always steps down from the gear to the bearing, in the end walls, 5 mm from the cavity. A bearing is drawn as an inner
-and an outer ring and eight balls.
+the shaft always steps down from the gear to the bearing, in the end walls,
+max(5 mm, c_w) from the cavity. A bearing is drawn as an inner and an outer ring and eight balls.
 
 **Housing.** A cast box split on the shafts' plane, its four corners along the shafts rounded (the input
-end round about the input shaft), the cavity `c_w` round every gear's tip and at least as wide as the
-bearing seats, end walls as thick as the widest bearing + 4 mm, four bolting ears with M6 bolts (ISO 4017)
+end round about the input shaft), the cavity `c_w` round every gear's tip and along the shafts (at least 5 mm there), and at least as wide
+as the bearing seats, end walls as thick as the widest bearing + 4 mm, four bolting ears with M6 bolts (ISO 4017)
 and nuts (ISO 4032), an M12 fill plug on the rear half and a drain plug on the front half. Cast aluminium
 EN AC-42100; gears 42CrMo4, shafts C45, bearings 100Cr6.
 
 **What makes every point of the form a valid reducer.** The published ranges are fixed; where a value
-would not fit the gears it is kept in place by a formula (the model uses `z_1`, `z_3`, `b_1`, `b_3`,
-which `document.inspect` shows), as the `spur-gear` Jig keeps its hub. Ranges that follow the module were
+would not fit the gears, the model moves it, as the `spur-gear` Jig keeps its hub. **The form shows the
+value you set, not the value used:** `document.inspect` (or the variables in the window) shows what the
+model uses: `z_1`, `z_3` (pinion teeth), `z_2`, `z_4` (wheel teeth), `b_1`, `b_3` (face widths) and
+`i_actual` (the ratio built). At module 1 and ratio 20, for example, teeth3 14 becomes 30, teeth1 14
+becomes 21 and width3 60 mm becomes 15 mm. Ranges that follow the module were
 tried first, but a range check sets one choice at a time with the others at their defaults, and 18
 teeth or 14 mm are outside such ranges at other modules. The formulas:
 - Pinion 1: at least 14 teeth and enough for a 10 mm shaft with its key and a rim of 2.5 modules:
@@ -74,6 +88,19 @@ teeth or 14 mm are outside such ranges at other modules. The formulas:
   wheel 2 into the output shaft).
 - Face widths between 5 and 15 modules and at least 8 mm, so the longest key (12 mm wide, 40 mm shaft)
   fits its seat.
+
+What each stage-1 module allows (`python3 gen.py --table`; pinion 3 for teeth1 = 18, raised where
+needed, and 62xx bearings; the stage-2 module in brackets):
+
+| Module 1 | Pinion 1 teeth from | Face width 1 | Pinion 3 teeth (z3_lo-z3_hi) at ratio 5 / 10 / 20: same module | one size up | two sizes up |
+|---|---|---|---|---|---|
+| 1 mm | 21 | 8 to 15 mm | 31-40 / 31-40 / 30-40 (1 mm) | 25-40 / 26-40 / 25-40 (1.25 mm) | 21-34 / 22-40 / 21-40 (1.5 mm) |
+| 1.25 mm | 18 | 8 to 18.75 mm | 27-40 / 27-40 / 26-40 (1.25 mm) | 22-37 / 23-40 / 22-40 (1.5 mm) | 17-27 / 17-39 / 17-40 (2 mm) |
+| 1.5 mm | 17 | 8 to 22.5 mm | 26-40 / 26-40 / 25-40 (1.5 mm) | 20-34 / 19-40 / 19-40 (2 mm) | 16-27 / 16-38 / 15-40 (2.5 mm) |
+| 2 mm | 14 | 10 to 30 mm | 23-40 / 24-40 / 23-40 (2 mm) | 19-38 / 19-40 / 19-40 (2.5 mm) | 16-31 / 16-40 / 16-40 (3 mm) |
+| 2.5 mm | 14 | 12.5 to 37.5 mm | 22-40 / 22-40 / 22-40 (2.5 mm) | 18-40 / 19-40 / 19-40 (3 mm) | 14-29 / 14-40 / 14-40 (4 mm) |
+| 3 mm | 14 | 15 to 45 mm | 21-40 / 22-40 / 22-40 (3 mm) | 16-37 / 16-40 / 16-40 (4 mm) | 16-37 / 16-40 / 16-40 (4 mm) |
+| 4 mm | 14 | 20 to 60 mm | 20-40 / 21-40 / 21-40 (4 mm) | 20-40 / 21-40 / 21-40 (4 mm) | 20-40 / 21-40 / 21-40 (4 mm) |
 
 `python3 gen.py --sweep` mirrors these formulas and tries every module pair, the ratio in steps of 0.1,
 every tooth count the formulas let through and both bearing series against the conditions they are made
@@ -88,8 +115,9 @@ housing): 1 634 388 points, none failing; a wheel has at most 163 teeth.
 - stage 1 and stage 2 mesh without interference; the gears of different stages stay apart;
 - stage 1 and stage 2 flank clearance between 0.3 and 0.7 of jn (half the normal backlash at the line of
   action is the expected value);
-- the moving parts (gears, shafts, keys, spacers) do not interfere with the housing; gear-to-housing
-  clearance at least min(c_w, 5 mm) − 0.1 mm; every bearing seated in the housing (at most 0.02 mm);
+- the moving parts (gears, shafts, keys, spacers) do not interfere with the housing; the gears clear
+  the housing by at least c_w − 0.1 mm, round their tips and along the shafts (the end walls are
+  max(5 mm, c_w) away); every bearing seated in the housing (at most 0.02 mm);
 - wheel 2 clears the output shaft, wheel 4 the input shaft, pinion 3 the input shaft and its spacer.
 
 **Checked over the range** (3DCraft `main` at 3faaaea0, seed 1, `MALLOC_ARENA_MAX=2`): the points of
@@ -98,12 +126,12 @@ choices, the defaults) and 26 of 26 with the 16 random points; with `--deep`, 30
 choices, 4 random). A regeneration takes 2.3 to 2.6 s (median), at most about 7 s; a point with its 22
 assertions about a minute (the two flank clearances take most of it); a run peaks at 1.9 GB. The
 three *notProven* clearances are warnings at every point (see *Limits*). The corner run found a real
-fault on the way: with a 3 mm wall the bolting ears reached 1 mm into the cavity (the gear-to-housing
-clearance failed), fixed.
+fault on the way: with a 3 mm wall the bolting ears reached 1 mm into the cavity (the gears' clearance
+to the housing failed), fixed.
 
 **Limits of 3DCraft today** (found in the test drive; the Jig works within them):
 - A clearance between spline faces (the involute flanks) is found but not proven: the two flank
-  clearance assertions and the gear-to-housing clearance report *notProven* (a warning, never passed),
+  clearance assertions and the gears' clearance to the housing report *notProven* (a warning, never passed),
   with the value found (0.0564 mm for jn / 2 = 0.0564 mm at the defaults: as designed). `check-range`
   counts a point with a *notProven* assertion as passing (only failed assertions and assertions in error
   fail a point), so the assertions are kept as they are.
@@ -125,8 +153,10 @@ clearance failed), fixed.
   its gear seat (there a 17 mm seat took a 17 mm bearing, a step of no length in the shaft's profile,
   which fails once the values move); 608/628 bearings were added for a 10 mm seat.
 - The housing's ends grow with the bearings; the bolting ears reach through the wall to 0.5 mm short of
-  the cavity (with a thin wall they reached into it, found by the gear-to-housing assertion).
+  the cavity (with a thin wall they reached into it, found by the gears' clearance assertion).
 - An assertion was added: pinion 3 clears the input shaft and its spacer.
+- The room between the gears and the end walls is max(5 mm, c_w) (5 mm there), so the gears' clearance
+  assertion checks c_w itself (it checked min(c_w, 5 mm) − 0.1 mm there).
 - Narrowed: modules 1 to 4 mm (0.5 to 8 mm there), ratio 5 to 20 (4 to 30 there), input angle ±360°
   (±720° there); stage 2's module is chosen relative to stage 1's; the teeth and face widths are kept in
   place by formulas (above). The public inputs are `teeth1`, `teeth3`, `width1`, `width3` (`z_1`, `z_3`,
