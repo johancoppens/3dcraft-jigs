@@ -10,10 +10,10 @@ crank is one year; set the date and every ball moves to where its gears put it. 
 | Planets | Planets | Mercury to Saturn | Mercury to Earth, to Mars, to Jupiter or to Saturn (table `planetSets`) |
 | Moon | Planets | on | on / off |
 | Accuracy target | Gear trains | 0.03 % (300 ppm) | 0.5 %, 0.1 %, 0.05 % or 0.03 % (table `targets`) |
-| Most teeth per gear | Gear trains | 120 | `zLeast` (60 to 120: the least that meets the target, see below) to 120, step 10 |
+| Most teeth per gear | Gear trains | 120 | `zLeast` (60 to 120: the least that meets the target, see below) to 120, step 10; 120 is the least for Mercury to Saturn with the Moon at 0.03 % |
 | Module | Gear trains | 1 mm | 1, 1.25, 1.5 or 2 mm |
 | Gears made by | Gear trains | 3D printed (4 mm) | 3D printed, laser-cut acrylic 3 mm, laser-cut plywood 4 mm |
-| Mercury's arm | Arms | 60 mm | Sun + Mercury + 2 mm to 90 mm, step 1 mm |
+| Mercury's arm (at module 1) | Arms | 60 mm | Sun + Mercury + 2 mm to 90 mm, step 1 mm; scaled by the module, as the gearbox is |
 | Gap between orbits | Arms | 14 mm | 3 to 20 mm, step 0.5 mm |
 | Ball size | Arms | 1.4 | 0.6 to 1.8 (the Sun 24 mm across at 1) |
 | Days since 1 Jan 2000 | Crank | 0 | −36525 to 36525 (1900 to 2100), step 1 day |
@@ -92,7 +92,17 @@ tooth sum, S12 or S2, and the centre distances are `module · S12 / 2` and `modu
 keep the sense of rotation: every tube turns with the crank. The distance L1 to C is free; it is the
 least at which every A clears the tubes and every D clears L1 (and at most a right angle at L2), so the
 triangle closes. Each tube stands on the gear of the tube inside it (Mercury's on the base plate), a
-steel washer under each compound on L2.
+steel washer under each compound on L2. Put a thin washer (PTFE or brass, or a drop of grease) where a
+tube stands on the gear below it: the two turn at different speeds.
+
+**The frame.** The gears sit between two plates of the same outline: the base plate and a bridge plate
+1 mm above the top layer of gears, on four pillars at the corners, 8 mm outside the box of every gear's
+tip circle (so clear of the gears whatever the trains). The input shaft runs in a hole of both plates
+(0.25 mm clearance), the lay shaft is fitted in both, the centre post in the base plate, and the
+bridge's hole holds the outermost tube with running clearance, and through it every tube inside it and
+the post. Every shaft is so held at both ends: a single 6 mm plate would let the input shaft tilt about
+5° in its clearance, and the top gears, up to 70 mm higher, would walk out of mesh. The crank sits on
+the bridge; the arms start 40 mm above its knob, so a hand on it stays clear of them.
 
 **The search** (`trains.py`, run by `gen.py`; Python, deterministic). For each choice of planets, Moon,
 most teeth (60 to 120 in steps of 10) and accuracy target it tries the tooth sums S12 and S2 from the
@@ -131,9 +141,14 @@ Gc, the sleeve keeps the Moon tube's own turn as the arm goes round (parallel mo
 on top of it points at the Moon's mean longitude. The Earth's orbit radius is rounded to what the idlers
 reach: module × (Gc + idlers × idler teeth).
 
-**The arms.** Above the gears the tubes end in arms, the outermost tube (Saturn) lowest, each 3 mm thick
-and 7 mm wide, with a pin up to its ball; all balls (and the Sun, on the centre post) at one height. Each
-orbit radius is the one inside it plus both bodies' reach (ball, arm end, Saturn's ring at 2.2 radii,
+**The arms.** Above the gears the tubes end in arms, the outermost tube (Saturn) lowest, each 7 mm wide,
+with a pin up to its ball. A bar sags under its own weight by 3 ρ g L⁴ / (2 E h²) (L its length, h its
+depth), so each arm is 3 mm · (L / 120 mm)² deep, 3 to 12 mm: every arm then sags about as little as a
+3 mm arm of 120 mm, 0.12 mm in PLA (E ≈ 3.5 GPa, ρ ≈ 1.24 g/cm³), and the balls add about as much. At
+the defaults Mercury's to the Earth's arms are 3 mm deep, Mars's 5, Jupiter's 7 and Saturn's 11 mm; a
+3 mm Saturn arm of 230 mm would sag about 1.6 mm by itself and some 6 mm more under its ball.
+All balls (and the Sun, on the centre post) sit at one height; all balls (and the Sun, on the centre post) at one height. Each
+orbit radius is the one inside it plus both bodies' reach (ball, arm end, Saturn's ring at 1.8 radii,
 the Earth's Moon and Moon gears) plus the **gap between orbits**. An arm is always lower than the arms
 inside it and shorter than the orbits outside it, so nothing of one orbit can meet anything of another
 at any angle.
@@ -148,30 +163,39 @@ of the flank the arc lies within 0.041 module inside the involute and at most 0.
 (`python3 gen.py --flank`), well within the 0.0375 mm a flank is thinned and below what a printer or a
 laser holds. Why: see *Limits of 3DCraft* below.
 
+**Colours.** Input and tube gears brass, the lay shaft's compounds (and their spacers) copper, the
+shafts and washers steel, the plates walnut, the planets in the Jigs palette.
+
 **Sizes.** The centre post and both spindles are 4 mm rods; tubes have 1.2 mm walls with 0.25 mm
 clearance (the 7th is 24.3 mm across); gears fixed on a rod or tube have a 0.01 mm gap there (glue);
-loose bores 0.25 mm. Layers of gears 1 mm apart (washers). The base plate (6 mm, walnut) is the gears'
-outline plus 6 mm, with corners of 10 mm radius.
+loose bores 0.25 mm. Layers of gears 1 mm apart (washers). The plates (6 mm) are the box of the gears'
+tip circles plus 16 mm, with corners of 10 mm radius; the pillars 10 mm across.
 
 ## Making it
 
-Print or cut: every gear (A, B, C, D of each body; with the Moon Gc, the idlers and Gp), the spacers and
+Print or cut: the bridge plate and four pillars, every gear (A, B, C, D of each body; with the Moon Gc, the idlers and Gp), the spacers and
 washers, the tubes, the arms with their pins, the Moon's carrier, the balls, the Sun, the base plate;
-4 mm steel or brass rod for the centre post and both spindles. For laser-cut gears, the named face set
-**Cut sheet** holds every gear's outline and the base plate:
-`file.export {"path": "orrery.svg", "set": "Cut sheet", "width": "600 mm"}` (its kerf is not
+4 mm steel or brass rod for the centre post and both spindles. For laser-cut gears there are two named
+face sets, one per sheet thickness: **Cut sheet: gears** (every gear's outline) and **Cut sheet:
+plates** (the base and bridge plates, 6 mm):
+`file.export {"path": "gears.svg", "set": "Cut sheet: gears", "width": "600 mm"}`. In the SVG or DXF
+each gear is on a layer of its own named after it (`A_Me`, `B_Me`, … `D_Sa`, `Gc`, `Idler1`, `Gp`), so
+you can tell them apart; engrave the name or mark each gear as you take it off the bed (its kerf is not
 compensated: the backlash takes about 0.15 mm; check a pair before cutting them all). Print the tubes
 upright; a thin tube prints better slowly or in PETG. Brass telescoping tubing works too, if you change
 the tube sizes to its steps.
 
 Assembly, from the bottom:
-1. Glue the centre post and the lay shaft into the base plate; the input shaft turns freely in its hole.
+1. Glue the centre post, the lay shaft and the four pillars into (onto) the base plate; the input shaft
+   turns freely in its hole.
 2. Glue every A gear onto the input shaft at its height (layer by layer, a spacer block of the layer
    pitch helps), and the crank on top.
 3. Per body, from Mercury out: slide its washer and compound (B, spacer, C glued, all the same way up)
    onto the lay shaft; slide its tube with D glued at the bottom over the tube inside it, so that D sits
    in the layer of its C. Turn the crank a little after each one: it must still run freely.
-4. With the Moon: glue Gc onto the Moon's tube top.
+4. Put the bridge plate on the pillars over the lay shaft, the input shaft and the outermost tube; screw
+   or glue it to the pillars. Glue the crank onto the input shaft above it. With the Moon: glue Gc onto
+   the Moon's tube top.
 5. Set the crank so its day counter is 0 (or turn on to today), then glue each arm onto its tube pointing
    at the body's mean longitude for that day (the open model shows the angles: `th_Me`, …; the Moon's
    `thMo`). Mount the idlers and the Earth's sleeve with Gp and the Moon's carrier.
@@ -186,7 +210,7 @@ times, Saturn a thirtieth.
 
 ## Checked
 
-**Assertions** (50, at every regeneration):
+**Assertions** (61, at every regeneration):
 - the trains, from the tooth counts alone: every pair of a stage meshes on its shared centre distance
   (zA + zB = S12, zC + zD = S2 for every body); every body's period built (365.256 d · zB zD / (zA zC))
   within the accuracy target of its real one; every train gear has 12 to *most teeth* teeth (counts:
@@ -195,10 +219,15 @@ times, Saturn a thirtieth.
   lay-shaft gears at x = module (zC + zD) / 2, y = 0, and of the input gears at the point at module
   (zA + zB) / 2 from the lay shaft and the chosen distance from the centre (from Mercury's teeth, which
   the first assertion ties to every other train's);
-- no two parts overlap, at the current crank angle: every pair of the 70 or so bodies, in eleven groups
+- no two parts overlap, at the current crank angle: every pair of the 70 or so bodies, in thirteen groups
   (the meshing pairs, so the teeth are turned into each other's gaps, every gear against every shaft,
   tube, washer and spacer, the arms and balls against each other and everything below);
-- the tubes nest with running clearance (at least 0.4 of the 0.25 mm, see *Limits*);
+- the tubes nest with running clearance (at least 0.2 of the 0.25 mm, see *Limits*);
+- every shaft held at both ends: the input shaft within its clearance of both plates, the lay shaft
+  within its fit of both, the centre post of the base plate, the tubes of the bridge, and the shafts
+  reaching through the bridge;
+- headroom: the crank's top at least 40 mm below the lowest arm (the box of the crank against the box
+  of the arms and balls);
 - neighbouring orbits apart at every angle (each orbit's ring of reach from the next by the gap), the
   Sun clear of Mercury, the crank clear of the tubes;
 - for each body, x and y: its ball is where its gear train puts it (L0 + crank angle × zA zC / (zB zD),
@@ -210,13 +239,15 @@ The overlap of the arms is checked only at the current crank angle; that they ca
 follows from the orbits' rings (the formula assertion above), not from a measure.
 
 **Over the range** (3DCraft `main` at 3faaaea0, seed 1): `scripts/check.sh orrery` passes 92 of 92
-points (the defaults, 64 corners, 11 choices, 16 random), and so does `DEEP=1` (92 of 92). A
-regeneration takes 78 ms (median), at most 230 ms; a range check about 3.5 minutes and 160 MB. The
-first run found three faults, all fixed: the table's row order, the Moon's assertions in error with the
-Moon off, and arcs given by through points (see *Limits*). `python3 gen.py --sweep` checks every
-reachable row at every module (224 rows x 4 modules, none failing). Looked at: the default thumbnail,
-a laser-cut acrylic orrery to Mars on 26 October 2026 (Venus in inferior conjunction: its arm in line
-with the Earth's) and its cut sheet (16 gears and the base plate, 36 closed paths).
+points (the defaults, 64 corners, 11 choices, 16 random), and so does `DEEP=1` (92 of 92), with no
+assertion left *not proven*. A regeneration takes about 79 ms (median), at most 150 ms; a range check
+about 3.5 minutes and 160 MB. The checks found four faults on the way, all fixed: the table's row
+order, the Moon's assertions in error with the Moon off, arcs given by through points (see *Limits*),
+and, with the bridge, the Moon's idler pins 1 mm below the lowest arm when only the inner planets are
+built. `python3 gen.py --sweep` checks every reachable row at every module (224 rows x 4 modules, none
+failing). Looked at: the default thumbnail; a laser-cut acrylic orrery to Mars on 26 October 2026
+(Venus in inferior conjunction: its arm in line with the Earth's); the cut sheets of a plywood orrery
+at module 2 (66 closed paths of gears; the two plates, the bridge with its hole for the tubes).
 
 ## Limits of 3DCraft today
 
@@ -233,11 +264,11 @@ with the Earth's) and its cut sheet (16 gears and the base plate, 36 closed path
   given by their centres instead, worked out from the three points in variables.
 - **A parameter's range cannot look a table up** (`unknown table`); the least *most teeth* goes through
   the variable `zLeast` (repro: `repro-orrery-2.json`).
-- An overlap assertion takes at most 500 pairs of bodies: eleven assertions over named sets.
+- An overlap assertion takes at most 500 pairs of bodies: thirteen assertions over named sets.
 - An assertion whose subject is a body that is switched off is in *error*; the per-body checks measure
   the ball together with the Sun so that they always have a subject.
-- The clearance between the nested tubes is found (0.25 mm) but proven only to about 0.10 mm, so its
-  assertion asks 0.4 × clearance; that the tubes do not overlap is proven by the overlap assertion.
+- The clearance between the nested tubes is found (0.25 mm) but proven only to about 0.06 mm (the
+  longer the tubes, the less), so its assertion asks 0.2 × clearance; that the tubes do not overlap is proven by the overlap assertion.
 
 ## Sources
 

@@ -121,9 +121,10 @@ for name, expr in (
         ("rS", "%g mm" % trains.R_SHAFT), ("clr", "%g mm" % trains.CLR), ("wall", "%g mm" % trains.WALL),
         ("fit", "%g mm" % trains.FIT), ("rim", "%g mm" % trains.RIM), ("gapR", "%g mm" % trains.GAP),
         ("g", "1 mm"),                   # between layers: a washer
-        ("armT", "3 mm"), ("hw", "3.5 mm"), ("pinR", "1.5 mm"),
-        ("slot", "armT + 3 mm"),         # from one arm to the next
-        ("tPlate", "6 mm"),
+        ("RING", "1.8"),                 # Saturn's ring, in its radii
+        ("hw", "3.5 mm"), ("pinR", "1.5 mm"),
+        ("tPlate", "6 mm"),              # the base plate and the bridge plate
+        ("pillarR", "5 mm"),
         ("year", "%r" % trains.YEAR),
         # derived
         ("mn", "modules[moduleSize].value"),
@@ -172,7 +173,7 @@ def gear_vars(p, z):
         var(name + "_" + p, expr.replace("@", "_" + p))
 
 
-def gear(p, z, bore, angle, at, when=None):
+def gear(p, z, bore, angle, at, when=None, colour=None):
     """Gear p with z teeth and a bore of radius bore, its layer bottom at at = [x, y, z], turned by angle
     (its tooth 0 on +x at angle 0). Makes the body named p."""
     gear_vars(p, z)
@@ -200,7 +201,7 @@ def gear(p, z, bore, angle, at, when=None):
         tf["when"] = when
     cmd("feature.extrude", **ex)
     cmd("feature.transform", **tf)
-    look(p, BRASS, ("Brass-coloured PLA", "1.24 g/cm3"))
+    look(p, colour or BRASS, ("Brass-coloured PLA", "1.24 g/cm3"))
 
 
 for k in KEYS:
@@ -235,8 +236,8 @@ for k in KEYS:
     var("rhoC_" + k, "180 deg - zA_{k} / zB_{k} * crank".format(k=k))
     var("rhoD_" + k, "180 deg / zD_{k} - zC_{k} / zD_{k} * (rhoC_{k} - 180 deg)".format(k=k))
     gear("A_" + k, "zA_" + k, "rS + fit", "crank", ["x1", "y1", "zAB_" + k], w)
-    gear("B_" + k, "zB_" + k, "rS + clr", "rhoB_" + k, ["a2", "0 mm", "zAB_" + k], w)
-    gear("C_" + k, "zC_" + k, "rS + clr", "rhoC_" + k, ["a2", "0 mm", "zCD_" + k], w)
+    gear("B_" + k, "zB_" + k, "rS + clr", "rhoB_" + k, ["a2", "0 mm", "zAB_" + k], w, COPPER)
+    gear("C_" + k, "zC_" + k, "rS + clr", "rhoC_" + k, ["a2", "0 mm", "zCD_" + k], w, COPPER)
     gear("D_" + k, "zD_" + k, "tOut_%s + fit" % k, "rhoD_" + k, ["0 mm", "0 mm", "zCD_" + k], w)
     # B and C are glued into a compound with a spacer between them; a washer under each compound.
     for nm, r_out, z0, h in (("Spacer_", "min(mn * (zB_%s / 2 - 1.25), mn * (zC_%s / 2 - 1.25)) - 1 mm" % (k, k),
@@ -253,7 +254,7 @@ for k in KEYS:
             t["when"] = w
         cmd("feature.extrude", **p)
         cmd("feature.transform", **t)
-        look(nm + k, BRASS if nm == "Spacer_" else STEEL, ("PLA", "1.24 g/cm3"))
+        look(nm + k, COPPER if nm == "Spacer_" else STEEL, ("PLA", "1.24 g/cm3"))
 
 # ---------------------------------------------------------------- orbits and arms
 
@@ -272,10 +273,10 @@ for k in ORBITS:
     if k == "Ea":
         var("e_Ea", "max(max(R_Ea, hw), if(moon, max(ell + R_Mo, raGp), 0 mm))")
     elif k == "Sa":
-        var("e_Sa", "max(2.2 * R_Sa, hw)")
+        var("e_Sa", "max(RING * R_Sa, hw)")
     else:
         var("e_" + k, "max(R_%s, hw)" % k)
-var("rP_Me", "rIn")
+var("rP_Me", "rIn * mn / 1 mm")
 var("rP_Ve", "rP_Me + e_Me + gapO + e_Ve")
 var("rE0", "rP_Ve + e_Ve + gapO + e_Ea")
 # The idlers between them: 1, 3 or 5 equal ones in a row along the arm (an odd number, so the sleeve
@@ -290,15 +291,24 @@ var("rP_Ju", "rP_Ma + e_Ma + gapO + e_Ju")
 var("rP_Sa", "rP_Ju + e_Ju + gapO + e_Sa")
 
 # Heights: the arms from the outermost tube (lowest) in; the Moon's slot holds its gears.
-var("zArm0", "zTop + 20 mm")
+# Each arm is deeper the longer it is, so that its tip sags as little as a 3 mm arm of 120 mm does
+# (a bar's sag under its own weight grows as length^4 / depth^2): 3 to 12 mm deep.
+for k in ORBITS:
+    var("armH_" + k, "clamp(3 mm * (rP_%s / 120 mm)^2, 3 mm, 12 mm)" % k)
+# Above the gears the bridge plate (tPlate), the crank on it (hub, bar and a 14 mm knob), then the arms,
+# at least 40 mm above the knob so a hand on the crank stays clear of them.
+var("zBr", "zTop")
+var("zCrank", "zBr + tPlate + 1 mm")
+var("zKnob", "zCrank + 14 mm")
+var("zArm0", "zKnob + 40 mm")
 var("zArm_Sa", "zArm0")
-var("zArm_Ju", "zArm_Sa + on_Sa * slot")
-var("zArm_Ma", "zArm_Ju + on_Ju * slot")
-var("zArm_Mo", "zArm_Ma + on_Ma * slot")
+var("zArm_Ju", "zArm_Sa + on_Sa * (armH_Sa + 3 mm)")
+var("zArm_Ma", "zArm_Ju + on_Ju * (armH_Ju + 3 mm)")
+var("zArm_Mo", "zArm_Ma + on_Ma * (armH_Ma + 3 mm) + 1 mm")   # 1 mm for the idlers' pin ends
 var("zArm_Ea", "zArm_Mo + moon * (b + g)")
-var("zArm_Ve", "zArm_Ea + slot")
-var("zArm_Me", "zArm_Ve + slot")
-var("H", "zArm_Me + armT + 2 mm + Rsun")
+var("zArm_Ve", "zArm_Ea + armH_Ea + 3 mm")
+var("zArm_Me", "zArm_Ve + armH_Ve + 3 mm")
+var("H", "zArm_Me + armH_Me + 2 mm + Rsun")
 
 # Arm angles: each tube turns as its gear D does; the arm sits at the body's mean longitude at J2000.
 for k in KEYS:
@@ -316,36 +326,48 @@ for k in KEYS:
 var("raC", raC)
 var("raL1", raL1)
 var("raL2", raL2)
+# The box of every gear's tip circle (cb..), the plates 16 mm beyond it, a pillar at each corner 8 mm
+# outside it (so clear of every gear whatever the trains).
 for name, expr in (
-        ("bxL", "min(-raC, x1 - raL1) - 6 mm"), ("bxR", "max(a2 + raL2, x1 + raL1) + 6 mm"),
-        ("byL", "min(min(-raC, -raL2), y1 - raL1) - 6 mm"), ("byH", "max(raC, raL2) + 6 mm"),
-        ("cR", "10 mm")):
+        ("cbL", "min(-raC, x1 - raL1)"), ("cbR", "max(a2 + raL2, x1 + raL1)"),
+        ("cbB", "min(min(-raC, -raL2), y1 - raL1)"), ("cbT", "max(raC, raL2)"),
+        ("bxL", "cbL - 16 mm"), ("bxR", "cbR + 16 mm"), ("byL", "cbB - 16 mm"), ("byH", "cbT + 16 mm"),
+        ("cR", "10 mm"),
+        ("tOutN", "rS + clr + (n - 1) * (wall + clr) + wall")):    # the outermost tube
     var(name, expr)
-cmd("sketch.create", name="S_Plate", plane="xy", offset="-tPlate")
-cmd("sketch.path", sketch="S_Plate", start=["bxL + cR", "byL"], segments=[
-    {"line": ["bxR - cR", "byL"]}, {"arc": ["bxR", "byL + cR"], "center": ["bxR - cR", "byL + cR"]},
-    {"line": ["bxR", "byH - cR"]}, {"arc": ["bxR - cR", "byH"], "center": ["bxR - cR", "byH - cR"]},
-    {"line": ["bxL + cR", "byH"]}, {"arc": ["bxL", "byH - cR"], "center": ["bxL + cR", "byH - cR"]},
-    {"line": ["bxL", "byL + cR"]}, {"arc": "start", "center": ["bxL + cR", "byL + cR"]}])
-cmd("sketch.circle", sketch="S_Plate", center=["0 mm", "0 mm"], radius="rS + fit")
-cmd("sketch.circle", sketch="S_Plate", center=["a2", "0 mm"], radius="rS + fit")
-cmd("sketch.circle", sketch="S_Plate", center=["x1", "y1"], radius="rS + clr")
-cmd("feature.extrude", sketch="S_Plate", distance="tPlate", name="BasePlate")
-look("BasePlate", WALNUT, ("Walnut", "0.65 g/cm3"))
+for nm, z0, holes in (("Base", "-tPlate", [("0 mm", "0 mm", "rS + fit"), ("a2", "0 mm", "rS + fit"),
+                                           ("x1", "y1", "rS + clr")]),
+                      ("Bridge", "zBr", [("0 mm", "0 mm", "tOutN + clr"), ("a2", "0 mm", "rS + fit"),
+                                         ("x1", "y1", "rS + clr")])):
+    sk = "S_" + nm
+    cmd("sketch.create", name=sk, plane="xy", offset=z0)
+    cmd("sketch.path", sketch=sk, start=["bxL + cR", "byL"], segments=[
+        {"line": ["bxR - cR", "byL"]}, {"arc": ["bxR", "byL + cR"], "center": ["bxR - cR", "byL + cR"]},
+        {"line": ["bxR", "byH - cR"]}, {"arc": ["bxR - cR", "byH"], "center": ["bxR - cR", "byH - cR"]},
+        {"line": ["bxL + cR", "byH"]}, {"arc": ["bxL", "byH - cR"], "center": ["bxL + cR", "byH - cR"]},
+        {"line": ["bxL", "byL + cR"]}, {"arc": "start", "center": ["bxL + cR", "byL + cR"]}])
+    for hx, hy, hr in holes:
+        cmd("sketch.circle", sketch=sk, center=[hx, hy], radius=hr)
+    cmd("feature.extrude", sketch=sk, distance="tPlate", name=nm + "Plate")
+    look(nm + "Plate", WALNUT, ("Walnut", "0.65 g/cm3"))
+for i, (px, py) in enumerate((("cbL - 8 mm", "cbB - 8 mm"), ("cbR + 8 mm", "cbB - 8 mm"),
+                              ("cbR + 8 mm", "cbT + 8 mm"), ("cbL - 8 mm", "cbT + 8 mm")), start=1):
+    cmd("feature.cylinder", radius="pillarR", height="zBr - 2 * fit", position=[px, py, "fit"], name="Pillar%d" % i)
+    look("Pillar%d" % i, BRASS, ("Brass", "8.5 g/cm3"))
 
 # The centre post (fixed, up into the Sun), the lay shaft L2 (fixed), the input shaft L1 with the crank.
 cmd("feature.cylinder", radius="rS", height="H - Rsun - fit + tPlate", position=["0 mm", "0 mm", "-tPlate"],
     name="CentrePost")
 look("CentrePost", STEEL, ("Steel", "7.85 g/cm3"))
-cmd("feature.cylinder", radius="rS", height="zTop + tPlate", position=["a2", "0 mm", "-tPlate"], name="LayShaft")
+cmd("feature.cylinder", radius="rS", height="zBr + 2 * tPlate", position=["a2", "0 mm", "-tPlate"], name="LayShaft")
 look("LayShaft", STEEL, ("Steel", "7.85 g/cm3"))
 var("lcMax", "d1 - (rS + clr + (n - 1) * (wall + clr) + wall) - 4 mm")
 var("lcr", "min(22 mm, lcMax)")
-cmd("feature.cylinder", radius="rS", height="zTop + 5 mm + tPlate", position=["0 mm", "0 mm", "-tPlate"],
+cmd("feature.cylinder", radius="rS", height="zCrank + 4 mm + tPlate", position=["0 mm", "0 mm", "-tPlate"],
     name="InSpindle")
-cmd("feature.cylinder", radius="4 mm", height="4 mm", position=["0 mm", "0 mm", "zTop + 1 mm"], name="CrankHub")
-cmd("feature.block", size=["lcr", "6 mm", "4 mm"], position=["0 mm", "-3 mm", "zTop + 1 mm"], name="CrankBar")
-cmd("feature.cylinder", radius="3 mm", height="14 mm", position=["lcr", "0 mm", "zTop + 1 mm"], name="CrankKnob")
+cmd("feature.cylinder", radius="4 mm", height="4 mm", position=["0 mm", "0 mm", "zCrank"], name="CrankHub")
+cmd("feature.block", size=["lcr", "6 mm", "4 mm"], position=["0 mm", "-3 mm", "zCrank"], name="CrankBar")
+cmd("feature.cylinder", radius="3 mm", height="zKnob - zCrank", position=["lcr", "0 mm", "zCrank"], name="CrankKnob")
 cmd("feature.boolean", op="union", target="InSpindle", tool="CrankHub", name="In1")
 cmd("feature.boolean", op="union", target="In1", tool="CrankBar", name="In2")
 cmd("feature.boolean", op="union", target="In2", tool="CrankKnob", name="In3")
@@ -396,12 +418,12 @@ for k in ORBITS:
     w = None if k in ("Me", "Ve", "Ea") else "on_" + k
     W = (lambda d: dict(d, when=w)) if w else (lambda d: d)  # noqa: E731
     sk = arm(k, "tIn_" + k, "rS + clr" if k == "Ea" else None)
-    cmd("feature.extrude", **W({"sketch": sk, "distance": "armT", "name": "Arm0_" + k}))
+    cmd("feature.extrude", **W({"sketch": sk, "distance": "armH_" + k, "name": "Arm0_" + k}))
     # The pin from the arm up to fit below the ball (the Earth's fills its sleeve hole when there is no Moon).
     pin = "rS + 0.5 mm" if k == "Ea" else "pinR"
     pw = "on_Ea && !moon" if k == "Ea" else w
-    pp = {"radius": pin, "height": "H - R_%s - fit - zArm_%s - armT + 0.5 mm" % (k, k),
-          "position": ["rP_" + k, "0 mm", "armT - 0.5 mm"], "name": "Pin0_" + k}
+    pp = {"radius": pin, "height": "H - R_{k} - fit - zArm_{k} - armH_{k} + 0.5 mm".format(k=k),
+          "position": ["rP_" + k, "0 mm", "armH_%s - 0.5 mm" % k], "name": "Pin0_" + k}
     if pw:
         pp["when"] = pw
     cmd("feature.cylinder", **pp)
@@ -443,7 +465,7 @@ var("rSl", "rS")
 gear("Gp", "zc", "rSl + fit", "th_Ea + rp", ["rP_Ea * cos(th_Ea)", "rP_Ea * sin(th_Ea)", "zArm_Mo"], "moon")
 # The Earth's sleeve, from the bottom of Gp up through the arm to the Moon's arm, which carries the
 # Earth's pin and the Moon's pin; built about the origin along +x, then moved.
-var("zMA", "zArm_Ea + armT + 1 mm")
+var("zMA", "zArm_Ea + armH_Ea + 1 mm")
 cmd("feature.cylinder", radius="rSl", height="zMA - zArm_Mo + 0.5 mm", position=["0 mm", "0 mm", "zArm_Mo"],
     when="moon", name="Sleeve0")
 cmd("sketch.create", name="S_MoonArm", plane="xy", offset="zMA")
@@ -473,10 +495,10 @@ for k in ORBITS:
     if w:
         p["when"] = w
     cmd("feature.sphere", **p)
-# Saturn's ring: a disc through the ball, 0.8 mm thick, out to 2.2 radii, tilted 26.7 deg (the tilt of
+# Saturn's ring: a disc through the ball, 0.8 mm thick, out to RING radii, tilted 26.7 deg (the tilt of
 # Saturn's axis); it turns with the arm.
 cmd("sketch.create", name="S_Ring", plane="xy", offset="H - 0.4 mm")
-cmd("sketch.circle", sketch="S_Ring", center=["0 mm", "0 mm"], radius="2.2 * R_Sa")
+cmd("sketch.circle", sketch="S_Ring", center=["0 mm", "0 mm"], radius="RING * R_Sa")
 cmd("feature.extrude", sketch="S_Ring", distance="0.8 mm", when="on_Sa", name="Ring0")
 cmd("feature.transform", source="Ring0", angle="26.7 deg", axis=[1, 0, 0], pivot=["0 mm", "0 mm", "H"],
     when="on_Sa", name="Ring1")
@@ -506,9 +528,12 @@ cmd("set.define", name="Moon gears", kind="body",
     where={"any": [{"name": "Gc"}, {"name": "Idler*"}, {"name": "Gp"}, {"name": "CentrePost"}]})
 cmd("set.define", name="Tubes", kind="body", where={"any": [{"name": "CentrePost"}, {"name": "Tube_*"}]})
 cmd("set.define", name="Balls", kind="body", where={"any": [{"name": "Sun"}, {"name": "Ball_*"}]})
-# The cut sheet: every gear's outline (its underside) and the base plate, for a laser.
-cmd("set.define", name="Cut sheet", kind="face",
-    where={"any": [{"in": gname, "normal": {"along": "-z"}} for gname in GEARS + ["BasePlate"]]})
+# Cut sheets for a laser, one per thickness: every gear's outline (its underside; in the SVG or DXF each
+# is on a layer named after the gear, A_Me ...), and the two plates.
+cmd("set.define", name="Cut sheet: gears", kind="face",
+    where={"any": [{"in": gname, "normal": {"along": "-z"}} for gname in GEARS]})
+cmd("set.define", name="Cut sheet: plates", kind="face",
+    where={"any": [{"in": p, "normal": {"along": "-z"}} for p in ("BasePlate", "BridgePlate")]})
 
 # The trains, from the teeth alone (not from S12, S2 or the ratios the geometry uses).
 mesh = []
@@ -526,13 +551,13 @@ for k in KEYS:
                  "max(max(zA_{k}, zB_{k}), max(zC_{k}, zD_{k})) <= maxTeeth))".format(k=k))
 var("meshOK", " && ".join(mesh))
 var("accOK", " && ".join(accs))
-var("teethOK", " && ".join(teeth) + " && (!moon || (zc >= 12 && zI >= 12 && zc <= maxTeeth))")
+var("teethOK", " && ".join(teeth) + " && (!moon || (zc >= 12 && zI >= 12 && zc <= maxTeeth && zI <= maxTeeth))")
 gears = {"kind": "body", "where": {"set": "Gears"}}
 cmd("assert.add", name="Each stage meshes on its shafts' centre distance: zA + zB = S12, zC + zD = S2",
     measure="count", of=gears, eq="if(meshOK, nGears, 0)")
 cmd("assert.add", name="Each train's period within the accuracy target",
     measure="count", of=gears, eq="if(accOK, nGears, 0)")
-cmd("assert.add", name="Every train gear has 12 to maxTeeth teeth",
+cmd("assert.add", name="Every gear has 12 to maxTeeth teeth",
     measure="count", of=gears, eq="if(teethOK, nGears, 0)")
 # Where the gears are: on the centre post, on the lay shaft at the stage-2 centre distance, on the input
 # shaft at the stage-1 centre distance from the lay shaft (from Mercury's teeth; the check above makes
@@ -547,7 +572,9 @@ for setname, ex, ey in (("Tube gears", "0 mm", "0 mm"), ("Lay gears", "s2x", "0 
             of={"kind": "body", "where": {"set": setname}}, axis=ax, eq=e, tol="0.001 mm")
 # No two parts overlap: every pair of bodies, in groups (an overlap assertion takes at most 500 pairs).
 cmd("set.define", name="Shafts and tubes", kind="body",
-    where={"any": [{"set": "Tubes"}, {"name": "LayShaft"}, {"name": "InputShaft"}, {"name": "BasePlate"}]})
+    where={"any": [{"set": "Tubes"}, {"name": "LayShaft"}, {"name": "InputShaft"}]})
+cmd("set.define", name="Frame", kind="body",
+    where={"any": [{"name": "BasePlate"}, {"name": "BridgePlate"}, {"name": "Pillar*"}]})
 cmd("set.define", name="Washers and spacers", kind="body", where={"any": [{"name": "Washer_*"}, {"name": "Spacer_*"}]})
 cmd("set.define", name="Arms and balls", kind="body",
     where={"any": [{"name": "Arm_*"}, {"name": "MoonCarrier"}, {"set": "Balls"}]})
@@ -556,15 +583,18 @@ for label, of, to in (("train gears", "Train gears", None), ("Moon gears", "Moon
                       ("train gears and Moon gears", "Train gears", "Moon gears"),
                       ("gears and shafts or tubes", "Gears", "Shafts and tubes"),
                       ("gears and washers or spacers", "Gears", "Washers and spacers"),
-                      ("shafts, tubes, washers and spacers", None, None),
+                      ("gears and the frame", "Gears", "Frame"),
+                      ("shafts, tubes, washers, spacers and the frame", None, None),
                       ("arms and balls", "Arms and balls", None),
                       ("arms or balls and shafts or tubes", "Arms and balls", "Shafts and tubes"),
                       ("arms or balls and washers or spacers", "Arms and balls", "Washers and spacers"),
                       ("arms or balls and train gears", "Arms and balls", "Train gears"),
-                      ("arms or balls and Moon gears", "Arms and balls", "Moon gears")):
+                      ("arms or balls and Moon gears", "Arms and balls", "Moon gears"),
+                      ("arms or balls and the frame", "Arms and balls", "Frame")):
     p = {"name": "No overlap: " + label + " (at the current crank angle)", "measure": "overlap", "is": False}
     if of is None:
-        p["of"] = {"kind": "body", "where": {"any": [{"set": "Shafts and tubes"}, {"set": "Washers and spacers"}]}}
+        p["of"] = {"kind": "body", "where": {"any": [{"set": "Shafts and tubes"}, {"set": "Washers and spacers"},
+                                                     {"set": "Frame"}]}}
     else:
         p["of"] = Q(of)
     if to:
@@ -572,10 +602,28 @@ for label, of, to in (("train gears", "Train gears", None), ("Moon gears", "Moon
     cmd("assert.add", **p)
 cmd("assert.add", name="Tubes nest with running clearance", measure="clearance",
     **{"from": {"kind": "body", "where": {"set": "Tubes"}}, "to": {"kind": "body", "where": {"set": "Tubes"}}},
-    min="0.4 * clr")
+    min="0.2 * clr")
+# Every shaft held at both ends: the input shaft runs in a hole of both plates, the lay shaft and the
+# centre post are fitted in the base plate, the lay shaft in the bridge too, and the bridge's hole holds
+# the outermost tube (and with it the tubes inside it and the centre post) at the top.
+for shaft, plate, gap in (("InputShaft", "BasePlate", "clr"), ("InputShaft", "BridgePlate", "clr"),
+                          ("LayShaft", "BasePlate", "fit"), ("LayShaft", "BridgePlate", "fit"),
+                          ("CentrePost", "BasePlate", "fit")):
+    cmd("assert.add", name="%s held in the %s" % (shaft, plate), measure="clearance", **{"from": shaft, "to": plate},
+        max="%s + 0.005 mm" % gap)
+cmd("assert.add", name="The tubes held in the BridgePlate", measure="clearance",
+    **{"from": {"kind": "body", "where": {"set": "Tubes"}}, "to": "BridgePlate"}, max="clr + 0.005 mm")
+cmd("assert.add", name="The shafts reach through the bridge", measure="boxMax", axis="z",
+    of=["LayShaft", "InputShaft"], min="zBr + tPlate")
+# Headroom over the crank: its top at least 40 mm below the lowest arm.
+cmd("assert.add", name="Crank headroom: the crank's top", measure="boxMax", axis="z", of="InputShaft",
+    max="zArm0 - 40 mm")
+cmd("assert.add", name="Crank headroom: the lowest arm or Moon gear", measure="boxMin", axis="z",
+    of={"kind": "body", "where": {"any": [{"set": "Arms and balls"}, {"name": "Gc"}, {"name": "Idler*"},
+                                          {"name": "Gp"}]}}, min="zArm0 - 0.001 mm")
 # The arms, posts and balls of neighbouring orbits apart at any angle: each body's reach (ball, arm end,
 # Saturn's ring, the Earth's Moon and its gears) stays within its ring of radii.
-apart = ["rIn - e_Me >= Rsun + 2 mm"]
+apart = ["rP_Me - e_Me >= Rsun + 2 mm"]
 prev = "Me"
 for k in ORBITS[1:]:
     apart.append("(!on_{k} || rP_{k} - e_{k} - rP_{p} - e_{p} >= gapO - 0.001 mm)".format(k=k, p=prev))
@@ -589,7 +637,7 @@ cmd("assert.add", name="Neighbouring orbits apart at every angle, the crank clea
 var("V_Sun", "4 / 3 * pi * Rsun^3")
 for k in ORBITS + ["Mo"]:
     if k == "Sa":
-        var("V_Sa", "4 / 3 * pi * R_Sa^3 + pi * (2.2 * R_Sa)^2 * 0.8 mm - pi * (R_Sa^2 * 0.8 mm - (0.8 mm)^3 / 12)")
+        var("V_Sa", "4 / 3 * pi * R_Sa^3 + pi * (RING * R_Sa)^2 * 0.8 mm - pi * (R_Sa^2 * 0.8 mm - (0.8 mm)^3 / 12)")
     else:
         var("V_" + k, "4 / 3 * pi * R_%s^3" % k)
     var("w_" + k, "V_%s / (V_%s + V_Sun)" % (k, k))
@@ -634,15 +682,17 @@ params = [
     dict(name="maxTeeth", label="Most teeth per gear", group="Gear trains", order=2, kind="integer",
          min="zLeast", max="120", step="10",
          description="The largest gear the trains may use (60 to 120). Its least value is the least that meets "
-                     "the accuracy target for these planets"),
+                     "the accuracy target for these planets: 120 for Mercury to Saturn with the Moon at 0.03 %, "
+                     "the default"),
     dict(name="moduleSize", label="Module", group="Gear trains", order=3, kind="choice", choicesFrom="modules",
          description="Tooth size of every gear: pitch diameter = module x teeth. The whole gearbox scales with it"),
     dict(name="material", label="Gears made by", group="Gear trains", order=4, kind="choice", choicesFrom="materials",
          description="3D printed gears 4 mm thick, or laser-cut from 3 mm acrylic or 4 mm plywood (the named "
-                     "face set Cut sheet lays every gear and the base plate out for the laser)"),
-    dict(name="rIn", label="Mercury's arm", group="Arms", order=1, min="Rsun + e_Me + 2 mm", max="90 mm",
-         step="1 mm", unit="mm",
-         description="Radius of Mercury's orbit. The others follow outwards; not to scale (see the README)"),
+                     "face sets Cut sheet: gears and Cut sheet: plates lay them out for the laser)"),
+    dict(name="rIn", label="Mercury's arm (at module 1)", group="Arms", order=1,
+         min="(Rsun + e_Me + 2 mm) / (mn / 1 mm)", max="90 mm", step="1 mm", unit="mm",
+         description="Radius of Mercury's orbit at module 1; it grows with the module, as the gearbox does. The "
+                     "others follow outwards; not to scale (see the README)"),
     dict(name="gapO", label="Gap between orbits", group="Arms", order=2, min="3 mm", max="20 mm", step="0.5 mm",
          unit="mm", description="Least room between the balls, arms and pins of neighbouring orbits"),
     dict(name="size", label="Ball size", group="Arms", order=3, min="0.6", max="1.8", step="0.05",
@@ -661,7 +711,7 @@ cmd("document.info",
                 "turn is one year). Choose the planets, the target, the most teeth per gear, the module, printed "
                 "or laser-cut gears and the arms; turn the date and every ball moves to its place by its gears. "
                 "Involute teeth (20 deg), assertions on the trains, the meshing, the clearances and the planets' "
-                "places. The cut sheet holds every gear for a laser.",
+                "places. Two cut sheets (gears, plates) for a laser.",
     author="3DCraft Jigs", licence="CC-BY-4.0",
     url="https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/orrery",
     tags=["orrery", "planetarium", "astronomy", "gear", "gear train", "involute", "mechanism", "3D printing",
