@@ -34,7 +34,8 @@ uses too.
   floor).
 - Stacking lip: from the top down a 1.9 mm 45° slope, 1.8 mm straight and a 0.7 mm 45° slope (4.4 mm tall,
   2.6 mm deep), on a 1.2 mm straight support and a 45° slope back to the wall. The sharp tip is cut off
-  0.4 mm, leaving a 0.4 mm flat on top that prints cleanly (the bin is 4 mm taller than height × 7 mm);
+  0.4 mm, leaving a 0.4 mm flat on top that prints cleanly (rebuilt rounds it with a 0.6 mm fillet
+  instead; the bin is 4 mm taller than height × 7 mm);
   a stacked bin's feet rest on the lip's slopes, not on the tip. With the lip the wall is at most 1.8 mm,
   so the lip's 1.9 mm step stays inside it.
 - Holes, in the four corners of every unit, 8 mm in from its sides: magnet holes 6.5 mm across and 2.4 mm
@@ -55,8 +56,8 @@ uses too.
 - The foot profile: the area of the bottom faces is units × (35.6² − (4 − π) 0.8²) mm² less the holes, and
   the area of the profile's sides (chamfer, straight, chamfer) is units × the frustum areas of the profile,
   to 0.05 mm²: a wrong chamfer, radius or height changes them.
-- The walls: the distance from the outside face to the inside face is the wall (left, and front or back),
-  and the wall is at least the standard's thinnest (0.95 mm).
+- The walls: the distance from the outside face to the inside face is the wall, front and back (the
+  side walls are the same offset), and the wall is at least the standard's thinnest (0.95 mm).
 - Dividers: as many as asked each way, and every divider face lies within 0.01 mm of where equal
   compartments put it, between the floor and the dividers' top.
 - Label tabs: one per row, and the support face runs down to where the angle puts it; at least 5 mm deep.
@@ -77,8 +78,9 @@ back ones mirrored. Feature names are used in the fillet's edge names (`LipHollo
 a tab angle above 45° prints more cleanly than the standard's 36°). PLA or PETG, 0.2 mm layers, a 0.4 mm
 nozzle, two or three perimeters. Glue or press the magnets in.
 
-**Checked.** `check-range` passes at the default, 64 corners, the choices and 16 random points (seed 1), also
-`--deep`: 83 of 83; regeneration median about 100 ms, at most about 450 ms. STL export closed. Export the body `Bin` (STL or 3MF); the hidden `Stacked foot` is a check, not a
+**Checked.** With 3DCraft `main` 5c9153e2: `check-range` passes at the default, 64 corners, the choices
+and 16 random points (seed 1), also `--deep`: 83 of 83, none with unproven assertions; regeneration
+median about 120 ms, at most about 0.9 s. STL export closed. Export the body `Bin` (STL or 3MF); the hidden `Stacked foot` is a check, not a
 part.
 
 **Sources.**

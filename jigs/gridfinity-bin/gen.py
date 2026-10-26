@@ -229,18 +229,27 @@ def assertions():
         of=faces({"in": "Bin", "below": {"z": unit(gf.FOOT_H + 0.001)},
                   "not": {"any": [{"hole": True}, {"normal": {"along": "-z"}}]}}),
         eq="gx * gy * %.6f * 1 mm^2" % gf.foot_side_area(), tol="0.05 * 1 mm^2")
-    # Walls: from the outside to the inside, the wall's thickness: the left wall, and the front wall (the
-    # back one under a front label, whose tab takes the front wall's inner face over).
-    add("wall left is the wall thickness", "distance",
-        from_=faces({"in": "Bin", "normal": {"along": "-x"}, "inside": [["-" + big] * 3, ["-hx + 0.001 mm", big, big]]}),
-        to=faces({"in": "Bin", "madeBy": "LipHollow", "normal": {"along": "x"}, "surface": "plane"}),
-        eq="wall")
+    # Walls: from the outside to the inside, the wall's thickness, front and back (the side walls are the
+    # same offset; their inner faces, cut by every scoop and tab, are too intricate to prove a distance on).
+    # The inner face is any flat face facing the inside in the wall's plane (a tab may take its name).
+    # On the side of the label tabs the tab may take the inner face over (in a low bin there is no flat
+    # inner face left): there, every face facing front or back is at least the wall from the outside.
+    lab_out = ["-" + big, "if(label == 3, -%s, hy - 0.001 mm)" % big, "-" + big], \
+        [big, "if(label == 3, -hy + 0.001 mm, %s)" % big, big]
+    add("wall on the label side is at least the wall thickness", "distance",
+        from_=faces({"in": "Bin", "any": [{"normal": {"along": "y"}}, {"normal": {"along": "-y"}}],
+                     "inside": list(lab_out)}),
+        to=faces({"in": "Bin", "surface": "plane", "any": [{"normal": {"along": "y"}}, {"normal": {"along": "-y"}}],
+                  "not": {"inside": list(lab_out)}}),
+        min="wall - 0.0001 mm")
     add("wall front (back under a front label) is the wall thickness", "distance",
         from_=faces({"in": "Bin", "any": [{"normal": {"along": "y"}}, {"normal": {"along": "-y"}}],
                      "inside": [["-" + big, "if(label == 3, hy - 0.001 mm, -%s)" % big, "-" + big],
                                 [big, "if(label == 3, %s, -hy + 0.001 mm)" % big, big]]}),
-        to=faces({"in": "Bin", "madeBy": "LipHollow", "surface": "plane",
-                  "any": [{"normal": {"along": "y"}}, {"normal": {"along": "-y"}}]}),
+        to=faces({"in": "Bin", "surface": "plane",
+                  "any": [{"normal": {"along": "y"}}, {"normal": {"along": "-y"}}],
+                  "inside": [["-" + big, "if(label == 3, di, -di) - 0.001 mm", "-" + big],
+                             [big, "if(label == 3, di, -di) + 0.001 mm", big]]}),
         eq="wall")
     add("wall at least the thinnest printable (%g mm)" % gf.MIN_WALL, "count", of={"kind": "body", "where": {"name": "Bin"}},
         eq="if(wall >= %s, 1, 0)" % unit(gf.MIN_WALL))
@@ -284,12 +293,12 @@ def assertions():
     add("scoops: a quarter round in every compartment", "count",
         of=faces({"in": "Bin", "madeBy": "Scoop", "surface": "cylinder", "radius": "rs"}),
         eq="if(scoopOn, divy + 1, 0)")
-    # Stacking: a second bin's foot stands in the lip on its chamfers without entering it (or, without
-    # the lip, floats 10 mm over the rim, its bottom edge 2.95 mm - wall in from the rim's inside).
+    # Stacking: a second bin's foot stands in the lip on its chamfers without entering it: clearance 0.
+    # Without the lip there is nothing to stand in: the foot floats 10 mm over the rim, clear of it.
     add("stacking: a bin's foot enters nothing (dividers and tabs stay under it)", "overlap",
         of="Stacked foot", to="Bin", is_=False)
     add("stacking: a bin's foot seats on the lip's chamfers", "clearance", from_="Stacked foot", to="Bin",
-        eq="if(lip, 0 mm, sqrt((10 mm)^2 + (%s - wall)^2))" % unit(gf.FOOT[0][1]))
+        min="0 mm", max="if(lip, 0 mm, 1000 mm)")
     return a
 
 

@@ -40,7 +40,8 @@ RIDGE_CUT = 0.1
 SEAT_SIDE_GAP = 0.25
 # The stacking lip at the top of a bin's wall, from its inner tip down and out: 0.7 mm at 45 deg, 1.8 mm
 # straight, 1.9 mm at 45 deg (4.4 mm tall, 2.6 mm deep; STACKING_LIP_LINE), on a 1.2 mm straight support
-# (STACKING_LIP_SUPPORT_HEIGHT) and a 45 deg slope back to the wall.
+# (STACKING_LIP_SUPPORT_HEIGHT) and a 45 deg slope back to the wall. Its sharp tip is cut flat 0.4 mm
+# down here (rebuilt rounds it with a 0.6 mm fillet, STACKING_LIP_FILLET_RADIUS).
 LIP_H = 4.4
 LIP_D = 2.6
 LIP_SUPPORT = 1.2
@@ -101,7 +102,8 @@ def profile_loft(name, profile, top, radius, z0, cx="0 mm", cy="0 mm", when=None
         n = "%s%d" % (name, i)
         names.append(n)
         h = num(top / 2 - inset)
-        s += rrect(n, "(%s) + %s" % (z0, num(z)), h, h, num(radius - inset), cx, cy)
+        dz = z if isinstance(z, str) else num(z)       # a height above z0, a number (mm) or an expression
+        s += rrect(n, "(%s) + (%s)" % (z0, dz), h, h, num(radius - inset), cx, cy)
     loft = {"sections": names, "ruled": True, "name": name}
     if when is not None:
         loft["when"] = when
@@ -116,8 +118,9 @@ def foot(name, z0="0 mm", cx="0 mm", cy="0 mm", when=None):
 
 def socket_cutter(name, z0, below, cx="0 mm", cy="0 mm", when=None):
     """The opening of one baseplate cell, to subtract: the socket profile with its bottom at z0, carried
-    straight down by `below` (mm, a number) and cut RIDGE_CUT under its top."""
-    prof = [(-below, SOCKET[0][1])] + SOCKET[1:-1]
+    straight down by `below` (an expression, a length; 0 mm on a floor, more to cut through a plate
+    without one) and cut RIDGE_CUT under its top."""
+    prof = [("-(%s)" % below, SOCKET[0][1])] + SOCKET[1:-1]
     zt, it = SOCKET[-2]
     z1, _ = SOCKET[-1]
     # The 45 deg chamfer stopped RIDGE_CUT under its top, then carried up 1 mm past the plate's top.
