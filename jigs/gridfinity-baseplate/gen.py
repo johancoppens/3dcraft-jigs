@@ -92,7 +92,6 @@ _side = math.hypot(DT_L, DT_END - DT_NECK)
 _ofs = offset_polygon(TAB)
 SLOT = [(0, -DT_NECK), (DT_L, -DT_END), (DT_L, DT_END), (0, DT_NECK)]
 SLOT_OFF = [(0, -_side / DT_L), _ofs[1], _ofs[2], (0, _side / DT_L)]
-# Bowtie: polygon order above is clockwise in (u, v)? Make sure it is counter-clockwise.
 
 
 def ccw(pts):
