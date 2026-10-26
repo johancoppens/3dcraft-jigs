@@ -80,6 +80,7 @@ is reviewable:
 - `06-review-names.json`: the 2.2.3 assertions say they are for the stowed state and bound both sides
   together, the mass assertion says typical maximum (Table 1); the stored wing angle is 90°, its default;
   the *Deployed* description fits the checkbox.
+- `07-sources-keep-material.json`: the source bodies of the conditional transforms, mirrors and patterns (Spacer_xy, Tape_PX0, Tape_PY0, Coil0, SunSensor_PX) carry the same material and colour, so a part keeps its mass when its condition is off (3DCraft main 3faaaea0 no longer applies the material of a switched-off feature)
 
 **Why the camera is not switched off in the form for a 1U, and why the default is one board.** The form
 can do both: a boolean's maximum may be a formula (`payload` at most `stack_room >= cam_h`), and the form

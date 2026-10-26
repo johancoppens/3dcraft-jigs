@@ -1,0 +1,97 @@
+[
+ [
+  "file.open",
+  {
+   "path": "jigs/cubesat/source.3dcraft"
+  }
+ ],
+ [
+  "body.material",
+  {
+   "body": "Spacer_xy",
+   "name": "Al 6061-T6",
+   "density": 2700.0
+  }
+ ],
+ [
+  "body.appearance",
+  {
+   "body": "Spacer_xy",
+   "color": "#C8A75A",
+   "metallic": 0.8,
+   "roughness": 0.35
+  }
+ ],
+ [
+  "body.material",
+  {
+   "body": "Tape_PX0",
+   "name": "Spring steel (tape)",
+   "density": 7850.0
+  }
+ ],
+ [
+  "body.appearance",
+  {
+   "body": "Tape_PX0",
+   "color": "#D8D2C4",
+   "metallic": 0.9,
+   "roughness": 0.25
+  }
+ ],
+ [
+  "body.material",
+  {
+   "body": "Tape_PY0",
+   "name": "Spring steel (tape)",
+   "density": 7850.0
+  }
+ ],
+ [
+  "body.appearance",
+  {
+   "body": "Tape_PY0",
+   "color": "#D8D2C4",
+   "metallic": 0.9,
+   "roughness": 0.25
+  }
+ ],
+ [
+  "body.material",
+  {
+   "body": "Coil0",
+   "name": "Spring steel (tape, wound)",
+   "density": 7850.0
+  }
+ ],
+ [
+  "body.appearance",
+  {
+   "body": "Coil0",
+   "color": "#D8D2C4",
+   "metallic": 0.9,
+   "roughness": 0.25
+  }
+ ],
+ [
+  "body.material",
+  {
+   "body": "SunSensor_PX",
+   "name": "Sun sensor (avg)",
+   "density": 2500.0
+  }
+ ],
+ [
+  "body.appearance",
+  {
+   "body": "SunSensor_PX",
+   "color": "#D4AF37",
+   "metallic": 0.9,
+   "roughness": 0.3
+  }
+ ],
+ [
+  "file.save",
+  {}
+ ]
+]
