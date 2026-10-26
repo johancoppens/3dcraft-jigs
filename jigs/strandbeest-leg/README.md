@@ -97,7 +97,7 @@ crank / 15 between centre lines, so `wMax = 0.75 × crank` leaves at least 2 × 
 default). The assertions measure it on the model at the form's crank angle. The axle may not reach layers 2 and 3: bars j and
 k pass right over O once a turn, which is why the drive is behind the frame.
 
-1. Cut the parts: the named face set **Cut sheet**, `file.export {"path": "leg.svg", "set": "Cut sheet"}`
+1. Cut the parts: the named face set **Cut sheet**, `file.export {"path": "leg.svg", "set": "Cut sheet", "width": "400 mm"}`
    (DXF works too), every flat part at true size with its pin holes (pin + clearance).
 2. Fix the crank to the axle so they turn together: glue, a D-flat with a set screw, or two nuts on a
    threaded axle. Every other joint turns freely.
@@ -130,7 +130,9 @@ Measured on the model:
   inside its hole. A part drawn from its bar length and turned to its joints has its far hole on the joint
   only when the joints are where the bar says.
 - *Parts on one layer stay apart* (crank, hip and foot triangle; j and c; k and f): at least 0.5 mm.
-- *The leg runs free of its frame*: at least half the layer gap.
+- *The leg runs free of its frame*: the front leg's box ends at least half the layer gap in front of the
+  frame's front face (measured exactly as a box). The second leg is the same stack behind the second
+  frame, from the same formulas mirrored; the overlap check covers it.
 - *Stance is flat*: the stance tube (the foot path over the 120° of crank round its lowest point) is at
   most 3 % of `stride` high, plus the tube.
 - *Foot path as wide as the stride*: the path's measured width matches `stride`.

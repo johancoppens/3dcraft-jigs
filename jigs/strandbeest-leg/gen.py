@@ -311,7 +311,7 @@ def main():
     legs = {1: kin(v, "p", "theta"), 2: kin(v, "r", "theta + 180 deg")}
     samples = []
     for k in range(N):
-        samples.append(kin(v, "s%02d" % k, "%d deg" % (k * 360 // N)))
+        samples.append(kin(v, "s%02d" % k, "%g deg" % (k * 360 / N)))
     qs = ["s%02d%sq" % (k, j) for k in range(N) for j in "CDEFG"]
     v.append(("closeMin", nest("min", qs)))
     gx = [S["G"][0] for S in samples]
@@ -492,7 +492,7 @@ def main():
         p["name"] = name
         A.append(["assert.add", p])
 
-    a("Linkage closes over the whole turn (every joint at 24 crank angles, none flatter than ~6 deg)",
+    a("Linkage closes over the whole turn (every joint at %d crank angles," % N + " none flatter than ~6 deg)",
       measure="extent", of="Frame", axis="x", min="if(closeMin >= %s, 0 mm, 1 m)" % QMIN)
     a("No part overlaps another (pins pass their holes, layers clear)", measure="overlap", of={"set": "Parts"}, **{"is": False})
     members = {"O": ["Frame", "Crank"], "A": ["Crank", "BarJ", "BarK"], "B": ["Frame", "HipTriangle", "BarC"],
@@ -507,7 +507,12 @@ def main():
     for x, y in (("Crank1", "HipTriangle1"), ("Crank1", "FootTriangle1"), ("HipTriangle1", "FootTriangle1"),
                  ("BarJ1", "BarC1"), ("BarK1", "BarF1")):
         a("%s and %s, on one layer, stay apart" % (x, y), measure="clearance", **{"from": x, "to": y}, min="0.5 mm")
-    a("The leg runs free of its frame", measure="clearance", **{"from": "Frame", "to": {"set": "Leg 1"}}, min="gap / 2")
+    # The frame's front face is at y = -t and leg 1 stands in front of it (towards -y), measured
+    # exactly as a box (a clearance between parallel faces is not always proven at large sizes).
+    # Leg 2 is the same stack behind the second frame; a set of it would name nothing with one leg,
+    # so it is covered by the overlap check and by construction (the same layer formulas, mirrored).
+    a("The leg runs free of its frame (in front of it by at least half the layer gap)", measure="boxMax",
+      of={"set": "Leg 1"}, axis="y", max="-t - gap / 2")
     a("Stance is flat: the foot's lowest 120 deg of crank stays within 3 % of the stride in height",
       measure="extent", of="Stance", axis="z", max="%s * stride + 2.2 * rt" % FLAT)
     a("Foot path as wide as the stride", measure="extent", of={"set": "Foot path"}, axis="x",
@@ -557,7 +562,7 @@ def main():
                        "legs, the sheet, the bar width and the pins; every joint is solved by formulas and the "
                        "assertions check that the linkage closes over the whole turn, that every pin sits in its "
                        "holes and that the parts on one layer stay apart. stride and stepHeight report the gait. "
-                       "Cut sheet: file.export {\"path\": \"leg.svg\", \"set\": \"Cut sheet\"}.",
+                       "Cut sheet: file.export {\"path\": \"leg.svg\", \"set\": \"Cut sheet\", \"width\": \"400 mm\"}.",
         "author": "3DCraft Jigs",
         "licence": "CC-BY-4.0",
         "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/" + ID,
