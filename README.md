@@ -23,6 +23,7 @@ standard.
 | [`tensegrity-table`](jigs/tensegrity-table/) | A floating (tensegrity) table: top hung from the base's hook by a central cable, held level by 3 or 4 outer cables, with tensions and the load limit from statics, cut sheet | CC-BY-4.0 |
 | [`sliceform`](jigs/sliceform/) | A sliceform sculpture or lamp shade: two families of laser-cut slices with half-lap slots showing a saddle, a wave, an ellipsoid or a twisted vase from its formula | CC-BY-4.0 |
 | [`joint-drawer`](jigs/joint-drawer/) | A drawer or box with through dovetails or finger joints, a bottom in a groove and a brass knob | CC-BY-4.0 |
+| [`solar-cooker`](jigs/solar-cooker/) | A parabolic solar cooker from flat petals (gores) drawn from the paraboloid's arc length, tilting on an axis through the focus so the pot stays level, with cut sheets | CC-BY-4.0 |
 | [`sundial`](jigs/sundial/) | A horizontal garden or (declining) wall sundial for your place: hour lines with the longitude correction, numerals, a slotted gnomon at the latitude angle, cut sheet | CC-BY-4.0 |
 | [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style) to laser cut and MIG weld: perforated top and skirts, half-lapped ribs, every joint tab and slot with dogbone reliefs and plug-weld pockets, legs and frame of square tube from a table, cut sheet and tube cut list | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
