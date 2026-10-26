@@ -38,7 +38,8 @@ standard.
 | [`pillow-block`](jigs/pillow-block/) | A pillow block bearing housing for a deep-groove bearing from a table (608, 60xx, 62xx), with slots and a grease nipple | CC-BY-4.0 |
 | [`drag-chain`](jigs/drag-chain/) | A printable cable drag chain with snap-in hinge pins and clip-on bridges, laid out round its bend radius | CC-BY-4.0 |
 | [`pot-knob`](jigs/pot-knob/) | A knob for a potentiometer or encoder shaft (D-shaft or round), with grip grooves | CC-BY-4.0 |
-| [`gridfinity-bin`](jigs/gridfinity-bin/) | A Gridfinity storage bin: grid size, height, compartments, label ledge, stacking lip, magnet holes | CC-BY-4.0 |
+| [`gridfinity-bin`](jigs/gridfinity-bin/) | A Gridfinity storage bin: grid size, height, dividers both ways, label tabs at the back or front with their angle, scoops, magnet and screw holes, stacking lip, wall and floor | CC-BY-4.0 |
+| [`gridfinity-baseplate`](jigs/gridfinity-baseplate/) | A Gridfinity baseplate that fills a drawer: the cells that fit, centred, filler strips to the walls, split into pieces for your print bed that lock with bowtie clips or dovetails; light, solid or weighted, magnet and screw holes; checked against a seated bin | CC-BY-4.0 |
 | [`electronics-enclosure`](jigs/electronics-enclosure/) | A box for a circuit board: standoffs, port cut-outs from a table, a screwed or snap-fit lid | CC-BY-4.0 |
 | [`print-in-place-hinge`](jigs/print-in-place-hinge/) | A hinge that prints in one piece on conical pins, with an adjustable clearance | CC-BY-4.0 |
 | [`screw-jar`](jigs/screw-jar/) | A jar with a helical thread and a screw-on lid that follows it, with grip ribs | CC-BY-4.0 |
@@ -80,6 +81,7 @@ jigs/<id>/gen.py       (optional) the script that wrote build.json, when the bat
 scripts/build.sh       build every Jig into dist/, then the gallery
 scripts/check.sh       prove every Jig over its parameter range (craft3d-cli check-range)
 scripts/shaftlib.py    shared bore and set-screw options (gt2-pulley, spur-gear gen.py)
+scripts/gridfinitylib.py  the Gridfinity dimensions and profiles (gridfinity-bin, gridfinity-baseplate gen.py)
 scripts/gallery.py     dist/index.html and dist/thumbs/ from the built Jigs (Python standard library only)
 dist/                  the built Jigs, their thumbnails and the gallery page
 ```
