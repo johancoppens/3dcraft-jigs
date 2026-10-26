@@ -92,7 +92,14 @@ housing): 1 634 388 points, none failing; a wheel has at most 163 teeth.
   clearance at least min(c_w, 5 mm) − 0.1 mm; every bearing seated in the housing (at most 0.02 mm);
 - wheel 2 clears the output shaft, wheel 4 the input shaft, pinion 3 the input shaft and its spacer.
 
-CHECKED_RESULTS
+**Checked over the range** (3DCraft `main` at 3faaaea0, seed 1, `MALLOC_ARENA_MAX=2`): the points of
+`scripts/check.sh` all pass: 74 of 74 with every corner (all 64 of the corner subset, the 9 other
+choices, the defaults) and 26 of 26 with the 16 random points; with `--deep`, 30 of 30 (16 corners, 9
+choices, 4 random). A regeneration takes 2.3 to 2.6 s (median), at most about 7 s; a point with its 22
+assertions about a minute (the two flank clearances take most of it); a run peaks at 1.9 GB. The
+three *notProven* clearances are warnings at every point (see *Limits*). The corner run found a real
+fault on the way: with a 3 mm wall the bolting ears reached 1 mm into the cavity (the gear-to-housing
+clearance failed), fixed.
 
 **Limits of 3DCraft today** (found in the test drive; the Jig works within them):
 - A clearance between spline faces (the involute flanks) is found but not proven: the two flank
@@ -106,14 +113,24 @@ CHECKED_RESULTS
 - An `extent` assertion over spline faces after cuts measures too wide, so the overall size is not
   asserted.
 - `m` and `mod` are reserved names: the module is `mn`.
+- A range check holds a lot of memory with interference assertions on spline bodies: memory grows from
+  point to point (glibc's per-thread arenas account for about half of it; `MALLOC_ARENA_MAX=2` keeps a
+  full run under 2 GB), and the two flank clearances take most of the time (about a minute a point).
 
-**Changed from the test drive's model.** The gears are drawn as one outline per gear (the `spur-gear`
-Jig's chained pattern) instead of cutting each tooth space with a boolean, which makes a regeneration
-several times lighter; the root has the radial foot of `spur-gear` instead of a root fillet of 0.38
-modules. The shaft diameters (12, 17 and 25 mm there) follow the gears; the housing's ends grow with the
-bearings; the bolting ears reach through the wall to 0.5 mm short of the cavity; a pinion-3 assertion was added; the modules run
-from 1 to 4 mm (0.5 to 8 mm there), the ratio from 5 to 20 (4 to 30 there), the second module is chosen
-relative to the first, and the tooth and width ranges are formulas (see above).
+**Changed from the test drive's model.**
+- The gears are drawn as one outline per gear (the `spur-gear` Jig's chained pattern) instead of cutting
+  each tooth space with a boolean, which makes a regeneration several times lighter; the root has the
+  radial foot of `spur-gear` instead of a root fillet of 0.38 modules.
+- The shaft diameters (12, 17 and 25 mm there) follow the gears; each bearing's bore is strictly below
+  its gear seat (there a 17 mm seat took a 17 mm bearing, a step of no length in the shaft's profile,
+  which fails once the values move); 608/628 bearings were added for a 10 mm seat.
+- The housing's ends grow with the bearings; the bolting ears reach through the wall to 0.5 mm short of
+  the cavity (with a thin wall they reached into it, found by the gear-to-housing assertion).
+- An assertion was added: pinion 3 clears the input shaft and its spacer.
+- Narrowed: modules 1 to 4 mm (0.5 to 8 mm there), ratio 5 to 20 (4 to 30 there), input angle ±360°
+  (±720° there); stage 2's module is chosen relative to stage 1's; the teeth and face widths are kept in
+  place by formulas (above). The public inputs are `teeth1`, `teeth3`, `width1`, `width3` (`z_1`, `z_3`,
+  `b_1`, `b_3` there, now the values the model uses).
 
 **Sources.**
 - ISO 53:1998, *Cylindrical gears for general and heavy engineering: standard basic rack tooth profile*;
