@@ -185,10 +185,15 @@ CH = {False: [KEEL] + [edge(face(j - 1), face(j)) for j in range(1, NP + 1)],
 done(1)
 
 # ---------------------------------------------------------------- the panels: developable sheets between the chines
+# They are switched off by default (connections = 0): their sheets end in two vertices about the tolerance
+# apart at a tip, which the deep check of a body refuses (plan/repro/repro-sea-kayak-7.json in 3DCraft).
+# Set connections to 1 to build them: each is the envelope's face, found from its two chines alone.
+V("connections", "0")
 SIDES = [(False, "S"), (True, "P")]
 for port, tag in SIDES:
     for j in range(NP):
-        C("feature.developable", a={"edges": [CH[port][j]]}, b={"edges": [CH[port][j + 1]]}, name=f"Panel{j}{tag}")
+        C("feature.developable", a={"edges": [CH[port][j]]}, b={"edges": [CH[port][j + 1]]}, name=f"Panel{j}{tag}",
+          when="connections")
 done(2)
 
 # ---------------------------------------------------------------- the plywood: plates on the envelope's faces

@@ -46,11 +46,12 @@ the widest station, η = ½, lies at 0.47 of the length from the stern.
    by the deck, and its edges are the **keel, the chines and the sheer, found by the kernel** where
    neighbouring panels meet.
 3. **The panels between the chines.** `feature.developable` makes the developable sheet between each pair
-   of neighbouring chines (the envelope's edges), the same surface as the envelope's face, found
-   independently from the two chines alone: the proof that each panel *is* the developable between its
-   chines. The feature refuses a sheet that is not developable and reports its largest Gaussian
-   curvature (about 10⁻¹² mm⁻² here); it is not asserted on separately, because measuring the curvature
-   of these 5 m sheets does not always settle in 3DCraft today.
+   of neighbouring chines (the envelope's edges): the same surface as the envelope's face, found
+   independently from the two chines alone, which shows that each panel *is* the developable between its
+   chines (largest Gaussian curvature about 10⁻¹² mm⁻²). These eight features are switched off by default
+   (the variable `connections`, 0): their sheets end at a tip in two vertices about the tolerance apart,
+   which the deep validity check refuses, and measuring their curvature does not always settle; both are
+   3DCraft issues reported with repros. Set `connections` to 1 to build them.
 4. **Plywood.** `feature.plate` gives each panel of the envelope its thickness inwards (4 mm hull, 3 mm
    deck) with the builder's joints: `touch` at the keel and the chines (the inner edges of two stitched
    panels just touch; the outside V is the epoxy fillet), the sheer panel `under` the deck and the deck
@@ -67,7 +68,7 @@ the widest station, η = ½, lies at 0.47 of the length from the stern.
    centre of buoyancy and the waterplane's second moments. KB, BM, KM and GM are computed from those
    measures by `hydro.py` (below): naval vocabulary, kept in the Jig.
 
-`gen.py` writes 80 variables (the previous version, which computed the geometry itself, needed 3839),
+`gen.py` writes 81 variables (the previous version, which computed the geometry itself, needed 3839),
 48 feature commands and 17 assertions. A regeneration from nothing takes about 5 s; a build with every
 assertion measured about 30 s.
 
