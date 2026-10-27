@@ -34,6 +34,7 @@ standard.
 | [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle): bore types, hub with set screws, web and lightening holes | CC-BY-4.0 |
 | [`planetary-gearbox`](jigs/planetary-gearbox/) | A planetary gear set (sun, planets, ring, carrier) with involute teeth and its assembly conditions | CC-BY-4.0 |
 | [`gear-reducer`](jigs/gear-reducer/) | A two-stage spur gear reducer from a target ratio: involute gears keyed on stepped shafts (DIN 6885), ISO 15 bearings, a split cast housing, twenty-two assertions on fits and clearances | CC-BY-4.0 |
+| [`miura-ori`](jigs/miura-ori/) | A Miura-ori fold panel that folds in and out with one slider (one crease driven, the rest solved by 3DCraft), with its crease pattern to print and score or laser-score | CC-BY-4.0 |
 | [`strandbeest-leg`](jigs/strandbeest-leg/) | Theo Jansen's walking linkage from his "holy numbers": drag the crank angle and the leg walks, joints solved by circle intersections, foot path drawn, layered bars and pins checked, cut sheet | CC-BY-4.0 |
 | [`orrery`](jigs/orrery/) | A hand-cranked geared orrery, Mercury to Saturn and the Moon, whose two-stage trains were searched to match the real sidereal periods (one crank turn a year, the date sets every planet to its mean longitude), with a cut sheet for laser-cut gears | CC-BY-4.0 |
 | [`pillow-block`](jigs/pillow-block/) | A pillow block bearing housing for a deep-groove bearing from a table (608, 60xx, 62xx), with slots and a grease nipple | CC-BY-4.0 |
