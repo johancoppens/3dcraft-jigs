@@ -30,7 +30,7 @@ MATERIALS = [
     # name,                         minR/t, K,    V/t, red, green, blue
     ["Steel DC01",                   1.0,   0.42, 8,   125, 133, 140],
     ["Aluminium 5754",               1.0,   0.38, 6,   185, 190, 196],
-    ["Stainless 304",                2.0,   0.45, 10,  185, 190, 196],
+    ["Stainless 304",                2.0,   0.45, 10,  200, 206, 214],
 ]
 # Screws: nominal diameter, clearance hole (ISO 273 medium), pan head
 # diameter and height (ISO 7045 / ISO 14583).
@@ -42,12 +42,12 @@ SCREWS = [
 INPUTS = [
     ("Wi", "160 mm"), ("Di", "120 mm"), ("Hi", "50 mm"),
     ("material", "1"), ("t", "1 mm"),
-    ("radiusMode", "1"), ("radiusCustom", "2 mm"),
+    ("radiusExtra", "0"),
     ("screw", "1"), ("fit", "0.5 mm"),
     ("vents", "1"), ("feet", "1"),
 ]
 DERIVED = [
-    ("R", "if(radiusMode == 1, mats[material].minR * t, radiusCustom)"),
+    ("R", "(mats[material].minR + radiusExtra) * t"),
     ("K", "mats[material].k"),
     ("V", "mats[material].v * t"),               # die opening
     ("minFlange", "0.7 * V"),                   # to the outside mould line
@@ -70,6 +70,10 @@ DERIVED = [
     # Screws: through the lid's top and the return flanges' middle.
     ("xs", "Wi / 2 - R - retL / 2"),
     ("ys", "b - relief - max(8 mm, holeEdge + dc)"),
+    # Where the return flanges' holes lie in the base's flat pattern (they are not cut in it: gap 2).
+    ("BA", "pi / 2 * (R + K * t)"),             # bend allowance of a 90 degree bend
+    ("flatHoleX", "a + BA + wallL + BA + retL / 2"),
+    ("flatHoleY", "ys"),
     ("headD", "screws[screw].head"),
     ("headK", "screws[screw].k"),
     ("shankL", "2 * t + 3 * d"),                # through both sheets and a nut below
@@ -204,7 +208,10 @@ def main():
                        "size, the material (steel DC01, aluminium 5754, stainless 304) and thickness, the bend "
                        "radius, M3 or M4 screws, vent slots and feet holes; the bend radius, flange lengths, hole "
                        "distances, corner reliefs, the lid's fit and the screws' alignment are checked against the "
-                       "material's table. Flat patterns with bend lines: file.export with sheetMetal (see README).",
+                       "material's table. Flat patterns with bend lines: file.export with sheetMetal (see README). "
+                       "BEFORE YOU CUT: the base's flat pattern has no holes in the return flanges; drill them "
+                       "after bending, or mark them on the flat at x = +-flatHoleX, y = +-flatHoleY (derived "
+                       "variables; retL / 2 from the flat's outer edge).",
         "author": "3DCraft Jigs",
         "licence": "CC-BY-4.0",
         "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/" + ID,
@@ -296,7 +303,16 @@ def asserts(d):
     for nm, part in (("lid", LID_BODY), ("base", BASE_BODY)):
         d.do("assert.add", {"name": "Screws centred in the %s's holes" % nm, "measure": "clearance",
                             "from": "Screws", "to": {"kind": "body", "where": {"any": part}},
-                            "min": "(dc - d) / 2 - 0.01 mm"})
+                            "eq": "(dc - d) / 2", "tol": "0.01 mm"})
+    # The return flanges are drilled: four bores of the clearance hole along z, in the drill boxes.
+    d.do("assert.add", {"name": "Four holes drilled in the return flanges", "measure": "count",
+                        "of": faces([{"any": BASE_BODY}, {"surface": "cylinder"}, {"axis": {"along": "z"}},
+                                     {"radius": {"eq": "dc / 2", "tol": "0.001 mm"}}, {"any": drills}]), "eq": "4"})
+    # The lid rests on the return flanges.
+    d.do("assert.add", {"name": "Lid rests on the return flanges", "measure": "distance",
+                        "from": faces([{"any": LIDS}, {"name": "*copy(1)/*face(0)"}]),
+                        "to": faces([{"any": BASES}, {"any": [{"name": "*copy(1)/*face(10)"}, {"name": "*copy(1)/*face(12)"}]}]),
+                        "eq": "0 mm", "tol": "0.01 mm"})
 
 
 PUB = [
@@ -310,10 +326,9 @@ PUB = [
                       group="Sheet", order=1, kind="choice", choicesFrom="mats")),
     ("t", dict(label="Thickness", description="Sheet thickness", group="Sheet", order=2,
                min="0.8 mm", max="2 mm", step="0.1 mm", unit="mm")),
-    ("radiusMode", dict(label="Bend radius", description="The material's minimum inner radius from the table, or your own",
-                        group="Sheet", order=3, kind="choice", choices=["From the table", "Custom"])),
-    ("radiusCustom", dict(label="Custom bend radius", description="Inner bend radius when Bend radius is Custom",
-                          group="Sheet", order=4, min="mats[material].minR * t", max="3 * t", step="0.1 mm", unit="mm")),
+    ("radiusExtra", dict(label="Extra bend radius", description="Inner bend radius above the material's minimum, "
+                         "in thicknesses: 0 is the table's minimum radius, 1 adds one thickness",
+                         group="Sheet", order=3, min="0", max="2", step="0.1")),
     ("screw", dict(label="Screws", description="Lid screws, with clearance holes in the lid and the return flanges",
                    group="Fit", order=1, kind="choice", choicesFrom="screws")),
     ("fit", dict(label="Lid clearance", description="Gap between the lid's skirts and walls and the base",

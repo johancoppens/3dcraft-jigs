@@ -8,6 +8,14 @@ assembled, the lid fitted on the base, with the screws; the flat patterns with t
 bend table come out by command (below). The sheet-metal counterpart of
 [`electronics-enclosure`](../electronics-enclosure/). Licence: CC-BY-4.0.
 
+> **Before you cut.** The base's flat pattern has **no holes in the return flanges** (3DCraft cannot put a
+> hole in a flange yet, gap 2 below). Drill them after bending, or mark them on the flat before: on each
+> return flange's centre line, retL / 2 in from the flat's outer edge (parallel to the bend lines), at
+> x = ± `flatHoleX`, y = ± `flatHoleY` in the flat's axes, Ø of the screw's clearance hole. `retL`,
+> `flatHoleX` and `flatHoleY` are derived variables of the document, so they can be read for any
+> parameter point (`variable.get`, or the Variables panel). With the defaults: x = ± 136.16 mm,
+> y = ± 48.5 mm, retL = 11.4 mm, Ø 3.4 mm.
+
 | Parameter | Group | Default | Range |
 |---|---|---|---|
 | Inside width | Size | 160 mm | 100 to 400 mm, step 1 mm (between the side walls) |
@@ -15,8 +23,7 @@ bend table come out by command (below). The sheet-metal counterpart of
 | Inside height | Size | 50 mm | 30 to 200 mm, step 1 mm (floor to the lid's underside) |
 | Material | Sheet | Steel DC01 | Steel DC01, Aluminium 5754, Stainless 304 (the table below) |
 | Thickness | Sheet | 1 mm | 0.8 to 2 mm, step 0.1 mm |
-| Bend radius | Sheet | From the table | From the table (the material's minimum × thickness), Custom |
-| Custom bend radius | Sheet | 2 mm | the table's minimum to 3 × thickness, step 0.1 mm |
+| Extra bend radius | Sheet | 0 | 0 to 2 thicknesses, step 0.1: the inner radius is (the table's minimum + this) × thickness |
 | Screws | Fit | M3 | M3, M4 |
 | Lid clearance | Fit | 0.5 mm | 0.2 to 1 mm, step 0.1 mm |
 | Vent slots | Options | on | on / off |
@@ -47,8 +54,8 @@ the inputs (`gen.py` writes `build.json`; it computes no geometry).
 - Each option is a second variant of the part (`BaseFeet`/`BasePlain`, `LidVented`/`LidPlain`) switched
   by `when`, so the holes and slots are in the part's own sketch and in its flat pattern.
 
-Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (#B9BEC4) for 5754 and
-304, the screws brass.
+Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (#B9BEC4) for 5754, a
+lighter, bluer tint (#C8CED6) for stainless 304; the screws brass.
 
 ## The material table
 
@@ -61,8 +68,8 @@ Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (
 - Minimum inner radius: Fictiv's sheet-metal design guide gives 0.5–1.0 t for cold-rolled steel and for
   5052 aluminium (an Al-Mg alloy like 5754) and 1.0–2.0 t for stainless 304; the table takes the upper
   (safe) end of each. Air-bent on the die below, steel takes a natural radius of about V/6 to 0.16 V
-  (≈ 1.3 t), so a radius from the table is a minimum, not a promise; choose Custom when your shop says what
-  its tooling gives.
+  (≈ 1.3 t), so a radius from the table is a minimum, not a promise; set Extra bend radius when your shop
+  says what its tooling gives.
 - K-factor: Fictiv, soft (aluminium) 0.33–0.40, medium (steel) 0.40–0.45, hard (stainless) 0.45–0.50;
   OSHCut, about 0.4 for soft and 0.45 for harder metals. Cross-check for steel: DIN 6935's correction
   factor k = 0.65 + ½ log₁₀(r/s) (the neutral fibre at k·s/2) gives K = 0.33 at r = s and 0.40 at r = 2s.
@@ -70,8 +77,9 @@ Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (
   8–10 t for stainless, 4–6 t for aluminium (the upper end taken).
 - Minimum flange: S. Benson, *The Fabricator* (press-brake bending tips): the shortest flange a standard
   V die bends comfortably is about 70 % of the die width; it is measured from the outside mould line.
-- Hole to bend: Fictiv, "hole to bend ≥ 2.5 × thickness + bend radius" (from the hole's edge to the bend's
-  tangent line). Corner relief: Fictiv asks a relief at least t wide and 1.5 t deep; the relief here is
+- Hole to bend: 2.5 × thickness + bend radius from the hole's edge to the bend's tangent line, as Xometry's
+  sheet-metal design guide and Addmaker's *Tips for making sheet metal parts* give it (Fabcon's DFM guide
+  asks 2 t + R, a little less). Corner relief: Fictiv asks a relief at least t wide and 1.5 t deep; the relief here is
   R + 1.5 t, so it also reaches past the bend zone.
 - Bend allowance, setback, deduction: Machinery's Handbook (*Sheet metal work*), as 3DCraft's bend table
   gives them; DIN 6935 for the deduction (*Ausgleichswert*).
@@ -87,8 +95,9 @@ here.
 | flange ≥ 0.7 V to the mould line | the base's lips and the lid's skirts and walls reach that far from the outside of the other leg (their ends lie beyond it), the return flanges from the walls' outside; the walls' flats between their two bends ≥ 0.7 V − R − t |
 | hole to bend ≥ 2.5 t + R | the least distance from the feet holes and the drilled return-flange holes to the base's bends, and from the lid's screw holes and vent slots to the lid's bends |
 | every corner where two bends meet is relieved | at all four corners of each part the two bends stay at least t apart (without a relief they would meet in a point) |
-| the lid clears the base | the lid's skirts and walls lie exactly the clearance from the base's walls and lips (distance between the faces) |
-| the screw holes line up | each screw shank clears the holes of the lid and of the base by (clearance − d) / 2 all round, within 0.01 mm, so the holes' axes coincide with the screw's |
+| the lid clears the base | the lid's skirts and walls lie exactly the clearance from the base's walls and lips, measured at the nearest point (the least distance between the faces) |
+| the lid rests on the base | the lid's underside touches the return flanges' tops (distance 0) |
+| the screw holes line up | each screw shank's least clearance to the lid and to the base is exactly (clearance − d) / 2 (± 0.01 mm), so it stands in both holes, centred; and the base has four bores of the clearance diameter in the return flanges (a screw in open air, or holes beside the flanges, fail both) |
 | nothing overlaps | no two bodies share a volume (the lid rests on the return flanges, the heads on the lid) |
 
 The sheet-metal measures `bendRadius`, `flangeLength`, `holeToBend` and `relief` were the first choice but
@@ -115,11 +124,9 @@ slots on) or `LidPlain`. `sheetMetal.bends` is the bend table: per bend its angl
 bend allowance (and the unfold's measured one), setback, deduction and flange length, and the flat
 pattern's size and area.
 
-**The base's flat pattern has no holes in the return flanges** (gap 2): mark or drill them at ± ys along
-the bend lines' direction, centred across each return flange's flat: in the flat's axes at
-x = ± (width / 2 − R + BA + wall + BA + return / 2), with BA = π/2 (R + K t), wall = height − t − 2R,
-return = the return flange's flat and ys = depth / 2 − 2R − 1.5 t − max(8 mm, 2.5 t + R + hole).
-With the defaults: x = ± 136.16 mm, y = ± 48.5 mm, Ø 3.4 mm.
+**The base's flat pattern has no holes in the return flanges** (gap 2, *Before you cut* above):
+`flatHoleX` = width / 2 − R + BA + wall + BA + retL / 2, with BA = π/2 (R + K t) and wall = height − t − 2R;
+`flatHoleY` = ys = depth / 2 − 2R − 1.5 t − max(8 mm, 2.5 t + R + hole).
 
 Bend table with the defaults (steel DC01, 1 mm, R = 1 mm, K = 0.42): bend allowance 2.231 mm, setback
 2 mm, deduction 1.769 mm per 90° bend; base flat 283.7 × 142.5 mm (walls 47 mm, lips 10 mm, return
@@ -149,7 +156,9 @@ Repros in the 3DCraft repository, `plan/repro/repro-sheet-metal-enclosure-<n>.js
 ## Sources
 
 - Fictiv, *Sheet metal design guide* (blog.fictiv.com/specifications/sheet-metal): minimum bend radius per
-  material, K-factor ranges, hole-to-bend distance, relief width and depth.
+  material, K-factor ranges, relief width and depth.
+- Xometry, *Sheet metal design guide*; Addmaker, *Tips for making sheet metal parts*
+  (mag.addmaker.tw, 2021); Fabcon, *Sheet metal DFM guide* (fabcon.com): hole-to-bend distance.
 - OSHCut, material details, stainless 304 (oshcut.com/materialdetails/stainless-steel-304-1-finish): K-factor
   rule of thumb.
 - Durmapress, *How to select the right press brake V-die opening: rule of 8 & material chart*
