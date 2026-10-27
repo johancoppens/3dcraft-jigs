@@ -40,13 +40,24 @@ is faster: at the defaults (90 deg) the zigzags are at 142.2 deg. At 179 deg the
 180 deg (folded flat) is not offered: a sheet without thickness folded flat lays facets on one another, which
 3DCraft refuses.
 
+The facet that stays in place is a middle cell (the fourth) of the third row. A folded Miura-ori leans: each facet tilts
+by `theta = atan(tan(fold / 2) / cos(angle))` (half the zigzag creases' fold angle) about its zigzag edge, so the
+Jig turns the folded sheet back by `theta` about that edge's direction (`feature.transform`, the body `Panel`).
+The panel then lies level, its mean plane (the plane of each zigzag crease line) on `z = 0`, and it shrinks in
+place as it folds.
+
 ## Checked by assertions
 
-- `the folded sheet keeps the flat area`: the folded panel's area is `6 x 8 x a x b` at every fold angle (each
-  parallelogram has base `a` and height `b`): rigid folding does not stretch the paper.
+- `every cell is in the folded panel (area rows x cols x a x b)`: the folded panel's area is `6 x 8 x a x b`
+  (each parallelogram has base `a` and height `b`), so no facet is missing or cut short.
 - `the flat sheet is rows x cols parallelograms of a x b`: the flat sheet (a hidden fill of the same outline) has
   that area too.
 - `one facet per cell`: the folded panel has 48 facets, so the fold built every cell.
+- `folded thickness a sin(gamma) sin(theta), by the closed form`: the folded panel's height in z is
+  `a sin(angle) sin(theta)`, with `theta = atan(tan(fold / 2) / cos(angle))` the facets' lean (Schenk and Guest
+  2013): the solved fold against the Miura-ori's kinematics, to 0.001 mm.
+- `the panel lies level about z = 0`: its top is at half that height, so it lies level, mountains above and
+  valleys below.
 - `the pattern fits the sheet's width inside the margin`, `... height ...`: the flat sheet's box fits the paper
   less twice the margin.
 
@@ -92,10 +103,18 @@ true size in millimetres (the pattern's own size, not the paper's).
    corners and it opens in one motion.
 
 **Laser-scoring.** Use the DXF or SVG; give the layers `mountain` and `valley` a low-power score (engrave line)
-setting that marks or half-cuts the card without going through, and the layer `boundary` a cut. A laser scores
-from the top only: score the valleys from the front, then flip the sheet against a jig or registration marks
-and score the mountains from the back, or score both from the front and fold the mountains against the score
-(works on paper and thin card, not on thick card). Try your power on a test strip first.
+setting that half-cuts the card without going through, and the layer `boundary` a cut. **A half-cut belongs on
+the outside of its fold:** the kerf opens as the card bends and the uncut skin on the inside is the hinge; a
+half-cut on the inside is squeezed shut, and the card buckles or cracks beside it. Seen from the printed side
+(the front), the outside of a mountain is the front and the outside of a valley is the back. A laser cuts from
+the top only, so:
+
+1. Front up: half-cut the **mountains** (red) only.
+2. Flip the sheet about its long edge against a corner stop or registration marks, and mirror the file
+   (left-right) in your laser software; half-cut the **valleys** (blue) only, then cut the outline.
+
+On paper and thin card (up to about 200 g/m²) a single pass from the front for all creases works too: the
+valleys then have their score on the inside, which thin stock forgives. Try your power on a test strip first.
 
 ## Sources
 

@@ -109,13 +109,29 @@ def main():
 
     add(["feature.fill", {"sketch": "Crease pattern", "name": "Flat sheet"}])
     add(["feature.visible", {"feature": "Flat sheet", "visible": False}])
-    add(["feature.fold", {"sketch": "Crease pattern", "name": "Miura-ori", "creases": creases}])
-    add(["body.appearance", {"body": "Miura-ori", "color": COL_PANEL}])
+    # The facet that stays: the middle of cell 3 of row 2 (a row of even j, whose zigzag edge runs along
+    # (cos gamma, sin gamma)).
+    add(["feature.fold", {"sketch": "Crease pattern", "name": "Miura-ori", "creases": creases,
+                          "fixed": ["3.5 * a + 0.5 * d", "2.5 * b"]}])
+    # Lay the folded panel level: its facets lean by theta = atan(tan(fold / 2) / cos(gamma)) (half the
+    # zigzag creases' fold angle) about their zigzag edge, so turning the panel back by theta about that
+    # edge's direction puts its mean plane, the plane of a zigzag crease line, on z = 0.
+    add(["variable.set", {"name": "theta", "expr": "atan(tan(fold / 2) / cos(gamma))"}])
+    add(["feature.transform", {"source": "Miura-ori", "name": "Panel", "angle": "theta",
+                               "axis": ["cos(gamma)", "sin(gamma)", "0"], "pivot": ["3.5 * a + 0.5 * d", "2.5 * b", "0 mm"]}])
+    add(["body.appearance", {"body": "Panel", "color": COL_PANEL}])
 
-    add(["assert.add", {"name": "the folded sheet keeps the flat area", "measure": "area", "of": "Miura-ori", "eq": "flatArea"}])
+    add(["assert.add", {"name": "every cell is in the folded panel (area rows x cols x a x b)", "measure": "area", "of": "Panel", "eq": "flatArea"}])
     add(["assert.add", {"name": "the flat sheet is rows x cols parallelograms of a x b", "measure": "area", "of": "Flat sheet", "eq": "flatArea"}])
     add(["assert.add", {"name": "one facet per cell", "measure": "count",
-                        "of": {"kind": "face", "where": {"in": "Miura-ori"}}, "eq": "rows * cols"}])
+                        "of": {"kind": "face", "where": {"in": "Panel"}}, "eq": "rows * cols"}])
+    # The panel's thickness when folded, by the closed form (Schenk and Guest 2013): a straight crease of
+    # length a, at gamma to the zigzag edge, leans by theta, and mountains and valleys alternate above and
+    # below the mean plane. Checks the solved fold against the kinematics, and that the panel lies level.
+    add(["assert.add", {"name": "folded thickness a sin(gamma) sin(theta), by the closed form", "measure": "extent",
+                        "of": "Panel", "axis": "z", "eq": "a * sin(gamma) * sin(theta)", "tol": "0.001 mm"}])
+    add(["assert.add", {"name": "the panel lies level about z = 0", "measure": "boxMax",
+                        "of": "Panel", "axis": "z", "eq": "a * sin(gamma) * sin(theta) / 2", "tol": "0.001 mm"}])
     add(["assert.add", {"name": "the pattern fits the sheet's width inside the margin", "measure": "extent",
                         "of": "Flat sheet", "axis": "x", "max": "usableW"}])
     add(["assert.add", {"name": "the pattern fits the sheet's height inside the margin", "measure": "extent",
@@ -128,7 +144,7 @@ def main():
                    "group": "Pattern", "min": "10 mm", "max": "floor(usableH / rows / (0.5 mm)) * (0.5 mm)", "step": "0.5 mm", "unit": "mm"}),
         ("gamma", {"label": "Parallelogram angle", "description": "Acute angle of the parallelograms; 90 deg would be a plain grid, which does not fold rigidly",
                    "group": "Pattern", "min": "45 deg", "max": "85 deg", "step": "1 deg", "unit": "deg"}),
-        ("fold", {"label": "Fold", "description": "Fold angle of the straight creases: 0 is flat, 179 deg almost folded flat; every other crease follows",
+        ("fold", {"label": "Fold", "description": "Fold angle of the straight creases: 0 is flat, 179 deg almost folded flat; all other creases follow",
                   "group": "Fold", "min": "0 deg", "max": "179 deg", "step": "1 deg", "unit": "deg"}),
         ("sheet", {"label": "Paper", "description": "Paper size for the printed crease pattern (table sheets)",
                    "group": "Paper", "kind": "choice", "choicesFrom": "sheets"}),
