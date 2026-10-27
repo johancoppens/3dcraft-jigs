@@ -74,7 +74,7 @@ station.
   of each end, drawn from the keel's formula.
 - **Flat panels.** `feature.unfold` lays the outside skin of each starboard plate flat on the floor (cut two
   of each, stacked face to face, for the pair). Each is cut by three regions into three pieces at two
-  **puzzle joints**: a line across the panel with a dovetail key every 75 mm, half way between two stitch
+  **puzzle joints**: a line across the panel with a dovetail key every 73 mm, half way between two stitch
   stations; even rows are joined at v = ±0.375 of the stitch grid (η ≈ 0.30 and 0.70), odd rows at −0.475
   and 0.275, so the joints are staggered; the middle piece lies 50 mm along, the last 100 mm.
 - **Stitch holes** along every stitched seam: keel, chines, sheer and ridge. Holes of `holeD` (2 mm), `holeIn`
@@ -87,9 +87,10 @@ station.
   square to its panel's station normal, at the panel's own formulas, drilled through the plate (both sides
   of the boat); `feature.unfold` carries the holes onto the flat pieces, so they are on the cut sheet.
 
-`gen.py` writes 211 variables (the version that computed the geometry itself needed 3839), 292 feature
-commands and 31 assertions; a build with every assertion measured takes about 130 s at the defaults (the
-drilling of some 500 holes and the 27 flat pieces are most of it).
+`gen.py` writes 217 variables (the version that computed the geometry itself needed 3839), 292 feature
+commands and 30 assertions; a regeneration takes 30 to 100 s (median 56 s over the check's points), a build
+with every assertion measured about 130 s at the defaults (drilling some 500 holes and the 27 flat pieces
+are most of it).
 
 ## What 3DCraft checks (assertions)
 
@@ -102,32 +103,56 @@ drilling of some 500 holes and the 27 flat pieces are most of it).
 | the end pours are dry | above the highest waterline the freeboard allows |
 | the coaming stands on the deck; the cockpit lets the knees in | distance 0; its length ≥ 0.34 × height + room behind the seat |
 | every flat piece fits a 2440 mm sheet | per piece and joint parity |
-| stitch holes keep their distance from the edges | hole walls at least `holeIn − holeD/2 − tHull` from every rim |
-| every stitch hole is whole on the cut sheet | the flat pieces carry exactly the holes drilled (no puzzle joint runs into one) |
+| every stitch hole is drilled | the starboard plates carry exactly the holes the seams call for (the port side the same); no puzzle joint can run into one, as the seams leave out the stations within two of a joint |
 | stitch holes pair up across the keel, chine 1, the sheer and the ridge | the nearest hole walls across the seam are no farther apart than two holes at one station, `holeIn` either side of the chine |
 
 ## Hydrostatics
 
 From `measure.levelFor` (the draft for the weight, the centre of buoyancy, the waterplane and its second
-moments) and its `surface` (the wetted surface), KB, BM = I/∇, KM and GM are worked out by `hydro.py` from
-the measures. Waiting for a fix of `levelFor` in 3DCraft (plan/repro/repro-sea-kayak-9.json), the numbers
-are not yet measured on this hull. **Blocked by measures in expressions** (repro 4): an assertion GM ≥ 0, the
-prismatic coefficient and the displacement-length ratio (they need the waterline's length), the capacity
-from the measures themselves (the ranges use a block coefficient read off `measure.below` over the corners
-of the ranges, on the safe side, and the freeboard assertion checks the real waterline), and the trim (the
-seat back is placed 230 mm behind the widest station instead of where the centre of gravity lies over the
-centre of buoyancy).
+moments) and its `surface` (the wetted surface), `hydro.py` works out KB, BM = I/∇, KM and GM from the
+measures. At the defaults (80 kg paddler, 5 kg load, sea water):
+
+| Quantity | 3DCraft (measures) | Igdlorssuit (published) | Earlier Jig (formulas outside 3DCraft) |
+|---|---|---|---|
+| Boat, displacement | 15.9 kg, 100.9 kg | 88 kg | 14.9, 99.9 kg |
+| Draft (levelFor, 9 steps) | 105.6 mm | 122 mm | 107.6 mm |
+| Waterplane area | 1.516 m² | | 1.445 m² |
+| Wetted surface | 1.74 m² | 1.57 m² | 1.69 m² |
+| KB, BM, KM | 66, 218, **285** mm | KM 269 mm | 67, 204, **271** mm |
+| KG | 250 mm | | 248 mm |
+| **GM** | **35 mm** | | **23 mm** |
+| Centre of buoyancy, x | 124 mm aft of the middle | | 124 mm aft |
+
+The ends are fuller than the earlier lines' (bottom panels narrowing as G^1.6 where they had G^2.2: plates
+refuse panels narrower than about their thickness), so the waterplane carries more area towards the ends
+and BM is 7 % higher; KB and KG are as before. The Igdlorssuit is finer still (Cp 0.524).
+
+**Not yet assertions** (measures in expressions, approved by the developer and to be built in 3DCraft, repro
+4): GM ≥ 0, the prismatic coefficient and the displacement-length ratio (they need the waterline's
+length), the capacity from the measures themselves (the ranges use a block coefficient read off
+`measure.below` over the corners of the ranges, on the safe side, and the freeboard assertion checks the
+real waterline), and the trim (the seat back is placed 230 mm behind the widest station instead of where
+the centre of gravity lies over the centre of buoyancy). When they land, KB, BM, KM, GM and Cp move from
+`hydro.py` into the model as assertions.
 
 ## What 3DCraft cannot do yet (repros in the 3DCraft repository, plan/repro)
 
-- Plates on `feature.developable` sheets: spurious end fans (repro 8), so the plates are on the envelope.
+- The bottom panel's developable connection has a fold cone amidships (not yet unfoldable) and the deck's
+  is refused (repro 8), so every plate is on the envelope's faces.
 - The ends' panels: plates refuse panels narrower than about their thickness, so the plywood ends at η 0.03
   and 0.97 and the end pour is the hull there; the ends table is less fine than the earlier lines
   (p = 1.8, 1.6, 1.3 for the bottom panel, where 2.6, 2.2, 1.8 left panels under a millimetre wide).
 - The coaming's lip (repro 10), the riser's developed strip and the bulkheads laid flat by `feature.unfold`
   (repro 11; the bulkheads are flat and on their own cut sheet).
-- No volume shared between neighbouring plates, proven by a boolean intersection: the boolean refuses
-  touching freeform plates (repro 12). The features are in the model, switched off (`overlapProof`).
+- **No volume shared between neighbouring plates, proven by a boolean intersection** of every neighbouring
+  pair: the boolean refuses touching freeform plates today (repro 12, being fixed). The features are in the
+  model, switched off (`overlapProof = 0`); the distance-0 assertions alone do not prove it, and this Jig
+  is not finished until the intersections are on and green.
+- The holes' distance from the plates' rims: measuring it takes minutes per thin plate (repro 13), so it is
+  not asserted; the holes are set `holeIn + t tan(d/2)` in from the chine (holeIn from the plate's edge
+  after its joint, d the seam's angle).
+- Plates on the developable sheets of the upper panels (repro 14: a topside's offset folds over, the port
+  ends' corners are not reached, a skin does not unfold).
 - `levelFor` on this hull (repro 9) and measures in expressions (repro 4).
 
 ## Cut sheet
