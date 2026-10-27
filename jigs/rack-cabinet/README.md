@@ -14,7 +14,7 @@ opened.
 | Depth | Cabinet | 450 mm | 300 to 600 mm, front to wall, step 10 mm |
 | Sheet | Cabinet | Steel DC01 1.5 mm | Aluminium 5052-H32 2 / 3 mm, Steel DC01 1.5 / 2 mm |
 | Rail profile | Rails | C | L (front face and a leg on the side), C (with a return at the back) |
-| Rail holes | Rails | Square 9.5 mm | Square 9.5 mm (M6 cage nuts), M6 tapped (5.0 mm tap drill) |
+| Rail holes | Rails | Square 9.5 mm | Square 9.5 mm (M6 cage nuts); M6 tapped (5.0 mm tap drill) only in 2 mm steel |
 | Rear rails | Rails | on | on / off |
 | Door | Door | on | a vented door, or an open front |
 | Door shown open | Door | 105 deg | 0 to 110 deg (only the view) |
@@ -41,7 +41,7 @@ and pan. Parts that are bolted together touch; none overlaps another.
 
 **Standard and stock.** See [`rack-panel`](../rack-panel/) and `scripts/racklib.py`: EIA-310-D (19 in,
 1 U = 44.45 mm, 465.1 mm hole centres, the 1/2-5/8-5/8 in pattern, 450 mm opening, 9.5 mm square holes),
-IEC 60297-3-100 panel heights; DIN 6935 minimum radii and K-factor, the 5052-H32 bend radii, Protolabs' 4 t
+IEC 60297-3-100 panel heights; DIN 6935 minimum radii and K-factor (a steel standard, an approximation for 5052), the 5052-H32 bend radii, Protolabs' 4 t
 flange and 2.5 t + r hole-to-bend rules.
 
 **Assertions (50).** Height, depth and width outside; on every rail (front and rear) the holes at the
@@ -64,7 +64,15 @@ craft3d-cli run dist/rack-cabinet.3dcraftjig \
   --cmd file.export --params '{"path": "rail.dxf", "sheetMetal": "Rail C square"}'
 ```
 
-Cut four rails (two with rear rails off), two sides, and one of each other part.
+Cut four rails (two with rear rails off), two sides, and one of each other part. The left rails are the
+mirror of the right ones and the left side the mirror of the right: cut the same blank (`Rail ...`, or `Side
+right`) and flip it before bending, so the bends go the other way.
+
+**Safety.** The cabinet hangs on its four wall-mount holes: use wall anchors and screws rated for the loaded
+cabinet (equipment included) in your wall, and check that the wall carries it. M6 tapped holes in 1.5 to 2
+mm sheet hold only 1.5 to 3 threads, so the Jig offers them only in 2 mm steel; in thinner sheet use the
+square holes with cage nuts, or set rivnuts or clinch nuts. Choose the cage nut's clip for the sheet: 3 mm
+aluminium needs the thick-panel type.
 
 **Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): sheet-metal measures that skip parts that are off
 (repro-rack-2), so the rails and the door are checked on their geometry; holes with a condition or cut later
@@ -72,4 +80,4 @@ in a flat pattern (repro-rack-4); slots in thicker sheet (repro-rack-5: the door
 radius); flanges with holes (hinge holes in the sides' lips), a flange on part of an edge, closed (mitred)
 box corners; the flat pattern in the export dialog and on one sheet with the others.
 
-**Checked.** `check-range` passes 88 of 88 points (64 corners, every choice, 16 random; seed 1), plain and with `--deep`; 3DCraft `main` at c75ca7b8.
+**Checked.** `check-range` passes every point (87 of 87; 64 corners, every choice, 16 random; seed 1), plain and with `--deep`; 3DCraft `main` at c75ca7b8.

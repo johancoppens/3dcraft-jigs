@@ -21,7 +21,7 @@ The sheet stock (min inner bend radius, K-factor, min flange, hole to bend):
   1.5 mm sheet, 2.5 mm for 2 mm sheet (the row "over 1.5 to 2.5 mm"). Aluminium 5052-H32: 1 t for
   2 mm and 1.5 t for 3 mm, the Aluminum Association's 90-degree bend radii (Aluminum Standards and Data)
   as suppliers restate them.
-- K-factor: DIN 6935's correction factor k = 0.65 + 0.5 log10(r / s) (for r / s < 5) puts the neutral
+- K-factor: DIN 6935 (a standard for steel, used here for 5052 as an approximation): its correction factor k = 0.65 + 0.5 log10(r / s) (for r / s < 5) puts the neutral
   fibre at r + k s / 2, so K = k / 2; computed in the document from the row's radius and thickness.
 - Min flange 4 t, holes at least 2.5 t + r from a bend: the rules of thumb of Protolabs' sheet metal
   design guide (protolabs.com/resources/design-tips/sheet-metal), measured here (conservatively) from
@@ -33,6 +33,7 @@ PANEL_W = 482.6           # mm, the panel's width (19 in)
 PANEL_GAP = 0.8           # mm, a panel is n U - 0.8 mm high (IEC 60297-3-100)
 HOLE_X = 465.1 / 2        # mm, the mounting holes' centres from the rack's centre line (18.312 in apart)
 HOLES_IN_U = (6.35, 22.225, 38.1)   # mm, the three holes of a U above its lower boundary
+HOLE_NAMES = ("hole1", "hole2", "hole3")   # the same as document variables (spec_variables)
 OPENING = 450.0           # mm, the clear opening between the rails (17.72 in)
 CAGE_HOLE = 9.5           # mm, square hole for a cage nut
 M6_TAP = 5.0              # mm, tap drill for M6 x 1
@@ -79,7 +80,7 @@ def stock_commands(default="1"):
 def spec_variables():
     """The spec as document variables (so assertions name them)."""
     return [["variable.set", {"name": n, "expr": e}] for n, e in [
-        ("U", unit(U)), ("panelW", unit(PANEL_W)), ("panelGap", unit(PANEL_GAP)), ("holeX", unit(HOLE_X)),
+        ("U", unit(U)), ("panelW", unit(PANEL_W)), ("panelGap", unit(PANEL_GAP)), ("holeX", "465.1 mm / 2"),
         ("hole1", unit(HOLES_IN_U[0])), ("hole2", unit(HOLES_IN_U[1])), ("hole3", unit(HOLES_IN_U[2])),
         ("opening", unit(OPENING)), ("cabInnerW", unit(CAB_INNER_W)), ("sideClear", unit(PANEL_SIDE_CLEAR)),
     ]]
@@ -112,8 +113,8 @@ def rail_hole_centres(n_max, z0="0 mm"):
     pattern, unit by unit."""
     out = []
     for k in range(n_max):
-        for h in HOLES_IN_U:
-            out.append((k, "(%s) + %d * U + %s" % (z0, k, unit(h))))
+        for h in HOLE_NAMES:
+            out.append((k, "(%s) + %d * U + %s" % (z0, k, h)))
     return out
 
 

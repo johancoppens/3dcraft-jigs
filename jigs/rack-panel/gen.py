@@ -28,18 +28,18 @@ ID = "rack-panel"
 MAX_U = 4
 unit = rk.unit
 
-CUTOUTS = ["None", "D-sub (DE-9)", "XLR / Neutrik D", "Window"]
+CUTOUTS = ["None", "D-sub DE-9 (socket)", "XLR / Neutrik D", "Window"]
 FIXINGS = ["Round holes", "Slots"]
 
 INPUTS = [
-    ("nU", "2"),
+    ("nU", "3"),
     ("flanged", "1"),
     ("fixing", "2"),          # 1 round holes, 2 slots
     ("handles", "1"),
     ("cutout", "3"),          # 1 none, 2 D-sub, 3 XLR, 4 window
     ("count", "8"),
     ("winW", "300 mm"),
-    ("winH", "60 mm"),
+    ("winH", "25 mm"),
 ]
 DERIVED = [
     ("H", "nU * U - panelGap"),                 # the panel's height
@@ -48,7 +48,7 @@ DERIVED = [
     ("a", "opening / 2 - 5 mm - d"),            # the flanges span -a..a, inside the rails
     ("flangeL", "max(15 mm, minFlange)"),       # flange beyond the bend
     ("rM", unit(rk.M6_CLEAR / 2)),              # mounting hole / slot end radius
-    ("slotHalf", unit((rk.M6_SLOT_L - rk.M6_CLEAR) / 2)),
+    ("slotHalf", "(10 mm - 6.6 mm) / 2"),
     ("mHalf", "if(fixing == 2, slotHalf, 0 mm)"),
     ("rH", unit(rk.M4_CLEAR / 2)),              # handle screw holes
     ("hX", "holeX - %s" % unit(rk.HANDLE_IN)),  # handle holes' x
@@ -56,7 +56,7 @@ DERIVED = [
     ("eh", "max(8 mm, edgeMin + rH)"),          # handle holes from the edges
     ("hc", "H - 2 * eh"),                       # handle hole centres
     ("xa", "if(handles, hX - rH - 6 mm, opening / 2 - 5 mm)"),   # cut-outs within -xa..xa
-    # D-sub DE-9 front-mount cut-out (Harting, CECC 75 301-802): 20.5 x 11.4 mm, sides at 10 deg,
+    # D-sub DE-9 front-mount cut-out for a female (socket) connector (Harting, CECC 75 301-802): 20.5 x 11.4 mm, sides at 10 deg,
     # 3.1 mm holes on 25 mm centres; pitch 33 mm (flange 30.8 mm).
     ("dsW", "20.5 mm"), ("dsH", "11.4 mm"), ("dsHole", "1.55 mm"), ("dsC", "12.5 mm"), ("dsP", "33 mm"),
     # Neutrik D series (XLR): 24 mm hole, two 3.2 mm holes 19 mm x 24 mm apart on a diagonal; flange
@@ -103,8 +103,8 @@ def panel_sketch(name, flanged, cut, handles, slots):
     flanges = [lines[k] for k in fl]
     seeds = []
     # Mounting holes: the outer two holes of every U (6.35 and 38.1 mm above its boundary), both sides.
-    for h in (rk.HOLES_IN_U[0], rk.HOLES_IN_U[2]):
-        zc = "z0 + %s" % unit(h)
+    for h in ("hole1", "hole3"):
+        zc = "z0 + %s" % h
         if slots:
             seeds += sk.slot(zc, "-holeX", "slotHalf", "rM")
         else:
@@ -224,7 +224,7 @@ def assertions():
     add("width: 19 in (482.6 mm, EIA-310)", "extent", of="Panel", axis="x", eq="panelW")
     add("height: n U - 0.8 mm (IEC 60297-3-100)", "extent", of="Panel", axis="z", eq="H")
     add("centred on its U boundaries (0.4 mm above the lower one)", "boxMin", of="Panel", axis="z", eq="z0 + panelGap / 2")
-    add("fits between the sides of a rack-cabinet with clearance", "extent", of="Panel", axis="x",
+    add("its measured width leaves 4 mm to each side of a rack-cabinet (cabInnerW; the cabinet checks its sides with a reference panel)", "extent", of="Panel", axis="x",
         max="cabInnerW - 2 * sideClear")
     # A hole's wall is a face of the sheet's rim: 3DCraft gives a plate's rim over a circle as freeform
     # faces, not a cylinder (repro-rack-3), one or two per circle; an `area` filter on them is slow. So the
@@ -237,13 +237,13 @@ def assertions():
                 ["%s * holeX + mHalf + rM + 0.01 mm" % sx, slab[1], big]) for sx in ("-1", "1")]
     boxes = []
     for k in range(MAX_U):
-        for h in (rk.HOLES_IN_U[0], rk.HOLES_IN_U[2]):
-            zc = "z0 + %d * U + %s" % (k, unit(h))
+        for h, hval in (("hole1", rk.HOLES_IN_U[0]), ("hole3", rk.HOLES_IN_U[2])):
+            zc = "z0 + %d * U + %s" % (k, h)
             for sx in ("-1", "1"):
                 b = box(["%s * holeX - mHalf - rM - 0.01 mm" % sx, slab[0], "%s - rM - 0.01 mm" % zc],
                         ["%s * holeX + mHalf + rM + 0.01 mm" % sx, slab[1], "%s + rM + 0.01 mm" % zc])
                 boxes.append(b)
-                add("mounting hole at the EIA-310 place: U %d, %g mm, x = %s465.1 / 2 mm" % (k + 1, h, "-" if sx == "-1" else "+"),
+                add("mounting hole at the EIA-310 place: U %d, %g mm, x = %s465.1 / 2 mm" % (k + 1, hval, "-" if sx == "-1" else "+"),
                     "count", of=faces(dict({"in": "Panel", "surface": "freeform"}, **b)), min="if(nU > %d, 1, 0)" % k,
                     max="if(nU > %d, 4, 0)" % k)
     add("no hole in the ears off the EIA-310 pattern", "count",
@@ -307,7 +307,7 @@ def publish():
         ("flanged", dict(label="Flanges", description="Bend the top and bottom edges back between the rails, "
                                                       "for stiffness", group="Panel", order=3, kind="boolean")),
         ("fixing", dict(label="Mounting", description="6.6 mm holes for M6, or M6 slots (10 x 6.6 mm, for lateral play; "
-                                                     "not in 3 mm aluminium, which 3DCraft cannot plate yet)",
+                                                     "not offered in 3 mm aluminium)",
                         group="Panel", order=4, kind="choice", choices=FIXINGS, max="if(stock == 2, 1, 2)")),
         ("handles", dict(label="Handle holes", description="Two M4 holes each side for front handles, "
                                                            "19.05 mm inboard of the mounting holes",

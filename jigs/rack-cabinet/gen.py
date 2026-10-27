@@ -198,8 +198,8 @@ def rails():
             sk = rk.Sketch("Sketch " + nm, "zx", "yr", when=when)
             ln = sk.polyline(rect_uv("zU0 - mr", "zU0 + nU * U + mr", "opening / 2", "xo"))
             seeds = []
-            for h in rk.HOLES_IN_U:
-                zc = "zU0 + %s" % unit(h)
+            for h in rk.HOLE_NAMES:
+                zc = "zU0 + %s" % h
                 if holes == 1:
                     seeds += sk.square(zc, "holeX", unit(rk.CAGE_HOLE))
                 else:
@@ -358,8 +358,9 @@ def publish():
         ("profile", dict(label="Rail profile", description="L (front face and a leg on the side) or C (with a "
                                                            "return at the back of the leg)", group="Rails",
                          order=1, kind="choice", choices=PROFILES)),
-        ("railHoles", dict(label="Rail holes", description="Square holes for M6 cage nuts, or 5 mm holes to tap M6",
-                           group="Rails", order=2, kind="choice", choices=RAIL_HOLES)),
+        ("railHoles", dict(label="Rail holes", description="Square holes for M6 cage nuts, or 5 mm holes to tap M6 (only in 2 mm steel: thinner sheet holds too few threads; use rivnuts or clinch nuts there)",
+                           group="Rails", order=2, kind="choice", choices=RAIL_HOLES,
+                           max="if(stock == 4, 2, 1)")),
         ("rear", dict(label="Rear rails", description="A second pair of rails at the back, for deep equipment",
                       group="Rails", order=3, kind="boolean")),
         ("door", dict(label="Door", description="A vented door hinged at the left, or an open front",
