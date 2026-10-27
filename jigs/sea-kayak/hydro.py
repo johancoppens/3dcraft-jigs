@@ -47,7 +47,7 @@ def main():
         os.remove(script)
     inspect, measure, level = (json.loads(line) for line in out[-3:])
     var = {v["name"]: v["value"] for v in inspect["variables"]}
-    wood = [b for b in measure["bodies"] if b["name"].startswith(("Plank", "Deck"))]
+    wood = [b for b in measure["bodies"] if b["name"].startswith(("Plank", "Top", "Deck")) and b.get("mass")]
     m_ply = sum(b["mass"] for b in wood)
     z_ply = sum(b["mass"] * b["centroid"][2] for b in wood) / m_ply
     x_ply = sum(b["mass"] * b["centroid"][0] for b in wood) / m_ply
@@ -72,6 +72,7 @@ def main():
         ("Displacement", f"{m_tot:.1f} kg, V = {V / 1e9:.5f} m3"),
         ("Draft T (levelFor)", f"{T:.1f} mm in {level['steps']} steps"),
         ("Waterplane area", f"{sec['area'] / 1e6:.4f} m2"),
+        ("Wetted surface (below the waterline)", f"{level['surface'] / 1e6:.3f} m2"),
         ("KB, BM, KM", f"{KB:.1f}, {BM:.1f}, {KM:.1f} mm"),
         ("KG (boat, paddler, load)", f"{KG:.1f} mm"),
         ("GM", f"{GM:.1f} mm"),

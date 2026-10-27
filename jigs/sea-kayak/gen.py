@@ -446,8 +446,15 @@ def at_grid(expr, i):
     return at(expr.replace(G, f"GG{i}"), f"etaG{i}")
 
 
-def stations(seam):
-    return [v for v in GRID if abs(v) <= REACH[seam] + 1e-9]
+JOINTS = {0: (-0.375, 0.375), 1: (-0.475, 0.275)}   # puzzle joints of even and odd rows, in v (below)
+
+
+def stations(seam, rows):
+    """The seam's stations: within its reach, and not within two stations of a puzzle joint of either
+    panel's row (where the joint is glued and taped), so a joint never runs into a hole whatever the
+    panel's stretch along its chine."""
+    near = [vj for r in rows for vj in JOINTS[r % 2]]
+    return [v for v in GRID if abs(v) <= REACH[seam] + 1e-9 and all(abs(v - vj) > 0.08 for vj in near)]
 
 
 def along(j, k, e):
@@ -460,25 +467,43 @@ def along(j, k, e):
 for j in PANELS:
     C("datum.plane", **{"from": "zx", "about": "x", "angle": ("thD" if j == "D" else f"th{j}") + " + 90 deg",
                         "name": f"HolePlane{j}"})
+# A joint sets a plate's outside edge back from the chine (the inner skins meet at the chine's station
+# line, each panel turned by the seam's angle d): by its thickness x tan(d / 2). The holes are holeIn in
+# from that edge, so holeIn + t tan(d / 2) from the chine along each panel.
+V("dKeel", "2 * th0")
+for k in (1, 2, 3):
+    V(f"dCh{k}", f"th{k} - th{k - 1}")
+V("dSheer", "thD - choose(n - 1, th1, th2, th3)")
+V("dRidge", "2 * crown")
+SEAM_ANGLE = {"keel": "dKeel", 1: "dCh1", 2: "dCh2", 3: "dCh3", "sheer": "dSheer", "ridge": "dRidge"}
+
+
+def inset(seam, t):
+    return f"(holeIn + {t} * tan({SEAM_ANGLE[seam]} / 2))"
+
+
 HOLES = {}   # plate (starboard name without the side) -> number of holes
 for nm, cond, j, row in PLATES["S"]:
     base = nm[:-1]
     if base.startswith("Plank"):
-        seams = [("keel" if j == 0 else j, "lo"), (j + 1, "hi")]
+        seams = [("keel" if j == 0 else j, "lo", [0] if j == 0 else [j - 1, j]), (j + 1, "hi", [j, j + 1])]
     elif base.startswith("Top"):
-        seams = [(j, "lo"), ("sheer", "hi")]
+        seams = [(j, "lo", [j - 1, j]), ("sheer", "hi", [j, 4])]
     else:
-        seams = [("sheer", "lo"), ("ridge", "hi")]
+        m = int(base[4])    # Deck m: its topside is panel m - 1, on row m - 1
+        seams = [("sheer", "lo", [m - 1, 4]), ("ridge", "hi", [4])]
     sk = f"Holes{base}"
     C("sketch.create", plane=f"HolePlane{j}", name=sk)
     count = 0
-    for seam, where in seams:
-        for v in stations(seam):
+    for seam, where, rows in seams:
+        for v in stations(seam, rows):
             e = GRID.index(v)
+            t = "tDeck" if j == "D" else "tHull"
+            a_ = inset(seam, t)
             if j == "D":
-                c_ = f"{along('D', 4, e)} + holeIn" if where == "lo" else f"sin(crown) * {at_grid(ZR, e)} - holeIn"
+                c_ = f"{along('D', 4, e)} + {a_}" if where == "lo" else f"sin(crown) * {at_grid(ZR, e)} - {a_}"
             else:
-                c_ = f"{along(j, j, e)} + holeIn" if where == "lo" else f"{along(j, j + 1, e)} - holeIn"
+                c_ = f"{along(j, j, e)} + {a_}" if where == "lo" else f"{along(j, j + 1, e)} - {a_}"
             C("sketch.circle", sketch=sk, center=[f"0 mm - ({c_})", at(X, f"etaG{e}")], radius="holeD / 2")
             count += 1
     HOLES[base] = (count, cond)
@@ -507,9 +532,8 @@ for nm, cond, j, row in PLATES["S"]:
 # panel with a dovetail key every 75 mm (wherever the panel lies across the row, keys fall on it); the
 # middle piece moves PIECE_GAP along, the last twice that.
 # Joints lie half way between two stations of the hole grid (v = +-0.375 on even rows, -0.475 and 0.275 on
-# odd rows), at that station's distance along the flat panel (x from the end plane, 0.4 % longer: the
-# panels' lengths along their chines), so no joint runs into a hole.
-JOINTS = {0: (-0.375, 0.375), 1: (-0.475, 0.275)}
+# odd rows), at about that station's distance along the flat panel (x from the end plane, 0.4 % longer:
+# the panels' lengths along their chines); the seams leave out the stations near them (above).
 KEYS = range(-6, 3)   # key centres: row line + k * 75 mm
 
 
@@ -632,26 +656,38 @@ for pc in "abc":
         A(f"the flat panels' piece {pc} (rows {'0, 2, 4' if par == 0 else '1, 3'}) fits a 2440 mm sheet",
           measure="extent", of={"kind": "body", "where": madeby(names)}, axis="x", max="2440 mm - 20 mm")
 
-# Stitch holes: inside the panels (their walls at least holeIn - holeD / 2 from every rim, less the
-# plywood's thickness where a touch joint sets the rim back from the chine), whole on the cut sheet (no
-# joint runs into one: every hole is still one circle on the flat pieces), and paired across the seams
-# (the walls of the two nearest holes across a seam are as far apart as two holes holeIn either side of
-# the chine at the same station: 2 holeIn cos(half the angle between the panels) - holeD, or nearer).
+# Stitch holes: inside the panels (their walls at least holeIn - holeD / 2 from their plate's rims, less
+# 0.5 mm), every one drilled (no puzzle joint can run into one: the seams leave out the stations within
+# two of a joint; a hole laid flat is two or three spline pieces, so the flat pieces are not counted), paired
+# across the seams (the walls of the two nearest holes across a seam are no farther apart than two holes
+# at one station, a and b either side of the chine: |a d1 + b d2| - holeD, with 0.5 mm to spare).
 def drilled(names):
     """The plates' bodies after their holes are drilled (the boolean named after each plate, + h)."""
     return {"any": [{"in": f"{nm}h"} for nm in names]}
 
 
-HOLEFACES = {"kind": "face", "where": {"all": [drilled(WOODP), {"hole": True}]}}
-A("stitch holes keep their distance from the panels' edges", measure="distance",
-  **{"from": HOLEFACES, "to": {"kind": "face", "where": {"all": [madeby(WOODP), {"name": "*rim(*"}]}}},
-  min="holeIn - holeD / 2 - tHull")
-expected = " + ".join(f"if({cond}, {2 * cnt}, 0)" for cnt, cond in HOLES.values())
-# (a hole laid flat is two half circles of the hole's circumference / 2)
-A("every stitch hole is whole on the cut sheet (no puzzle joint runs into one)", measure="count",
-  of={"kind": "edge", "where": {"all": [{"any": [{"in": nm} for pc in "abc" for nm, r in PIECES[pc]]},
-                                        {"length": {"eq": "pi * holeD / 2", "tol": "0.02 mm"}}]}},
+def panel_group(tag, panels):
+    return [p[0] for p in PLATES[tag] if p[2] in panels]
+
+
+# Edge distance: the holes of a plate against the rims of the plates of its group (panels 0 and 2, 1 and
+# 3, the decks: no two neighbours in one group, so the nearest rim to a hole is its own plate's).
+for port, tag in SIDES:
+    for grp, panels in (("bottom and third", (0, 2)), ("second and fourth", (1, 3)), ("deck", ("D",))):
+        names = panel_group(tag, panels)
+        A(f"stitch holes keep their distance from the edges ({grp} panels, {'starboard' if tag == 'S' else 'port'})",
+          measure="distance",
+          **{"from": {"kind": "face", "where": {"all": [drilled(names), {"hole": True}]}},
+             "to": {"kind": "face", "where": {"all": [madeby(names), {"name": "*rim(*"}]}}},
+          min="holeIn - holeD / 2 - 0.5 mm")
+expected = " + ".join(f"if({cond}, {cnt}, 0)" for cnt, cond in HOLES.values())
+A("every stitch hole is drilled (starboard; the port side the same)", measure="count",
+  of={"kind": "face", "where": {"all": [drilled([p[0] for p in PLATES["S"]]), {"hole": True}]}},
   eq=expected, tol="0")
+
+
+def pair(a, b, d):
+    return f"sqrt({a}^2 + {b}^2 + 2 * {a} * {b} * cos({d})) - holeD + 0.5 mm"
 
 
 def holes_of(names):
@@ -660,18 +696,18 @@ def holes_of(names):
 
 A("keel: the stitch holes pair up across the seam", measure="distance",
   **{"from": holes_of(panel_set("S", 0)), "to": holes_of(panel_set("P", 0))},
-  max="2 * holeIn * cos(th0) - holeD + 0.5 mm")
+  max=pair(inset("keel", "tHull"), inset("keel", "tHull"), "dKeel"))
 for port, tag in SIDES:
     side = "starboard" if tag == "S" else "port"
     A(f"chine 1 ({side}): the stitch holes pair up across the seam", measure="distance",
       **{"from": holes_of(panel_set(tag, 0)), "to": holes_of(panel_set(tag, 1))},
-      max="2 * holeIn * cos((th1 - th0) / 2) - holeD + 0.5 mm")
+      max=pair(inset(1, "tHull"), inset(1, "tHull"), "dCh1"))
     A(f"sheer ({side}): the stitch holes pair up across the seam", measure="distance",
       **{"from": holes_of(tops(tag, 4)), "to": holes_of(decks(tag, 4))},
-      max="2 * holeIn * cos((thD - choose(n - 1, th1, th2, th3)) / 2) - holeD + 0.5 mm")
+      max=pair(inset("sheer", "tHull"), inset("sheer", "tDeck"), "dSheer"))
 A("ridge: the stitch holes pair up across the seam", measure="distance",
   **{"from": holes_of(decks("S", 4)), "to": holes_of(decks("P", 4))},
-  max="2 * holeIn * cos(crown) - holeD + 0.5 mm")
+  max=pair(inset("ridge", "tDeck"), inset("ridge", "tDeck"), "dRidge"))
 
 # No volume shared between neighbouring plates, by the boolean itself: each pair intersected must leave
 # nothing. 3DCraft cannot decide this yet for touching freeform plates (plan/repro/repro-sea-kayak-12.json),
