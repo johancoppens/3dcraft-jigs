@@ -533,19 +533,19 @@ for nm, cond, j, row in PLATES["S"]:
 
 # Each flat panel is cut into three pieces at two puzzle joints (a panel is longer than a 2440 mm sheet),
 # staggered from row to row so that the joints never line up on the hull. A joint is a line across the
-# panel with a dovetail key every 75 mm (wherever the panel lies across the row, keys fall on it); the
+# panel with a dovetail key every 73 mm (wherever the panel lies across the row, keys fall on it); the
 # middle piece moves PIECE_GAP along, the last twice that.
 # Joints lie half way between two stations of the hole grid (v = +-0.375 on even rows, -0.475 and 0.275 on
 # odd rows), at about that station's distance along the flat panel (x from the end plane, 0.4 % longer:
 # the panels' lengths along their chines); the seams leave out the stations near them (above).
-KEYS = range(-6, 3)   # key centres: row line + k * 75 mm
+KEYS = range(-6, 3)   # key centres: row line + k * 73 mm
 
 
 def joint_line(xj, yr, up):
     """Points of a joint at x = xj across the row (from below to above when up, else back down)."""
     pts = []
     for k in KEYS:
-        yc = f"{yr} + {k} * 75 mm"
+        yc = f"{yr} + 31 mm + {k} * 73 mm"
         pts += [[xj, f"{yc} - 12 mm"], [f"{xj} + 18 mm", f"{yc} - 20 mm"], [f"{xj} + 18 mm", f"{yc} + 20 mm"],
                 [xj, f"{yc} + 12 mm"]]
     return pts if up else pts[::-1]
@@ -554,7 +554,9 @@ def joint_line(xj, yr, up):
 for r in range(5):
     yr = row_y(r)
     j1, j2 = (f"(Xa + ({at(X, eta_v(v))} - Xa) * 1.004)" for v in JOINTS[r % 2])
-    lo, hi = f"{yr} - {(-KEYS[0] + 1) * 75} mm", f"{yr} + {(KEYS[-1] + 1) * 75} mm"
+    # the regions reach 1500 mm either side of the row (only their flat panel is cut by them, and a panel
+    # bows across its row by a few hundred millimetres), the keys in the middle
+    lo, hi = f"{yr} - 1500 mm", f"{yr} + 1500 mm"
     regions = {
         "a": [["Xa - 300 mm", lo], [j1, lo]] + joint_line(j1, yr, True) + [[j1, hi], ["Xa - 300 mm", hi]],
         "b": [[j1, lo], [j2, lo]] + joint_line(j2, yr, True) + [[j2, hi], [j1, hi]] + joint_line(j1, yr, False),
