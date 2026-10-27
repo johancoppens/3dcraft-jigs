@@ -47,6 +47,8 @@ standard.
 | [`phone-stand`](jigs/phone-stand/) | A phone or tablet stand with a curved strut and open back: angle, device thickness, optional cable slot | CC-BY-4.0 |
 | [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
 | [`cubesat`](jigs/cubesat/) | A CubeSat to the CDS Rev 14.1 and PC/104: 1U to 6U, stowed or deployed wings and antennas, a PC/104 stack as large as fits, optional camera, twelve assertions on the standard | CC-BY-4.0 |
+| [`rack-panel`](jigs/rack-panel/) | A 19-inch rack front panel (EIA-310) of 1 to 4 U in aluminium or steel sheet: flat or with bent-back flanges, M6 slots or holes on the rail pattern, handle holes, a row of D-sub or XLR cut-outs or a window, flat pattern | CC-BY-4.0 |
+| [`rack-cabinet`](jigs/rack-cabinet/) | A wall-mount 19-inch rack cabinet of 6 to 15 U, every part bent from sheet: sides, lid and pan with knock-outs, wall plate, L or C rails with cage-nut or M6 holes front and rear, a vented door; rack-panels fit it | CC-BY-4.0 |
 
 ## Using a Jig
 
@@ -83,6 +85,7 @@ scripts/build.sh       build every Jig into dist/, then the gallery
 scripts/check.sh       prove every Jig over its parameter range (craft3d-cli check-range)
 scripts/shaftlib.py    shared bore and set-screw options (gt2-pulley, spur-gear gen.py)
 scripts/gridfinitylib.py  the Gridfinity dimensions and profiles (gridfinity-bin, gridfinity-baseplate gen.py)
+scripts/racklib.py     the 19-inch rack (EIA-310) dimensions and the sheet stock table (rack-panel, rack-cabinet gen.py)
 scripts/gallery.py     dist/index.html and dist/thumbs/ from the built Jigs (Python standard library only)
 dist/                  the built Jigs, their thumbnails and the gallery page
 ```
