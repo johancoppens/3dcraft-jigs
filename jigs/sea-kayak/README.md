@@ -1,171 +1,162 @@
 # Sea kayak (stitch and glue)
 
-A Greenland-style **multichine sea kayak in okoume plywood**, built stitch and glue: four hull panels and
-a deck panel a side. It is built **entirely by 3DCraft from formulas**: `gen.py` writes commands and
-computes no geometry. The hull's lines are formulas; 3DCraft finds the keel, the chines and the sheer where
-the panels meet, makes each panel the developable surface between its chines, gives every panel its
-plywood thickness with the joints a builder makes (inner edges touching at the chines, the deck resting on
-the sheer panels), lays every panel flat for cutting, and finds the waterline for the paddler and the load
-on the exact hull. Licence: CC-BY-4.0.
+A Greenland-style **multichine sea kayak in okoume plywood**, built stitch and glue: two to four hull panels
+a side, a two-panel deck with a keyhole cockpit and its coaming riser, sheer clamps, fore and aft bulkheads
+with round hatch covers, end pours of thickened epoxy in the stems and an optional hardwood stem strip.
+Every panel is laid flat on the floor beside the boat, cut into three pieces with staggered puzzle joints
+(a panel is longer than a 2440 mm sheet), with its stitch holes. It is built **entirely by 3DCraft from
+formulas**: `gen.py` writes commands and formulas and computes no geometry; its loops only write lists of
+commands. Licence: CC-BY-4.0.
 
 **Lines.** The character is that of the Greenland kayak Emanuele Korneliussen built at Igdlorssuit for Ken
-Taylor in 1959, surveyed by Duncan Winning in 1964 (the boat behind the Anas Acuta and most British sea
-kayaks): about 5.2 m long, 0.53 m wide, low volume, strong rocker, raised ends. The published plans carry no
-licence that allows reuse of their offsets, so **these lines are our own**, a parametric family *inspired
-by* that boat. Its published hydrostatics (displacement 88 kg, Cp 0.524, LWL 4.00 m, BWL 0.48 m, draft
-0.122 m, transverse KM 0.27 m) are the yardstick below.
+Taylor in 1959, surveyed by Duncan Winning in 1964 (the boat behind the Anas Acuta): about 5.2 m long,
+0.53 m wide, low volume, strong rocker, raised ends. Its published plans carry no licence that allows reuse
+of the offsets, so **these lines are our own**, a parametric family *inspired by* that boat. Its published
+hydrostatics (displacement 88 kg, Cp 0.524, LWL 4.00 m, BWL 0.48 m, draft 0.122 m, wetted surface
+1.57 m², transverse KM 0.27 m) are the yardstick.
 
 | Parameter | Group | Default | Range |
 |---|---|---|---|
 | Length overall | Hull | 5300 mm | 5000 to 5800 mm |
-| Beam | Hull | 545 mm | 530 to 600 mm, at the sheer |
-| Depth at the sheer | Hull | 190 mm | 170 mm to min(230 mm, 0.36 × beam), keel to sheer at the widest station |
+| Beam | Hull | 545 mm | 530 to 600 mm at the sheer; at least 570 mm with one chine |
+| Depth at the sheer | Hull | 190 mm | 170 mm to min(230 mm, 0.36 × beam) |
 | Deck crown | Hull | 22° | 12 to 26° |
-| Bow rise, Stern rise | Hull | 300, 240 mm | 250 to 400, 220 to 350 mm: the keel's rise to each tip (rocker) |
-| Paddler weight (kg) | Paddler and load | 80 | 45 to 100 |
-| Load (kg) | Paddler and load | 5 | 0 to 30 |
-| Water | Paddler and load | Sea water | Sea water (1025 kg/m³) or fresh water (1000 kg/m³) |
+| Bow rise, Stern rise | Hull | 300, 240 mm | 250 to 400, 220 to 350 mm (rocker) |
+| Widest station | Hull | 0.47 | 0.44 to 0.52 of the length from the stern |
+| Chines per side | Hull | 3 | 1 to 3 (2 to 4 hull panels a side) |
+| Ends | Hull | Moderate | Fine, Moderate, Full (table `forms`) |
+| End cap | Hull | Hardwood strip | None or a hardwood strip along the stems |
+| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries (at most 110) |
+| Paddler height | Paddler and load | 1780 mm | 1500 to 2000 mm |
+| Load (kg) | Paddler and load | 5 | 0 to what is left, at most 40 |
+| Water | Paddler and load | Sea water | Sea (1025 kg/m³) or fresh (1000 kg/m³) |
+| Hull, deck plywood | Plywood | 4, 3 mm | 3 to 5, 3 to 4 mm |
+| Stitch hole diameter, edge distance | Plywood | 2, 8 mm | 1.5 to 3, 6 to 10 mm |
+| Cockpit length | Cockpit and hatches | 800 mm | 0.34 × height + 100 mm to min(950 mm, 0.57 × height − 40 mm) |
+| Cockpit width | Cockpit and hatches | 420 mm | 380 to 460 mm |
+| Bulkheads and hatches | Cockpit and hatches | on | off: an open hull for float bags |
 
 ## How 3DCraft builds it
 
-`x` runs along the boat (stern −L/2, bow +L/2), `y` to starboard, `z` up from the keel's lowest point. A
-station is η from 0 (stern tip) to 1 (bow tip), a skewed copy of ξ = x/L + ½ (η = ξ + s ξ(1 − ξ)) so that
-the widest station, η = ½, lies at 0.47 of the length from the stern.
+`x` runs along the boat (stern −L/2, bow +L/2), `y` to starboard, `z` up from the keel's lowest point; a
+station is η from 0 (stern tip) to 1 (bow tip), skewed (η = ξ + s ξ(1 − ξ)) so that η = ½ is the widest
+station.
 
-1. **The lines, as formulas.** Every hull panel j is a *generalised cylinder*: in every station it is a
-   straight line at the same flare angle θⱼ, from chine j to chine j + 1, of width
-   wⱼ = Wⱼ G^pⱼ (1 + σⱼ (1 − G)), G = 4η(1 − η). At the widest station the chines lie on a quarter ellipse
-   (B/2, D), equally spaced in angle, which sets θⱼ and Wⱼ. The keel rises as z₀ = rA (q u² + (1 − q) u⁴) +
-   rC u⁵ (u = 2η − 1, rA and rC from the bow and stern rises, q = 0.3). The deck is a generalised
-   cylinder too, at the crown angle, from the sheer to a ridge on the centre line. A surface swept by
-   straight lines that keep their direction has zero Gaussian curvature: it is **developable**, a sheet of
-   plywood bends onto it without stretching (do Carmo, §3-5).
-2. **The hull envelope.** Each panel's *trace* (its section square to its flare direction, a curve
-   `sketch.curve` draws from the formulas) is extruded along that direction into a solid; the five solids a
-   side, mirrored, are intersected (`feature.boolean`). What is left is the outside of the planking closed
-   by the deck, and its edges are the **keel, the chines and the sheer, found by the kernel** where
-   neighbouring panels meet.
-3. **The panels between the chines.** `feature.developable` makes the developable sheet between each pair
-   of neighbouring chines (the envelope's edges): the same surface as the envelope's face, found
-   independently from the two chines alone, which shows that each panel *is* the developable between its
-   chines (largest Gaussian curvature about 10⁻¹² mm⁻²). These eight features are switched off by default
-   (the variable `connections`, 0): their sheets end at a tip in two vertices about the tolerance apart,
-   which the deep validity check refuses, and measuring their curvature does not always settle; both are
-   3DCraft issues reported with repros. Set `connections` to 1 to build them.
-4. **Plywood.** `feature.plate` gives each panel of the envelope its thickness inwards (4 mm hull, 3 mm
-   deck) with the builder's joints: `touch` at the keel and the chines (the inner edges of two stitched
-   panels just touch; the outside V is the epoxy fillet), the sheer panel `under` the deck and the deck
-   `over` it (the deck rests on the sheer panel and covers its edge flush with its outside), `touch` at
-   the ridge, and both ends `onto` the planes where the plywood ends (η = 0.03 and 0.97; the last 160 mm
-   or so of each end, where the panels are a few centimetres wide, is a hardwood tip and an end pour of
-   thickened epoxy).
-5. **Flat panels.** `feature.unfold` lays the outside skin of each starboard plate flat on the floor
-   beside the boat (cut two of each from two sheets stacked face to face for the port and starboard
-   pair). Lengths, angles and areas are kept: the unfold refuses to change an edge's length by more than
-   the tolerance, and reports the change (at the defaults: lengths 2·10⁻¹¹, areas 1·10⁻⁸ relative).
-6. **Hydrostatics.** `measure.levelFor` finds the draft at which the hull envelope displaces the boat's,
-   the paddler's and the load's weight in water, by Newton's method on the exact B-rep, and returns the
-   centre of buoyancy and the waterplane's second moments. KB, BM, KM and GM are computed from those
-   measures by `hydro.py` (below): naval vocabulary, kept in the Jig.
+- **The lines.** Every hull panel j is a *generalised cylinder*: in every station a straight line at the same
+  flare angle θⱼ, from chine j to chine j + 1, of width Wⱼ G^pⱼ (1 + σⱼ (1 − G)), G = 4η(1 − η), σⱼ the
+  sheer spring. At the widest station the chines lie on a quarter ellipse (B/2, D), equally spaced in angle.
+  The keel rises as rA u⁴ + rC u⁵ (u = 2η − 1). The deck is one panel a side at the crown angle, from the
+  sheer to a ridge on the centre line. Such a surface is developable (do Carmo §3-5) and is exactly the
+  extrusion of a plane curve, its *trace*, along its direction: **`sketch.curve` draws each trace from the
+  formulas and `feature.extrude` sweeps it**; the ten solids (four hull panels and the deck, each side,
+  `when` the hull has them) intersected are the hull envelope, whose edges are the keel, chines and sheer,
+  found by the kernel. (`feature.developable` between the chines gives the same surfaces; its sheets cannot
+  yet carry the plates, see *What 3DCraft cannot do yet*.)
+- **Plywood.** `feature.plate` gives each envelope face its thickness inwards: `touch` at keel and chines
+  (the inner edges of two stitched panels just touch; the outside V is the epoxy fillet), the topside
+  `under` the deck and the deck `over` it (the deck rests on the topside), `touch` at the ridge, `onto` the
+  end planes at η = 0.03 and 0.97. The topside and deck plates come in one version per number of chines.
+- **Sheer clamps** (20 × 12 mm, from 15 to 85 % of the length): the region between the topside's inner skin
+  and that skin moved 12 mm in, and between the deck's inner skin and that moved 20 mm in, both traces
+  offset by formulas and extruded.
+- **Bulkheads** (with hatches): the inside of the planking (a second envelope, every trace moved in by the
+  plywood) cut to a slab at each bulkhead station (0.57 × height ahead of the seat back, 150 mm behind it),
+  notched for the clamps. **Hatch covers**: discs on the deck, 22 mm proud (the envelope raised by 22 mm,
+  less the envelope).
+- **Coaming riser**: the keyhole ring (an aft circle of half the cockpit's width and a forward one of 0.62 of
+  it, joined by tangents), 6 mm wide, outside the envelope and inside the envelope raised by 30 mm: it
+  stands 30 mm on the deck all round, following the crown.
+- **The ends.** The plywood plates end at η = 0.03 and 0.97, where the panels are only millimetres wide. The
+  hull's surfaces run on to the stems (η = 0.004 and 0.996, the panels' own cylinders), and what they enclose
+  there is the **end pour** of thickened epoxy a stitch-and-glue builder puts in each end (CLC); inside the
+  plywood hull the end pour goes on for 120 mm past each end plane (the inside of the planking within that
+  slab). The optional **stem strip** is a hardwood strip 10 × 4 mm under the keel line over the last stretch
+  of each end, drawn from the keel's formula.
+- **Flat panels.** `feature.unfold` lays the outside skin of each starboard plate flat on the floor (cut two
+  of each, stacked face to face, for the pair). Each is cut by three regions into three pieces at two
+  **puzzle joints**: a line across the panel with a dovetail key every 75 mm, half way between two stitch
+  stations; even rows are joined at v = ±0.375 of the stitch grid (η ≈ 0.30 and 0.70), odd rows at −0.475
+  and 0.275, so the joints are staggered; the middle piece lies 50 mm along, the last 100 mm.
+- **Stitch holes** along every stitched seam: keel, chines, sheer and ridge. Holes of `holeD` (2 mm), `holeIn`
+  (8 mm) from the edge, the usual stitch-and-glue practice of copper wire through 1/16 to 3/32 in holes
+  3/8 in from the edge, every 4 to 6 in (CLC; Kulczycki), closer where the panels bend most. The stations are
+  one grid along the boat, η = ½ + 0.44 (0.6 v + 0.4 sin(πv/2)) for v from −1 to 1 by 0.05 (about 130 mm
+  apart amidships and 65 mm near the ends of a 5.3 m hull); each seam uses the stations where both its
+  panels are wide enough. Both panels of a seam get their holes at the *same stations*, each `holeIn` from
+  the chine along its own station line, so they pair up across the seam. A hole is a circle in the plane
+  square to its panel's station normal, at the panel's own formulas, drilled through the plate (both sides
+  of the boat); `feature.unfold` carries the holes onto the flat pieces, so they are on the cut sheet.
 
-`gen.py` writes 81 variables (the previous version, which computed the geometry itself, needed 3839),
-48 feature commands and 17 assertions. A regeneration from nothing takes about 5 s; a build with every
-assertion measured about 30 s.
+`gen.py` writes 211 variables (the version that computed the geometry itself needed 3839), 292 feature
+commands and 31 assertions; a build with every assertion measured takes about 130 s at the defaults (the
+drilling of some 500 holes and the 27 flat pieces are most of it).
 
-## What 3DCraft checks (assertions, at every point of the form)
+## What 3DCraft checks (assertions)
 
 | Assertion | What it proves |
 |---|---|
-| chines 1 to 3, both sides: the panels' inner edges touch | the kernel's least distance between neighbouring plates is 0 (± 0.01 mm): the panels meet edge to edge |
-| keel, ridge: the inner edges touch | the same for the two bottom panels and the two deck panels |
-| sheer, both sides: the deck rests on the sheer panel | the least distance between deck and sheer plate is 0 |
-| the panels: developable | every face of the envelope the plates are made of is developable within the tolerance (Gaussian curvature measured on the face) |
-| the panels: Gaussian curvature | the largest \|K\| on those faces ≤ 10⁻⁹ mm⁻² (measured: 0) |
-| plywood mass | the kernel's mass of the ten plates (okoume, 500 kg/m³) is the weight formula's ± 4 %: the waterline is found for the boat the model is |
-| freeboard | the waterline for boat, paddler and load (`levelFor`) lies at least 45 mm below the sheer amidships |
-| tips dry | the hardwood tips lie above the highest waterline the freeboard allows |
-| coaming, both sides | the coaming stands on the deck (distance 0) |
+| keel, chines 1–3 (each side; on a hull with fewer chines the sheer), sheer, ridge | the least distance between neighbouring plates is 0: the panels meet edge to edge |
+| the panels are developable; their Gaussian curvature ≤ 10⁻⁹ mm⁻² | measured on the envelope faces the plates are made of: 0 |
+| plywood mass | the kernel's mass of the plates (okoume 500 kg/m³) is the weight formula's ± 4 % |
+| freeboard | the waterline for boat, paddler and load (`levelFor`) lies 45 mm below the sheer amidships |
+| the end pours are dry | above the highest waterline the freeboard allows |
+| the coaming stands on the deck; the cockpit lets the knees in | distance 0; its length ≥ 0.34 × height + room behind the seat |
+| every flat piece fits a 2440 mm sheet | per piece and joint parity |
+| stitch holes keep their distance from the edges | hole walls at least `holeIn − holeD/2 − tHull` from every rim |
+| every stitch hole is whole on the cut sheet | the flat pieces carry exactly the holes drilled (no puzzle joint runs into one) |
+| stitch holes pair up across the keel, chine 1, the sheer and the ridge | the nearest hole walls across the seam are no farther apart than two holes at one station, `holeIn` either side of the chine |
 
-## Hydrostatics at the defaults
+## Hydrostatics
 
-(80 kg paddler, 5 kg load, sea water, 5.3 m × 545 mm, depth 190 mm; `python3 -I hydro.py`)
+From `measure.levelFor` (the draft for the weight, the centre of buoyancy, the waterplane and its second
+moments) and its `surface` (the wetted surface), KB, BM = I/∇, KM and GM are worked out by `hydro.py` from
+the measures. Waiting for a fix of `levelFor` in 3DCraft (plan/repro/repro-sea-kayak-9.json), the numbers
+are not yet measured on this hull. **Blocked by measures in expressions** (repro 4): an assertion GM ≥ 0, the
+prismatic coefficient and the displacement-length ratio (they need the waterline's length), the capacity
+from the measures themselves (the ranges use a block coefficient read off `measure.below` over the corners
+of the ranges, on the safe side, and the freeboard assertion checks the real waterline), and the trim (the
+seat back is placed 230 mm behind the widest station instead of where the centre of gravity lies over the
+centre of buoyancy).
 
-| Quantity | 3DCraft (measures) | Igdlorssuit (published) | Previous Jig (formulas outside 3DCraft) |
-|---|---|---|---|
-| Plywood (kernel mass of the ten plates) | 8.47 kg (formula 8.53 kg) | | 7.5 kg |
-| Boat (plywood, glass and epoxy, fittings) | 16.3 kg | | 14.9 kg |
-| Displacement | 101.3 kg, ∇ = 0.0989 m³ | 88 kg | 99.9 kg |
-| Draft T (`levelFor`, 10 Newton steps) | 111.7 mm | 122 mm | 107.6 mm |
-| Waterplane area | 1.544 m² | | 1.445 m² |
-| KB, BM, KM | 72, 236, **308** mm | KM 269 mm | 67, 204, **271** mm |
-| KG (boat, paddler, load) | 252 mm | | 248 mm |
-| **GM** | **56 mm** | | **23 mm** |
-| Centre of buoyancy, x | 128 mm aft of the middle | | 124 mm aft |
-| Freeboard amidships | 78 mm | | 82 mm |
+## What 3DCraft cannot do yet (repros in the 3DCraft repository, plan/repro)
 
-**Why KM and GM are higher than before.** The hull is fuller at the ends than the previous version's:
-the panels now narrow to the ends as G^p with p ≤ 1 (0.8 to 1.0) where they had p = 1.8 to 2.6 (fine V
-ends). That was a choice forced by the platform: with finer ends the topside panel's trace has an
-inflection near the ends, and `feature.developable` refuses a generalised cylinder whose trace inflects
-(the developable condition's zero set branches there), so the panels could no longer be shown to be the
-developable connection of their chines. The fuller waterplane (+7 % area) carries its area further out
-along the length and at the ends, so its transverse moment, BM = I_T/∇, grows by 16 %; KB and KG change
-little. The boat is more stable than the Igdlorssuit (KM 308 against 269 mm); the *Beam* and *Depth*
-parameters move it (a 530 mm beam takes BM down by about 8 %).
-
-**KG** takes the plywood's centre of gravity from the kernel (z = 145 mm), the glass and fittings with
-it, the paddler's centre of gravity 254 mm above a 25 mm seat pad on the floor amidships, and the load at
-100 mm. **Capacity:** the paddler's range ends at what the hull carries with the sheer 45 mm above the
-water (a block coefficient of the volume below that plane, calibrated against `measure.below` over the
-corners of the hull's ranges and on the safe side of every one), and the load's at what is left; the
-freeboard assertion then checks the real waterline at every point.
-
-Why `hydro.py` and not an assertion: a measure's value cannot be used in an expression in 3DCraft (no
-variable is driven by a measure), so GM ≥ 0, which needs the draft from `levelFor` inside the plane of
-`sectionInertia` and KB from `centroidBelow` in the bound, cannot be written as an assertion yet. The
-assertions check what can be checked (the waterline for the weight against the sheer, the tips dry,
-the formula's weight against the kernel's), and `hydro.py` does the naval arithmetic on the measures.
+- Plates on `feature.developable` sheets: spurious end fans (repro 8), so the plates are on the envelope.
+- The ends' panels: plates refuse panels narrower than about their thickness, so the plywood ends at η 0.03
+  and 0.97 and the end pour is the hull there; the ends table is less fine than the earlier lines
+  (p = 1.8, 1.6, 1.3 for the bottom panel, where 2.6, 2.2, 1.8 left panels under a millimetre wide).
+- The coaming's lip (repro 10), the riser's developed strip and the bulkheads laid flat by `feature.unfold`
+  (repro 11; the bulkheads are flat and on their own cut sheet).
+- No volume shared between neighbouring plates, proven by a boolean intersection: the boolean refuses
+  touching freeform plates (repro 12). The features are in the model, switched off (`overlapProof`).
+- `levelFor` on this hull (repro 9) and measures in expressions (repro 4).
 
 ## Cut sheet
 
-Export the named set **Cut sheet: panels** (File › Export…, DXF or SVG, `width` 5100 mm for one panel a
-row): the outlines of the four hull panels and the deck panel, laid flat; `cut-sheet.svg` is that export
-at the defaults. The panels are about 5 m long: join two or three 2440 mm sheets end to
-end with scarf or puzzle joints before cutting (or cut the panels in pieces and join them flat), then cut
-two of each, stacked face to face, for the port and starboard pair.
-
-**Building**, in short (CLC, Kulczycki): cut and join the panels; stitch the bottom panels at the keel,
-open them and stitch on the next panels chine by chine, then the sheer panels, with copper wire every 100
-to 150 mm; tack the seams with thickened epoxy, pull the wires, fillet and tape the seams inside; glass the
-outside; fit bulkheads, sheer clamps and deck; coaming, hatches, hardwood tips and end pours, varnish.
+Export the named set **Cut sheet: panels** (DXF or SVG, `width` 2440 mm): the flat pieces with their puzzle
+keys and stitch holes (`cut-sheet.svg` at the defaults), and **Cut sheet: bulkheads**
+(`cut-sheet-bulkheads.svg`). Glue the puzzle joints flat on plastic sheet with thickened epoxy (and glass
+tape on the hull panels) before stitching.
 
 ## Safety
 
-- A sea kayak is a serious craft: learn to paddle it, brace, rescue yourself and others (and roll a
-  Greenland boat) in sheltered water first, with others, and wear a buoyancy aid.
-- The stability figure is for a paddler sitting still and rigid. Low-volume boats feel tippy until you
-  paddle them with your hips.
-- Fit bulkheads or float bags fore and aft, or the hull sinks when swamped.
+- A sea kayak is a serious craft: learn to paddle it, brace, rescue yourself and others in sheltered water
+  first, with others, and wear a buoyancy aid. Low-volume boats feel tippy until you paddle with your hips.
+- With bulkheads and hatches off the hull has no buoyancy compartments: fit float bags fore and aft.
 - Epoxy sensitises skin: gloves, ventilation, a respirator when sanding cured epoxy and glass.
 
 ## Sources
 
-- PaddlingLight, *Igdlorssuit: Free Kayak Plans for the Boat Before Anas Acuta*
-  (paddlinglight.com/articles/igdlorssuit-free-plans-for-the-boat-before-anas-acuta): the boat's history and
-  its hydrostatics, quoted for comparison. Its plans were not used.
-- C. Kulczycki, *The New Kayak Shop*, Ragged Mountain Press 1999, and Chesapeake Light Craft (clcboats.com):
-  stitch-and-glue practice, okoume 3 and 4 mm, glass cloth weights, okoume sheet weights.
-- A. B. Biran and R. López-Pulido, *Ship Hydrostatics and Stability*, 2nd ed., Butterworth-Heinemann 2014:
-  displacement, centres of buoyancy and gravity, BM = I/∇, KM, GM.
+- PaddlingLight, *Igdlorssuit: Free Kayak Plans for the Boat Before Anas Acuta*: history and hydrostatics,
+  quoted for comparison; its plans were not used.
+- C. Kulczycki, *The New Kayak Shop*, Ragged Mountain Press 1999, and Chesapeake Light Craft (clcboats.com,
+  "Stitch and glue construction"): stitch holes, copper wire, fillets and tape, end pours, okoume weights.
+- A. B. Biran and R. López-Pulido, *Ship Hydrostatics and Stability*, 2nd ed., 2014: KB, BM = I/∇, GM.
 - *Sea Kayaker* magazine's stability reviews: a paddler's centre of gravity 10 in above the seat.
-- M. P. do Carmo, *Differential Geometry of Curves and Surfaces*, 1976, §3-5: ruled and developable
-  surfaces.
+- S. Pheasant, *Bodyspace*, 1996: buttock–knee length about 0.34 of stature; D. A. Winter, *Biomechanics*:
+  the foot brace at about 0.57 of stature from the seat back.
+- M. P. do Carmo, *Differential Geometry of Curves and Surfaces*, 1976, §3-5: developable surfaces.
 
-`build.json` was written by `python3 -I gen.py > build.json`; edit `gen.py` and run it again to change the
-model.
+`build.json` was written by `python3 -I gen.py > build.json`.
 
-The cockpit coaming is a ring standing 30 mm on the deck round an 800 × 420 mm opening (the envelope
-raised by 30 mm, within the ring, less the envelope); cut the opening in the deck after assembly.
-
-**Colours.** Varnished okoume (plywood #D9B98A) hull panels and their flat patterns, a sapele-coloured
-(copper #B87350) deck, walnut (#7A5638) tips and coaming, from the Jigs palette.
+**Colours.** Okoume (#D9B98A) hull panels and flat pieces, a copper (#B87350) deck, walnut (#7A5638)
+coaming, hatch covers and stem strips, cream (#E8DFCC) clamps, brass (#B8954A) end pours.

@@ -68,7 +68,8 @@ def when(d, cond):
 for n_, e in [("L", "5300 mm"), ("B", "545 mm"), ("D", "190 mm"), ("crown", "22 deg"), ("rockB", "300 mm"),
               ("rockS", "240 mm"), ("xmax", "0.47"), ("chines", "3"), ("form", "2"), ("mPad", "80"),
               ("hPad", "1780 mm"), ("payload", "5"), ("water", "1"), ("tHull", "4 mm"), ("tDeck", "3 mm"),
-              ("cockL", "800 mm"), ("cockW", "420 mm"), ("hatches", "1"), ("endCap", "2")]:
+              ("cockL", "800 mm"), ("cockW", "420 mm"), ("hatches", "1"), ("endCap", "2"), ("holeD", "2 mm"),
+              ("holeIn", "8 mm")]:
     V(n_, e)
 # The ends: how fast the panels narrow to the tips, G^p (bottom panel pb, topside pt).
 # kA, kD: the panels' and the deck's area as a share of length x girth, and kCap: a block coefficient of the
@@ -414,37 +415,78 @@ for h, xv in (("Fore", "xHatF"), ("Aft", "xHatA")):
       name=f"Hatch{h}", when="hatches")
 done(6)
 
-# ================================================================ stitch holes, drilled in the starboard plates
-# 2 mm holes 8 mm in from both edges of every panel, at stations from 20 % to 80 % of the length: circles
-# in the plane square to the panel's station normal, at the panel's own formulas (along a station line the
-# panel is straight), drilled through the plate. The flat panels carry them (an unfold keeps holes).
-V("holeIn", "8 mm")
-V("holeR", "1 mm")
-HOLE_ETAS = [round(0.2 + 0.025 * k, 3) for k in range(25)]
+# ================================================================ stitch holes
+# Holes of diameter holeD, holeIn in from the edge, along every seam that is stitched: the keel, the
+# chines, the sheer and the ridge. The holes of a seam are at the same stations on both of its panels (the
+# stations of one grid along the boat, in eta), each holeIn from the shared chine along its own panel's
+# station line, so they pair up across the seam when the boat is stitched. The grid is closer towards the
+# ends, where the panels bend most: eta = 1/2 + 0.44 (0.6 v + 0.4 sin(pi v / 2)), v from -1 to 1 in steps of
+# 0.05 (about 130 mm apart amidships, 65 mm near the ends of a 5.3 m hull); each seam uses the stations
+# where both its panels are wide enough (|v| <= its reach). A hole is a circle in the plane square to its
+# panel's station normal, at the panel's own formulas, drilled through the plate; the flat panels carry the
+# holes (an unfold keeps holes), so they are on the cut sheet.
+NG = 41
+GRID = [round(-1 + 0.05 * i, 4) for i in range(NG)]
+
+
+def eta_v(v):
+    return f"(0.5 + 0.44 * (0.6 * ({v}) + 0.4 * sin(pi * ({v}) / 2)))"
+
+
+REACH = {"keel": 0.5, 1: 0.5, 2: 0.6, 3: 0.6, "sheer": 0.6, "ridge": 0.9}
+
+
+for i, v in enumerate(GRID):
+    V(f"etaG{i}", eta_v(v))
+    V(f"GG{i}", f"4 * etaG{i} * (1 - etaG{i})")
+
+
+def at_grid(expr, i):
+    """expr (in t) at grid station i, with G read from GG_i to keep it short."""
+    return at(expr.replace(G, f"GG{i}"), f"etaG{i}")
+
+
+def stations(seam):
+    return [v for v in GRID if abs(v) <= REACH[seam] + 1e-9]
 
 
 def along(j, k, e):
-    """P . d_j of chine k at eta e: the coordinate along panel j's direction."""
+    """P . d_j of chine k (4: the sheer) at eta e: the coordinate along panel j's direction."""
     if j == "D":
-        return f"(-cos(crown) * ({at(Y(4), e)}) + sin(crown) * ({at(Z(4), e)}))"
-    return f"(c{j} * ({at(Y(k), e)}) + s{j} * ({at(Z(k), e)}))"
+        return f"(-cos(crown) * ({at_grid(Y(4), e)}) + sin(crown) * ({at_grid(Z(4), e)}))"
+    return f"(c{j} * ({at_grid(Y(k), e)}) + s{j} * ({at_grid(Z(k), e)}))"
 
 
 for j in PANELS:
-    sk = f"Holes{j}"
     C("datum.plane", **{"from": "zx", "about": "x", "angle": ("thD" if j == "D" else f"th{j}") + " + 90 deg",
                         "name": f"HolePlane{j}"})
-    C("sketch.create", plane=f"HolePlane{j}", name=sk)
-    for e in HOLE_ETAS:
-        if j == "D":
-            lo, hi = f"{along('D', 4, e)} + holeIn", f"sin(crown) * {at(ZR, e)} - holeIn"
-        else:
-            lo, hi = f"{along(j, j, e)} + holeIn", f"{along(j, j + 1, e)} - holeIn"
-        for v in (lo, hi):
-            C("sketch.circle", sketch=sk, center=[f"0 mm - ({v})", at(X, e)], radius="holeR")
-FLATS = []   # (flat name, when, row)
+HOLES = {}   # plate (starboard name without the side) -> number of holes
 for nm, cond, j, row in PLATES["S"]:
-    C("feature.extrude", sketch=f"Holes{j}", distance="1500 mm", symmetric=True, cut=nm, name=f"{nm}h", when=cond)
+    base = nm[:-1]
+    if base.startswith("Plank"):
+        seams = [("keel" if j == 0 else j, "lo"), (j + 1, "hi")]
+    elif base.startswith("Top"):
+        seams = [(j, "lo"), ("sheer", "hi")]
+    else:
+        seams = [("sheer", "lo"), ("ridge", "hi")]
+    sk = f"Holes{base}"
+    C("sketch.create", plane=f"HolePlane{j}", name=sk)
+    count = 0
+    for seam, where in seams:
+        for v in stations(seam):
+            e = GRID.index(v)
+            if j == "D":
+                c_ = f"{along('D', 4, e)} + holeIn" if where == "lo" else f"sin(crown) * {at_grid(ZR, e)} - holeIn"
+            else:
+                c_ = f"{along(j, j, e)} + holeIn" if where == "lo" else f"{along(j, j + 1, e)} - holeIn"
+            C("sketch.circle", sketch=sk, center=[f"0 mm - ({c_})", at(X, f"etaG{e}")], radius="holeD / 2")
+            count += 1
+    HOLES[base] = (count, cond)
+    C("feature.extrude", sketch=sk, distance="1500 mm", symmetric=True, name=f"Drill{base}S", when=cond)
+    C("feature.mirror", source=f"Drill{base}S", normal=[0, 1, 0], keep=True, name=f"Drill{base}P", when=cond)
+    for t in "SP":
+        C("feature.boolean", op="subtract", target=f"{base}{t}", tool=f"Drill{base}{t}", name=f"{base}{t}h", when=cond)
+FLATS = []   # (flat name, when, row)
 done(7)
 
 # ================================================================ the flat panels on the floor
@@ -464,7 +506,10 @@ for nm, cond, j, row in PLATES["S"]:
 # staggered from row to row so that the joints never line up on the hull. A joint is a line across the
 # panel with a dovetail key every 75 mm (wherever the panel lies across the row, keys fall on it); the
 # middle piece moves PIECE_GAP along, the last twice that.
-JOINTS = {0: ("0.32", "0.68"), 1: ("0.38", "0.73")}
+# Joints lie half way between two stations of the hole grid (v = +-0.375 on even rows, -0.475 and 0.275 on
+# odd rows), at that station's distance along the flat panel (x from the end plane, 0.4 % longer: the
+# panels' lengths along their chines), so no joint runs into a hole.
+JOINTS = {0: (-0.375, 0.375), 1: (-0.475, 0.275)}
 KEYS = range(-6, 3)   # key centres: row line + k * 75 mm
 
 
@@ -480,7 +525,7 @@ def joint_line(xj, yr, up):
 
 for r in range(5):
     yr = row_y(r)
-    j1, j2 = (f"Xa + {f} * Lhull" for f in JOINTS[r % 2])
+    j1, j2 = (f"(Xa + ({at(X, eta_v(v))} - Xa) * 1.004)" for v in JOINTS[r % 2])
     lo, hi = f"{yr} - {(-KEYS[0] + 1) * 75} mm", f"{yr} + {(KEYS[-1] + 1) * 75} mm"
     regions = {
         "a": [["Xa - 300 mm", lo], [j1, lo]] + joint_line(j1, yr, True) + [[j1, hi], ["Xa - 300 mm", hi]],
@@ -587,6 +632,47 @@ for pc in "abc":
         A(f"the flat panels' piece {pc} (rows {'0, 2, 4' if par == 0 else '1, 3'}) fits a 2440 mm sheet",
           measure="extent", of={"kind": "body", "where": madeby(names)}, axis="x", max="2440 mm - 20 mm")
 
+# Stitch holes: inside the panels (their walls at least holeIn - holeD / 2 from every rim, less the
+# plywood's thickness where a touch joint sets the rim back from the chine), whole on the cut sheet (no
+# joint runs into one: every hole is still one circle on the flat pieces), and paired across the seams
+# (the walls of the two nearest holes across a seam are as far apart as two holes holeIn either side of
+# the chine at the same station: 2 holeIn cos(half the angle between the panels) - holeD, or nearer).
+def drilled(names):
+    """The plates' bodies after their holes are drilled (the boolean named after each plate, + h)."""
+    return {"any": [{"in": f"{nm}h"} for nm in names]}
+
+
+HOLEFACES = {"kind": "face", "where": {"all": [drilled(WOODP), {"hole": True}]}}
+A("stitch holes keep their distance from the panels' edges", measure="distance",
+  **{"from": HOLEFACES, "to": {"kind": "face", "where": {"all": [madeby(WOODP), {"name": "*rim(*"}]}}},
+  min="holeIn - holeD / 2 - tHull")
+expected = " + ".join(f"if({cond}, {2 * cnt}, 0)" for cnt, cond in HOLES.values())
+# (a hole laid flat is two half circles of the hole's circumference / 2)
+A("every stitch hole is whole on the cut sheet (no puzzle joint runs into one)", measure="count",
+  of={"kind": "edge", "where": {"all": [{"any": [{"in": nm} for pc in "abc" for nm, r in PIECES[pc]]},
+                                        {"length": {"eq": "pi * holeD / 2", "tol": "0.02 mm"}}]}},
+  eq=expected, tol="0")
+
+
+def holes_of(names):
+    return {"kind": "face", "where": {"all": [drilled(names), {"hole": True}]}}
+
+
+A("keel: the stitch holes pair up across the seam", measure="distance",
+  **{"from": holes_of(panel_set("S", 0)), "to": holes_of(panel_set("P", 0))},
+  max="2 * holeIn * cos(th0) - holeD + 0.5 mm")
+for port, tag in SIDES:
+    side = "starboard" if tag == "S" else "port"
+    A(f"chine 1 ({side}): the stitch holes pair up across the seam", measure="distance",
+      **{"from": holes_of(panel_set(tag, 0)), "to": holes_of(panel_set(tag, 1))},
+      max="2 * holeIn * cos((th1 - th0) / 2) - holeD + 0.5 mm")
+    A(f"sheer ({side}): the stitch holes pair up across the seam", measure="distance",
+      **{"from": holes_of(tops(tag, 4)), "to": holes_of(decks(tag, 4))},
+      max="2 * holeIn * cos((thD - choose(n - 1, th1, th2, th3)) / 2) - holeD + 0.5 mm")
+A("ridge: the stitch holes pair up across the seam", measure="distance",
+  **{"from": holes_of(decks("S", 4)), "to": holes_of(decks("P", 4))},
+  max="2 * holeIn * cos(crown) - holeD + 0.5 mm")
+
 # No volume shared between neighbouring plates, by the boolean itself: each pair intersected must leave
 # nothing. 3DCraft cannot decide this yet for touching freeform plates (plan/repro/repro-sea-kayak-12.json),
 # so these features are switched off (overlapProof = 0) until it can; set it to 1 to build them.
@@ -675,6 +761,10 @@ params = [
      "description": "Keyhole opening: at least the buttock-knee length (0.34 x stature) plus room behind the seat"},
     {"name": "cockW", "label": "Cockpit width", "group": G4, "order": 2, "min": "380 mm", "max": "460 mm",
      "step": "5 mm", "unit": "mm", "description": "Keyhole opening at its widest (aft) end"},
+    {"name": "holeD", "label": "Stitch hole diameter", "group": G3, "order": 3, "min": "1.5 mm", "max": "3 mm",
+     "step": "0.5 mm", "unit": "mm", "description": "Holes for the copper wire stitches"},
+    {"name": "holeIn", "label": "Stitch hole edge distance", "group": G3, "order": 4, "min": "6 mm",
+     "max": "10 mm", "step": "0.5 mm", "unit": "mm", "description": "From the panel's edge to the hole's centre"},
     {"name": "hatches", "label": "Bulkheads and hatches", "group": G4, "order": 3, "kind": "boolean",
      "description": "Fore and aft bulkheads with round hatches (off: an open hull for float bags)"},
 ]
