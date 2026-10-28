@@ -57,7 +57,7 @@ rack-cabinet's sides) the panel lies on their front without reaching into them (
 
 **Cutting.** Flat: the face set **Cut sheet** (File > Export..., DXF or SVG, "Sheet of set: Cut sheet").
 Flanged: the flat pattern with bend lines (layers `outline`, `bendUp`) is written by `file.export` with
-`sheetMetal`, which the export dialog does not offer yet; the part to name is the one that is on, `Panel
+`sheetMetal` (or in the window File › Export to .dxf or .svg, "Flat pattern of" the part); the part to name is the one that is on, `Panel
 flanged <cut-out>[ handles] <slots|holes>` (for the default `Panel flanged XLR handles slots`):
 
 ```sh
@@ -81,6 +81,7 @@ flanges' reach behind the panel, the distance from every hole wall to the bends.
 (repro-rack-2); a plate's rim over a circle as a cylinder face (repro-rack-3); holes cut later in the flat
 pattern, or holes with a condition (repro-rack-4); slots in sheet thicker than about r / 1.3 (repro-rack-5,
 hence no slots in 3 mm aluminium); a measure that fails on a plate in a plane through the origin
-(repro-rack-1); the flat pattern in the export dialog and several flat patterns on one sheet.
+(repro-rack-1). (The flat pattern in the export dialog and several flat patterns on one sheet, listed
+here before, are built in 3DCraft since.)
 
 **Checked.** `check-range` passes 88 of 88 points (64 corners, every choice, 16 random; seed 1), plain and with `--deep`; 3DCraft `main` at c75ca7b8.
