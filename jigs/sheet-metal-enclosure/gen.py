@@ -305,8 +305,8 @@ PUB = [
     ("corner", dict(label="Corners", description="How the walls meet at the corners: open (each flange ends at its "
                     "bend), butt, overlap (the base's walls cover the lips' ends, the lid's front and back walls "
                     "the skirts') or miter", group="Corners", order=1, kind="choice", choices=CORNERS)),
-    ("gap", dict(label="Corner gap", description="The gap left at a closed corner (a butt's is less than the "
-                 "thickness)", group="Corners", order=2, min="0.1 mm", max="if(corner == 2, t - 0.1 mm, 2 mm)",
+    ("gap", dict(label="Corner gap", description="The gap left at a closed corner: at least 0.4 mm (0.015 in, "
+                 "SendCutSend's least gap between flanges), a butt's less than the thickness", group="Corners", order=2, min="0.4 mm", max="if(corner == 2, min(2 mm, t - 0.1 mm), 2 mm)",
                  step="0.1 mm", unit="mm")),
     ("reliefShape", dict(label="Corner relief", description="The relief cut at each corner of the flat pattern, "
                          "R + t + 0.5 mm along each edge", group="Corners", order=3, kind="choice",

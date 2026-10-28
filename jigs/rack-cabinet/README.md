@@ -22,7 +22,7 @@ reliefs.
 | Knock-outs | Cable entry | 3 | 1 to 4, in the lid and in the bottom, 45 mm from the back |
 | Gland size | Cable entry | M25 | M20 (20.5 mm), M25 (25.5 mm), M32 (32.5 mm), EN 50262 glands |
 | Corners | Corners | Overlap | Open, Butt, Overlap, Miter: the lid's, the pan's and the door's corners (below) |
-| Corner gap | Corners | 0.5 mm | 0.1 to 2 mm, step 0.1 mm; for a butt at most the thickness less 0.1 mm |
+| Corner gap | Corners | 0.5 mm | 0.4 to 2 mm, step 0.1 mm; for a butt at most min(2 mm, thickness − 0.1 mm) |
 | Corner relief | Corners | Round | Rect, Round, Tear, R + t + 0.5 mm along each edge |
 
 **Parts** (each a `feature.sheetMetal` part; every hole is drawn in the flat, in the part's sketch or in a
@@ -31,8 +31,11 @@ a relief where two bends meet):
 - **Side left / right**: the side plate with a 25 mm front lip (longer in 3 mm sheet, to hold the hinge
   holes 2.5 t + r from its bend), a top and a bottom flange bent inward; 520 mm apart inside (`cabInnerW`,
   the clear width every rack-cabinet has). Three M6 bolt holes (6.6 mm) for each front rail's leg, and
-  three for each rear rail's when the rear rails are on; in the left side's lip four M4 holes (4.5 mm) for
-  the door's hinges, at the door's hinge holes' heights, when the door is on.
+  three for each rear rail's when the rear rails are on; in the left side's lip four M4 holes (4.5 mm) at
+  the door's hinge holes' heights, when the door is on. They are a **placeholder pattern**, not a given
+  hinge's: centred on the lip, they lie about 2.6 mm across from the door's hinge holes (x = −245.9 against
+  −248.5 mm by default), which suits no particular hinge; drill both to the hinge you buy, or move them in
+  `gen.py` (`lipHoleU`, `hingeX`) once one is chosen.
 - **Lid / Pan**: over the sides' top and under their bottom, three flanges down (up) over the sides and
   the front lips, the knock-outs near the back.
 - **Back**: the wall plate, its back face on the wall, four flanges forward inside the sides and between
@@ -62,11 +65,14 @@ and pan's front bends and the sides' top and bottom bends, which wrap round them
 runs into the lid's bend radius (12.6 mm³ of overlap with 1.5 mm steel) and the back's into the sides'
 (22 mm³). Every corner keeps its **relief** (a closed corner needs it as the hole where the bends would
 cross): the *Corner relief* choice (relief `shape` by expression, 1 rect, 2 round, 3 tear; round by
-default: no sharp inside corner to crack from, the smallest hole at a closed corner), its size **R + t +
-0.5 mm** along each edge, the rule of [`sheet-metal-enclosure`](../sheet-metal-enclosure/): past the bend
-zone by half a millimetre, as SendCutSend's bend relief guide asks (depth at least bend radius +
-thickness + 0.020 in; sendcutsend.com/blog/guide-to-designing-bend-reliefs). It was r + t + 1 mm, round
-only, before.
+default: no sharp inside corner to crack from, and the least material taken out of the flat, measured in
+[`sheet-metal-enclosure`](../sheet-metal-enclosure/); SendCutSend notes round reliefs leave slightly
+larger gaps at the bend ends), its size **R + t + 0.5 mm** along each edge, the rule of
+`sheet-metal-enclosure`: past the bend zone by half a millimetre. That is SendCutSend's rule for a bend
+relief's depth (at least bend radius + thickness + 0.020 in; sendcutsend.com/blog/guide-to-designing-bend-reliefs),
+applied to corner reliefs by analogy. It was r + t + 1 mm, round only, before. *Corner gap* is at least
+0.4 mm, SendCutSend's least gap between flanges (0.015 in, same guide); for a butt at most
+min(2 mm, t − 0.1 mm).
 
 **Standard and stock.** See [`rack-panel`](../rack-panel/) and `scripts/racklib.py`: EIA-310-D (19 in,
 1 U = 44.45 mm, 465.1 mm hole centres, the 1/2-5/8-5/8 in pattern, 450 mm opening, 9.5 mm square holes),
@@ -85,7 +91,7 @@ one in the side, in the same box round the place (so they line up); the hinge ho
 knock-outs, wall-mount holes and the door's hinge holes and vents where they belong.
 
 **Cutting.** The flat pattern of a part, with its bend lines (layers `outline`, `bendUp`, `bendDown`), is
-written by `file.export` with `sheetMetal` (the export dialog does not offer it yet), one part per file:
+written by `file.export` with `sheetMetal`, one part per file:
 `Side right`, `Side left`, `Lid`, `Pan`, `Back`, `Door`, and the rail that is on, `Rail L` or `Rail C`
 (in the window, File › Export to .dxf or .svg offers each part's flat pattern, and all of them on one sheet):
 
@@ -109,7 +115,10 @@ aluminium needs the thick-panel type.
 **Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): `cornerGap` breaks when the Jig's choice opens
 every corner and an assertion has no condition, so with *Corners* open the gap assertion is *not proven*
 (repro-sheet-metal-enclosure-7); `holeToBend` on a part with no hole beside a bend is an error, not a value
-(repro-rack-4, still so; every part here has one). Fixed since the first version and used now: the
+(repro-rack-4, still so; every part here has one); the hinge and bolt holes on the lip and the rail legs
+are placed by unfolding by hand (`lipHoleU`, `legHoleV` re-implement the bend allowance π/2 (R + K t);
+checked by the bolt-hole assertions), where a cut-out placed on a flange in its folded position or a
+flange's flat offset as an output would do (repro-sheet-metal-enclosure-8, a feature request). Fixed since the first version and used now: the
 sheet-metal measures skip parts that are off (repro-rack-2), holes with a condition (`cutouts`) and holes in
 flanges, narrow slots in thick sheet (repro-rack-5: the door's vents are 6 mm wide in every sheet again),
 closed corners, the flat pattern in the export dialog and on one sheet. Still not built: a flange on part

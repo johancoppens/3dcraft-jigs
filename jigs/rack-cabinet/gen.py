@@ -194,6 +194,8 @@ def sides():
         out += rear.cmds
         cut = [rear.name]
         if name == "Side left":
+            # A placeholder pattern for the hinges' cabinet leaves (four M4 holes at the door's hinge-hole
+            # heights, centred on the lip); drill to the hinge you buy.
             hinge = rk.Sketch("Sketch Side left hinge", "yz", off, when="door")
             h = hinge.circle(["lipHoleU", "60 mm"], "rM4")
             hinge.pattern([h], count="2", step=["0 mm", "20 mm"], count2="2", step2=["0 mm", "Hc - 140 mm"])
@@ -441,8 +443,8 @@ def publish():
                         "corners: open (each flange ends at its bend), butt, overlap (the lid's and the pan's front "
                         "flange and the door's side flanges cover the other flanges' ends) or miter; the sides' and "
                         "the back's corners, inside the lid's, the pan's and the sides' bends, stay open", group="Corners", order=1, kind="choice", choices=CORNERS)),
-        ("gap", dict(label="Corner gap", description="The gap left at a closed corner (a butt's is less than the "
-                     "thickness)", group="Corners", order=2, min="0.1 mm", max="if(corner == 2, t - 0.1 mm, 2 mm)",
+        ("gap", dict(label="Corner gap", description="The gap left at a closed corner: at least 0.4 mm (0.015 in, "
+                     "SendCutSend's least gap between flanges), a butt's less than the thickness", group="Corners", order=2, min="0.4 mm", max="if(corner == 2, min(2 mm, t - 0.1 mm), 2 mm)",
                      step="0.1 mm", unit="mm")),
         ("reliefShape", dict(label="Corner relief", description="The relief cut at each corner of the flat pattern, "
                              "R + t + 0.5 mm along each edge", group="Corners", order=3, kind="choice",

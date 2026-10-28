@@ -20,7 +20,7 @@ the flat. The corners are closed (overlap by default) with a gap you set. The sh
 | Screws | Fit | M3 | M3, M4 |
 | Lid clearance | Fit | 0.5 mm | 0.2 to 1 mm, step 0.1 mm |
 | Corners | Corners | Overlap | Open, Butt, Overlap, Miter (below) |
-| Corner gap | Corners | 0.5 mm | 0.1 to 2 mm, step 0.1 mm; for a butt at most the thickness less 0.1 mm |
+| Corner gap | Corners | 0.5 mm | 0.4 to 2 mm, step 0.1 mm; for a butt at most min(2 mm, thickness − 0.1 mm) |
 | Corner relief | Corners | Round | Rect, Round, Tear, R + t + 0.5 mm along each edge |
 | Vent slots | Options | on | on / off |
 | Feet holes | Options | on | on / off |
@@ -47,7 +47,7 @@ the inputs (`gen.py` writes `build.json`; it computes no geometry).
   wall + BA + retL / 2, with BA = π/2 (R + K t), y = ± `flatHoleY`), so both are cut flat, and the screws'
   assertions prove that they line up once bent.
 - **Vent slots** (option): a row of slots across the middle of the lid's top, half the inside depth long,
-  max(4 mm, 4 t) wide, at a pitch of twice the width plus 2 mm, between the return flanges.
+  max(4 mm, 2 t) wide, at a pitch of twice the width plus 2 mm, between the return flanges.
 - **Feet holes** (option): four clearance holes in the floor's corners, for screw-on feet or standoffs.
 - The vents and the feet holes are `cutouts` sketches of the lid and the base, each switched on and off by
   its option (`when`), so they are cut in the flat pattern too. (Before, each option was a second variant
@@ -65,7 +65,11 @@ the flats running on past their bends towards the other flange and stopping *Cor
   the eye. It is what a shop folds for an unwelded box: it closes the corner without welding, tolerates the
   press brake's angle error (the covered flange has the gap to move) and needs no finishing.
 - **Butt**: as overlap, the covering flange also the gap short of flush (the gap must be less than the
-  thickness, so the range of *Corner gap* is narrowed to t − 0.1 mm when butt is chosen).
+  thickness, so the range of *Corner gap* is narrowed to min(2 mm, t − 0.1 mm) when butt is chosen).
+
+*Corner gap* is at least 0.4 mm: SendCutSend asks at least 0.015 in (0.38 mm) between flanges that meet
+(*Guide to designing bend reliefs in sheet metal*, above), so the covered flange clears the cover when
+it is bent.
 - **Miter**: both flanges to the plane halving the corner, the gap apart; the ends are bevelled (cut square
   by a laser, the gap takes that up), the joint to weld or braze.
 - **Open**: each flange ends at its bend, as before (the corner is open by the relief and the bend radii).
@@ -73,14 +77,28 @@ the flats running on past their bends towards the other flange and stopping *Cor
 **Reliefs.** Every corner keeps its relief: a closed corner needs it as the hole where the two bends would
 cross. Its shape is the *Corner relief* choice (relief `shape` by expression, 1 rect, 2 round, 3 tear),
 its size **R + t + 0.5 mm** along each edge, the same rule as in [`rack-cabinet`](../rack-cabinet/): the
-relief reaches past the bend zone (inner radius plus thickness) by half a millimetre, as SendCutSend's
-bend relief guide asks (depth at least bend radius + thickness + 0.020 in; *Guide to designing bend
-reliefs in sheet metal*, sendcutsend.com/blog/guide-to-designing-bend-reliefs). **Round** is the default:
-a round relief has no sharp inside corner to start a crack from and is the smallest hole at a closed
-corner; rect is the classic square notch, tear the largest (a disc tangent to both edges).
+relief reaches past the bend zone (inner radius plus thickness) by half a millimetre. That is SendCutSend's
+rule for a **bend relief's depth** (at least bend radius + thickness + 0.020 in; *Guide to designing bend
+reliefs in sheet metal*, sendcutsend.com/blog/guide-to-designing-bend-reliefs), applied here to corner
+reliefs by analogy: SendCutSend gives no separate size for a corner relief. **Round** is the default: it
+has no sharp inside corner to start a crack from, and in the flat it removes the least material. Measured
+on the base's flat pattern with the defaults (vents and feet off, relief 2.5 mm): 37 503.19 mm² round,
+37 497.83 mm² rect (5.37 mm² less: four times r² − π r²/4), 37 438.92 mm² tear (64.27 mm² less). That is
+the notch in the floor only; SendCutSend notes that round reliefs leave slightly larger gaps at the bend
+ends, so where the look of the corner matters choose rect.
 
 Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (#B9BEC4) for 5754, a
 lighter, bluer tint (#C8CED6) for stainless 304; the screws brass.
+
+## Bend order
+
+Bend the **base** in this order: the two **return flanges** first (on the flat, before anything stands in
+the way), then the front and back **lips**, then the two **walls**. A wall with its return flange already
+bent is a U-shaped channel on the press brake: as it is bent up, the return flange swings towards the
+upper tool, so the walls usually need a **gooseneck punch** (or a deep-throat one), depending on the inside
+height and the return flange's length; check with your shop. The lips must be up before the walls, since
+the walls close the corners over the lips' ends (overlap and butt). The **lid**: the skirts first, then
+the front and back walls, which cover the skirts' ends.
 
 ## The material table
 
@@ -173,6 +191,10 @@ the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal 
    (passed with `--strict` off, failed with it on). Either a measure that says "no closed corner" as a
    value an assertion can accept, a condition on an assertion, or an `if` that does not look at the branch
    it does not take would make them pass.
+8. **A hole on a flange is placed by unfolding it by hand.** `flatHoleX` re-implements the bend allowance
+   π/2 (R + K t) that 3DCraft lays the pattern out with. It is checked (the screws stand centred in both
+   holes), but the Jig should not need the formula: a cut-out sketch placed on a flange in its folded
+   position, or a flange's flat offset as an output, would do it (a feature request, filed as a repro).
 
 ## Sources
 
