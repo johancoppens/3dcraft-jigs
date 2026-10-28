@@ -708,27 +708,53 @@ A("ridge: the stitch holes pair up across the seam", measure="distance",
   **{"from": holes_of(decks("S", 4)), "to": holes_of(decks("P", 4))},
   max=pair(inset("ridge", "tDeck"), inset("ridge", "tDeck"), "dRidge"))
 
-# No volume shared between neighbouring plates, by the boolean itself: each pair intersected must leave
-# nothing. 3DCraft cannot decide this yet for touching freeform plates (plan/repro/repro-sea-kayak-12.json),
-# so these features are switched off (overlapProof = 0) until it can; set it to 1 to build them.
-V("overlapProof", "0")
-PAIRS = []
-for port, tag in SIDES:
-    for k in (1, 2, 3):
-        for a_ in panel_set(tag, k - 1):
-            for b_ in panel_set(tag, k):
-                PAIRS.append((a_, b_))
-    for a_ in tops(tag, 4):
-        for b_ in decks(tag, 4):
-            if a_[3] == b_[4]:
-                PAIRS.append((a_, b_))
-PAIRS += [("Plank0S", "Plank0P")] + [(f"Deck{nn}S", f"Deck{nn}P") for nn in (2, 3, 4)]
-WHEN = {p[0]: p[1] for t in "SP" for p in PLATES[t]}
-for k, (a_, b_) in enumerate(PAIRS):
-    cond = f"overlapProof && ({WHEN[a_]}) && ({WHEN[b_]})"
-    C("feature.transform", source=a_, keep=True, name=f"OvCopy{k}", when=cond)
-    C("feature.boolean", op="intersect", target=f"OvCopy{k}", tool=b_, keepTool=True, name=f"Overlap{k}", when=cond)
+# No volume shared between neighbouring plates: the overlap measure (a boolean intersection of the two
+# drilled plates, which must leave nothing) for every pair of hull panels (so the keel and every chine,
+# whatever the number of chines) and for the deck panels at the ridge. The topside and the deck
+# at the sheer share the deck's skin (the deck rests on the topside), which the boolean does not take yet
+# (coincident freeform skins: the Ov3D case of plan/repro/repro-sea-kayak-12.json in 3DCraft), so the sheer
+# is proven by its distance alone until then.
+def drilled_solids(names):
+    return {"kind": "body", "where": drilled(names)}
+
+
+HULLPLATES = [p[0] for t in "SP" for p in PLATES[t] if p[2] != "D"]
+A("keel and chines: no two hull panels share any volume", measure="overlap", of=drilled_solids(HULLPLATES),
+  **{"is": False})
+A("ridge: the deck panels share no volume", measure="overlap", of=drilled_solids(decks("S", 4)),
+  to=drilled_solids(decks("P", 4)), **{"is": False})
 done(10)
+
+# ================================================================ hydrostatics, as outputs of 3DCraft's measures
+# Read-only outputs (variable.measure, variable.output): the waterline for the weight, the centre of
+# buoyancy, the waterplane and its transverse moment, then KB, BM = I / V, KM, KG, GM (Biran & Lopez-Pulido,
+# ch. 2-3). KG: the plywood's centre of gravity from the kernel (glass and fittings taken with it), the
+# paddler's 254 mm above a 25 mm seat pad on the floor amidships, the load at 100 mm.
+C("feature.block", size=["10 mm", "2000 mm", "2000 mm"], position=["Xmid - 5 mm", "-1000 mm", "-500 mm"],
+  name="MidSlab")
+C("feature.boolean", op="intersect", target="MidSlab", tool="Hull", keepTool=True, name="MidSlice")
+C("feature.visible", feature=["MidSlice"], visible=False)
+WATER = dict(of="Hull", plane="xy", offset="T")
+OUT = [("T", dict(measure="levelFor", of="Hull", volume="Vdisp")),
+       ("Vb", dict(measure="volumeBelow", **WATER)),
+       ("KB", dict(measure="centroidBelow", axis="z", **WATER)),
+       ("LCB", dict(measure="centroidBelow", axis="x", **WATER)),
+       ("Awp", dict(measure="sectionArea", **WATER)),
+       ("IT", dict(measure="sectionInertia", about="x", **WATER)),
+       ("Amid", dict(measure="volumeBelow", of="MidSlice", plane="xy", offset="T")),
+       ("zPly", dict(measure="centerOfMass", of=solids(WOODP), axis="z")),
+       ("xPly", dict(measure="centerOfMass", of=solids(WOODP), axis="x"))]
+for nm, kw in OUT:
+    C("variable.measure", name=nm, wait=False, **kw)
+for nm, ex in [("BM", "IT / Vb"), ("KM", "KB + BM"),
+               ("KG", "(mBoat * zPly + mPad * (tHull + 25 mm + cgUp) + payload * 100 mm) / mTotal"),
+               ("GM", "KM - KG"),
+               ("LCG", "(mBoat * xPly + mPad * (xBack + cgFwd) + payload * (xBack + 250 mm)) / mTotal"),
+               ("trim", "LCB - LCG"),
+               ("Amidship", "Amid / 10 mm"),
+               ("freeboard", "Zmid - T")]:
+    C("variable.output", name=nm, expr=ex, wait=False)
+A("initial stability: GM = KB + BM - KG >= 0", measure="value", expr="GM", min="0 mm")
 
 # ================================================================ what is shown, the cut sheet
 HIDE = (["Hull", "InHull", "EndA", "EndB"] + [s[1]["name"] for s in steps if s[0] in ("datum.plane", "sketch.create")]
@@ -817,5 +843,6 @@ C("document.info",
   tags=["kayak", "boat", "stitch and glue", "plywood", "developable", "plate", "unfold", "hydrostatics",
         "cut sheet", "formula"])
 C("assert.list")
+C("output.list")
 C("jig.export", path="dist/sea-kayak.3dcraftjig")
 done(99)

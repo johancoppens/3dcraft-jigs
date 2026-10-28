@@ -87,8 +87,8 @@ station.
   square to its panel's station normal, at the panel's own formulas, drilled through the plate (both sides
   of the boat); `feature.unfold` carries the holes onto the flat pieces, so they are on the cut sheet.
 
-`gen.py` writes 217 variables (the version that computed the geometry itself needed 3839), 292 feature
-commands and 30 assertions; a regeneration takes 30 to 100 s (median 56 s over the check's points), a build
+`gen.py` writes 216 variables and 17 outputs (the version that computed the geometry itself needed 3839 variables), 243 feature
+commands and 33 assertions; a regeneration takes 30 to 100 s (median 56 s over the check's points), a build
 with every assertion measured about 130 s at the defaults (drilling some 500 holes and the 27 flat pieces
 are most of it).
 
@@ -98,6 +98,8 @@ are most of it).
 |---|---|
 | keel, chines 1–3 (each side; on a hull with fewer chines the sheer), sheer, ridge | the least distance between neighbouring plates is 0: the panels meet edge to edge |
 | the panels are developable; their Gaussian curvature ≤ 10⁻⁹ mm⁻² | measured on the envelope faces the plates are made of: 0 |
+| keel and chines: no two hull panels share volume; ridge likewise | the overlap measure (boolean intersection) of the drilled plates |
+| initial stability | the output GM ≥ 0 |
 | plywood mass | the kernel's mass of the plates (okoume 500 kg/m³) is the weight formula's ± 4 % |
 | freeboard | the waterline for boat, paddler and load (`levelFor`) lies 45 mm below the sheer amidships |
 | the end pours are dry | above the highest waterline the freeboard allows |
@@ -108,32 +110,33 @@ are most of it).
 
 ## Hydrostatics
 
-From `measure.levelFor` (the draft for the weight, the centre of buoyancy, the waterplane and its second
-moments) and its `surface` (the wetted surface), `hydro.py` works out KB, BM = I/∇, KM and GM from the
-measures. At the defaults (80 kg paddler, 5 kg load, sea water):
+Read-only **outputs** of 3DCraft's measures (`variable.measure`, `variable.output`; File › outputs, or
+`output.list`), computed after every regeneration: the waterline `T` (`levelFor` the displacement), the
+volume, centre of buoyancy (`KB`, `LCB`) and waterplane (`Awp`, its transverse moment `IT`) below it, the
+midship section below it (`Amidship`), the plywood's centre of gravity (`zPly`, `xPly`), and from them
+`BM = IT / Vb`, `KM`, `KG`, `GM`, `LCG`, `trim = LCB − LCG` and `freeboard` (Biran & López-Pulido, ch. 2–3).
+GM ≥ 0 is an assertion on the output. At the defaults (80 kg paddler, 5 kg load, sea water):
 
-| Quantity | 3DCraft (measures) | Igdlorssuit (published) | Earlier Jig (formulas outside 3DCraft) |
+| Quantity | 3DCraft (outputs) | Igdlorssuit (published) | Earlier Jig (formulas outside 3DCraft) |
 |---|---|---|---|
-| Boat, displacement | 15.9 kg, 100.9 kg | 88 kg | 14.9, 99.9 kg |
-| Draft (levelFor, 9 steps) | 105.6 mm | 122 mm | 107.6 mm |
-| Waterplane area | 1.516 m² | | 1.445 m² |
-| Wetted surface | 1.74 m² | 1.57 m² | 1.69 m² |
+| Boat, displacement | 15.9 kg, 100.9 kg (∇ 0.0985 m³) | 88 kg | 14.9, 99.9 kg |
+| Draft T | 105.6 mm | 122 mm | 107.6 mm |
+| Waterplane area, midship section | 1.516 m², 0.0354 m² | | 1.445 m² |
+| Wetted surface | 1.74 m² (`measure.below`'s surface) | 1.57 m² | 1.69 m² |
 | KB, BM, KM | 66, 218, **285** mm | KM 269 mm | 67, 204, **271** mm |
 | KG | 250 mm | | 248 mm |
 | **GM** | **35 mm** | | **23 mm** |
-| Centre of buoyancy, x | 124 mm aft of the middle | | 124 mm aft |
+| LCB, LCG (trim lever) | −124.3, −125.0 mm (0.7 mm) | | −124.0, −123.8 mm |
 
 The ends are fuller than the earlier lines' (bottom panels narrowing as G^1.6 where they had G^2.2: plates
 refuse panels narrower than about their thickness), so the waterplane carries more area towards the ends
-and BM is 7 % higher; KB and KG are as before. The Igdlorssuit is finer still (Cp 0.524).
+and BM is 7 % higher; KB and KG are as before.
 
-**Not yet assertions** (measures in expressions, approved by the developer and to be built in 3DCraft, repro
-4): GM ≥ 0, the prismatic coefficient and the displacement-length ratio (they need the waterline's
-length), the capacity from the measures themselves (the ranges use a block coefficient read off
-`measure.below` over the corners of the ranges, on the safe side, and the freeboard assertion checks the
-real waterline), and the trim (the seat back is placed 230 mm behind the widest station instead of where
-the centre of gravity lies over the centre of buoyancy). When they land, KB, BM, KM, GM and Cp move from
-`hydro.py` into the model as assertions.
+**Not yet:** the prismatic coefficient Cp = ∇ / (A_midship · LWL) and the displacement-length ratio need the
+waterline's length, the extent of a section, which 3DCraft does not measure (plan/repro/repro-sea-kayak-15.json
+in 3DCraft). The capacity in the ranges is a block coefficient on the safe side (outputs may not drive the
+form's ranges), checked by the freeboard assertion, and the seat is placed 230 mm behind the widest station
+(an output may not move geometry); the `trim` output shows how far that is from level.
 
 ## What 3DCraft cannot do yet (repros in the 3DCraft repository, plan/repro)
 
@@ -144,15 +147,15 @@ the centre of gravity lies over the centre of buoyancy). When they land, KB, BM,
   (p = 1.8, 1.6, 1.3 for the bottom panel, where 2.6, 2.2, 1.8 left panels under a millimetre wide).
 - The coaming's lip (repro 10), the riser's developed strip and the bulkheads laid flat by `feature.unfold`
   (repro 11; the bulkheads are flat and on their own cut sheet).
-- **No volume shared between neighbouring plates, proven by a boolean intersection** of every neighbouring
-  pair: the boolean refuses touching freeform plates today (repro 12, being fixed). The features are in the
-  model, switched off (`overlapProof = 0`); the distance-0 assertions alone do not prove it, and this Jig
-  is not finished until the intersections are on and green.
+- **No volume shared at the sheer**: the keel, the chines and the ridge are proven by the overlap measure
+  (a boolean intersection of the drilled plates, which leaves nothing); the topside and the deck share the
+  deck's skin, which the boolean does not take yet (coincident freeform skins, the Ov3D case of repro 12,
+  being built). Until then the sheer has its distance-0 assertion only, and this Jig is not finished.
 - The holes' distance from the plates' rims: measuring it takes minutes per thin plate (repro 13), so it is
   not asserted; the holes are set `holeIn + t tan(d/2)` in from the chine (holeIn from the plate's edge
   after its joint, d the seam's angle).
-- Plates on the developable sheets of the upper panels (repro 14: a topside's offset folds over, the port
-  ends' corners are not reached, a skin does not unfold).
+- Plates on the developable sheets of the upper panels (repro 14, now fixed in 3DCraft except the topside's,
+  DevTop4S): not switched over yet, the envelope's faces are the same surfaces.
 - `levelFor` on this hull (repro 9) and measures in expressions (repro 4).
 
 ## Cut sheet
