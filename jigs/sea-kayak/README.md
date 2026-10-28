@@ -26,7 +26,7 @@ hydrostatics (displacement 88 kg, Cp 0.524, LWL 4.00 m, BWL 0.48 m, draft 0.122 
 | Chines per side | Hull | 3 | 1 to 3 (2 to 4 hull panels a side) |
 | Ends | Hull | Moderate | Fine, Moderate, Full (table `forms`) |
 | End cap | Hull | Hardwood strip | None or a hardwood strip along the stems |
-| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (93 kg at 530 mm beam, +0.3 kg per mm, at most 110) |
+| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (93 kg at 530 mm beam, +0.3 kg per mm, 5 kg less with one chine, at most 110) |
 | Paddler height | Paddler and load | 1780 mm | 1500 to 2000 mm |
 | Load (kg) | Paddler and load | 5 | 0 to what is left, at most 40 |
 | Water | Paddler and load | Sea water | Sea (1025 kg/m³) or fresh (1000 kg/m³) |
@@ -155,6 +155,8 @@ form's ranges), checked by the freeboard assertion, and the seat is placed 230 m
   together than the tolerance can tell apart"): the keel (repro 16), chine 1 (repro 17), chine 3 against
   the topside (repro 18, at the Fine ends near the defaults) and the ridge (repro 19). Those assertions stay
   on and fail there until the boolean decides them.
+- The inside of the planking (`InHull`, which the bulkheads and the end pours are cut from) is refused by
+  the boolean at some points ("an intersection curve could not be fitted within the tolerance", repro 20).
 - The holes' distance from the plates' rims: measuring it takes minutes per thin plate (repro 13), so it is
   not asserted; the holes are set `holeIn + t tan(d/2)` in from the chine (holeIn from the plate's edge
   after its joint, d the seam's angle).

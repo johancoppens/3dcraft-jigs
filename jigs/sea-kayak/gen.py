@@ -609,8 +609,9 @@ V("Vdisp", "mTotal / rho * (1 m)^3")
 V("kCap", "forms[form].kCap - 0.00017 * (rockB + rockS - 470 mm) / (1 mm)")
 V("mCap", "kCap * L * B * (Zmid - 45 mm) * rho / (1 m)^3 - mBoat")
 # The heaviest paddler with GM >= 0 (sitting still), a bound on the safe side of the output GM over the
-# corners of the ranges (narrow, deep hulls are the tender ones); the GM assertion checks it at every point.
-V("mStab", "93 + 0.3 * (B - 530 mm) / (1 mm)")
+# corners of the ranges (narrow, deep hulls are the tender ones; a single-chine V is tenderer still, 5 kg
+# less: GM falls about 0.8 mm per kg); the GM assertion checks it at every point.
+V("mStab", "93 + 0.3 * (B - 530 mm) / (1 mm) - if(chines == 1, 5, 0)")
 done(9)
 
 # ================================================================ assertions
