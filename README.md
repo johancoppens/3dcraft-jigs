@@ -22,7 +22,7 @@ standard.
 | [`flatpack-stool`](jigs/flatpack-stool/) | A screwless plywood stool or side table: cross-lap legs, tabs through the seat, hand-hold slot, cut sheet | CC-BY-4.0 |
 | [`tensegrity-table`](jigs/tensegrity-table/) | A floating (tensegrity) table: top hung from the base's hook by a central cable, held level by 3 or 4 outer cables, with tensions and the load limit from statics, cut sheet | CC-BY-4.0 |
 | [`sliceform`](jigs/sliceform/) | A sliceform sculpture or lamp shade: two families of laser-cut slices with half-lap slots showing a saddle, a wave, an ellipsoid or a twisted vase from its formula | CC-BY-4.0 |
-| [`miura-ori`](jigs/miura-ori/) | A Miura-ori fold panel that folds in and out with one slider (one crease driven, the rest solved by 3DCraft), with its crease pattern to print and score or laser-score | CC-BY-4.0 |
+| [`miura-ori`](jigs/miura-ori/) | A Miura-ori fold panel of 3 to 12 rows and columns that folds in and out with one slider, from flat to folded flat (the other creases solved by 3DCraft), Kawasaki, Maekawa and flat-foldability asserted, with its crease pattern to print and score or laser-score | CC-BY-4.0 |
 | [`joint-drawer`](jigs/joint-drawer/) | A drawer or box with through dovetails or finger joints, a bottom in a groove and a brass knob | CC-BY-4.0 |
 | [`solar-cooker`](jigs/solar-cooker/) | A parabolic solar cooker from flat petals (gores) drawn from the paraboloid's arc length, tilting on an axis through the focus so the pot stays level, with cut sheets | CC-BY-4.0 |
 | [`sundial`](jigs/sundial/) | A horizontal garden or (declining) wall sundial for your place: hour lines with the longitude correction, numerals, a slotted gnomon at the latitude angle, cut sheet | CC-BY-4.0 |
@@ -112,10 +112,11 @@ it after changing a `build.json` or upgrading 3DCraft, and commit the result tog
 You need `craft3d-cli` from 3DCraft, any build that has `jig.export` and `check-range` (the files in `dist/`
 were built with different builds of 3DCraft `main`, so a Jig needs a build that reads its format version or a newer
 one). Most were built and checked at 3faaaea0 (format version 36); `gridfinity-bin` and `gridfinity-baseplate` are at
-format version 37; `rack-panel` (sheet metal) and `miura-ori` (`feature.fold`,
-built and checked at 4d82484c) are at format version 41 and need a build that reads it (`main` at 4d82484c reads it);
+format version 37; `rack-panel` (sheet metal) is at format version 41 (`main` at 4d82484c reads it);
 `rack-cabinet` and `sheet-metal-enclosure` (closed corners, choices by expression, holes in flanges) were built and
-checked at a3ee23a9 and are at format version 46 (assertions with a condition). Put it on `PATH` or point `CRAFT3D_CLI` at it.
+checked at a3ee23a9 and are at format version 46 (assertions with a condition); `miura-ori` (creases from sketch
+patterns, folding flat, thick panels) is at format version 50, built and checked at 0dc5efb6, and needs that build or a
+newer one. Put it on `PATH` or point `CRAFT3D_CLI` at it.
 
 ```sh
 export CRAFT3D_CLI=/path/to/craft3d-cli
