@@ -610,7 +610,7 @@ V("kCap", "forms[form].kCap - 0.00017 * (rockB + rockS - 470 mm) / (1 mm)")
 V("mCap", "kCap * L * B * (Zmid - 45 mm) * rho / (1 m)^3 - mBoat")
 # The heaviest paddler with GM >= 0 (sitting still), a bound on the safe side of the output GM over the
 # corners of the ranges (narrow, deep hulls are the tender ones); the GM assertion checks it at every point.
-V("mStab", "95 + 0.25 * (B - 530 mm) / (1 mm)")
+V("mStab", "93 + 0.3 * (B - 530 mm) / (1 mm)")
 done(9)
 
 # ================================================================ assertions
@@ -790,8 +790,8 @@ params = [
      "max": "600 mm", "step": "5 mm", "unit": "mm",
      "description": "Widest beam at the sheer; at least 570 mm with one chine"},
     {"name": "D", "label": "Depth at the sheer", "group": G1, "order": 3, "min": "170 mm",
-     "max": "min(230 mm, 0.33 * B)", "step": "5 mm", "unit": "mm",
-     "description": "Keel to sheer at the widest station; the deck's crown comes on top. At most 0.33 x beam: deeper hulls carry their weight too high (GM)"},
+     "max": "min(230 mm, 0.35 * B)", "step": "5 mm", "unit": "mm",
+     "description": "Keel to sheer at the widest station; the deck's crown comes on top. At most 0.35 x beam: deeper hulls carry their weight too high (GM)"},
     {"name": "crown", "label": "Deck crown", "group": G1, "order": 4, "min": "12 deg", "max": "26 deg",
      "step": "1 deg", "unit": "deg", "description": "Angle of the deck panels from the horizontal"},
     {"name": "rockB", "label": "Bow rise", "group": G1, "order": 5, "min": "250 mm", "max": "400 mm",

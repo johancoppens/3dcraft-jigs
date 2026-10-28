@@ -19,14 +19,14 @@ hydrostatics (displacement 88 kg, Cp 0.524, LWL 4.00 m, BWL 0.48 m, draft 0.122 
 |---|---|---|---|
 | Length overall | Hull | 5300 mm | 5000 to 5800 mm |
 | Beam | Hull | 545 mm | 530 to 600 mm at the sheer; at least 570 mm with one chine |
-| Depth at the sheer | Hull | 190 mm | 170 mm to min(230 mm, 0.33 × beam): deeper hulls carry their weight too high |
+| Depth at the sheer | Hull | 190 mm | 170 mm to min(230 mm, 0.35 × beam): deeper hulls carry their weight too high |
 | Deck crown | Hull | 22° | 12 to 26° |
 | Bow rise, Stern rise | Hull | 300, 240 mm | 250 to 400, 220 to 350 mm (rocker) |
 | Widest station | Hull | 0.47 | 0.44 to 0.52 of the length from the stern |
 | Chines per side | Hull | 3 | 1 to 3 (2 to 4 hull panels a side) |
 | Ends | Hull | Moderate | Fine, Moderate, Full (table `forms`) |
 | End cap | Hull | Hardwood strip | None or a hardwood strip along the stems |
-| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (95 kg at 530 mm beam, +0.25 kg per mm, at most 110) |
+| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (93 kg at 530 mm beam, +0.3 kg per mm, at most 110) |
 | Paddler height | Paddler and load | 1780 mm | 1500 to 2000 mm |
 | Load (kg) | Paddler and load | 5 | 0 to what is left, at most 40 |
 | Water | Paddler and load | Sea water | Sea (1025 kg/m³) or fresh (1000 kg/m³) |
