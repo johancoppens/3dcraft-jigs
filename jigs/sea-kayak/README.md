@@ -19,14 +19,14 @@ hydrostatics (displacement 88 kg, Cp 0.524, LWL 4.00 m, BWL 0.48 m, draft 0.122 
 |---|---|---|---|
 | Length overall | Hull | 5300 mm | 5000 to 5800 mm |
 | Beam | Hull | 545 mm | 530 to 600 mm at the sheer; at least 570 mm with one chine |
-| Depth at the sheer | Hull | 190 mm | 170 mm to min(230 mm, 0.36 × beam) |
+| Depth at the sheer | Hull | 190 mm | 170 mm to min(230 mm, 0.33 × beam): deeper hulls carry their weight too high |
 | Deck crown | Hull | 22° | 12 to 26° |
 | Bow rise, Stern rise | Hull | 300, 240 mm | 250 to 400, 220 to 350 mm (rocker) |
 | Widest station | Hull | 0.47 | 0.44 to 0.52 of the length from the stern |
 | Chines per side | Hull | 3 | 1 to 3 (2 to 4 hull panels a side) |
 | Ends | Hull | Moderate | Fine, Moderate, Full (table `forms`) |
 | End cap | Hull | Hardwood strip | None or a hardwood strip along the stems |
-| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries (at most 110) |
+| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (95 kg at 530 mm beam, +0.25 kg per mm, at most 110) |
 | Paddler height | Paddler and load | 1780 mm | 1500 to 2000 mm |
 | Load (kg) | Paddler and load | 5 | 0 to what is left, at most 40 |
 | Water | Paddler and load | Sea water | Sea (1025 kg/m³) or fresh (1000 kg/m³) |
@@ -151,6 +151,10 @@ form's ranges), checked by the freeboard assertion, and the seat is placed 230 m
   (a boolean intersection of the drilled plates, which leaves nothing); the topside and the deck share the
   deck's skin, which the boolean does not take yet (coincident freeform skins, the Ov3D case of repro 12,
   being built). Until then the sheer has its distance-0 assertion only, and this Jig is not finished.
+- **The overlap measure cannot decide some touching pairs** at some points of the range ("two points closer
+  together than the tolerance can tell apart"): the keel (repro 16), chine 1 (repro 17), chine 3 against
+  the topside (repro 18, at the Fine ends near the defaults) and the ridge (repro 19). Those assertions stay
+  on and fail there until the boolean decides them.
 - The holes' distance from the plates' rims: measuring it takes minutes per thin plate (repro 13), so it is
   not asserted; the holes are set `holeIn + t tan(d/2)` in from the chine (holeIn from the plate's edge
   after its joint, d the seam's angle).
