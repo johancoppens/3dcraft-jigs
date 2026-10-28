@@ -6,14 +6,16 @@ IEC 60297-3-100) and the sheet stock table come from scripts/racklib.py, shared 
 rails carry the hole pattern a rack-panel bolts onto, and the sides stand the width apart that the panel
 Jig checks it fits between.
 
-Every part is a sheet-metal part (feature.sheetMetal) bent from one sheet, with its holes in the base's
-sketch (so they are in its flat pattern), its corners relieved:
-- two sides (plate along y-z) with a front lip, a top and a bottom flange bent inward;
+Every part is a sheet-metal part (feature.sheetMetal) bent from one sheet, with its holes drawn in the flat
+(in the base's sketch, also those of the flanges, or in a cut-out sketch switched by `when`, so every hole is
+in its flat pattern), its corners relieved and closed by the `corner` choice:
+- two sides (plate along y-z) with a front lip, a top and a bottom flange bent inward, the rails' bolt
+  holes, and in the left side's lip the door's hinge holes;
 - a lid and a bottom pan with three flanges (front, left, right) over the sides, cable knock-outs near
   the back;
 - a back plate (the wall plate) with four flanges forward, inside the sides, and four wall-mount holes;
 - two front rails, L or C profile, square cage-nut holes or M6 tap holes on the EIA-310 pattern, their
-  legs against the sides; optionally the same two rails at the back;
+  legs bolted to the sides (three M6 holes in each leg); optionally the same two rails at the back;
 - a vented door (a pan with four flanges), hinged at the left, shown opened by an angle.
 Parts bolted together touch; none overlap (checked).
 
@@ -35,6 +37,8 @@ PROFILES = ["L", "C"]
 RAIL_HOLES = ["Square 9.5 mm (cage nuts)", "M6 tapped"]
 # Knock-outs for metric cable glands (EN 50262): the clearance hole of M20, M25, M32.
 KNOCKOUTS = [("M20", 20.5), ("M25", 25.5), ("M32", 32.5)]
+CORNERS = ["Open", "Butt", "Overlap", "Miter"]     # feature.sheetMetal corner kind 1..4
+RELIEFS = ["Rect", "Round", "Tear"]                # relief shape 1..3
 
 INPUTS = [
     ("nU", "9"),
@@ -46,17 +50,23 @@ INPUTS = [
     ("rear", "1"),
     ("knock", "3"),
     ("gland", "2"),
+    ("corner", "3"),
+    ("gap", "0.5 mm"),
+    ("reliefShape", "2"),
 ]
 DERIVED = [
     ("Wi", "cabInnerW"),                       # clear width between the sides
     ("mr", "5 mm"),                             # the rails reach this far past the U range
     ("Hc", "nU * U + 2 * (mr + R + t)"),        # the sides' height
     ("zU0", "R + t + mr"),                      # the lowest U boundary
-    ("s", "R + t + 1 mm"),                     # relief size (each edge and its flange end s from a corner)
-    ("Lside", "max(25 mm, minFlange)"),        # sides: front lip
+    ("s", "R + t + 0.5 mm"),                   # relief size (each edge and its flange end s from a corner)
+    ("BA", "pi / 2 * (R + K * t)"),            # bend allowance of a 90 degree bend: where a flange's flat starts
+    ("rM4", unit(rk.M4_CLEAR / 2)),
+    ("rB", unit(rk.M6_CLEAR / 2)),             # rail bolts: M6 clearance (ISO 273 medium)
+    ("Lside", "max(25 mm, minFlange, 2 * (holeMin + rM4) + 1 mm)"),   # sides: front lip (hinge holes in it)
     ("Lf", "max(20 mm, minFlange)"),           # other flanges
     ("Ld", "max(15 mm, minFlange)"),           # door flanges
-    ("leg", "max(30 mm, minFlange)"),          # rail leg against the side
+    ("leg", "max(30 mm, minFlange, 2 * (holeMin + rB) + 1 mm)"),   # rail leg against the side (bolt holes in it)
     ("ret", "max(15 mm, minFlange)"),          # C rail's return
     ("yr", "50 mm"),                           # front rails' front face (room for handles behind the door)
     ("xo", "Wi / 2 - R - t"),                  # rails' outer bend line: the leg's outside on the side
@@ -69,12 +79,20 @@ DERIVED = [
     ("kY", "D - 45 mm"),                       # knock-outs' row
     ("wmD", unit(9.0)),                        # wall-mount holes: M8 clearance (ISO 273 medium)
     # Door vents: slots 50 x 6 mm, a band of rows at the top and at the bottom.
-    ("vHalf", "22 mm"), ("vR", "max(3 mm, 1.7 * t)"), ("vPx", "60 mm"), ("vPz", "14 mm"),
+    ("vHalf", "22 mm"), ("vR", "3 mm"), ("vPx", "60 mm"), ("vPz", "14 mm"),
     ("vCols", "floor((Wd - 100 mm) / vPx)"),
     ("vRows", "max(1, min(4, floor((Hc / 2 - 80 mm) / vPz)))"),
     ("vX0", "-(vCols - 1) * vPx / 2"),
     ("hingeX", "-(Wi / 2 + t - R) + holeMin + 6 mm"),   # hinge holes' x on the door
-    ("rM4", unit(rk.M4_CLEAR / 2)),
+    # Hinge holes in the left side's lip, at the door's hinge holes' heights: in the side's sketch, the
+    # lip's flat starts BA in front of its edge (u = R + t); the holes in the middle of it.
+    ("lipHoleU", "R + t - BA - Lside / 2"),
+    # Rail bolt holes: in the rail's sketch the leg's flat starts BA past its edge (v = xo); folded, the
+    # leg's flat starts R + t behind the rail's face, so the holes lie at y = yr + t + R + leg / 2.
+    ("legHoleV", "xo + BA + leg / 2"),
+    ("boltY", "yr + t + R + leg / 2"),
+    ("boltYr", "yrr + t + R + leg / 2"),
+    ("boltZ1", "zU0 + U / 2"), ("boltZ2", "zU0 + nU * U / 2"), ("boltZ3", "zU0 + nU * U - U / 2"),
     ("rRail", "if(railHoles == 1, %s, %s)" % (unit(rk.CAGE_HOLE / 2), unit(rk.M6_TAP / 2))),
 ]
 
@@ -131,11 +149,18 @@ def rect_uv(u0, u1, v0, v1):
     return [[u0, v0], [u1, v0], [u1, v1], [u0, v1]]
 
 
-def sm(sketch, name, flanges, relief=True, when=None):
+def sm(sketch, name, flanges, relief=True, when=None, cover=None, cutouts=None):
+    """A part; with relief, its corners relieved, and with cover = [(i, j), ...] closed by the `corner`
+    choice, flange i covering flange j's end at each corner."""
     p = {"sketch": sketch, "name": name, "thickness": "t", "radius": "R", "kFactor": "K",
          "flanges": flanges}
     if relief:
-        p["relief"] = {"shape": "round", "size": "s"}
+        p["relief"] = {"shape": "reliefShape", "size": "s"}
+    if cover:
+        p["corner"] = {"kind": "corner", "gap": "gap"}
+        p["corners"] = [{"flanges": [i, j], "kind": "corner", "over": i} for i, j in cover]
+    if cutouts:
+        p["cutouts"] = cutouts
     if when is not None:
         p["when"] = when
     return ["feature.sheetMetal", p]
@@ -147,15 +172,35 @@ def fl(edge, length, direction, **kw):
     return f
 
 
+BOLT_Z = ("boltZ1", "boltZ2", "boltZ3")
+
+
 def sides():
-    """The sides: on the yz plane (u = y, v = z), the inner face at x = +-Wi / 2, flanges inward."""
+    """The sides: on the yz plane (u = y, v = z), the inner face at x = +-Wi / 2, flanges inward; their
+    corners stay open (closed, the corner would run into the bend of the lid's or the pan's front flange,
+    which wraps round it). Bolt holes for the front rails' legs; those for the
+    rear rails in a cut-out sketch switched by `rear`; the left side's lip has the door's hinge holes
+    (a cut-out sketch switched by `door`)."""
     out = []
     for name, off, direction in (("Side right", "Wi / 2", "down"), ("Side left", "-Wi / 2 - t", "up")):
         sk = rk.Sketch("Sketch " + name, "yz", off)
         ln = sk.polyline(rect_uv("R + t", "D", "R + t", "Hc - R - t"))
+        for z in BOLT_Z:
+            sk.circle(["boltY", z], "rB")
         out += sk.cmds
+        rear = rk.Sketch("Sketch %s rear bolts" % name, "yz", off, when="rear")
+        for z in BOLT_Z:
+            rear.circle(["boltYr", z], "rB")
+        out += rear.cmds
+        cut = [rear.name]
+        if name == "Side left":
+            hinge = rk.Sketch("Sketch Side left hinge", "yz", off, when="door")
+            h = hinge.circle(["lipHoleU", "60 mm"], "rM4")
+            hinge.pattern([h], count="2", step=["0 mm", "20 mm"], count2="2", step2=["0 mm", "Hc - 140 mm"])
+            out += hinge.cmds
+            cut.append(hinge.name)
         out.append(sm(sk.name, name, [fl(ln[3], "Lside", direction), fl(ln[2], "Lf", direction),
-                                      fl(ln[0], "Lf", direction)]))
+                                      fl(ln[0], "Lf", direction)], cutouts=cut))
     return out
 
 
@@ -172,7 +217,7 @@ def lid_and_pan():
         sk.pattern([k], count="knock", step=["kP", "0 mm"])
         out += sk.cmds
         out.append(sm(sk.name, name, [fl(ln[0], "Lf", direction), fl(ln[1], "Lf", direction),
-                                      fl(ln[3], "Lf", direction)]))
+                                      fl(ln[3], "Lf", direction)], cover=[(0, 1), (0, 2)]))
     return out
 
 
@@ -184,38 +229,43 @@ def back():
     ln = sk.polyline(rect_uv("R + 2 * t", "Hc - R - 2 * t", "-(%s)" % xe, xe))
     w = sk.circle(["zU0 + 40 mm", "-(Wi / 2 - 70 mm)"], "wmD / 2")
     sk.pattern([w], count="2", step=["Hc - 2 * zU0 - 80 mm", "0 mm"], count2="2", step2=["0 mm", "Wi - 140 mm"])
+    # Its corners stay open: they sit in the inside of the sides' top and bottom bends, which a closed
+    # corner would run into.
     return sk.cmds + [sm(sk.name, "Back", [fl(e, "Lf", "down") for e in ln])]
 
 
 def rails():
-    """The right front rail in four variants (profile x holes), one on by its `when`, passed on as Rail
-    right by a chain of unions; the left one its mirror; the rear ones moved copies."""
-    out, names = [], []
+    """The right front rail in two variants (L and C profile), one on by its `when`, passed on as Rail
+    right by a union; its face holes, square or round, are two cut-out sketches switched by railHoles,
+    shared by both variants; the left one its mirror; the rear ones moved copies."""
+    out, names, cut = [], [], []
+    for holes in (1, 2):
+        hs = rk.Sketch("Sketch rail %s holes" % ["square", "M6"][holes - 1], "zx", "yr",
+                       when="railHoles == %d" % holes)
+        seeds = []
+        for h in rk.HOLE_NAMES:
+            zc = "zU0 + %s" % h
+            if holes == 1:
+                seeds += hs.square(zc, "holeX", unit(rk.CAGE_HOLE))
+            else:
+                seeds.append(hs.circle([zc, "holeX"], "rRail"))
+        hs.pattern(seeds, count="nU", step=["U", "0 mm"])
+        out += hs.cmds
+        cut.append(hs.name)
     for profile in (2, 1):
-        for holes in (1, 2):
-            nm = "Rail %s %s" % (PROFILES[profile - 1], ["square", "M6"][holes - 1])
-            when = "profile == %d && railHoles == %d" % (profile, holes)
-            sk = rk.Sketch("Sketch " + nm, "zx", "yr", when=when)
-            ln = sk.polyline(rect_uv("zU0 - mr", "zU0 + nU * U + mr", "opening / 2", "xo"))
-            seeds = []
-            for h in rk.HOLE_NAMES:
-                zc = "zU0 + %s" % h
-                if holes == 1:
-                    seeds += sk.square(zc, "holeX", unit(rk.CAGE_HOLE))
-                else:
-                    seeds.append(sk.circle([zc, "holeX"], "rRail"))
-            sk.pattern(seeds, count="nU", step=["U", "0 mm"])
-            out += sk.cmds
-            flanges = [fl(ln[2], "leg", "up")]
-            if profile == 2:
-                flanges.append({"tip": 0, "length": "ret", "angle": "90 deg", "direction": "up"})
-            out.append(sm(sk.name, nm, flanges, relief=False, when=when))
-            names.append(nm)
-    prev = names[0]
-    for i, nm in enumerate(names[1:]):
-        o = "Rail right" if i == len(names) - 2 else "Rail union %d" % (i + 1)
-        out.append(["feature.boolean", {"op": "union", "target": prev, "tool": nm, "name": o}])
-        prev = o
+        nm = "Rail %s" % PROFILES[profile - 1]
+        when = "profile == %d" % profile
+        sk = rk.Sketch("Sketch " + nm, "zx", "yr", when=when)
+        ln = sk.polyline(rect_uv("zU0 - mr", "zU0 + nU * U + mr", "opening / 2", "xo"))
+        for z in BOLT_Z:                       # the leg's bolt holes, where the leg lies in the flat
+            sk.circle([z, "legHoleV"], "rB")
+        out += sk.cmds
+        flanges = [fl(ln[2], "leg", "up")]
+        if profile == 2:
+            flanges.append({"tip": 0, "length": "ret", "angle": "90 deg", "direction": "up"})
+        out.append(sm(sk.name, nm, flanges, relief=False, when=when, cutouts=cut))
+        names.append(nm)
+    out.append(["feature.boolean", {"op": "union", "target": names[0], "tool": names[1], "name": "Rail right"}])
     out.append(["feature.mirror", {"source": "Rail right", "normal": [1, 0, 0], "keep": True, "name": "Rail left"}])
     for side in ("right", "left"):
         out.append(["feature.transform", {"source": "Rail " + side, "translate": ["0 mm", "yrr - yr", "0 mm"],
@@ -237,7 +287,9 @@ def door():
     sk.pattern(bot, count="vCols", step=["0 mm", "vPx"], count2="vRows", step2=["vPz", "0 mm"])
     sk.pattern([hinge], count="2", step=["20 mm", "0 mm"], count2="2", step2=["Hc - 140 mm", "0 mm"])
     out = sk.cmds
-    out.append(sm(sk.name, "Door", [fl(e, "Ld", "up") for e in ln], when="door"))
+    # The left and the right flange (lines 0 and 2) cover the top and bottom flanges' ends.
+    out.append(sm(sk.name, "Door", [fl(e, "Ld", "up") for e in ln], when="door",
+                  cover=[(0, 1), (0, 3), (2, 1), (2, 3)]))
     out.append(["feature.transform", {"source": "Door", "angle": "-doorOpen", "axis": [0, 0, 1],
                                       "pivot": ["-Wd / 2", "-t - gd", "0 mm"], "name": "Door shown", "when": "door"}])
     return out
@@ -307,42 +359,58 @@ def assertions():
         eq="cabInnerW")
     add("parts: none overlaps another", "overlap", of=every_part, is_=False)
 
-    # The sheet-metal rules, on every part that is always there.
-    for p in PARTS:
-        a += rk.sheet_rules(p, holes=not p.startswith("Side"))     # the sides have no holes
-    # Rails and door are switched by `when` (and bendRadius, flangeLength, holeToBend refuse a part that
-    # is off, repro-rack-2): their rules on the geometry. Bends are the cylinders of a part.
-    for body, nb, cond, base_y in (("Rail right", "if(profile == 2, 4, 2)", "1", "yr"),
-                                   ("Door shown", "8", "door", None)):
-        add("%s: bends at least the stock's minimum radius" % body, "count",
-            of=faces({"in": body, "surface": "cylinder", "radius": {"min": "minR - 0.0001 mm", "max": big}}),
-            eq="if(%s, %s, 0)" % (cond, nb))
-        add("%s: every bend" % body, "count", of=faces({"in": body, "surface": "cylinder"}), eq="if(%s, %s, 0)" % (cond, nb))
-    add("Rail right: holes at least 2.5 t + r from the bend", "distance",
-        from_=faces({"in": "Rail right", "inside": [["opening / 2 + 0.01 mm", "yr - 0.01 mm", "zU0 - mr + 0.01 mm"],
-                                                 ["xo - 0.01 mm", "yr + t + 0.01 mm", "zU0 + nU * U + mr - 0.01 mm"]],
-                     "any": [{"surface": "freeform"}, {"normal": {"perpendicular": "y"}}]}),
-        to=faces({"in": "Rail right", "surface": "cylinder"}), min="holeMin")
+    # The sheet-metal rules on every part that is switched on (rails and door included), by the
+    # sheet-metal measures; and the closed corners' gap, measured on the solid. The gap goes through an
+    # output, so that with every corner open (nothing to measure) it is not proven rather than broken
+    # (repro-sheet-metal-enclosure-7).
+    a += rk.sheet_rules(None, label="parts")
+    a.append(["variable.measure", {"name": "cornerGapMeasured", "measure": "cornerGap"}])
+    add("closed corners: the gap as given", "value", expr="if(corner == 1, gap, cornerGapMeasured)", eq="gap",
+        tol="0.001 mm")
+    add("Rail right: every bend", "count", of=faces({"in": "Rail right", "surface": "cylinder", "hole": False}),
+        eq="if(profile == 2, 4, 2)")
     add("Rail right: leg and return at least 4 t", "boxMax", of="Rail right", axis="y",
         min="yr + t + R + minFlange + if(profile == 2, R + t, 0 mm)")
-    add("knock-outs in the lid", "count",
-        of=faces({"in": "Lid", "surface": "freeform", "inside": [["-" + big, "kY - kD / 2 - 0.01 mm", "-" + big], [big, "kY + kD / 2 + 0.01 mm", big]]}),
-        min="knock", max="2 * knock")
-    add("knock-outs in the pan", "count",
-        of=faces({"in": "Pan", "surface": "freeform", "inside": [["-" + big, "kY - kD / 2 - 0.01 mm", "-" + big], [big, "kY + kD / 2 + 0.01 mm", big]]}),
-        min="knock", max="2 * knock")
+
+    def hole_at(body, x0, x1, y, z, r, ylo=None, yhi=None):
+        """Hole walls of `body` of radius r inside the box x0..x1 round (y, z)."""
+        return faces({"in": body, "hole": True, "radius": {"eq": r, "tol": "0.001 mm"},
+                      "inside": [[x0, "(%s) - (%s) - 0.01 mm" % (y, r), "(%s) - (%s) - 0.01 mm" % (z, r)],
+                                 [x1, "(%s) + (%s) + 0.01 mm" % (y, r), "(%s) + (%s) + 0.01 mm" % (z, r)]]})
+    # The rails are bolted to the sides: at every bolt place a hole in the rail's leg and one in the side.
+    for side, sx in (("right", ""), ("left", "-")):
+        lo, hi = ("Wi / 2 - t - 0.01 mm", "Wi / 2 + t + 0.01 mm") if not sx else \
+                 ("-Wi / 2 - t - 0.01 mm", "-Wi / 2 + t + 0.01 mm")
+        for rail, y, cond in (("Rail " + side, "boltY", "1"), ("Rear rail " + side, "boltYr", "rear")):
+            for k, z in enumerate(BOLT_Z):
+                for body in (rail, "Side " + side):
+                    add("%s: bolt hole %d of %s" % (body, k + 1, rail), "count",
+                        of=hole_at(body, lo, hi, y, z, "rB"), eq="if(%s, 1, 0)" % cond)
+    # The door's hinge holes in the left side's lip, at the door hinge holes' heights.
+    for z in ("60 mm", "80 mm", "Hc - 80 mm", "Hc - 60 mm"):
+        add("Side left: hinge hole in the lip at z = %s" % z, "count",
+            of=faces({"in": "Side left", "hole": True, "radius": {"eq": "rM4", "tol": "0.001 mm"},
+                      "inside": [["-" + big, "-0.01 mm", "(%s) - rM4 - 0.01 mm" % z],
+                                 [big, "t + 0.01 mm", "(%s) + rM4 + 0.01 mm" % z]]}),
+            eq="if(door, 1, 0)")
+    for part in ("Lid", "Pan"):
+        add("knock-outs in the %s" % part.lower(), "count",
+            of=faces({"in": part, "hole": True, "radius": {"eq": "kD / 2", "tol": "0.001 mm"},
+                      "inside": [["-" + big, "kY - kD / 2 - 0.01 mm", "-" + big], [big, "kY + kD / 2 + 0.01 mm", big]]}),
+            eq="knock")
     for zc in ("zU0 + 40 mm", "Hc - zU0 - 40 mm"):
         for sx in ("-1", "1"):
             add("wall-mount hole in the back at x = %s(Wi / 2 - 70 mm), z = %s" % ("-" if sx == "-1" else "", zc), "count",
-                of=faces({"in": "Back", "surface": "freeform",
+                of=faces({"in": "Back", "hole": True,
                           "inside": [["%s * (Wi / 2 - 70 mm) - wmD / 2 - 0.01 mm" % sx, "D - t - 0.01 mm", "%s - wmD / 2 - 0.01 mm" % zc],
                                      ["%s * (Wi / 2 - 70 mm) + wmD / 2 + 0.01 mm" % sx, "D + 0.01 mm", "%s + wmD / 2 + 0.01 mm" % zc]]}),
-                min="1", max="2")
-    add("wall-mount holes: no other hole in the back", "count", of=faces({"in": "Back", "surface": "freeform"}),
-        min="4", max="8")
-    add("door: four hinge holes and the vent slots' round ends", "count",
-        of=faces({"in": "Door shown", "surface": "freeform"}), min="if(door, 4 + 4 * vCols * vRows, 0)",
-        max="if(door, 8 + 8 * vCols * vRows, 0)")
+                eq="1")
+    add("wall-mount holes: no other hole in the back", "count", of=faces({"in": "Back", "hole": True}), eq="4")
+    add("door: four hinge holes", "count",
+        of=faces({"in": "Door shown", "hole": True, "radius": {"eq": "rM4", "tol": "0.001 mm"}}), eq="if(door, 4, 0)")
+    add("door: the vent slots' round ends", "count",
+        of=faces({"in": "Door shown", "surface": "cylinder", "hole": False, "radius": {"eq": "vR", "tol": "0.001 mm"}}),
+        min="if(door, 4 * vCols * vRows, 0)", max="if(door, 8 * vCols * vRows, 0)")
     return a
 
 
@@ -369,6 +437,16 @@ def publish():
                           group="Door", order=2, min="0 deg", max="110 deg", step="5 deg", unit="deg")),
         ("knock", dict(label="Knock-outs", description="Cable entries in the lid and in the bottom, near the back",
                        group="Cable entry", order=1, kind="integer", min="1", max="4")),
+        ("corner", dict(label="Corners", description="How the flanges of the lid, the pan and the door meet at their "
+                        "corners: open (each flange ends at its bend), butt, overlap (the lid's and the pan's front "
+                        "flange and the door's side flanges cover the other flanges' ends) or miter; the sides' and "
+                        "the back's corners, inside the lid's, the pan's and the sides' bends, stay open", group="Corners", order=1, kind="choice", choices=CORNERS)),
+        ("gap", dict(label="Corner gap", description="The gap left at a closed corner (a butt's is less than the "
+                     "thickness)", group="Corners", order=2, min="0.1 mm", max="if(corner == 2, t - 0.1 mm, 2 mm)",
+                     step="0.1 mm", unit="mm")),
+        ("reliefShape", dict(label="Corner relief", description="The relief cut at each corner of the flat pattern, "
+                             "R + t + 0.5 mm along each edge", group="Corners", order=3, kind="choice",
+                             choices=RELIEFS)),
         ("gland", dict(label="Gland size", description="Metric cable gland (EN 50262) the knock-outs take",
                        group="Cable entry", order=2, kind="choice", choicesFrom="glands")),
     ]
