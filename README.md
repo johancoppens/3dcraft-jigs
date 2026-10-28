@@ -115,7 +115,7 @@ one). Most were built and checked at 3faaaea0 (format version 36); `gridfinity-b
 format version 37; `rack-panel` (sheet metal) and `miura-ori` (`feature.fold`,
 built and checked at 4d82484c) are at format version 41 and need a build that reads it (`main` at 4d82484c reads it);
 `rack-cabinet` and `sheet-metal-enclosure` (closed corners, choices by expression, holes in flanges) were built and
-checked at 0b2f171e and are at format version 44. Put it on `PATH` or point `CRAFT3D_CLI` at it.
+checked at a3ee23a9 and are at format version 46 (assertions with a condition). Put it on `PATH` or point `CRAFT3D_CLI` at it.
 
 ```sh
 export CRAFT3D_CLI=/path/to/craft3d-cli

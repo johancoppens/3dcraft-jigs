@@ -137,7 +137,7 @@ here.
 | flange ≥ 0.7 V to the mould line | `flangeLength` measured to the mould line, every flange of both parts |
 | hole to bend ≥ 2.5 t + R | `holeToBend`: every hole and vent slot of both parts, the return flanges' screw holes included, from the bends beside its flat |
 | every corner where two bends meet is relieved | `relief` |
-| the closed corners' gap is as given | `cornerGap` (through the output `cornerGapMeasured`): the least gap at every closed corner of both parts equals *Corner gap*, ± 0.001 mm; with *Corners* open there is nothing to measure and the assertion is *not proven* (below) |
+| the closed corners' gap is as given | `cornerGap`: the least gap at every closed corner of both parts equals *Corner gap*, ± 0.001 mm; the assertion applies `when: corner != 1` (with *Corners* open there is nothing to measure, and it is inactive) |
 | the lid clears the base | the lid's skirts and walls lie exactly the clearance from the base's walls and lips, measured at the nearest point (the least distance between the faces) |
 | the lid rests on the base | the lid's underside touches the return flanges' tops (distance 0) |
 | the screw holes line up | each screw shank's least clearance to the lid and to the base is exactly (clearance − d) / 2 (± 0.01 mm), so it stands in both holes, centred; the base has four bores of the clearance diameter in the return flanges, and the four feet holes when they are asked for |
@@ -175,7 +175,7 @@ Bend table with the defaults (steel DC01, 1 mm, R = 1 mm, K = 0.42): bend allowa
 flanges 11.4 mm), lid flat 189.5 × 224.5 mm (skirts 12 mm, walls 49.5 mm); round reliefs of 2.5 mm, the
 corners closed by overlap with a 0.5 mm gap.
 
-## Platform gaps (3DCraft at 0b2f171e)
+## Platform gaps (3DCraft at a3ee23a9)
 
 Repros in the 3DCraft repository, `plan/repro/repro-sheet-metal-enclosure-<n>.json`. Gaps 1 to 6 of the
 first version (the export dialog without flat patterns, no hole in a flange, the sheet-metal measures on a
@@ -183,14 +183,9 @@ part a boolean took or one switched off, `*:` globs, slots with a small end radi
 the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal measures, vent slots
 4 mm wide in any thickness).
 
-7. **`cornerGap` is broken when no corner is closed**, and an assertion has no condition: with *Corners*
-   open the measure fails ("no corner of the part is closed"), so an assertion on it breaks every point
-   of the range where the Jig's choice opens the corners. The Jig measures it into an output and asserts
-   `if(corner == 1, gap, cornerGapMeasured)`, but an unknown output makes the assertion *not proven* even
-   in the branch not taken, so `check-range` counts the open points as *with unproven assertions*
-   (passed with `--strict` off, failed with it on). Either a measure that says "no closed corner" as a
-   value an assertion can accept, a condition on an assertion, or an `if` that does not look at the branch
-   it does not take would make them pass.
+7. **`cornerGap` was broken when no corner is closed** and an assertion had no condition; fixed (3DCraft
+   a3ee23a9: assertion `when`, a lazy `if`). The gap assertion now applies `when: corner != 1` and is
+   inactive with the corners open.
 8. **A hole on a flange is placed by unfolding it by hand.** `flatHoleX` re-implements the bend allowance
    π/2 (R + K t) that 3DCraft lays the pattern out with. It is checked (the screws stand centred in both
    holes), but the Jig should not need the formula: a cut-out sketch placed on a flange in its folded
@@ -218,8 +213,7 @@ the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal 
 
 ## Checked
 
-`check-range` with 3DCraft `main` at 0b2f171e (format 44): 89 of 89 points without a failure (64 corners,
-every choice, 16 random; seed 1), 48 passed and 41 not proven, every one of those with *Corners* open
-(gap 7 above); with `SAMPLES=64 SEED=7 DEEP=1` 137 of 137 without a failure. Regeneration median about
-35 ms a point (28 ms before the rework, with fewer parameters, open corners and the return flanges
-drilled by a boolean).
+`check-range` with 3DCraft `main` at a3ee23a9 (format 46): 89 of 89 points passed (64 corners, every choice,
+16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1` 137 of 137 passed.
+Regeneration median about 33 ms a point (28 ms before the rework, with fewer parameters, open corners and
+the return flanges drilled by a boolean).

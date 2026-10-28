@@ -362,13 +362,10 @@ def assertions():
     add("parts: none overlaps another", "overlap", of=every_part, is_=False)
 
     # The sheet-metal rules on every part that is switched on (rails and door included), by the
-    # sheet-metal measures; and the closed corners' gap, measured on the solid. The gap goes through an
-    # output, so that with every corner open (nothing to measure) it is not proven rather than broken
-    # (repro-sheet-metal-enclosure-7).
+    # sheet-metal measures; and the closed corners' gap, measured on the solid, while the corners are
+    # closed (open, there is nothing to measure).
     a += rk.sheet_rules(None, label="parts")
-    a.append(["variable.measure", {"name": "cornerGapMeasured", "measure": "cornerGap"}])
-    add("closed corners: the gap as given", "value", expr="if(corner == 1, gap, cornerGapMeasured)", eq="gap",
-        tol="0.001 mm")
+    add("closed corners: the gap as given", "cornerGap", eq="gap", tol="0.001 mm", when="corner != 1")
     add("Rail right: every bend", "count", of=faces({"in": "Rail right", "surface": "cylinder", "hole": False}),
         eq="if(profile == 2, 4, 2)")
     add("Rail right: leg and return at least 4 t", "boxMax", of="Rail right", axis="y",

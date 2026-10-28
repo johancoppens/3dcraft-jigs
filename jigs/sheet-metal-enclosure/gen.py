@@ -251,11 +251,9 @@ def asserts(d):
       measured="mould", min="minFlange")
     A(name="Holes and vents at least 2.5 t + R from a bend", measure="holeToBend", min="holeEdge")
     A(name="Every corner of two bends relieved", measure="relief", **{"is": True})
-    # The closed corners' gap, measured on the solid. Through an output, so that with every corner
-    # open (nothing to measure) the assertion is not proven rather than broken (repro-sheet-metal-enclosure-7).
-    d.do("variable.measure", {"name": "cornerGapMeasured", "measure": "cornerGap"})
-    A(name="Closed corners: the gap as given", measure="value",
-      expr="if(corner == 1, gap, cornerGapMeasured)", eq="gap", tol="0.001 mm")
+    # The closed corners' gap, measured on the solid; with every corner open there is nothing to
+    # measure, so the assertion applies only while the corners are closed.
+    A(name="Closed corners: the gap as given", measure="cornerGap", eq="gap", tol="0.001 mm", when="corner != 1")
     # The lid fits over the base with the clearance, and nothing overlaps.
     d.do("assert.add", {"name": "Lid skirts clear the base walls", "measure": "distance",
                         "from": faces([LID, {"any": [{"name": "*copy(1)/*face(2)"}, {"name": "*copy(1)/*face(4)"}]}]),

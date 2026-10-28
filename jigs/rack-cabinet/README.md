@@ -85,8 +85,8 @@ a hidden 450 mm block over the U range from the front to the rear rails is clear
 a hidden stack of rack-panels (482.6 mm, n U - 0.8 mm) lies on the rails' front (clearance 0) and at least
 4 mm from the sides, and the sides stand 520 mm apart inside; no two parts overlap; bend radius, flange
 length (4 t), holes to bends (2.5 t + r) and reliefs of every part that is on (rails and door included) by
-the sheet-metal measures; the closed corners' gap by `cornerGap` (through the output `cornerGapMeasured`;
-with *Corners* open it is *not proven*, see *Owed*); at every rail bolt place a hole in the rail's leg and
+the sheet-metal measures; the closed corners' gap by `cornerGap`, `when: corner != 1` (inactive with the
+corners open); at every rail bolt place a hole in the rail's leg and
 one in the side, in the same box round the place (so they line up); the hinge holes in the left side's lip;
 knock-outs, wall-mount holes and the door's hinge holes and vents where they belong.
 
@@ -112,20 +112,18 @@ mm sheet hold only 1.5 to 3 threads, so the Jig offers them only in 2 mm steel; 
 square holes with cage nuts, or set rivnuts or clinch nuts. Choose the cage nut's clip for the sheet: 3 mm
 aluminium needs the thick-panel type.
 
-**Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): `cornerGap` breaks when the Jig's choice opens
-every corner and an assertion has no condition, so with *Corners* open the gap assertion is *not proven*
-(repro-sheet-metal-enclosure-7); `holeToBend` on a part with no hole beside a bend is an error, not a value
+**Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): `holeToBend` on a part with no hole beside a bend is an error, not a value
 (repro-rack-4, still so; every part here has one); the hinge and bolt holes on the lip and the rail legs
 are placed by unfolding by hand (`lipHoleU`, `legHoleV` re-implement the bend allowance π/2 (R + K t);
 checked by the bolt-hole assertions), where a cut-out placed on a flange in its folded position or a
 flange's flat offset as an output would do (repro-sheet-metal-enclosure-8, a feature request). Fixed since the first version and used now: the
 sheet-metal measures skip parts that are off (repro-rack-2), holes with a condition (`cutouts`) and holes in
 flanges, narrow slots in thick sheet (repro-rack-5: the door's vents are 6 mm wide in every sheet again),
-closed corners, the flat pattern in the export dialog and on one sheet. Still not built: a flange on part
+closed corners, the flat pattern in the export dialog and on one sheet, an assertion's condition `when`
+(repro-sheet-metal-enclosure-7: the corner gap with the corners open). Still not built: a flange on part
 of an edge, and a closed corner set back to clear a mating part's bend (the sides' and the back's corners).
 
-**Checked.** `check-range` with 3DCraft `main` at 0b2f171e (format 44): 92 of 92 points without a failure
-(64 corners, every choice, 16 random; seed 1), 51 passed and 41 not proven, every one of those with
-*Corners* open (see *Owed*); with `SAMPLES=64 SEED=7 DEEP=1` 140 of 140 without a failure. Regeneration
-median about 140 ms a point (about 120 ms before, with open corners, no bolt or hinge holes and assertions
-that no longer held on this 3DCraft: hole walls are cylinders now, not freeform faces).
+**Checked.** `check-range` with 3DCraft `main` at a3ee23a9 (format 46): 92 of 92 points passed (64 corners,
+every choice, 16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1` 140 of 140
+passed. Regeneration median about 150 ms a point (about 120 ms before, with open corners, no bolt or hinge
+holes and assertions that no longer held on this 3DCraft: hole walls are cylinders now, not freeform faces).
