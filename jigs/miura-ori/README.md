@@ -221,7 +221,7 @@ valleys then have their score on the inside, which thin stock forgives. Try your
 ## Notes
 
 - Needs a 3DCraft that reads format version 50 (creases from sketch patterns, folding flat, thick panels,
-  assertions with a condition): built and checked with `main` at 0dc5efb6; older builds cannot open or build
-  this Jig.
+  assertions with a condition): built and checked with `main` at 0dc5efb6 and again at 1f92b83b (the same
+  file, bit for bit); older builds cannot open or build this Jig.
 - `build.json` is written by `python3 gen.py > build.json`; gen.py only writes commands with expressions
   (`3 * a + d`), never coordinates it computed.

@@ -115,7 +115,7 @@ one). Most were built and checked at 3faaaea0 (format version 36); `gridfinity-b
 format version 37; `rack-panel` (sheet metal) is at format version 41 (`main` at 4d82484c reads it);
 `rack-cabinet` and `sheet-metal-enclosure` (closed corners, choices by expression, holes in flanges) were built and
 checked at a3ee23a9 and are at format version 46 (assertions with a condition); `miura-ori` (creases from sketch
-patterns, folding flat, thick panels) is at format version 50, built and checked at 0dc5efb6, and needs that build or a
+patterns, folding flat, thick panels) is at format version 50, built and checked at 0dc5efb6 and 1f92b83b, and needs that build or a
 newer one. Put it on `PATH` or point `CRAFT3D_CLI` at it.
 
 ```sh
