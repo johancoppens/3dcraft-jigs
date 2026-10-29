@@ -29,7 +29,7 @@ standard.
 | [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style) to laser cut and MIG weld: perforated top and skirts, half-lapped ribs, every joint tab and slot with dogbone reliefs and plug-weld pockets, legs and frame of square tube from a table, cut sheet and tube cut list | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
 | [`wall-bracket`](jigs/wall-bracket/) | A shelf bracket whose plate and gusset are sized from the load by formulas, with a load limit | CC-BY-4.0 |
-| [`sheet-metal-enclosure`](jigs/sheet-metal-enclosure/) | A two-part sheet-metal case for electronics to laser cut and bend: a base with return flanges and a lid screwed onto them, closed corners (overlap, butt or miter, with their gap) and corner reliefs, vent slots and feet holes, bend radius, flanges, hole distances and corner gaps checked against a material table (DC01, 5754, 304), flat patterns with every hole, the bend lines and the bend table | CC-BY-4.0 |
+| [`sheet-metal-enclosure`](jigs/sheet-metal-enclosure/) | A two-part sheet-metal case for electronics to laser cut and bend: a base with return flanges (each with an outline of its own holding its screw holes) and a lid screwed onto them, closed corners (overlap, butt or miter, with their gap) and corner reliefs, vent slots and feet holes, bend radius, flanges, hole distances and corner gaps checked against a material table (DC01, 5754, 304), flat patterns with every hole, the bend lines and the bend table | CC-BY-4.0 |
 | [`tuned-chimes`](jigs/tuned-chimes/) | A wind chime of tubes or a glockenspiel of bars, each cut to its note by the free-free beam formula, with holes at the nodes, a cut list and a cut sheet | CC-BY-4.0 |
 | [`gt2-pulley`](jigs/gt2-pulley/) | A GT2 (2 mm pitch) timing pulley: round, D-shaft or keyway bore, set screws with optional captive nuts, optional flanges and hub | CC-BY-SA-4.0 |
 | [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle): bore types, hub with set screws, web and lightening holes | CC-BY-4.0 |
@@ -49,7 +49,7 @@ standard.
 | [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
 | [`cubesat`](jigs/cubesat/) | A CubeSat to the CDS Rev 14.1 and PC/104: 1U to 6U, stowed or deployed wings and antennas, a PC/104 stack as large as fits, optional camera, twelve assertions on the standard | CC-BY-4.0 |
 | [`rack-panel`](jigs/rack-panel/) | A 19-inch rack front panel (EIA-310) of 1 to 4 U in aluminium or steel sheet: flat or with bent-back flanges, M6 slots or holes on the rail pattern, handle holes, a row of D-sub or XLR cut-outs or a window, flat pattern | CC-BY-4.0 |
-| [`rack-cabinet`](jigs/rack-cabinet/) | A wall-mount 19-inch rack cabinet of 6 to 15 U, every part bent from sheet: sides, lid and pan with knock-outs, wall plate, L or C rails with cage-nut or M6 holes front and rear bolted to the sides, a vented door with hinge holes, closed corners; every hole in the flat patterns; rack-panels fit it | CC-BY-4.0 |
+| [`rack-cabinet`](jigs/rack-cabinet/) | A wall-mount 19-inch rack cabinet of 6 to 15 U, every part bent from sheet: sides, lid and pan with knock-outs, wall plate screwed to the sides by six tabs, L or C rails with cage-nut or M6 holes front and rear bolted to the sides, a vented door with hinge holes, closed corners; every hole in the flat patterns; rack-panels fit it | CC-BY-4.0 |
 
 ## Using a Jig
 
@@ -82,8 +82,10 @@ jigs/<id>/edits/       (optional) the command batches applied to source.3dcraft 
 jigs/<id>/new.json     (optional) params of file.new for the empty document; default {"units": "mm"}
 jigs/<id>/README.md    what it makes, its parameters, sources and notes
 jigs/<id>/gen.py       (optional) the script that wrote build.json, when the batch is long and generated
+jigs/<id>/press.json   (sheet metal) the parts scripts/bendcheck.py proves bendable on a press brake, and where
 scripts/build.sh       build every Jig into dist/, then the gallery
 scripts/check.sh       prove every Jig over its parameter range (craft3d-cli check-range)
+scripts/bendcheck.py   prove a sheet-metal Jig's parts bendable on a press brake (sheetMetal.bendSequence)
 scripts/shaftlib.py    shared bore and set-screw options (gt2-pulley, spur-gear gen.py)
 scripts/gridfinitylib.py  the Gridfinity dimensions and profiles (gridfinity-bin, gridfinity-baseplate gen.py)
 scripts/racklib.py     the 19-inch rack (EIA-310) dimensions and the sheet stock table (rack-panel, rack-cabinet gen.py)
@@ -114,8 +116,8 @@ were built with different builds of 3DCraft `main`, so a Jig needs a build that 
 one). Most were built and checked at 3faaaea0 (format version 36); `gridfinity-bin` and `gridfinity-baseplate` are at
 format version 37; `rack-panel` (sheet metal) and `miura-ori` (`feature.fold`,
 built and checked at 4d82484c) are at format version 41 and need a build that reads it (`main` at 4d82484c reads it);
-`rack-cabinet` and `sheet-metal-enclosure` (closed corners, choices by expression, holes in flanges) were built and
-checked at a3ee23a9 and are at format version 46 (assertions with a condition). Put it on `PATH` or point `CRAFT3D_CLI` at it.
+`rack-cabinet` and `sheet-metal-enclosure` (flanges with an outline of their own, flange ids) were built and
+checked at 0dc5efb6 and are at the format version that build writes (50). Put it on `PATH` or point `CRAFT3D_CLI` at it.
 
 ```sh
 export CRAFT3D_CLI=/path/to/craft3d-cli
@@ -129,6 +131,14 @@ python3 scripts/gallery.py dist  # only the gallery
 parameter ranges and random points, each regenerated from nothing and checked as `document.check` checks it
 (no failed feature, valid closed bodies, no broken assertion, no invalid parameter). A Jig is only published
 when every point passes; if one fails, fix the model or narrow its range.
+
+**Bend sequence.** A sheet-metal Jig also has a `press.json`, and `scripts/bendcheck.py <id>` runs
+3DCraft's `sheetMetal.bendSequence` on its parts at the points `check-range` takes (fewer of them by
+default: the defaults, 8 corners, every choice, 8 random points), with a straight punch, a gooseneck
+punch and a V-die of 8 t (the tools are in the script): an order of the bends in which neither tool comes
+within 0.5 mm of the part. `bendSequence` is a command, not an assertion, so this is a script beside
+`check.sh` and not part of `check-range`; what each Jig's parts are proven to do, and what 3DCraft cannot
+prove yet, is in its README.
 
 **CI.** There is no GitHub-hosted workflow on purpose (it would cost Actions minutes). Build and check will
 run on the developer's own runners later; until then run `scripts/build.sh && scripts/check.sh` before a

@@ -6,7 +6,7 @@ a low lip at the front and the back) and a **lid** (a top with short side skirts
 bent down) that sits on the return flanges and is screwed to them. The model shows the folded parts
 assembled, the lid fitted on the base, with the screws; the flat patterns with their bend lines and the
 bend table come out by command (below); every hole, the return flanges' screw holes included, is cut in
-the flat. The corners are closed (overlap by default) with a gap you set. The sheet-metal counterpart of
+the flat. A script proves which parts a press brake can bend, and in which order (*Bend order*). The corners are closed (overlap by default) with a gap you set. The sheet-metal counterpart of
 [`electronics-enclosure`](../electronics-enclosure/). Licence: CC-BY-4.0.
 
 | Parameter | Group | Default | Range |
@@ -42,10 +42,13 @@ the inputs (`gen.py` writes `build.json`; it computes no geometry).
   corners are relieved and closed as the base's, the front and back walls covering the skirts' ends.
 - **Screws.** Four pan-head screws (ISO 7045 sizes) through clearance holes (ISO 273 medium: 3.4 mm for M3,
   4.5 mm for M4) in the lid's top and in the middle of the return flanges, near the front and the back.
-  The holes in the lid are holes of its sketch; those in the return flanges are holes of the base's sketch
-  too, drawn where the return flanges lie in the flat pattern (x = ± `flatHoleX` = width / 2 − R + BA +
-  wall + BA + retL / 2, with BA = π/2 (R + K t), y = ± `flatHoleY`), so both are cut flat, and the screws'
-  assertions prove that they line up once bent.
+  The holes in the lid are holes of its sketch. Each **return flange** is a flange with an **outline of its
+  own** (`outline`: the sketches `ReturnRight` and `ReturnLeft`, a rectangle on the wall's tip between the
+  corner reliefs with its two holes), drawn in the floor's plane as if the bends had no width, the hole
+  in the middle of the flange; 3DCraft lays the outline out past the two bends' allowances, so the holes
+  follow any thickness, radius or K-factor and are cut flat. The screws' assertions prove that they line
+  up once bent. (Before, the holes were drawn in the base's sketch at x = ± `flatHoleX`, the bend
+  allowance π/2 (R + K t) worked out by hand: platform gap 8 below, closed.)
 - **Vent slots** (option): a row of slots across the middle of the lid's top, half the inside depth long,
   max(4 mm, 2 t) wide, at a pitch of twice the width plus 2 mm, between the return flanges.
 - **Feet holes** (option): four clearance holes in the floor's corners, for screw-on feet or standoffs.
@@ -95,10 +98,37 @@ lighter, bluer tint (#C8CED6) for stainless 304; the screws brass.
 Bend the **base** in this order: the two **return flanges** first (on the flat, before anything stands in
 the way), then the front and back **lips**, then the two **walls**. A wall with its return flange already
 bent is a U-shaped channel on the press brake: as it is bent up, the return flange swings towards the
-upper tool, so the walls usually need a **gooseneck punch** (or a deep-throat one), depending on the inside
+upper tool, so the walls may need a **gooseneck punch** (or a deep-throat one), depending on the inside
 height and the return flange's length; check with your shop. The lips must be up before the walls, since
 the walls close the corners over the lips' ends (overlap and butt). The **lid**: the skirts first, then
-the front and back walls, which cover the skirts' ends.
+the front and back walls, which cover the skirts' ends. (This order is the shop's rule of thumb; what
+3DCraft proves is below.)
+
+**Proven on a press brake** (`scripts/bendcheck.py sheet-metal-enclosure`, `press.json`; the root README
+says how). 3DCraft's `sheetMetal.bendSequence` searches the orders of a part's bends and proves a step
+clear when neither the punch nor the die comes within 0.5 mm of the part over the whole stroke. The tools
+(in the script): a straight punch (88 degrees, 12 mm wide, 120 mm tall in an 80 mm clamp), a gooseneck
+punch both ways round, and a V-die of the material's opening V (8 t for DC01, 6 t for 5754, 10 t for 304),
+each as long as the part's longest bend. Run at 25 points (the defaults, 8 corners of the ranges, every
+choice, 8 random; seed 1) with 3DCraft at 0dc5efb6:
+
+| Part | Proven | Not proven, and why |
+|---|---|---|
+| Lid, corners open | 4 of the 5 points with *Corners* open: skirts first, then the front and back walls, with the straight punch | 1 collides: inside height 200 mm over a depth of 82 mm (t = 2 mm, R = 8 mm): the last wall cannot be bent past the first, which stands 200 mm tall 88 mm away, with these tools (a real limit of the shape, for a taller box punch or a lid in two parts) |
+| Lid, corners closed | 1 of the 20 (a small lid, 100 × 80 × 30 mm, mitred): the same order | 19 points: 3DCraft cannot prove the first 0.09 degrees of a skirt's stroke when the tools, as long as the walls' bends, reach past the skirt's bend over a closed corner (*not proven*, not a collision; the same lid with open corners is proven) |
+| Base | none | 25 points: with its six bends the search runs past 3DCraft's limit of 20000 distances (open corners), and past the closed corners as the lid's |
+
+So the check proves the lid with open corners, and with closed ones only where the bends are about as long as each other. `press.json` asks it of the lid at the points with
+*Corners* open, and nothing of the base (`prove: false`, the reason in `owed`); the script still checks and
+reports both everywhere. The run exits 1 for the deep, narrow lid above: that is a finding about the
+design (left in the range: a shop with taller tooling bends it), not a failure of the model.
+
+The tools are as long as the longest bend because `bendSequence` takes one tool length for every bend:
+a punch covering every bend overhangs the shorter ones, which is conservative (a feasible order also
+holds for a punch segmented to each bend) but makes a box's last bends collide with its standing ends
+where segmented tooling would clear them. Owed by 3DCraft (platform gap 10): a tool length per bend
+(segmented punches), the rest proof past a closed corner, a larger or caller-given search (or checking
+an order the caller gives).
 
 ## The material table
 
@@ -175,7 +205,7 @@ Bend table with the defaults (steel DC01, 1 mm, R = 1 mm, K = 0.42): bend allowa
 flanges 11.4 mm), lid flat 189.5 × 224.5 mm (skirts 12 mm, walls 49.5 mm); round reliefs of 2.5 mm, the
 corners closed by overlap with a 0.5 mm gap.
 
-## Platform gaps (3DCraft at a3ee23a9)
+## Platform gaps (3DCraft at 0dc5efb6)
 
 Repros in the 3DCraft repository, `plan/repro/repro-sheet-metal-enclosure-<n>.json`. Gaps 1 to 6 of the
 first version (the export dialog without flat patterns, no hole in a flange, the sheet-metal measures on a
@@ -186,10 +216,16 @@ the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal 
 7. **`cornerGap` was broken when no corner is closed** and an assertion had no condition; fixed (3DCraft
    a3ee23a9: assertion `when`, a lazy `if`). The gap assertion now applies `when: corner != 1` and is
    inactive with the corners open.
-8. **A hole on a flange is placed by unfolding it by hand.** `flatHoleX` re-implements the bend allowance
-   π/2 (R + K t) that 3DCraft lays the pattern out with. It is checked (the screws stand centred in both
-   holes), but the Jig should not need the formula: a cut-out sketch placed on a flange in its folded
-   position, or a flange's flat offset as an output, would do it (a feature request, filed as a repro).
+8. **A hole on a flange was placed by unfolding it by hand** (`flatHoleX`); closed at 0dc5efb6 by flanges
+   with an outline of their own, which the return flanges are now.
+9. **Screw tabs instead of whole return flanges are refused while the corners are closed.** Two inset
+   tabs on each wall's tip (the outline of each a tab with its hole) build with the corners open, but a
+   closed corner refuses a flange whose tip carries an inset flange ("its corner cannot be closed (not
+   supported)"). So the return flanges stay whole; owed by 3DCraft: closing a corner of a flange that
+   carries inset flanges or flanges on its sides.
+10. **What the bend-sequence check cannot prove** (*Bend order*): the base's search (more than 20000
+   distances), the bends of a part with closed corners when the tools reach past a bend's end, and a
+   tool length per bend (one length for every bend).
 
 ## Sources
 
@@ -213,7 +249,8 @@ the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal 
 
 ## Checked
 
-`check-range` with 3DCraft `main` at a3ee23a9 (format 46): 89 of 89 points passed (64 corners, every choice,
-16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1` 137 of 137 passed.
-Regeneration median about 33 ms a point (28 ms before the rework, with fewer parameters, open corners and
+`check-range` with 3DCraft `main` at 0dc5efb6 (format 50, the return flanges with outlines of their own): 89
+of 89 points passed (64 corners, every choice, 16 random; seed 1), none with unproven assertions,
+regeneration median 29 ms a point. Before, at a3ee23a9 (format 46): 89 of 89, and with `SAMPLES=64 SEED=7
+DEEP=1` 137 of 137; regeneration median about 33 ms a point (28 ms before the rework, with fewer parameters, open corners and
 the return flanges drilled by a boolean).

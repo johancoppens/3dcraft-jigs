@@ -1,0 +1,17 @@
+{
+ "die": "V",
+ "parts": [
+  {
+   "part": "Base",
+   "prove": false,
+   "owed": "the search over its six bends' orders runs past 3DCraft's 20000 distances (open corners); and closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  },
+  {
+   "part": "Lid",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  }
+ ]
+}

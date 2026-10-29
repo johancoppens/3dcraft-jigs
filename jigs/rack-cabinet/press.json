@@ -1,0 +1,43 @@
+{
+ "parts": [
+  {
+   "part": "Side left"
+  },
+  {
+   "part": "Side right"
+  },
+  {
+   "part": "Back"
+  },
+  {
+   "part": "Rail C",
+   "body": "Rail right"
+  },
+  {
+   "part": "Rail L",
+   "body": "Rail right"
+  },
+  {
+   "part": "Lid",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  },
+  {
+   "part": "Pan",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  },
+  {
+   "part": "Door",
+   "body": "Door shown",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  }
+ ]
+}

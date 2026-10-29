@@ -84,4 +84,21 @@ hence no slots in 3 mm aluminium); a measure that fails on a plate in a plane th
 (repro-rack-1). (The flat pattern in the export dialog and several flat patterns on one sheet, listed
 here before, are built in 3DCraft since.)
 
+**Bend sequence** (`scripts/bendcheck.py rack-panel`, `press.json`; README at the root). The flanged
+panel's two bends are parallel and as long as each other, so the tools of the check (a straight punch, a
+gooseneck punch, a V-die of 8 t; as long as the bend) are the ones a shop would use, and the bends could be
+made in either order. 3DCraft's `sheetMetal.bendSequence` cannot prove it yet: the panel's ears reach
+past each flange's bend line beside its ends (the 45-degree notch), so as the panel's leg rises they dip
+below the die's top, and its proof of a piece resting on the die needs the piece to stay above the top;
+every first step is *not proven* in its first 0.09 degrees, never a collision. Reproduced on a plain
+rectangle with a flange on a recessed edge; without the notch (a flange on a whole edge) the same plate is
+proven. So `press.json` asks nothing of the panel (`prove: false`) and the check only reports. Owed by
+3DCraft: proving material of the bend's own leg that dips into the die's V (the die's opening, not its
+top). At 0dc5efb6, 24 points (the defaults, 8 corners, every choice, 8 random; seed 1): the panel is flanged at 17, every one *not proven* for that reason, none colliding.
+
 **Checked.** `check-range` passes 88 of 88 points (64 corners, every choice, 16 random; seed 1), plain and with `--deep`; 3DCraft `main` at c75ca7b8.
+At 0dc5efb6 the same file (and the same `build.json` rebuilt) fails all 88: the hole assertions find the
+holes' walls as freeform faces, and 3DCraft's plate rims over circles are cylinders now (repro-rack-3,
+fixed); `"hole": true` does not tell them from the bends either. The panel is still to be moved to the
+current 3DCraft (holes in `cutouts` sketches with `when`, one part instead of 32, and the sheet-metal
+measures, all built since); its model is left as it was here.

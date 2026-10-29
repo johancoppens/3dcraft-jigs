@@ -70,7 +70,12 @@ DERIVED = [
     ("ret", "max(15 mm, minFlange)"),          # C rail's return
     ("yr", "50 mm"),                           # front rails' front face (room for handles behind the door)
     ("xo", "Wi / 2 - R - t"),                  # rails' outer bend line: the leg's outside on the side
-    ("yrr", "D - t - R - Lf - 3 * (R + t) - leg - ret - 5 mm"),   # rear rails' front face
+    # The back's screw tabs (three each side, on the sides' inner faces): long enough to hold an M6
+    # hole 2.5 t + r from the bend, the hole centred; the sides have the matching holes.
+    ("Ltab", "max(Lf, 2 * (holeMin + rB) + 1 mm)"),
+    ("tabW", "2 * rB + 2 * max(6 mm, 2 * t)"),
+    ("tabY", "D - t - R - Ltab / 2"),          # folded: the tabs' flat starts R behind the back's inside
+    ("yrr", "D - t - R - Ltab - 3 * (R + t) - leg - ret - 5 mm"),   # rear rails' front face
     ("gd", "2 mm"),                            # door gap in front of the lid's lip
     ("yd", "-t - gd - t - R - Ld"),            # door front face
     ("Wd", "Wi + 4 * t"),                      # door width (flush with the lid's flanges)
@@ -187,6 +192,8 @@ def sides():
         ln = sk.polyline(rect_uv("R + t", "D", "R + t", "Hc - R - t"))
         for z in BOLT_Z:
             sk.circle(["boltY", z], "rB")
+        for z in BOLT_Z:                       # the back's screw tabs
+            sk.circle(["tabY", z], "rB")
         out += sk.cmds
         rear = rk.Sketch("Sketch %s rear bolts" % name, "yz", off, when="rear")
         for z in BOLT_Z:
@@ -224,16 +231,30 @@ def lid_and_pan():
 
 
 def back():
-    """The wall plate: on the zx plane (u = z, v = x) at y = D - t, its back face on the wall, four
-    flanges bent forward inside the sides, under the sides' top and over their bottom flanges."""
+    """The wall plate: on the zx plane (u = z, v = x) at y = D - t, its back face on the wall, a flange
+    bent forward along the top and the bottom, under the sides' top and over their bottom flanges, and
+    three screw tabs each side (flanges with an outline of their own, each with an M6 hole) on the sides'
+    inner faces, at the rails' bolt heights, screwed to the sides."""
     sk = rk.Sketch("Sketch Back", "zx", "D - t")
     xe = "Wi / 2 - R - t"
     ln = sk.polyline(rect_uv("R + 2 * t", "Hc - R - 2 * t", "-(%s)" % xe, xe))
     w = sk.circle(["zU0 + 40 mm", "-(Wi / 2 - 70 mm)"], "wmD / 2")
     sk.pattern([w], count="2", step=["Hc - 2 * zU0 - 80 mm", "0 mm"], count2="2", step2=["0 mm", "Wi - 140 mm"])
+    out = sk.cmds
+    # The tabs' outlines, drawn in the plate's plane as if the bends had no width: a rectangle beyond
+    # the plate's left (v = -xe) or right (v = xe) edge, its hole in the middle.
+    tabs = []
+    for side, sv in (("left", "-"), ("right", "")):
+        for k, z in enumerate(BOLT_Z):
+            tab = rk.Sketch("Sketch Back tab %s %d" % (side, k + 1), "zx", "D - t")
+            tab.polyline(rect_uv("%s - tabW / 2" % z, "%s + tabW / 2" % z,
+                                 *(["-(%s + Ltab)" % xe, "-(%s)" % xe] if sv else [xe, "%s + Ltab" % xe])))
+            tab.circle([z, "%s(%s + Ltab / 2)" % (sv, xe)], "rB")
+            out += tab.cmds
+            tabs.append({"edge": ln[0] if sv else ln[2], "outline": tab.name, "angle": "90 deg", "direction": "down"})
     # Its corners stay open: they sit in the inside of the sides' top and bottom bends, which a closed
-    # corner would run into.
-    return sk.cmds + [sm(sk.name, "Back", [fl(e, "Lf", "down") for e in ln])]
+    # corner would run into; with the tabs inset from them, only one flange reaches each corner.
+    return out + [sm(sk.name, "Back", [fl(ln[1], "Lf", "down"), fl(ln[3], "Lf", "down")] + tabs)]
 
 
 def rails():
@@ -404,7 +425,17 @@ def assertions():
                           "inside": [["%s * (Wi / 2 - 70 mm) - wmD / 2 - 0.01 mm" % sx, "D - t - 0.01 mm", "%s - wmD / 2 - 0.01 mm" % zc],
                                      ["%s * (Wi / 2 - 70 mm) + wmD / 2 + 0.01 mm" % sx, "D + 0.01 mm", "%s + wmD / 2 + 0.01 mm" % zc]]}),
                 eq="1")
-    add("wall-mount holes: no other hole in the back", "count", of=faces({"in": "Back", "hole": True}), eq="4")
+    add("back: four wall-mount holes and one in each of its six screw tabs, no other", "count",
+        of=faces({"in": "Back", "hole": True}), eq="10")
+    # The back is screwed to the sides: at every tab a hole in the tab and one in the side, in the same
+    # box round the place (so they line up).
+    for side, sx in (("right", ""), ("left", "-")):
+        lo, hi = ("Wi / 2 - t - 0.01 mm", "Wi / 2 + t + 0.01 mm") if not sx else \
+                 ("-Wi / 2 - t - 0.01 mm", "-Wi / 2 + t + 0.01 mm")
+        for k, z in enumerate(BOLT_Z):
+            for body in ("Back", "Side " + side):
+                add("%s: screw hole of the back's %s tab %d" % (body, side, k + 1), "count",
+                    of=hole_at(body, lo, hi, "tabY", z, "rB"), eq="1")
     add("door: four hinge holes", "count",
         of=faces({"in": "Door shown", "hole": True, "radius": {"eq": "rM4", "tol": "0.001 mm"}}), eq="if(door, 4, 0)")
     add("door: the vent slots' round ends", "count",
