@@ -88,7 +88,8 @@ the panels meet when
 
 and the Fold slider stops at the last whole degree below that. With 1.5 mm panels and 1.5 mm clearance at
 70 deg the limit is 37.8 deg. At 45 deg it is 70.5 deg. 3 mm plywood with a 3 mm clearance (6 mm of bare fabric
-between two panels) behaves the same. More clearance, thinner panels or a lower angle let it fold further.
+between two panels) behaves the same. More clearance, thinner panels or a lower angle let it fold further. Where the limit is
+under 1 deg (6 mm panels with 0.3 mm clearance at 80 deg: 0.99 deg) the slider stays at 0, flat.
 3DCraft checks every pair of panels as solids and refuses a fold where two meet. The limit above agrees with
 it: at 45, 70 and 80 deg the fold passes 0.05 deg below the closed form and is refused 0.05 deg above it, the
 first meeting being two panels beside a zigzag crease.
@@ -113,6 +114,7 @@ Paper (Thick panels off):
   2013): the solved fold against the Miura-ori's kinematics, to 0.001 mm (0 when folded flat).
 - `the panel lies level about z = 0`: its top is at half that height, so it lies level, mountains above and
   valleys below.
+
 Thick panels (on), with `c` the clearance and `t` the thickness:
 
 - `thick panels: one six-sided prism per cell`: the panels have `6 x rows x columns` faces.
@@ -128,9 +130,10 @@ Thick panels (on), with `c` the clearance and `t` the thickness:
   `-a sin(angle) sin(theta) / 2 - t cos(theta)` with the panels on the back, and at `-a sin(angle) sin(theta) / 2`
   on the front. Both are held to 0.001 mm. They check the panels' placement against the kinematics and the side
   they are on.
-- `thick panels: the fold stays below where the panels meet`: `fold` is below the closed form above. That the
-  panels do not meet is 3DCraft's own check of every pair of panels as solids, a refused fold failing the
-  point.
+- `thick panels: the fold is below the closed-form limit`: `fold` is below the closed form above. The slider's
+  maximum comes from the same formula, so this only guards its rounding to a whole degree and does not prove
+  the formula. That the panels do not meet is 3DCraft's own check of every pair of panels as solids, a refused
+  fold failing the point. The formula itself was checked by hand, as above (0.05 deg either side).
 
 Both:
 

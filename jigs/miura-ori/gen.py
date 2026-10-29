@@ -219,7 +219,7 @@ def main():
     add(["assert.add", {"name": "thick panels on the front: the bottom at -a sin(gamma) sin(theta) / 2",
                         "measure": "boxMin", "of": PANEL, "axis": "z", "tol": "0.001 mm", "when": "thick && panelFront",
                         "eq": "-a * sin(gamma) * sin(theta) / 2"}])
-    add(["assert.add", {"name": "thick panels: the fold stays below where the panels meet, 2 atan(cos(gamma) c / t)",
+    add(["assert.add", {"name": "thick panels: the fold is below the closed-form limit 2 atan(cos(gamma) c / t) (guards the slider's rounding; that the panels clear is 3DCraft's own check)",
                         "measure": "value", "expr": "foldLimit - fold", "min": "0.001 deg", "when": "thick"}])
     # The crease pattern itself (fold.check and the flat-folded state): necessary local conditions at every
     # interior vertex, and the whole pattern folding flat with an order of the layers.
