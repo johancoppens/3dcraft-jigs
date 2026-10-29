@@ -77,7 +77,7 @@ of unions passes the one that is on as the body **Panel**. Because `bendRadius`,
 measured on the geometry: the bends are the part's cylinders (their radius at least the minimum), the
 flanges' reach behind the panel, the distance from every hole wall to the bends. A hole's wall is a
 cylinder along y (a round hole one face, a slot two half-cylinders and two planes) and a bend's skins are
-cylinders along x, so the assertions count exactly one wall per round hole and two per slot in each place
+cylinders along x, so the assertions count exactly one wall per round hole and four per slot in each place
 the spec gives, and exactly two inner skins of radius R and four skins in all for the bends.
 
 **Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): sheet-metal measures that skip parts that are off
@@ -101,7 +101,7 @@ top). At 0dc5efb6 and again at 3c885c35, 24 points (the defaults, 8 corners, eve
 
 **Checked.** `check-range` passes 88 of 88 points (64 corners, every choice, 16 random; seed 1), plain and
 with `--deep`, at 3DCraft `main` 3c885c35. (At c75ca7b8 it passed with the hole walls found as freeform
-faces; from 815249ae on, 3DCraft gives a plate's rim over a circle as a cylinder, and the assertions now
+faces; since 3DCraft commit 815249ae, 3DCraft gives a plate's rim over a circle as a cylinder, and the assertions now
 look for cylinders along y.) The panel is still to be moved to the current 3DCraft's ways of building it
 (holes in `cutouts` sketches with `when`, one part instead of 32, and the sheet-metal measures, all built
 since); its model is left as it was here.

@@ -230,7 +230,8 @@ def assertions():
     # (axis along y), a slot's two half-cylinders and two planes, a D-sub's or a window's sides planes
     # whose normal is square to y. The bends are cylinders too, but along x, so a hole wall is a cylinder
     # along y. The holes are counted in boxes where they belong: every place the spec gives has its hole,
-    # exactly, and no hole lies anywhere else.
+    # exactly (a round hole's one cylinder, a slot's two half-cylinders and two planes), and no hole lies
+    # anywhere else.
     interior = [["-panelW / 2 + 0.01 mm", slab[0], "0.01 mm"], ["panelW / 2 - 0.01 mm", slab[1], "H - 0.01 mm"]]
     hole_wall = {"in": "Panel", "surface": "cylinder", "axis": {"along": "y"}}
     walls = {"all": [{"in": "Panel", "inside": interior},
@@ -248,7 +249,7 @@ def assertions():
                         ["%s * holeX + mHalf + rM + 0.01 mm" % sx, slab[1], "%s + rM + 0.01 mm" % zc])
                 boxes.append(b)
                 add("mounting hole at the EIA-310 place: U %d, %g mm, x = %s465.1 / 2 mm" % (k + 1, hval, "-" if sx == "-1" else "+"),
-                    "count", of=faces(dict(hole_wall, **b)), eq="if(nU > %d, if(fixing == 2, 2, 1), 0)" % k)
+                    "count", of=faces({"all": [walls, b]}), eq="if(nU > %d, if(fixing == 2, 4, 1), 0)" % k)
     # No face at all (a hole's wall or anything else) lies inside the ears off the mounting holes' places.
     add("no hole in the ears off the EIA-310 pattern", "count",
         of=faces({"in": "Panel", "inside": interior, "any": ears, "not": {"any": boxes}}), eq="0")
