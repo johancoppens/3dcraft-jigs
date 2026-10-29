@@ -16,8 +16,9 @@ Two parts, each bent from one sheet (feature.sheetMetal):
   base with a clearance, its corners relieved and closed (the front and
   back walls cover the skirts' ends).
 
-Every hole is cut flat: the return flanges' screw holes are holes of the
-base's sketch, drawn where the flanges lie in the flat pattern; the lid's
+Every hole is cut flat: the return flanges are flanges with an outline of
+their own (a sketch each, drawn as if the bends had no width), their screw
+holes holes of those outlines; the lid's
 screw holes are holes of its sketch; the optional vent slots and feet holes
 are `cutouts` sketches switched by `when`.
 """
@@ -76,11 +77,10 @@ DERIVED = [
     # Screws: through the lid's top and the return flanges' middle.
     ("xs", "Wi / 2 - R - retL / 2"),
     ("ys", "b - relief - max(8 mm, holeEdge + dc)"),
-    # Where the return flanges' holes lie in the base's flat pattern: past the wall's bend
-    # (its allowance BA), the wall's flat, the return flange's bend and half the return flange.
-    ("BA", "pi / 2 * (R + K * t)"),             # bend allowance of a 90 degree bend
-    ("flatHoleX", "a + BA + wallL + BA + retL / 2"),
-    ("flatHoleY", "ys"),
+    # The return flanges' outlines (sketches of their own, drawn as if the bends had no width): on the
+    # side walls' tips at x = +-(a + wallL), along them between the corner reliefs.
+    ("retX", "a + wallL"),
+    ("retY", "b - relief"),                     # the tip's own span: the wall ends at the corner reliefs
     ("headD", "screws[screw].head"),
     ("headK", "screws[screw].k"),
     ("shankL", "2 * t + 3 * d"),                # through both sheets and a nut below
@@ -132,10 +132,14 @@ def base(d):
     d.do("sketch.create", {"plane": "xy", "name": sk})
     # Lines e5 (front, -y), e6 (right, +x), e7 (back), e8 (left).
     d.do("sketch.rect", {"sketch": sk, "from": ["-a", "-b"], "to": ["a", "b"]})
-    # The return flanges' screw holes, where the flanges lie in the flat pattern.
-    for sx in ("", "-"):
+    # The return flanges: each the outline of a sketch of its own with its two screw holes, drawn in the
+    # floor's plane as if every bend had no width (3DCraft lays it out past the bends' allowances), so
+    # the holes are drawn where they are on the flange.
+    for nm, sx in (("ReturnRight", ""), ("ReturnLeft", "-")):
+        d.do("sketch.create", {"plane": "xy", "name": nm})
+        d.do("sketch.rect", {"sketch": nm, "from": [sx + "retX", "-retY"], "to": ["%s(retX + retL)" % sx, "retY"]})
         for sy in ("", "-"):
-            d.do("sketch.circle", {"sketch": sk, "center": [sx + "flatHoleX", sy + "flatHoleY"], "radius": "dc / 2"})
+            d.do("sketch.circle", {"sketch": nm, "center": ["%s(retX + retL / 2)" % sx, sy + "ys"], "radius": "dc / 2"})
     # The feet holes: an option, a cut-out sketch in the floor's plane.
     d.do("sketch.create", {"plane": "xy", "name": "FeetHoles"})
     for sx in ("", "-"):
@@ -147,8 +151,8 @@ def base(d):
         {"edge": "e8", "length": "wallL", "angle": "90 deg"},   # 1 left wall
         {"edge": "e5", "length": "lipL", "angle": "90 deg"},    # 2 front lip
         {"edge": "e7", "length": "lipL", "angle": "90 deg"},    # 3 back lip
-        {"tip": 0, "length": "retL", "angle": "90 deg"},        # 4 right return flange
-        {"tip": 1, "length": "retL", "angle": "90 deg"},        # 5 left return flange
+        {"tip": 0, "outline": "ReturnRight", "angle": "90 deg"},  # 4 right return flange
+        {"tip": 1, "outline": "ReturnLeft", "angle": "90 deg"},   # 5 left return flange
     ], [0, 1], [2, 3], ["FeetHoles"]))
 
 

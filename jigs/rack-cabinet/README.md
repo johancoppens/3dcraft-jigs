@@ -38,13 +38,26 @@ a relief where two bends meet):
   `gen.py` (`lipHoleU`, `hingeX`) once one is chosen.
 - **Lid / Pan**: over the sides' top and under their bottom, three flanges down (up) over the sides and
   the front lips, the knock-outs near the back.
-- **Back**: the wall plate, its back face on the wall, four flanges forward inside the sides and between
-  their flanges; four 9 mm wall-mount holes (M8).
+- **Back**: the wall plate, its back face on the wall, a flange forward along the top and along the
+  bottom, under the sides' top and over their bottom flanges, and **three screw tabs each side** bent
+  forward onto the sides' inner faces at the rails' bolt heights; four 9 mm wall-mount holes (M8). Each
+  tab is a flange with an **outline of its own** (`Sketch Back tab left 1` …: a rectangle 2 × 3.3 +
+  2 × max(6 mm, 2 t) wide beyond the plate's edge, as long as the other flanges or long enough to hold
+  its hole 2.5 t + r from the bend, with one M6 hole of 6.6 mm in the middle), drawn as if the bend had
+  no width, so 3DCraft places the hole on the folded tab; the sides have the matching holes, so the back
+  is screwed (M6 screw and nut, or a rivnut in the side) to both sides. Before, the back had four full
+  flanges and was held by nothing. The tabs' bends end inside the plate's edge **without a bend relief**
+  (3DCraft does not build one at an inset bend's end yet): the sheet beside a tab's bend is not cut free,
+  so the bend's ends may bulge a little; ask your shop, or cut a relief slot at each end by hand. With the
+  tabs inset, no two of the back's bends meet at a corner any more (a flange with an outline of its own
+  is not a corner to 3DCraft), so the assertion that every corner of two bends is relieved has nothing
+  to check on the back.
 - **Rail right / left** (front) and **Rear rail right / left**: the front face carries the EIA-310 holes,
   three per U on 465.1 mm centres, from the inner edge at 225 mm (the 450 mm opening); its leg is bent back
   against the side (x = 260 mm), and a C rail has a return at the leg's back. The leg (30 mm, longer in 3 mm
   sheet) has three M6 bolt holes on the side's, near the rail's ends and in its middle. The rear rails are
-  the front ones moved back to `D - t - r - 20 - 3 (r + t) - leg - return - 5 mm`. One variant per profile
+  the front ones moved back to `D - t - r - tab - 3 (r + t) - leg - return - 5 mm` (`tab` the back's tabs'
+  length, 20 mm or more), clear of the back's tabs. One variant per profile
   (`Rail L`, `Rail C`); the square or round face holes are two `cutouts` sketches both share, switched by
   *Rail holes* (four variants and three unions before).
 - **Door shown**: the vented door (a pan of four 15 mm flanges, slots 50 x 6 mm in a band at the top and at
@@ -79,7 +92,7 @@ min(2 mm, t − 0.1 mm).
 IEC 60297-3-100 panel heights; DIN 6935 minimum radii and K-factor (a steel standard, an approximation for 5052), the 5052-H32 bend radii, Protolabs' 4 t
 flange and 2.5 t + r hole-to-bend rules.
 
-**Assertions (62).** Height, depth and width outside; on every rail (front and rear) the holes at the
+**Assertions (74).** Height, depth and width outside; on every rail (front and rear) the holes at the
 EIA-310 places for every U and none elsewhere on its face; the rail's leg on the side and its face at 225 mm;
 a hidden 450 mm block over the U range from the front to the rear rails is clear of every part (the opening);
 a hidden stack of rack-panels (482.6 mm, n U - 0.8 mm) lies on the rails' front (clearance 0) and at least
@@ -88,7 +101,9 @@ length (4 t), holes to bends (2.5 t + r) and reliefs of every part that is on (r
 the sheet-metal measures; the closed corners' gap by `cornerGap`, `when: corner != 1` (inactive with the
 corners open); at every rail bolt place a hole in the rail's leg and
 one in the side, in the same box round the place (so they line up); the hinge holes in the left side's lip;
-knock-outs, wall-mount holes and the door's hinge holes and vents where they belong.
+at every tab of the back a hole in the tab and one in the side, in the same box round the place (so the
+back's screws line up; twelve assertions), and no hole in the back but those and the four wall-mount
+holes; knock-outs and the door's hinge holes and vents where they belong.
 
 **Cutting.** The flat pattern of a part, with its bend lines (layers `outline`, `bendUp`, `bendDown`), is
 written by `file.export` with `sheetMetal`, one part per file:
@@ -114,16 +129,44 @@ aluminium needs the thick-panel type.
 
 **Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): `holeToBend` on a part with no hole beside a bend is an error, not a value
 (repro-rack-4, still so; every part here has one); the hinge and bolt holes on the lip and the rail legs
-are placed by unfolding by hand (`lipHoleU`, `legHoleV` re-implement the bend allowance π/2 (R + K t);
-checked by the bolt-hole assertions), where a cut-out placed on a flange in its folded position or a
-flange's flat offset as an output would do (repro-sheet-metal-enclosure-8, a feature request). Fixed since the first version and used now: the
+are still placed by unfolding by hand (`lipHoleU`, `legHoleV` re-implement the bend allowance π/2 (R + K t);
+checked by the bolt-hole assertions). A flange with an outline of its own (as the back's tabs are) would
+hold them without the formula, but not here: the side's lip meets the top and bottom flanges at relieved
+corners, and an outlined flange is not a corner (no relief would be cut there); the C rail's return sits
+on the leg's tip, and an outlined flange has no tip to carry one. Owed: a relief or a closed corner, and a
+flange, on an outlined flange's lines; a bend relief at an inset bend's ends (the back's tabs). Fixed since the first version and used now: the
 sheet-metal measures skip parts that are off (repro-rack-2), holes with a condition (`cutouts`) and holes in
 flanges, narrow slots in thick sheet (repro-rack-5: the door's vents are 6 mm wide in every sheet again),
 closed corners, the flat pattern in the export dialog and on one sheet, an assertion's condition `when`
-(repro-sheet-metal-enclosure-7: the corner gap with the corners open). Still not built: a flange on part
-of an edge, and a closed corner set back to clear a mating part's bend (the sides' and the back's corners).
+(repro-sheet-metal-enclosure-7: the corner gap with the corners open). Built since and used now: flanges with an outline of their
+own on part of an edge (the back's screw tabs), flange ids. Still not built: a closed corner set back to clear a mating part's bend (the sides' and the back's corners).
 
-**Checked.** `check-range` with 3DCraft `main` at a3ee23a9 (format 46): 92 of 92 points passed (64 corners,
-every choice, 16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1` 140 of 140
-passed. Regeneration median about 150 ms a point (about 120 ms before, with open corners, no bolt or hinge
+**Bend sequence** (`scripts/bendcheck.py rack-cabinet`, `press.json`; the root README says how).
+3DCraft's `sheetMetal.bendSequence` searches the orders of a part's bends and proves a step clear when
+neither the punch nor the die comes within 0.5 mm of the part over the whole stroke. The tools (in the
+script): a straight punch (88 degrees, 12 mm wide, 120 mm tall in an 80 mm clamp), a gooseneck punch both
+ways round, and a V-die of 8 t, each as long as the part's longest bend, so an order proven holds for
+segmented tools from each bend's length up to the longest bend's (not for a longer one-piece die). Run at
+28 points (the defaults, 8 corners of the ranges, every choice, 8 random; seed 1) with 3DCraft at 0dc5efb6,
+every point passing:
+
+| Part | Proven | Not proven, and why |
+|---|---|---|
+| Side left, Side right | all 28, with the straight punch (the lip, then the top and bottom flanges, or the other way) | none |
+| Rail C, Rail L | every point where it is on (C: the return first, then the leg) | none |
+| Lid, Pan | every point with *Corners* open (6), the straight punch | the 22 with closed corners: 3DCraft cannot prove the first 0.09 degrees of a side flange's stroke when the tools, as long as the front flange's bend, reach past it over a closed corner (*not proven*, not a collision) |
+| Door | every point with *Corners* open and the door on (3) | the closed-corner points, for the same reason |
+| Back | none | 24 collide and 4 are refused (a search past 20000 distances): with tools as long as the top and bottom flanges, the die under one screw tab reaches the other tabs on its line, which swing into it as the plate rises, or stand in the punch's way once bent. With tools as long as a tab every bend is proven (at the defaults: all eight, no collision), and a press brake bends the three tabs of a side in one stroke |
+
+`press.json` asks the sides and rails to be proven everywhere, the lid, the pan and the door where the
+corners are open, and nothing of the back (`prove: false`, the reason in `owed`); the script still
+checks and reports every part at every point. (Before the screw tabs the back, with four whole flanges,
+was proven at the defaults.) Owed by 3DCraft: a tool length per bend (segmented punches and dies), flanges
+on one line bent in one stroke, and the rest proof past a closed corner.
+
+**Checked** at 3DCraft 1f92b83b (format 50, the back's screw tabs): `check-range` 92 of 92 points passed (64
+corners, every choice, 16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1`
+140 of 140; regeneration median about 145 ms a point. The bend sequence (above) was checked at 0dc5efb6,
+whose sheet metal 1f92b83b keeps unchanged. Before, at a3ee23a9 (format 46): 92 of 92, and with `SAMPLES=64 SEED=7 DEEP=1` 140 of
+140; regeneration median about 150 ms a point (about 120 ms before, with open corners, no bolt or hinge
 holes and assertions that no longer held on this 3DCraft: hole walls are cylinders now, not freeform faces).

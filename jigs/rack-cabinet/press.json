@@ -1,0 +1,45 @@
+{
+ "parts": [
+  {
+   "part": "Side left"
+  },
+  {
+   "part": "Side right"
+  },
+  {
+   "part": "Back",
+   "prove": false,
+   "owed": "with tools as long as the longest bend (the top and bottom flanges), the die under one screw tab reaches the other tabs on its line: still flat they swing into it as the plate rises, bent they stand in the tools' way; with tools as long as a tab every bend is proven. Owed: a tool length per bend (and flanges on one line bent in one stroke)"
+  },
+  {
+   "part": "Rail C",
+   "body": "Rail right"
+  },
+  {
+   "part": "Rail L",
+   "body": "Rail right"
+  },
+  {
+   "part": "Lid",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  },
+  {
+   "part": "Pan",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  },
+  {
+   "part": "Door",
+   "body": "Door shown",
+   "prove": {
+    "corner": 1
+   },
+   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
+  }
+ ]
+}
