@@ -15,13 +15,16 @@ The parts to check are in jigs/<id>/press.json:
 the body the part's faces are in (default the part's own: a part a union or a transform took). `prove`
 says where the part must be proven bendable: absent at every point, a set of variable values at the
 points where every one holds, false nowhere (what 3DCraft cannot prove yet, the reason in `owed`); the
-part is still checked and reported at every point where it is on. Exit status 1 when a part is not
-proven at a point where it must be.
+part is still checked and reported at every point where it is on. `known` lists findings about the
+design: [{"values": {the point's values, as document.sample gives them}, "verdict": "collides", "why":
+"..."}]; at such a point that verdict is accepted (and reported as known), any other one is judged as
+usual. Exit status 1 when a part is not proven at a point where it must be, unless it is a known finding.
 
 A part's verdict at a point: proven (an order whose every step 3DCraft proves clear, with the punch
 that gave it), collides (every order collides with every punch tried: with tools as long as the longest
-bend, see below, which is not proof that the part cannot be bent), notProven (3DCraft could not prove a
-stroke interval, or refused the search as too large) or off.
+bend, see below, which is not proof that the part cannot be bent with other tools), notProven (3DCraft
+could not prove a stroke interval), refused (3DCraft refused the check, as a search too large), error
+(the part could not be measured) or off. Every verdict but proven and off is printed with its details.
 
 The tooling (millimetres, in the plane square to the bend; sheetMetal.bendSequence's frame: the punch's
 tip centre at the origin and its body along +y, the die's top at y = 0 and its body below):
@@ -41,7 +44,8 @@ The tools are as long as the part's longest bend (measured on the part: a bend's
 cylinders of radius R and R + T over its angle, so their area gives its length), centred on each bend.
 So the punch covers every bend, and since a prism inside another is farther from everything, an order
 that clears with these tools also clears with a punch segmented to each bend's own length (but no
-shorter). Tools longer than a bend are what make a box's last bends collide with its standing ends:
+shorter). It says nothing of tools longer than the longest bend: a one-piece die the length of the
+machine can meet a part past a bend's ends where these tools clear. Tools longer than a bend are what make a box's last bends collide with its standing ends:
 3DCraft takes one tool length for every bend (see the README of each Jig).
 
 Uses only the Python standard library; CRAFT3D_CLI or craft3d-cli on PATH.
@@ -136,7 +140,22 @@ def holds(cond, var):
     never (what 3DCraft cannot prove yet, its reason in the part's `owed`)."""
     if cond is False:
         return False
-    return all(abs((var.get(k) if var.get(k) is not None else math.nan) - v) < 1e-9 for k, v in (cond or {}).items())
+    if cond is True or cond is None:
+        return True
+    for k, want in cond.items():
+        have = var.get(k)
+        if not isinstance(have, (int, float)) or not isinstance(want, (int, float)) or abs(have - want) > 1e-9:
+            return False
+    return True
+
+
+def known(p, values):
+    """The verdict press.json records for this part at a point with exactly these values (a finding
+    about the design, with its reason), or None."""
+    for k in p.get("known", []):
+        if k.get("values") == values:
+            return k
+    return None
 
 
 def sequence(jig, values, part, punch, v, length):
@@ -150,12 +169,15 @@ def sequence(jig, values, part, punch, v, length):
 
 
 def check_point(jig, values, press):
-    """Returns [(part, verdict)] at one point. A verdict is skipped (the part is off), proven (a feasible
-    order with one of the punches), collides (every order collides with every punch: with tools as long
-    as the longest bend, which is not proof that the part cannot be bent) or notProven (3DCraft could not
-    prove a stroke interval, or refused the search as too large)."""
+    """Returns [(part, must, verdict)] at one point. A verdict is skipped (the part is off), proven (a
+    feasible order with one of the punches), collides (every order collides with every punch tried),
+    notProven (3DCraft could not prove a stroke interval), refused (3DCraft refused the check, its
+    error under tried) or error (the part could not be measured or set)."""
     parts = press["parts"]
-    doc = run(jig, [["param.set", {"values": values}], ["document.inspect", {"measures": False}]])[1]
+    try:
+        doc = run(jig, [["param.set", {"values": values}], ["document.inspect", {"measures": False}]])[1]
+    except RuntimeError as e:
+        return [(p["part"], True, {"verdict": "error", "why": str(e)}) for p in press["parts"]]
     var = {x["name"]: x.get("value") for x in doc["variables"]}
     status = {f.get("name"): f.get("status") for f in doc["features"]}
     v = var[press["die"]] if press.get("die") else 8.0 * var["t"]
@@ -166,7 +188,11 @@ def check_point(jig, values, press):
         if status.get(part) != "ok":
             out.append((part, must, {"verdict": "skipped"}))
             continue
-        length = longest_bend(jig, values, part, p.get("body", part))
+        try:
+            length = longest_bend(jig, values, part, p.get("body", part))
+        except RuntimeError as e:
+            out.append((part, must, {"verdict": "error", "why": str(e)}))
+            continue
         if not length:
             out.append((part, must, {"verdict": "error", "why": "no bend found"}))
             continue
@@ -186,7 +212,8 @@ def check_point(jig, values, press):
             if r.get("error") or not any(c.get("tool") == "punch" for c in coll):
                 break                       # another punch changes nothing
         if verdict is None:
-            kind = "notProven" if any(x["error"] or x["notProven"] for x in tried) else "collides"
+            kind = ("refused" if any(x["error"] for x in tried) else
+                    "notProven" if any(x["notProven"] for x in tried) else "collides")
             verdict = {"verdict": kind, "tried": tried, "length": length, "V": v}
         out.append((part, must, verdict))
     return out
@@ -214,21 +241,34 @@ def main():
         verdicts = check_point(jig, p["values"], press)
         words = []
         bad = []
+        details = []
         for part, must, v in verdicts:
             k = v["verdict"]
-            words.append("%s %s" % (part, "%s %s (%s)" % (k, v["order"], v["punch"]) if k == "proven" else
-                                    k if must or k == "skipped" else "%s (owed)" % k))
+            rec = known(next(x for x in press["parts"] if x["part"] == part), p["values"])
+            if k == "proven":
+                word = "proven %s (%s)" % (v["order"], v["punch"])
+            elif k == "skipped":
+                word = "off"
+            elif rec and rec.get("verdict") == k:
+                word = "%s (known: %s)" % (k, rec.get("why"))
+            else:
+                word = k if must else "%s (owed)" % k
+            words.append("%s %s" % (part, word))
             if k != "skipped":
-                key = (part, k if k == "proven" else k + (" where it must be proven" if must else " (owed)"))
+                key = (part, k if k == "proven" else k + (" (known)" if rec and rec.get("verdict") == k else
+                                                          " where it must be proven" if must else " (owed)"))
                 tally[key] = tally.get(key, 0) + 1
-            if must and k not in ("proven", "skipped"):
-                bad.append((part, v))
+            if k not in ("proven", "skipped"):
+                details.append((part, v))
+                if must and not (rec and rec.get("verdict") == k):
+                    bad.append(part)
         print("point %d (%s): %s" % (p["index"], p["kind"], "; ".join(words)), flush=True)
+        if details:
+            print("  values: %s" % json.dumps(p["values"]), flush=True)
+            for part, v in details:
+                print("  %s%s: %s" % (part, " (MUST)" if part in bad else "", json.dumps(v)), flush=True)
         if bad:
             failed += 1
-            print("  values: %s" % json.dumps(p["values"]))
-            for part, v in bad:
-                print("  %s: %s" % (part, json.dumps(v)))
     print("bendcheck %s: %d of %d points pass (samples %d, seed %d, max corners %d)" % (
         a.id, len(points) - failed, len(points), a.samples, a.seed, a.max_corners))
     for (part, k), n in sorted(tally.items()):

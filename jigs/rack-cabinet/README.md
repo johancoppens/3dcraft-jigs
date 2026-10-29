@@ -48,7 +48,10 @@ a relief where two bends meet):
   is screwed (M6 screw and nut, or a rivnut in the side) to both sides. Before, the back had four full
   flanges and was held by nothing. The tabs' bends end inside the plate's edge **without a bend relief**
   (3DCraft does not build one at an inset bend's end yet): the sheet beside a tab's bend is not cut free,
-  so the bend's ends may bulge a little; ask your shop, or cut a relief slot at each end by hand.
+  so the bend's ends may bulge a little; ask your shop, or cut a relief slot at each end by hand. With the
+  tabs inset, no two of the back's bends meet at a corner any more (a flange with an outline of its own
+  is not a corner to 3DCraft), so the assertion that every corner of two bends is relieved has nothing
+  to check on the back.
 - **Rail right / left** (front) and **Rear rail right / left**: the front face carries the EIA-310 holes,
   three per U on 465.1 mm centres, from the inner edge at 225 mm (the 450 mm opening); its leg is bent back
   against the side (x = 260 mm), and a C rail has a return at the leg's back. The leg (30 mm, longer in 3 mm
@@ -138,7 +141,32 @@ closed corners, the flat pattern in the export dialog and on one sheet, an asser
 (repro-sheet-metal-enclosure-7: the corner gap with the corners open). Built since and used now: flanges with an outline of their
 own on part of an edge (the back's screw tabs), flange ids. Still not built: a closed corner set back to clear a mating part's bend (the sides' and the back's corners).
 
-**Checked.** `check-range` with 3DCraft `main` at a3ee23a9 (format 46): 92 of 92 points passed (64 corners,
-every choice, 16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1` 140 of 140
-passed. Regeneration median about 150 ms a point (about 120 ms before, with open corners, no bolt or hinge
+**Bend sequence** (`scripts/bendcheck.py rack-cabinet`, `press.json`; the root README says how).
+3DCraft's `sheetMetal.bendSequence` searches the orders of a part's bends and proves a step clear when
+neither the punch nor the die comes within 0.5 mm of the part over the whole stroke. The tools (in the
+script): a straight punch (88 degrees, 12 mm wide, 120 mm tall in an 80 mm clamp), a gooseneck punch both
+ways round, and a V-die of 8 t, each as long as the part's longest bend, so an order proven holds for
+segmented tools from each bend's length up to the longest bend's (not for a longer one-piece die). Run at
+28 points (the defaults, 8 corners of the ranges, every choice, 8 random; seed 1) with 3DCraft at 0dc5efb6,
+every point passing:
+
+| Part | Proven | Not proven, and why |
+|---|---|---|
+| Side left, Side right | all 28, with the straight punch (the lip, then the top and bottom flanges, or the other way) | none |
+| Rail C, Rail L | every point where it is on (C: the return first, then the leg) | none |
+| Lid, Pan | every point with *Corners* open (6), the straight punch | the 22 with closed corners: 3DCraft cannot prove the first 0.09 degrees of a side flange's stroke when the tools, as long as the front flange's bend, reach past it over a closed corner (*not proven*, not a collision) |
+| Door | every point with *Corners* open and the door on (3) | the closed-corner points, for the same reason |
+| Back | none | 24 collide and 4 are refused (a search past 20000 distances): with tools as long as the top and bottom flanges, the die under one screw tab reaches the other tabs on its line, which swing into it as the plate rises, or stand in the punch's way once bent. With tools as long as a tab every bend is proven (at the defaults: all eight, no collision), and a press brake bends the three tabs of a side in one stroke |
+
+`press.json` asks the sides and rails to be proven everywhere, the lid, the pan and the door where the
+corners are open, and nothing of the back (`prove: false`, the reason in `owed`); the script still
+checks and reports every part at every point. (Before the screw tabs the back, with four whole flanges,
+was proven at the defaults.) Owed by 3DCraft: a tool length per bend (segmented punches and dies), flanges
+on one line bent in one stroke, and the rest proof past a closed corner.
+
+**Checked** at 3DCraft 1f92b83b (format 50, the back's screw tabs): `check-range` 92 of 92 points passed (64
+corners, every choice, 16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1`
+140 of 140; regeneration median about 145 ms a point. The bend sequence (above) was checked at 0dc5efb6,
+whose sheet metal 1f92b83b keeps unchanged. Before, at a3ee23a9 (format 46): 92 of 92, and with `SAMPLES=64 SEED=7 DEEP=1` 140 of
+140; regeneration median about 150 ms a point (about 120 ms before, with open corners, no bolt or hinge
 holes and assertions that no longer held on this 3DCraft: hole walls are cylinders now, not freeform faces).

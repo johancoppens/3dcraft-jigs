@@ -109,19 +109,22 @@ says how). 3DCraft's `sheetMetal.bendSequence` searches the orders of a part's b
 clear when neither the punch nor the die comes within 0.5 mm of the part over the whole stroke. The tools
 (in the script): a straight punch (88 degrees, 12 mm wide, 120 mm tall in an 80 mm clamp), a gooseneck
 punch both ways round, and a V-die of the material's opening V (8 t for DC01, 6 t for 5754, 10 t for 304),
-each as long as the part's longest bend. Run at 25 points (the defaults, 8 corners of the ranges, every
-choice, 8 random; seed 1) with 3DCraft at 0dc5efb6:
+each as long as the part's longest bend: so an order proven holds for segmented tools from each bend's
+length up to the longest bend's, not for a one-piece die longer than that. Run at 25 points (the defaults, 8 corners of the ranges, every
+choice, 8 random; seed 1) with 3DCraft at 0dc5efb6, every point passing:
 
 | Part | Proven | Not proven, and why |
 |---|---|---|
 | Lid, corners open | 4 of the 5 points with *Corners* open: skirts first, then the front and back walls, with the straight punch | 1 collides: inside height 200 mm over a depth of 82 mm (t = 2 mm, R = 8 mm): the last wall cannot be bent past the first, which stands 200 mm tall 88 mm away, with these tools (a real limit of the shape, for a taller box punch or a lid in two parts) |
 | Lid, corners closed | 1 of the 20 (a small lid, 100 × 80 × 30 mm, mitred): the same order | 19 points: 3DCraft cannot prove the first 0.09 degrees of a skirt's stroke when the tools, as long as the walls' bends, reach past the skirt's bend over a closed corner (*not proven*, not a collision; the same lid with open corners is proven) |
-| Base | none | 25 points: with its six bends the search runs past 3DCraft's limit of 20000 distances (open corners), and past the closed corners as the lid's |
+| Base | none | 25 points: at 18 the search over its six bends' orders runs past 3DCraft's limit of 20000 distances (*refused*; with the corners open too), at 7 a first stroke is *not proven* past a closed corner, as the lid's |
 
 So the check proves the lid with open corners, and with closed ones only where the bends are about as long as each other. `press.json` asks it of the lid at the points with
 *Corners* open, and nothing of the base (`prove: false`, the reason in `owed`); the script still checks and
-reports both everywhere. The run exits 1 for the deep, narrow lid above: that is a finding about the
-design (left in the range: a shop with taller tooling bends it), not a failure of the model.
+reports both everywhere. The deep, narrow lid above is a finding about the design, recorded in
+`press.json` (`known`, with its values and reason) and left in the range (a shop with taller tooling, or a
+lid made in two parts, does it): the run accepts that verdict there and fails on any other point where the
+open-cornered lid is not proven.
 
 The tools are as long as the longest bend because `bendSequence` takes one tool length for every bend:
 a punch covering every bend overhangs the shorter ones, which is conservative (a feasible order also
@@ -249,8 +252,9 @@ the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal 
 
 ## Checked
 
-`check-range` with 3DCraft `main` at 0dc5efb6 (format 50, the return flanges with outlines of their own): 89
-of 89 points passed (64 corners, every choice, 16 random; seed 1), none with unproven assertions,
-regeneration median 29 ms a point. Before, at a3ee23a9 (format 46): 89 of 89, and with `SAMPLES=64 SEED=7
+Checked at 3DCraft 1f92b83b (format 50, the return flanges with outlines of their own): `check-range` 89
+of 89 points passed (64 corners, every choice, 16 random; seed 1), none with unproven assertions; with
+`SAMPLES=64 SEED=7 DEEP=1` 137 of 137; regeneration median 29 ms a point. The bend sequence (*Bend order*)
+was checked at 0dc5efb6, whose sheet metal 1f92b83b keeps unchanged. Before, at a3ee23a9 (format 46): 89 of 89, and with `SAMPLES=64 SEED=7
 DEEP=1` 137 of 137; regeneration median about 33 ms a point (28 ms before the rework, with fewer parameters, open corners and
 the return flanges drilled by a boolean).

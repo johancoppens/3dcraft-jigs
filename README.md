@@ -48,7 +48,7 @@ standard.
 | [`phone-stand`](jigs/phone-stand/) | A phone or tablet stand with a curved strut and open back: angle, device thickness, optional cable slot | CC-BY-4.0 |
 | [`wavy-vase`](jigs/wavy-vase/) | A twisted, wavy vase or pot cover from a formula, for vase-mode printing | CC-BY-4.0 |
 | [`cubesat`](jigs/cubesat/) | A CubeSat to the CDS Rev 14.1 and PC/104: 1U to 6U, stowed or deployed wings and antennas, a PC/104 stack as large as fits, optional camera, twelve assertions on the standard | CC-BY-4.0 |
-| [`rack-panel`](jigs/rack-panel/) | A 19-inch rack front panel (EIA-310) of 1 to 4 U in aluminium or steel sheet: flat or with bent-back flanges, M6 slots or holes on the rail pattern, handle holes, a row of D-sub or XLR cut-outs or a window, flat pattern | CC-BY-4.0 |
+| [`rack-panel`](jigs/rack-panel/) | A 19-inch rack front panel (EIA-310) of 1 to 4 U in aluminium or steel sheet: flat or with bent-back flanges, M6 slots or holes on the rail pattern, handle holes, a row of D-sub or XLR cut-outs or a window, flat pattern (checked at c75ca7b8; its assertions fail on 3DCraft at 0dc5efb6, see its README) | CC-BY-4.0 |
 | [`rack-cabinet`](jigs/rack-cabinet/) | A wall-mount 19-inch rack cabinet of 6 to 15 U, every part bent from sheet: sides, lid and pan with knock-outs, wall plate screwed to the sides by six tabs, L or C rails with cage-nut or M6 holes front and rear bolted to the sides, a vented door with hinge holes, closed corners; every hole in the flat patterns; rack-panels fit it | CC-BY-4.0 |
 
 ## Using a Jig
@@ -117,7 +117,8 @@ one). Most were built and checked at 3faaaea0 (format version 36); `gridfinity-b
 format version 37; `rack-panel` (sheet metal) and `miura-ori` (`feature.fold`,
 built and checked at 4d82484c) are at format version 41 and need a build that reads it (`main` at 4d82484c reads it);
 `rack-cabinet` and `sheet-metal-enclosure` (flanges with an outline of their own, flange ids) were built and
-checked at 0dc5efb6 and are at the format version that build writes (50). Put it on `PATH` or point `CRAFT3D_CLI` at it.
+checked at 3DCraft 1f92b83b and are at format version 50 (their bend sequences checked at 0dc5efb6, whose
+sheet metal is the same). Put it on `PATH` or point `CRAFT3D_CLI` at it.
 
 ```sh
 export CRAFT3D_CLI=/path/to/craft3d-cli
@@ -135,7 +136,7 @@ when every point passes; if one fails, fix the model or narrow its range.
 **Bend sequence.** A sheet-metal Jig also has a `press.json`, and `scripts/bendcheck.py <id>` runs
 3DCraft's `sheetMetal.bendSequence` on its parts at the points `check-range` takes (fewer of them by
 default: the defaults, 8 corners, every choice, 8 random points), with a straight punch, a gooseneck
-punch and a V-die of 8 t (the tools are in the script): an order of the bends in which neither tool comes
+punch and a V-die of 8 t unless `press.json` names the opening (the tools are in the script): an order of the bends in which neither tool comes
 within 0.5 mm of the part. `bendSequence` is a command, not an assertion, so this is a script beside
 `check.sh` and not part of `check-range`; what each Jig's parts are proven to do, and what 3DCraft cannot
 prove yet, is in its README.

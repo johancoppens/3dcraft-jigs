@@ -80,7 +80,7 @@ DERIVED = [
     # The return flanges' outlines (sketches of their own, drawn as if the bends had no width): on the
     # side walls' tips at x = +-(a + wallL), along them between the corner reliefs.
     ("retX", "a + wallL"),
-    ("retY", "b - relief"),
+    ("retY", "b - relief"),                     # the tip's own span: the wall ends at the corner reliefs
     ("headD", "screws[screw].head"),
     ("headK", "screws[screw].k"),
     ("shankL", "2 * t + 3 * d"),                # through both sheets and a nut below
