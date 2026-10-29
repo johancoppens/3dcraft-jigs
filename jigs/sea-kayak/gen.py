@@ -680,8 +680,11 @@ def panel_group(tag, panels):
     return [p[0] for p in PLATES[tag] if p[2] in panels]
 
 
-# The holes' distance from the plates' rims is not asserted: measuring it between the holes and the rims of
-# thin plates takes minutes per plate (plan/repro/repro-sea-kayak-13.json in 3DCraft). The holes are set
+# The holes' distance from their own plate's rim is not asserted. Repro 13 (minutes per plate) measures fast
+# on 3DCraft main since 4d82484c for the holes of three plates against all three plates' rims, but here, on
+# main 0dc5efb6, the least distance from Plank0S's hole walls to Plank0S's own rim did not finish in ten
+# minutes at the defaults; against every starboard plate's rim it is fast, but it then finds a deck hole
+# 5.89 mm from the topside's rim, which is no edge distance (the deck rests on the topside). The holes are set
 # holeIn + t tan(d / 2) in from the chine, which is holeIn from the plate's edge after its joint.
 expected = " + ".join(f"if({cond}, {cnt}, 0)" for cnt, cond in HOLES.values())
 A("every stitch hole is drilled (starboard; the port side the same)", measure="count",
@@ -714,10 +717,12 @@ A("ridge: the stitch holes pair up across the seam", measure="distance",
 
 # No volume shared between neighbouring plates: the overlap measure (a boolean intersection of the two
 # drilled plates, which must leave nothing) for every pair of hull panels (so the keel and every chine,
-# whatever the number of chines) and for the deck panels at the ridge. The topside and the deck
-# at the sheer share the deck's skin (the deck rests on the topside), which the boolean does not take yet
-# (coincident freeform skins: the Ov3D case of plan/repro/repro-sea-kayak-12.json in 3DCraft), so the sheer
-# is proven by its distance alone until then.
+# whatever the number of chines) and for the deck panels at the ridge. The topside and the deck at the sheer
+# share the deck's skin (the deck rests on the topside: coincident freeform skins). 3DCraft's boolean takes
+# them as touching in repro 12 (Ov3D) since 2026-10-28, but here, on main 0dc5efb6, the drilled Top4Sh and
+# Deck4Sh are still refused at the defaults ("two points closer together than the tolerance can tell apart
+# (at the edge of tolerance)", face 5 of the topside, face 13 of the deck), so the sheer is proven by its
+# distance alone until then.
 def drilled_solids(names):
     return {"kind": "body", "where": drilled(names)}
 
@@ -746,6 +751,7 @@ OUT = [("T", dict(measure="levelFor", of="Hull", volume="Vdisp")),
        ("Awp", dict(measure="sectionArea", **WATER)),
        ("IT", dict(measure="sectionInertia", about="x", **WATER)),
        ("Amid", dict(measure="volumeBelow", of="MidSlice", plane="xy", offset="T")),
+       ("LWL", dict(measure="sectionExtent", axis="x", **WATER)),
        ("zPly", dict(measure="centerOfMass", of=solids(WOODP), axis="z")),
        ("xPly", dict(measure="centerOfMass", of=solids(WOODP), axis="x"))]
 for nm, kw in OUT:
@@ -756,6 +762,7 @@ for nm, ex in [("BM", "IT / Vb"), ("KM", "KB + BM"),
                ("LCG", "(mBoat * xPly + mPad * (xBack + cgFwd) + payload * (xBack + 250 mm)) / mTotal"),
                ("trim", "LCB - LCG"),
                ("Amidship", "Amid / 10 mm"),
+               ("Cp", "Vb / (Amidship * LWL)"),
                ("freeboard", "Zmid - T")]:
     C("variable.output", name=nm, expr=ex, wait=False)
 A("initial stability: GM = KB + BM - KG >= 0", measure="value", expr="GM", min="0 mm")
