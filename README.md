@@ -26,7 +26,7 @@ standard.
 | [`joint-drawer`](jigs/joint-drawer/) | A drawer or box with through dovetails or finger joints, a bottom in a groove and a brass knob | CC-BY-4.0 |
 | [`solar-cooker`](jigs/solar-cooker/) | A parabolic solar cooker from flat petals (gores) drawn from the paraboloid's arc length, tilting on an axis through the focus so the pot stays level, with cut sheets | CC-BY-4.0 |
 | [`sundial`](jigs/sundial/) | A horizontal garden or (declining) wall sundial for your place: hour lines with the longitude correction, numerals, a slotted gnomon at the latitude angle, cut sheet | CC-BY-4.0 |
-| [`sea-kayak`](jigs/sea-kayak/) | A Greenland-style multichine sea kayak in okoume plywood, stitch and glue, built entirely by 3DCraft from formulas: developable panels between the chines the kernel finds, plates whose inner edges touch, the deck resting on the sheer panels, flat panels to cut, and the waterline for paddler and load measured on the exact hull | CC-BY-4.0 |
+| [`sea-kayak`](jigs/sea-kayak/) | A Greenland-style multichine sea kayak in okoume plywood, stitch and glue, built entirely by 3DCraft from formulas: a hull of developable panels meeting at the chines the kernel finds, plates whose inner edges touch, the deck resting on the sheer panels, flat panels to cut, and the hydrostatics for paddler and load measured on the exact hull (not finished: some panel overlaps are not yet decided by 3DCraft, see its README) | CC-BY-4.0 |
 | [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style) to laser cut and MIG weld: perforated top and skirts, half-lapped ribs, every joint tab and slot with dogbone reliefs and plug-weld pockets, legs and frame of square tube from a table, cut sheet and tube cut list | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
 | [`wall-bracket`](jigs/wall-bracket/) | A shelf bracket whose plate and gusset are sized from the load by formulas, with a load limit | CC-BY-4.0 |
@@ -119,7 +119,7 @@ format version 37; `rack-panel` (sheet metal) is at format version 41 (`main` at
 `rack-cabinet` and `sheet-metal-enclosure` (flanges with an outline of their own, flange ids) were built and
 checked at 3DCraft 1f92b83b and are at format version 50 (their bend sequences checked at 0dc5efb6, whose
 sheet metal is the same); `miura-ori` (creases from sketch patterns, folding flat, thick panels) is at format
-version 50, built and checked at 0dc5efb6 and 1f92b83b. Each needs that build or a newer one. Put it on `PATH`
+version 50, built and checked at 0dc5efb6 and 1f92b83b; `sea-kayak` is at format version 50, built at 1f92b83b. Each needs that build or a newer one. Put it on `PATH`
 or point `CRAFT3D_CLI` at it.
 
 ```sh

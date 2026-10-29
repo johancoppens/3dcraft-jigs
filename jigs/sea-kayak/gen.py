@@ -719,10 +719,10 @@ A("ridge: the stitch holes pair up across the seam", measure="distance",
 # drilled plates, which must leave nothing) for every pair of hull panels (so the keel and every chine,
 # whatever the number of chines) and for the deck panels at the ridge. The topside and the deck at the sheer
 # share the deck's skin (the deck rests on the topside: coincident freeform skins). 3DCraft's boolean takes
-# them as touching in repro 12 (Ov3D) since 2026-10-28, but here, on main 0dc5efb6, the drilled Top4Sh and
+# them as touching in repro 12 (Ov3D) since 2026-10-28, but here, on main 0dc5efb6 and 1f92b83b, the drilled Top4Sh and
 # Deck4Sh are still refused at the defaults ("two points closer together than the tolerance can tell apart
 # (at the edge of tolerance)", face 5 of the topside, face 13 of the deck), so the sheer is proven by its
-# distance alone until then.
+# distance alone until then (not filed in 3DCraft yet).
 def drilled_solids(names):
     return {"kind": "body", "where": drilled(names)}
 

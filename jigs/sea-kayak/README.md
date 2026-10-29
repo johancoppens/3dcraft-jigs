@@ -149,7 +149,7 @@ craft3d-cli run dist/sea-kayak.3dcraftjig --cmd measure.floating \
   --params '{"of": "Hull", "volume": "Vdisp", "centerOfGravity": ["-125.047 mm", "0 mm", "249.962 mm"]}'
 ```
 
-| Quantity | Outputs (`levelFor`, upright) | `measure.floating` (main 0dc5efb6) |
+| Quantity | Outputs (`levelFor`, upright) | `measure.floating` (main 0dc5efb6 and 1f92b83b, the same) |
 |---|---|---|
 | Waterline | T = 105.616 mm | offset 105.611 mm along the tilted normal |
 | Trim | lever LCB − LCG = 0.728 mm | 0.00267°: the bow 0.19 mm down over the LWL |
@@ -158,7 +158,8 @@ craft3d-cli run dist/sea-kayak.3dcraftjig --cmd measure.floating \
 | Longitudinal GM | | 15.6 m, stable |
 
 They agree. The trim the lever predicts, `atan((LCB − LCG) / GM_L) = atan(0.728 / 15618)`, is 0.00267°, which is
-what `measure.floating` found (in one Newton step), and the 0.005 mm of waterline is that trim. So the seat's
+what `measure.floating` found (in one Newton step); the offsets differ by 0.005 mm because the tilted plane's
+offset is measured from the origin, not from the centre of the waterplane. So the seat's
 place trims this hull level within a fifth of a millimetre at the defaults. The Jig could assert the trim and
 the heel once `measure.floating` is a measure outputs and assertions take (see below).
 
@@ -168,10 +169,12 @@ form's ranges), checked by the freeboard assertion, and the seat is placed 230 m
 
 ## What 3DCraft cannot do yet (repros in the 3DCraft repository, plan/repro)
 
-Re-checked against 3DCraft `main` at 0dc5efb6 and 1f92b83b (2026-10-29).
+Re-checked against 3DCraft `main` at 0dc5efb6 and 1f92b83b (2026-10-29). Items marked **not filed yet** fail
+in this Jig where the cited repro now passes in 3DCraft. They are new cases with no repro in 3DCraft's
+`plan/repro` (it ends at repro 20), reported to the 3DCraft coordinator to be filed.
 
 - **The plates are on the envelope's faces, not on the developable sheets.** `feature.developable` now builds
-  every panel between the chines, the sheer panel `DevTop4S` too (repro 14). Since 1f92b83b its faces are
+  every panel between the chines, the sheer panel `DevTop4S` too (repro 14). At 1f92b83b its faces are
   named by their place (the end fans, the runs, the fans at its folds: `face(0)`, `face(1)`,
   `face(10000000000)`, ...). But a plate on it has to cover all eight faces, with a joint per boundary edge,
   and whether such a plate builds is untested. The whole sheer panel still does not unfold either: the
@@ -189,19 +192,20 @@ Re-checked against 3DCraft `main` at 0dc5efb6 and 1f92b83b (2026-10-29).
   deck's skin (coincident freeform skins). 3DCraft's boolean takes that case as touching in its own repro 12
   (Ov3D). In this Jig, though, the drilled `Top4Sh` and `Deck4Sh` are still refused at the defaults on both
   builds: "two points closer together than the tolerance can tell apart (at the edge of tolerance)", face 5
-  of the topside, face 13 of the deck (`document.interference`). Until then the sheer has only its distance-0
-  assertion, and this Jig is not finished.
+  of the topside, face 13 of the deck (`document.interference`). **Not filed yet.** Until then the sheer has only
+  its distance-0 assertion, and this Jig is not finished.
 - **The overlap measure cannot decide some touching pairs** at some points of the range, with the same
   message. 3DCraft's repros 16 to 19 (keel, chine 1, chine 3 against the topside, ridge) now pass in its own
   tests, but the Jig still fails at some points on both builds: chine 3 against the topside
   (`Plank2Sh`/`Top4Sh`) with Fine and with Full ends at the other defaults, and the keel
-  (`Plank0Sh`/`Plank0Ph`) on a single-chine hull. The assertion stays on and fails there until the boolean
-  decides them.
+  (`Plank0Sh`/`Plank0Ph`) on a single-chine hull. **Not filed yet.** The assertion (one for all hull pairs, so
+  such a point also leaves the other seams unproven) stays on and fails there until the boolean decides them.
 - The inside of the planking (`InHull`, repro 20) is now built by the boolean. No point checked here
   failed on it.
 - The holes' distance from their own plate's rim is not asserted. Repro 13 is fast in 3DCraft now (holes of
   three plates against the rims of all three). In the Jig, though, the least distance from `Plank0S`'s hole
-  walls to `Plank0S`'s own rim did not finish in ten minutes at the defaults on 0dc5efb6. Against every
+  walls to `Plank0S`'s own rim did not finish in ten minutes at the defaults on 0dc5efb6 (not timed on
+  1f92b83b). **Not filed yet.** Against every
   starboard plate's rim it is fast, but it finds a deck hole 5.89 mm from the topside's rim, which is no edge
   distance (the deck rests on the topside). The holes are set `holeIn + t tan(d/2)` in from the chine
   (`holeIn` from the plate's edge after its joint, d the seam's angle).
