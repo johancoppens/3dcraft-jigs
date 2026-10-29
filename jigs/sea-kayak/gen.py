@@ -26,7 +26,8 @@ import json
 import os
 import re
 
-STAGE = int(os.environ.get("STAGE", "99"))   # for development: stop after a stage
+STAGE = int(os.environ.get("STAGE", "99"))
+TRIM_MAX = "0.5 deg"   # the free-floating trim allowed either way (see the hydrostatics)   # for development: stop after a stage
 FLOOR = -150      # mm: the floor the flat parts lie on, below the keel
 ROW = 520         # mm between the rows of flat panels on the floor
 PIECE_GAP = 50    # mm: the three pieces of a flat panel lie this far apart along it
@@ -680,12 +681,21 @@ def panel_group(tag, panels):
     return [p[0] for p in PLATES[tag] if p[2] in panels]
 
 
-# The holes' distance from their own plate's rim is not asserted. Repro 13 (minutes per plate) measures fast
-# on 3DCraft main since 4d82484c for the holes of three plates against all three plates' rims, but here, on
-# main 0dc5efb6, the least distance from Plank0S's hole walls to Plank0S's own rim did not finish in ten
-# minutes at the defaults; against every starboard plate's rim it is fast, but it then finds a deck hole
-# 5.89 mm from the topside's rim, which is no edge distance (the deck rests on the topside). The holes are set
-# holeIn + t tan(d / 2) in from the chine, which is holeIn from the plate's edge after its joint.
+def holes_of(names):
+    return {"kind": "face", "where": {"all": [drilled(names), {"hole": True}]}}
+
+
+# Edge distance: the walls of each plate's holes are at least holeIn - holeD / 2 (less 0.5 mm) from that
+# plate's own rim (its faces round the edge, of the drilled body). The holes are set holeIn + t tan(d / 2)
+# in from the chine, which is holeIn from the plate's edge after its joint. One assertion per plate, on
+# while the hull has that plate.
+for port, tag in SIDES:
+    side = "starboard" if tag == "S" else "port"
+    for nm, cond, j, row in PLATES[tag]:
+        A(f"stitch holes keep their distance from their plate's edge ({nm}, {side})", measure="distance",
+          **{"from": holes_of([nm]),
+             "to": {"kind": "face", "where": {"all": [{"in": f"{nm}h"}, {"madeBy": nm}, {"name": "*rim(*"}]}}},
+          min="holeIn - holeD / 2 - 0.5 mm", when=cond)
 expected = " + ".join(f"if({cond}, {cnt}, 0)" for cnt, cond in HOLES.values())
 A("every stitch hole is drilled (starboard; the port side the same)", measure="count",
   of={"kind": "face", "where": {"all": [drilled([p[0] for p in PLATES["S"]]), {"hole": True}]}},
@@ -694,10 +704,6 @@ A("every stitch hole is drilled (starboard; the port side the same)", measure="c
 
 def pair(a, b, d):
     return f"sqrt({a}^2 + {b}^2 + 2 * {a} * {b} * cos({d})) - holeD + 0.5 mm"
-
-
-def holes_of(names):
-    return {"kind": "face", "where": {"all": [drilled(names), {"hole": True}]}}
 
 
 A("keel: the stitch holes pair up across the seam", measure="distance",
@@ -717,12 +723,9 @@ A("ridge: the stitch holes pair up across the seam", measure="distance",
 
 # No volume shared between neighbouring plates: the overlap measure (a boolean intersection of the two
 # drilled plates, which must leave nothing) for every pair of hull panels (so the keel and every chine,
-# whatever the number of chines) and for the deck panels at the ridge. The topside and the deck at the sheer
-# share the deck's skin (the deck rests on the topside: coincident freeform skins). 3DCraft's boolean takes
-# them as touching in repro 12 (Ov3D) since 2026-10-28, but here, on main 0dc5efb6 and 1f92b83b, the drilled Top4Sh and
-# Deck4Sh are still refused at the defaults ("two points closer together than the tolerance can tell apart
-# (at the edge of tolerance)", face 5 of the topside, face 13 of the deck), so the sheer is proven by its
-# distance alone until then (not filed in 3DCraft yet).
+# whatever the number of chines), for the topside and the deck at the sheer (they share the deck's skin:
+# coincident freeform skins, decided by 3DCraft's boolean since main 233bb724) and for the deck panels at
+# the ridge.
 def drilled_solids(names):
     return {"kind": "body", "where": drilled(names)}
 
@@ -730,6 +733,9 @@ def drilled_solids(names):
 HULLPLATES = [p[0] for t in "SP" for p in PLATES[t] if p[2] != "D"]
 A("keel and chines: no two hull panels share any volume", measure="overlap", of=drilled_solids(HULLPLATES),
   **{"is": False})
+for port, tag in SIDES:
+    A(f"sheer ({'starboard' if tag == 'S' else 'port'}): the topside and the deck share no volume",
+      measure="overlap", of=drilled_solids(tops(tag, 4)), to=drilled_solids(decks(tag, 4)), **{"is": False})
 A("ridge: the deck panels share no volume", measure="overlap", of=drilled_solids(decks("S", 4)),
   to=drilled_solids(decks("P", 4)), **{"is": False})
 done(10)
@@ -766,6 +772,17 @@ for nm, ex in [("BM", "IT / Vb"), ("KM", "KB + BM"),
                ("freeboard", "Zmid - T")]:
     C("variable.output", name=nm, expr=ex, wait=False)
 A("initial stability: GM = KB + BM - KG >= 0", measure="value", expr="GM", min="0 mm")
+# The free-floating equilibrium (measure.floating: the waterplane free to heel and trim until the centre of
+# buoyancy lies under G), with G at (LCG, 0, KG) from the outputs above: its transverse GM as an output and
+# asserted >= 0, and its trim as an output, asserted within TRIM_MAX either way (the seat is placed by a
+# formula, not by an output, so the trim is what the check proves).
+FLOAT = dict(of="Hull", volume="Vdisp", centerOfGravity=["LCG", "0 mm", "KG"])
+C("variable.measure", name="floatGM", measure="floatingGM", wait=False, **FLOAT)
+C("variable.measure", name="floatTrim", measure="floatingTrim", wait=False, **FLOAT)
+A("free floating: the equilibrium's transverse GM >= 0 (measure.floating)", measure="floatingGM", min="0 mm",
+  **FLOAT)
+A(f"free floating: the trim at most {TRIM_MAX} either way (measure.floating)", measure="floatingTrim",
+  min=f"-{TRIM_MAX}", max=TRIM_MAX, **FLOAT)
 
 # ================================================================ what is shown, the cut sheet
 HIDE = (["Hull", "InHull", "EndA", "EndB"] + [s[1]["name"] for s in steps if s[0] in ("datum.plane", "sketch.create")]

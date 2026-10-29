@@ -87,8 +87,8 @@ station.
   square to its panel's station normal, at the panel's own formulas, drilled through the plate (both sides
   of the boat); `feature.unfold` carries the holes onto the flat pieces, so they are on the cut sheet.
 
-`gen.py` writes 216 variables and 19 outputs (the version that computed the geometry itself needed 3839 variables), 243 feature
-commands and 33 assertions; a regeneration takes 30 to 100 s (median 56 s over the check's points), a build
+`gen.py` writes 216 variables and 21 outputs (the version that computed the geometry itself needed 3839 variables), 243 feature
+commands and 55 assertions (one per plate that a number of chines switches on or off); a regeneration takes 30 to 100 s (median 56 s over the check's points), a build
 with every assertion measured about 130 s at the defaults (drilling some 500 holes and the 27 flat pieces
 are most of it).
 
@@ -98,13 +98,15 @@ are most of it).
 |---|---|
 | keel, chines 1–3 (each side; on a hull with fewer chines the sheer), sheer, ridge | the least distance between neighbouring plates is 0: the panels meet edge to edge |
 | the panels are developable; their Gaussian curvature ≤ 10⁻⁹ mm⁻² | measured on the envelope faces the plates are made of: 0 |
-| keel and chines: no two hull panels share volume; ridge likewise | the overlap measure (boolean intersection) of the drilled plates |
-| initial stability | the output GM ≥ 0 |
+| keel and chines: no two hull panels share volume; the sheer (topside and deck) and the ridge likewise | the overlap measure (boolean intersection) of the drilled plates |
+| initial stability | the output GM ≥ 0 (the hull upright at the `levelFor` waterline) |
+| free floating: stability and trim | `floatingGM` ≥ 0 and `floatingTrim` within ±0.5° (`measure.floating`'s equilibrium, G from the outputs) |
 | plywood mass | the kernel's mass of the plates (okoume 500 kg/m³) is the weight formula's ± 4 % |
 | freeboard | the waterline for boat, paddler and load (`levelFor`) lies 45 mm below the sheer amidships |
 | the end pours are dry | above the highest waterline the freeboard allows |
 | the coaming stands on the deck; the cockpit lets the knees in | distance 0; its length ≥ 0.34 × height + room behind the seat |
 | every flat piece fits a 2440 mm sheet | per piece and joint parity |
+| stitch holes keep their distance from the edge | per plate: its hole walls lie at least `holeIn − holeD/2 − 0.5 mm` from its own rim |
 | every stitch hole is drilled | the starboard plates carry exactly the holes the seams call for (the port side the same); no puzzle joint can run into one, as the seams leave out the stations within two of a joint |
 | stitch holes pair up across the keel, chine 1, the sheer and the ridge | the nearest hole walls across the seam are no farther apart than two holes at one station, `holeIn` either side of the chine |
 
@@ -137,31 +139,26 @@ and BM is 7 % higher; KB and KG are as before.
 The fuller ends show in Cp too: 0.666 against the Igdlorssuit's 0.524, on a waterline 4.18 m long against
 4.00 m.
 
-**The free-floating equilibrium.** The outputs take the waterline level (`levelFor`, the hull upright) and
-give the trim only as a lever, `LCB − LCG`. 3DCraft's `measure.floating` finds the equilibrium itself, with the
-waterplane free to heel and trim until the centre of buoyancy lies on the vertical through G. It is not yet a
-measure an output or an assertion can use (`variable.measure` and `assert.add` do not list it), so it is a
-cross-check run by hand at the defaults, with G at (LCG, 0, KG) from the outputs (a command's parameters cannot
-name an output, so the numbers are typed in):
+**The free-floating equilibrium.** The outputs above take the waterline level (`levelFor`, the hull upright)
+and give the trim only as a lever, `LCB − LCG`. 3DCraft's `measure.floating` finds the equilibrium itself, with
+the waterplane free to heel and trim until the centre of buoyancy lies on the vertical through G. Its
+`floatingGM` and `floatingTrim` are outputs (`floatGM`, `floatTrim`) and assertions, with G at
+(`LCG`, 0, `KG`) from the outputs: the transverse GM at least 0, and the trim within ±0.5° either way (the ends
+within about 18 mm of the level waterline over its 4.2 m length; the seat is placed by a formula, so the check is
+what proves where it trims). At the defaults:
 
-```sh
-craft3d-cli run dist/sea-kayak.3dcraftjig --cmd measure.floating \
-  --params '{"of": "Hull", "volume": "Vdisp", "centerOfGravity": ["-125.047 mm", "0 mm", "249.962 mm"]}'
-```
-
-| Quantity | Outputs (`levelFor`, upright) | `measure.floating` (main 0dc5efb6 and 1f92b83b, the same) |
+| Quantity | Outputs (`levelFor`, upright) | `measure.floating` (outputs `floatGM`, `floatTrim`; main 3c885c35) |
 |---|---|---|
-| Waterline | T = 105.616 mm | offset 105.611 mm along the tilted normal |
-| Trim | lever LCB − LCG = 0.728 mm | 0.00267°: the bow 0.19 mm down over the LWL |
-| Heel | 0 (assumed) | 0 (−1.8e-7°): upright |
+| Waterline | T = 105.616 mm | offset 105.611 mm along the tilted normal (by hand, `measure.floating`) |
+| Trim | lever LCB − LCG = 0.728 mm | 0.00267° (4.66e-5 rad): the bow 0.19 mm down over the LWL |
+| Heel | 0 (assumed) | 0: upright |
 | Transverse GM | 34.65 mm | 34.65 mm, stable |
-| Longitudinal GM | | 15.6 m, stable |
+| Longitudinal GM | | 15.6 m, stable (by hand) |
 
 They agree. The trim the lever predicts, `atan((LCB − LCG) / GM_L) = atan(0.728 / 15618)`, is 0.00267°, which is
-what `measure.floating` found (in one Newton step); the offsets differ by 0.005 mm because the tilted plane's
-offset is measured from the origin, not from the centre of the waterplane. So the seat's
-place trims this hull level within a fifth of a millimetre at the defaults. The Jig could assert the trim and
-the heel once `measure.floating` is a measure outputs and assertions take (see below).
+what `measure.floating` finds; the offsets differ by 0.005 mm because the tilted plane's offset is measured from the
+origin, not from the centre of the waterplane. So the seat's place trims this hull level within a fifth of a
+millimetre at the defaults.
 
 The capacity in the ranges is a block coefficient on the safe side (outputs may not drive the
 form's ranges), checked by the freeboard assertion, and the seat is placed 230 mm behind the widest station
@@ -169,9 +166,7 @@ form's ranges), checked by the freeboard assertion, and the seat is placed 230 m
 
 ## What 3DCraft cannot do yet (repros in the 3DCraft repository, plan/repro)
 
-Re-checked against 3DCraft `main` at 0dc5efb6 and 1f92b83b (2026-10-29). Items marked **not filed yet** fail
-in this Jig where the cited repro now passes in 3DCraft. They are new cases with no repro in 3DCraft's
-`plan/repro` (it ends at repro 20), reported to the 3DCraft coordinator to be filed.
+Re-checked against 3DCraft `main` at 3c885c35 (2026-10-30).
 
 - **The plates are on the envelope's faces, not on the developable sheets.** `feature.developable` now builds
   every panel between the chines, the sheer panel `DevTop4S` too (repro 14). At 1f92b83b its faces are
@@ -181,38 +176,22 @@ in this Jig where the cited repro now passes in 3DCraft. They are new cases with
   strip beside the bow's fold fan is refused (a standing corner, owed), and the flat panels need it. The bottom
   panel's fold cone and the deck (repro 8) are as before. So the Jig keeps its plates on the envelope's faces,
   which are the same surfaces, and **the plates' face and edge names wait** until plates and unfolding on the
-  developable sheets work. They are not changed here.
+  developable sheets work. They are not changed here. Both are still owed by 3DCraft at 3c885c35: a plate
+  over a whole developable sheet, and the unfolding of a standing corner (what is said above of the sheets'
+  faces was seen at 1f92b83b and not tried again).
 - The ends' panels: plates refuse panels narrower than about their thickness, so the plywood ends at η 0.03
   and 0.97 and the end pour is the hull there; the ends table is less fine than the earlier lines
   (p = 1.8, 1.6, 1.3 for the bottom panel, where 2.6, 2.2, 1.8 left panels under a millimetre wide).
 - The coaming's lip (repro 10), the riser's developed strip and the bulkheads laid flat by `feature.unfold`
   (repro 11; the bulkheads are flat and on their own cut sheet). Not re-checked.
-- **No volume shared at the sheer**: the keel, the chines and the ridge are proven by the overlap measure
-  (a boolean intersection of the drilled plates, which leaves nothing). The topside and the deck share the
-  deck's skin (coincident freeform skins). 3DCraft's boolean takes that case as touching in its own repro 12
-  (Ov3D). In this Jig, though, the drilled `Top4Sh` and `Deck4Sh` are still refused at the defaults on both
-  builds: "two points closer together than the tolerance can tell apart (at the edge of tolerance)", face 5
-  of the topside, face 13 of the deck (`document.interference`). **Not filed yet.** Until then the sheer has only
-  its distance-0 assertion, and this Jig is not finished.
-- **The overlap measure cannot decide some touching pairs** at some points of the range, with the same
-  message. 3DCraft's repros 16 to 19 (keel, chine 1, chine 3 against the topside, ridge) now pass in its own
-  tests, but the Jig still fails at some points on both builds: chine 3 against the topside
-  (`Plank2Sh`/`Top4Sh`) with Fine and with Full ends at the other defaults, and the keel
-  (`Plank0Sh`/`Plank0Ph`) on a single-chine hull. **Not filed yet.** The assertion (one for all hull pairs, so
-  such a point also leaves the other seams unproven) stays on and fails there until the boolean decides them.
-- The inside of the planking (`InHull`, repro 20) is now built by the boolean. No point checked here
-  failed on it.
-- The holes' distance from their own plate's rim is not asserted. Repro 13 is fast in 3DCraft now (holes of
-  three plates against the rims of all three). In the Jig, though, the least distance from `Plank0S`'s hole
-  walls to `Plank0S`'s own rim did not finish in ten minutes at the defaults on 0dc5efb6 (not timed on
-  1f92b83b). **Not filed yet.** Against every
-  starboard plate's rim it is fast, but it finds a deck hole 5.89 mm from the topside's rim, which is no edge
-  distance (the deck rests on the topside). The holes are set `holeIn + t tan(d/2)` in from the chine
-  (`holeIn` from the plate's edge after its joint, d the seam's angle).
-- **`measure.floating` is not a measure for outputs and assertions** (`variable.measure`, `assert.add`), so the
-  equilibrium's trim and heel are a cross-check by hand (*Hydrostatics*, above), not asserted.
 - Done in 3DCraft since: `levelFor` on this hull (repro 9), measures in outputs and assertions (repro 4; the
-  hydrostatics above), the extent of a section (repro 15; `LWL` and `Cp` above).
+  hydrostatics above), the extent of a section (repro 15; `LWL` and `Cp` above), the inside of the planking
+  (`InHull`, repro 20), the overlaps the boolean could not decide here (the topside and the deck at the sheer,
+  chine 3 against the topside with Fine and Full ends, the keel of a single-chine hull: repros 21 to 24, main
+  233bb724; the sheer's overlap is asserted now), the holes' distance from their own plate's rim in seconds
+  instead of minutes (repro 25, main 233bb724; asserted per plate now), and `measure.floating` as a measure of
+  outputs and assertions (`floatingGM`, `floatingTrim`, `floatingHeel`, `floatingStable`, main 166671c1; GM and
+  trim asserted now).
 
 ## Cut sheet
 
@@ -241,7 +220,7 @@ tape on the hull panels) before stitching.
 - M. P. do Carmo, *Differential Geometry of Curves and Surfaces*, 1976, §3-5: developable surfaces.
 
 `build.json` was written by `python3 -I gen.py > build.json`.
-Built with 3DCraft `main` at 1f92b83b (format version 50); needs that build or a newer one.
+Built and checked with 3DCraft `main` at 3c885c35 (format version 50); needs that build or a newer one.
 
 **Colours.** Okoume (#D9B98A) hull panels and flat pieces, a copper (#B87350) deck, walnut (#7A5638)
 coaming, hatch covers and stem strips, cream (#E8DFCC) clamps, brass (#B8954A) end pours.
