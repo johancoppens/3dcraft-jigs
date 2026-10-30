@@ -75,14 +75,17 @@ sheet-metal part per combination of flanges, cut-out, handles and fixing (32), e
 of unions passes the one that is on as the body **Panel**. Because `bendRadius`, `flangeLength` and
 `holeToBend` refuse a part that is switched off (also when every part is meant), the sheet-metal rules are
 measured on the geometry: the bends are the part's cylinders (their radius at least the minimum), the
-flanges' reach behind the panel, the distance from every hole wall to the bends.
+flanges' reach behind the panel, the distance from every hole wall to the bends. A hole's wall is a
+cylinder along y (a round hole one face, a slot two half-cylinders and two planes) and a bend's skins are
+cylinders along x, so the assertions count exactly one wall per round hole and four per slot in each place
+the spec gives, and exactly two inner skins of radius R and four skins in all for the bends.
 
 **Owed by 3DCraft** (repros in 3DCraft's `plan/repro/`): sheet-metal measures that skip parts that are off
-(repro-rack-2); a plate's rim over a circle as a cylinder face (repro-rack-3); holes cut later in the flat
+(repro-rack-2); holes cut later in the flat
 pattern, or holes with a condition (repro-rack-4); slots in sheet thicker than about r / 1.3 (repro-rack-5,
 hence no slots in 3 mm aluminium); a measure that fails on a plate in a plane through the origin
 (repro-rack-1). (The flat pattern in the export dialog and several flat patterns on one sheet, listed
-here before, are built in 3DCraft since.)
+here before, and a plate's rim over a circle as a cylinder face, repro-rack-3, are built in 3DCraft since.)
 
 **Bend sequence** (`scripts/bendcheck.py rack-panel`, `press.json`; README at the root). The flanged
 panel's two bends are parallel and as long as each other, so the tools of the check (a straight punch, a
@@ -94,11 +97,11 @@ every first step is *not proven* in its first 0.09 degrees, never a collision. R
 rectangle with a flange on a recessed edge; without the notch (a flange on a whole edge) the same plate is
 proven. So `press.json` asks nothing of the panel (`prove: false`) and the check only reports. Owed by
 3DCraft: proving material of the bend's own leg that dips into the die's V (the die's opening, not its
-top). At 0dc5efb6, 24 points (the defaults, 8 corners, every choice, 8 random; seed 1): the panel is flanged at 17, every one *not proven* for that reason, none colliding.
+top). At 0dc5efb6 and again at 3c885c35, 24 points (the defaults, 8 corners, every choice, 8 random; seed 1): the panel is flanged at 17, every one *not proven* for that reason, none colliding.
 
-**Checked.** `check-range` passes 88 of 88 points (64 corners, every choice, 16 random; seed 1), plain and with `--deep`; 3DCraft `main` at c75ca7b8.
-At 0dc5efb6 the same file (and the same `build.json` rebuilt) fails all 88: the hole assertions find the
-holes' walls as freeform faces, and 3DCraft's plate rims over circles are cylinders now (repro-rack-3,
-fixed); `"hole": true` does not tell them from the bends either. The panel is still to be moved to the
-current 3DCraft (holes in `cutouts` sketches with `when`, one part instead of 32, and the sheet-metal
-measures, all built since); its model is left as it was here.
+**Checked.** `check-range` passes 88 of 88 points (64 corners, every choice, 16 random; seed 1), plain and
+with `--deep`, at 3DCraft `main` 3c885c35. (At c75ca7b8 it passed with the hole walls found as freeform
+faces; since 3DCraft commit 815249ae, 3DCraft gives a plate's rim over a circle as a cylinder, and the assertions now
+look for cylinders along y.) The panel is still to be moved to the current 3DCraft's ways of building it
+(holes in `cutouts` sketches with `when`, one part instead of 32, and the sheet-metal measures, all built
+since); its model is left as it was here.

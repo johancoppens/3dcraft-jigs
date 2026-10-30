@@ -226,12 +226,17 @@ def assertions():
     add("centred on its U boundaries (0.4 mm above the lower one)", "boxMin", of="Panel", axis="z", eq="z0 + panelGap / 2")
     add("its measured width leaves 4 mm to each side of a rack-cabinet (cabInnerW; the cabinet checks its sides with a reference panel)", "extent", of="Panel", axis="x",
         max="cabInnerW - 2 * sideClear")
-    # A hole's wall is a face of the sheet's rim: 3DCraft gives a plate's rim over a circle as freeform
-    # faces, not a cylinder (repro-rack-3), one or two per circle; an `area` filter on them is slow. So the
-    # holes are found as freeform faces in boxes where they belong: every place the spec gives has its
-    # hole (at least one face), and no hole lies anywhere else.
+    # A hole's wall is a face of the sheet's rim across the sheet: a round hole's wall is one cylinder
+    # (axis along y), a slot's two half-cylinders and two planes, a D-sub's or a window's sides planes
+    # whose normal is square to y. The bends are cylinders too, but along x, so a hole wall is a cylinder
+    # along y. The holes are counted in boxes where they belong: every place the spec gives has its hole,
+    # exactly (a round hole's one cylinder, a slot's two half-cylinders and two planes), and no hole lies
+    # anywhere else.
     interior = [["-panelW / 2 + 0.01 mm", slab[0], "0.01 mm"], ["panelW / 2 - 0.01 mm", slab[1], "H - 0.01 mm"]]
-    walls = {"in": "Panel", "inside": interior, "any": [{"surface": "freeform"}, {"normal": {"perpendicular": "y"}}]}
+    hole_wall = {"in": "Panel", "surface": "cylinder", "axis": {"along": "y"}}
+    walls = {"all": [{"in": "Panel", "inside": interior},
+                     {"any": [{"surface": "cylinder", "axis": {"along": "y"}},
+                              {"surface": "plane", "normal": {"perpendicular": "y"}}]}]}
     opening_zone = box(["-opening / 2", slab[0], "-" + big], ["opening / 2", slab[1], big])
     ears = [box(["%s * holeX - mHalf - rM - 0.01 mm" % sx, slab[0], "-" + big],
                 ["%s * holeX + mHalf + rM + 0.01 mm" % sx, slab[1], big]) for sx in ("-1", "1")]
@@ -244,49 +249,48 @@ def assertions():
                         ["%s * holeX + mHalf + rM + 0.01 mm" % sx, slab[1], "%s + rM + 0.01 mm" % zc])
                 boxes.append(b)
                 add("mounting hole at the EIA-310 place: U %d, %g mm, x = %s465.1 / 2 mm" % (k + 1, hval, "-" if sx == "-1" else "+"),
-                    "count", of=faces(dict({"in": "Panel", "surface": "freeform"}, **b)), min="if(nU > %d, 1, 0)" % k,
-                    max="if(nU > %d, 4, 0)" % k)
+                    "count", of=faces({"all": [walls, b]}), eq="if(nU > %d, if(fixing == 2, 4, 1), 0)" % k)
+    # No face at all (a hole's wall or anything else) lies inside the ears off the mounting holes' places.
     add("no hole in the ears off the EIA-310 pattern", "count",
-        of=faces(dict(walls, **{"any": ears, "not": {"any": boxes}})), eq="0")
+        of=faces({"in": "Panel", "inside": interior, "any": ears, "not": {"any": boxes}}), eq="0")
     # Every hole wall (a face across the sheet, inside the outline) lies in the 450 mm opening between
     # the rails or in a mounting hole's place: cut-outs and handle holes stay inside the opening and clear
     # of the mounting holes (the two zones are 2.5 mm apart or more).
     add("cut-outs and handle holes inside the 450 mm opening, clear of the mounting holes", "count",
-        of=faces(dict(walls, **{"not": {"any": [opening_zone] + ears}})), eq="0")
+        of=faces({"all": [walls, {"not": {"any": [opening_zone] + ears}}]}), eq="0")
     cz = [["-xa - 0.01 mm", slab[0], "-" + big], ["xa + 0.01 mm", slab[1], big]]
     add("cut-outs: as many as asked, inside their zone (XLR 3 round holes, D-sub 2)", "count",
-        of=faces({"in": "Panel", "surface": "freeform", "inside": cz}),
-        min="if(cutout == 3, 3 * n, if(cutout == 2, 2 * n, 0))", max="if(cutout == 3, 6 * n, if(cutout == 2, 4 * n, 0))")
+        of=faces(dict(hole_wall, inside=cz)), eq="if(cutout == 3, 3 * n, if(cutout == 2, 2 * n, 0))")
     add("cut-outs centred on the panel: XLR 24 mm holes, D-sub screw holes", "count",
-        of=faces({"in": "Panel", "surface": "freeform",
-                  "inside": [["-xa - 0.01 mm", slab[0], "zc - xlR - 0.01 mm"], ["xa + 0.01 mm", slab[1], "zc + xlR + 0.01 mm"]]}),
-        min="if(cutout == 3, n, if(cutout == 2, 2 * n, 0))", max="if(cutout == 3, 2 * n, if(cutout == 2, 4 * n, 0))")
+        of=faces(dict(hole_wall, inside=[["-xa - 0.01 mm", slab[0], "zc - xlR - 0.01 mm"], ["xa + 0.01 mm", slab[1], "zc + xlR + 0.01 mm"]])),
+        eq="if(cutout == 3, n, if(cutout == 2, 2 * n, 0))")
     add("window and D-sub sides: four each", "count",
-        of=faces(dict(walls, **{"normal": {"perpendicular": "y"}, "any": [opening_zone]})),
+        of=faces({"all": [walls, opening_zone, {"surface": "plane"}]}),
         eq="if(cutout == 4, 4, if(cutout == 2, 4 * n, 0))")
     for sx in ("-1", "1"):
         for dz in ("-", "+"):
             add("handle hole, 19.05 mm inboard of the mounting holes (%s, %s)" % ("left" if sx == "-1" else "right",
                                                                                "low" if dz == "-" else "high"), "count",
-                of=faces({"in": "Panel", "surface": "freeform",
-                          "inside": [["%s * hX - rH - 0.01 mm" % sx, slab[0], "zc %s hc / 2 - rH - 0.01 mm" % dz],
-                                     ["%s * hX + rH + 0.01 mm" % sx, slab[1], "zc %s hc / 2 + rH + 0.01 mm" % dz]]}),
-                min="if(handles, 1, 0)", max="if(handles, 2, 0)")
+                of=faces(dict(hole_wall, inside=[["%s * hX - rH - 0.01 mm" % sx, slab[0], "zc %s hc / 2 - rH - 0.01 mm" % dz],
+                                                 ["%s * hX + rH + 0.01 mm" % sx, slab[1], "zc %s hc / 2 + rH + 0.01 mm" % dz]])),
+                eq="if(handles, 1, 0)")
     # The sheet-metal rules. bendRadius, flangeLength and holeToBend refuse a part that is switched off,
     # also when every part is meant (repro-rack-2), and the panel is one of 32 parts by its `when`: the
-    # rules are measured on the geometry instead. The bends are the cylinders of the part (inner and
-    # outer skin), the flanges reach back to R + flange beyond the back face.
-    add("bends: two, each an inner and an outer skin", "count",
-        of=faces({"in": "Panel", "surface": "cylinder"}), eq="if(flanged, 4, 0)")
+    # rules are measured on the geometry instead. The bends are the cylinders of the part along x (the
+    # hole walls are along y): an inner skin of radius R and an outer one of R + t each; the flanges reach
+    # back to R + flange beyond the back face.
+    bend = {"in": "Panel", "surface": "cylinder", "axis": {"along": "x"}}
+    add("bends: two, each an inner and an outer skin", "count", of=faces(bend), eq="if(flanged, 4, 0)")
+    add("bends: two inner skins of radius R", "count",
+        of=faces(dict(bend, radius={"eq": "R", "tol": "0.0001 mm"})), eq="if(flanged, 2, 0)")
     add("bend radius at least the stock's minimum", "count",
-        of=faces({"in": "Panel", "surface": "cylinder", "radius": {"min": "minR - 0.0001 mm", "max": big}}),
-        eq="if(flanged, 4, 0)")
+        of=faces(dict(bend, radius={"min": "minR - 0.0001 mm", "max": big})), eq="if(flanged, 4, 0)")
     add("flanges at least 4 t (stock) beyond the bend", "boxMax", of="Panel", axis="y",
         min="if(flanged, R + minFlange, 0 mm)", max="if(flanged, R + flangeL, 0 mm)")
     # Measured to the bends' skins; the rails' backs (40 mm behind the panel) stand in for them when
     # there are no bends, so the measure always has something to measure to.
     add("holes at least 2.5 t + r from a bend", "distance", from_=faces(walls),
-        to=faces({"any": [{"in": "Panel", "surface": "cylinder"},
+        to=faces({"any": [bend,
                           {"in": "Rail left", "normal": {"along": "y"}}]}),
         min="if(flanged, holeMin, 0 mm)")
     # On a rack: against the rails' front, reaching into neither.
