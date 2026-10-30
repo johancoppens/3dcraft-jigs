@@ -29,6 +29,7 @@ standard.
 | [`sea-kayak`](jigs/sea-kayak/) | A Greenland-style multichine sea kayak in okoume plywood, stitch and glue, built entirely by 3DCraft from formulas: a hull of developable panels meeting at the chines the kernel finds, plates whose inner edges touch, the deck resting on the sheer panels, flat panels to cut, and the hydrostatics for paddler and load measured on the exact hull | CC-BY-4.0 |
 | [`welding-table`](jigs/welding-table/) | A system welding table (System 16 / 28 block style) to laser cut and MIG weld: perforated top and skirts, half-lapped ribs, every joint tab and slot with dogbone reliefs and plug-weld pockets, legs and frame of square tube from a table, cut sheet and tube cut list | CC-BY-4.0 |
 | [`welded-table-frame`](jigs/welded-table-frame/) | A welded steel table frame of tube or angle, mitred or butt, with cross rails, levelling feet and a cut list | CC-BY-4.0 |
+| [`welded-beam`](jigs/welded-beam/) | A straight beam of any size welded from laser-cut plate (1 to 10 mm, steel or aluminium) that locates itself by tab and slot, to build machines from: four walls (or three, a channel) with the tabs and slots of each long edge swappable, bulkheads, end plates with bolt holes, rounded-rectangle, truss or circle cutouts per wall, the weld (plug or fused tab) chosen per joint, and the section measured on the model with deflection, stresses, twist, plate buckling and natural frequency for your load | CC-BY-4.0 |
 | [`wall-bracket`](jigs/wall-bracket/) | A shelf bracket whose plate and gusset are sized from the load by formulas, with a load limit | CC-BY-4.0 |
 | [`sheet-metal-enclosure`](jigs/sheet-metal-enclosure/) | A two-part sheet-metal case for electronics to laser cut and bend: a base with return flanges (each with an outline of its own holding its screw holes) and a lid screwed onto them, closed corners (overlap, butt or miter, with their gap) and corner reliefs, vent slots and feet holes, bend radius, flanges, hole distances and corner gaps checked against a material table (DC01, 5754, 304), flat patterns with every hole, the bend lines and the bend table | CC-BY-4.0 |
 | [`tuned-chimes`](jigs/tuned-chimes/) | A wind chime of tubes or a glockenspiel of bars, each cut to its note by the free-free beam formula, with holes at the nodes, a cut list and a cut sheet | CC-BY-4.0 |
@@ -141,7 +142,7 @@ format version 37; `rack-panel` (sheet metal) was built and checked at 3DCraft 3
 checked at 3DCraft 1f92b83b and are at format version 50 (their bend sequences checked at 0dc5efb6, whose
 sheet metal is the same); `miura-ori` (creases from sketch patterns, folding flat, thick panels) is at format
 version 50, built and checked at 0dc5efb6 and 1f92b83b; `sea-kayak` is at format version 50, built and checked at 3c885c35; `strandbeest-leg` (its sheet
-thickness renamed `thick`, since `t` is the timeline) was rebuilt and checked at 57ba7632. Each needs that build or a newer one. Put it on `PATH`
+thickness renamed `thick`, since `t` is the timeline) was rebuilt and checked at 57ba7632. `welded-beam` (made with 3DCraft commands only: a `source.3dcraft` built by the batches in its `edits/`) is at format version 53, built and checked at 57ba7632. Each needs that build or a newer one. Put it on `PATH`
 or point `CRAFT3D_CLI` at it.
 
 ```sh
