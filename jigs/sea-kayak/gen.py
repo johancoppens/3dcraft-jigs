@@ -26,8 +26,8 @@ import json
 import os
 import re
 
-STAGE = int(os.environ.get("STAGE", "99"))
-TRIM_MAX = "0.5 deg"   # the free-floating trim allowed either way (see the hydrostatics)   # for development: stop after a stage
+STAGE = int(os.environ.get("STAGE", "99"))   # for development: stop after a stage
+TRIM_MAX = "0.5 deg"   # the free-floating trim allowed either way, a chosen bound (see the hydrostatics)
 FLOOR = -150      # mm: the floor the flat parts lie on, below the keel
 ROW = 520         # mm between the rows of flat panels on the floor
 PIECE_GAP = 50    # mm: the three pieces of a flat panel lie this far apart along it
@@ -481,6 +481,13 @@ for k in (1, 2, 3):
 V("dSheer", "thD - choose(n - 1, th1, th2, th3)")
 V("dRidge", "2 * crown")
 SEAM_ANGLE = {"keel": "dKeel", 1: "dCh1", 2: "dCh2", 3: "dCh3", "sheer": "dSheer", "ridge": "dRidge"}
+# The topside does not touch the deck at the sheer, it ends under it ("under"): its rim lies on the deck's
+# inner skin, tDeck in from the deck's outside. Along the topside from the sheer line (both outsides meet
+# there at the seam's angle d) that skin crosses the topside's outside at tDeck / sin(d) and its inside at
+# (tDeck - tHull cos(d)) / sin(d), whichever is farther in is the edge, and the holes are holeIn in from it.
+# (t tan(d / 2), the setback of two inner skins that touch, is the same only near d = 75 degrees: at a
+# 12 degree crown d is 94 degrees and the holes came 1 mm too close to the topside's edge.)
+V("insTopSheer", "holeIn + max(tDeck, tDeck - tHull * cos(dSheer)) / sin(dSheer)")
 
 
 def inset(seam, t):
@@ -504,7 +511,7 @@ for nm, cond, j, row in PLATES["S"]:
         for v in stations(seam, rows):
             e = GRID.index(v)
             t = "tDeck" if j == "D" else "tHull"
-            a_ = inset(seam, t)
+            a_ = "insTopSheer" if base.startswith("Top") and seam == "sheer" else inset(seam, t)
             if j == "D":
                 c_ = f"{along('D', 4, e)} + {a_}" if where == "lo" else f"sin(crown) * {at_grid(ZR, e)} - {a_}"
             else:
@@ -610,9 +617,10 @@ V("Vdisp", "mTotal / rho * (1 m)^3")
 V("kCap", "forms[form].kCap - 0.00017 * (rockB + rockS - 470 mm) / (1 mm)")
 V("mCap", "kCap * L * B * (Zmid - 45 mm) * rho / (1 m)^3 - mBoat")
 # The heaviest paddler with GM >= 0 (sitting still), a bound on the safe side of the output GM over the
-# corners of the ranges (narrow, deep hulls are the tender ones; a single-chine V is tenderer still, 5 kg
-# less: GM falls about 0.8 mm per kg); the GM assertion checks it at every point.
-V("mStab", "93 + 0.3 * (B - 530 mm) / (1 mm) - if(chines == 1, 5, 0)")
+# corners of the ranges (narrow, deep hulls are the tender ones; a single-chine V is tenderer still, 12 kg
+# less: at 600 mm beam its GM falls only about 0.23 mm per kg, and a corner there had GM -0.59 mm with 5 kg
+# less and 0.09 mm with 8); the GM assertions check it at every point.
+V("mStab", "93 + 0.3 * (B - 530 mm) / (1 mm) - if(chines == 1, 12, 0)")
 done(9)
 
 # ================================================================ assertions
@@ -687,8 +695,12 @@ def holes_of(names):
 
 # Edge distance: the walls of each plate's holes are at least holeIn - holeD / 2 (less 0.5 mm) from that
 # plate's own rim (its faces round the edge, of the drilled body). The holes are set holeIn + t tan(d / 2)
-# in from the chine, which is holeIn from the plate's edge after its joint. One assertion per plate, on
-# while the hull has that plate.
+# in from the chine along the station line (the topside's at the sheer insTopSheer, from the edge it has
+# under the deck), which is holeIn from the plate's edge after its joint, measured
+# square to the boat's length; the least distance in 3D is square to the edge, which crosses the stations
+# at an angle phi where the chines sweep in towards the ends, so it is holeIn cos(phi) - holeD / 2 (6.94 mm
+# at the defaults: phi about 7 degrees). The 0.5 mm allows phi up to acos((holeIn - 0.5 mm) / holeIn), 21
+# degrees at the defaults. One assertion per plate, on while the hull has that plate.
 for port, tag in SIDES:
     side = "starboard" if tag == "S" else "port"
     for nm, cond, j, row in PLATES[tag]:
@@ -716,7 +728,7 @@ for port, tag in SIDES:
       max=pair(inset(1, "tHull"), inset(1, "tHull"), "dCh1"))
     A(f"sheer ({side}): the stitch holes pair up across the seam", measure="distance",
       **{"from": holes_of(tops(tag, 4)), "to": holes_of(decks(tag, 4))},
-      max=pair(inset("sheer", "tHull"), inset("sheer", "tDeck"), "dSheer"))
+      max=pair("insTopSheer", inset("sheer", "tDeck"), "dSheer"))
 A("ridge: the stitch holes pair up across the seam", measure="distance",
   **{"from": holes_of(decks("S", 4)), "to": holes_of(decks("P", 4))},
   max=pair(inset("ridge", "tDeck"), inset("ridge", "tDeck"), "dRidge"))
@@ -775,10 +787,14 @@ A("initial stability: GM = KB + BM - KG >= 0", measure="value", expr="GM", min="
 # The free-floating equilibrium (measure.floating: the waterplane free to heel and trim until the centre of
 # buoyancy lies under G), with G at (LCG, 0, KG) from the outputs above: its transverse GM as an output and
 # asserted >= 0, and its trim as an output, asserted within TRIM_MAX either way (the seat is placed by a
-# formula, not by an output, so the trim is what the check proves).
+# formula, not by an output, so the trim is what the check proves); its heel, offset and longitudinal GM as
+# outputs, and stable both ways asserted.
 FLOAT = dict(of="Hull", volume="Vdisp", centerOfGravity=["LCG", "0 mm", "KG"])
-C("variable.measure", name="floatGM", measure="floatingGM", wait=False, **FLOAT)
-C("variable.measure", name="floatTrim", measure="floatingTrim", wait=False, **FLOAT)
+for nm, ms in (("floatGM", "floatingGM"), ("floatTrim", "floatingTrim"), ("floatHeel", "floatingHeel"),
+               ("floatOffset", "floatingOffset"), ("floatGML", "floatingGML")):
+    C("variable.measure", name=nm, measure=ms, wait=False, **FLOAT)
+A("free floating: stable against a heel and a trim (measure.floating)", measure="floatingStable",
+  **{"is": True}, **FLOAT)
 A("free floating: the equilibrium's transverse GM >= 0 (measure.floating)", measure="floatingGM", min="0 mm",
   **FLOAT)
 A(f"free floating: the trim at most {TRIM_MAX} either way (measure.floating)", measure="floatingTrim",

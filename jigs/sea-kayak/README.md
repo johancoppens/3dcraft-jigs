@@ -26,7 +26,7 @@ hydrostatics (displacement 88 kg, Cp 0.524, LWL 4.00 m, BWL 0.48 m, draft 0.122 
 | Chines per side | Hull | 3 | 1 to 3 (2 to 4 hull panels a side) |
 | Ends | Hull | Moderate | Fine, Moderate, Full (table `forms`) |
 | End cap | Hull | Hardwood strip | None or a hardwood strip along the stems |
-| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (93 kg at 530 mm beam, +0.3 kg per mm, 5 kg less with one chine, at most 110) |
+| Paddler weight (kg) | Paddler and load | 80 | 45 to what the hull carries with 45 mm freeboard and GM ≥ 0 (93 kg at 530 mm beam, +0.3 kg per mm, 12 kg less with one chine, at most 110) |
 | Paddler height | Paddler and load | 1780 mm | 1500 to 2000 mm |
 | Load (kg) | Paddler and load | 5 | 0 to what is left, at most 40 |
 | Water | Paddler and load | Sea water | Sea (1025 kg/m³) or fresh (1000 kg/m³) |
@@ -83,14 +83,26 @@ station.
   one grid along the boat, η = ½ + 0.44 (0.6 v + 0.4 sin(πv/2)) for v from −1 to 1 by 0.05 (about 130 mm
   apart amidships and 65 mm near the ends of a 5.3 m hull); each seam uses the stations where both its
   panels are wide enough. Both panels of a seam get their holes at the *same stations*, each `holeIn` from
-  the chine along its own station line, so they pair up across the seam. A hole is a circle in the plane
+  its plate's edge along its own station line, so they pair up across the seam. Where two inner skins touch,
+  that edge is `t tan(d/2)` back from the chine (d the seam's angle); the topside ends under the deck, its
+  rim on the deck's inner skin, so its edge is `max(tDeck, tDeck − tHull cos d) / sin d` back from the
+  sheer (the edge-distance assertion found the touching formula 1 mm short at a 12° crown, where d is 94°). A hole is a circle in the plane
   square to its panel's station normal, at the panel's own formulas, drilled through the plate (both sides
   of the boat); `feature.unfold` carries the holes onto the flat pieces, so they are on the cut sheet.
 
-`gen.py` writes 216 variables and 21 outputs (the version that computed the geometry itself needed 3839 variables), 243 feature
-commands and 55 assertions (one per plate that a number of chines switches on or off); a regeneration takes 30 to 100 s (median 56 s over the check's points), a build
-with every assertion measured about 130 s at the defaults (drilling some 500 holes and the 27 flat pieces
-are most of it).
+`gen.py` writes 216 variables and 24 outputs (the version that computed the geometry itself needed 3839 variables), 243 feature
+commands and 56 assertions (18 of them edge distances, one per plate, each on only for hulls that have that plate); at 3DCraft 3c885c35 a point of the range check
+(regeneration and every assertion) takes 19 to 43 s (median 30 s), a build about 120 s (drilling some 500
+holes and the 27 flat pieces are most of it).
+
+**Checked** at 3DCraft `main` 3c885c35 (2026-10-30) with `craft3d-cli check-range`: the defaults, every other
+choice (one chine, two chines, Fine and Full ends) and 3 random points (`--samples 3 --seed 1 --no-corners`, 8
+points), and 40 of the 2²¹ corners in five runs (`--samples 0 --max-corners 8`, seeds 1 to 5): every point
+passes, no assertion unproven. That run found two faults the earlier checks had missed, both fixed here: the
+topside's sheer holes 1 mm too close to its edge at a 12° crown (see *Stitch holes*), and GM −0.59 mm at a
+single-chine corner 600 mm wide with the heaviest paddler then allowed (the bound is now 12 kg lower with one
+chine, not 5). `scripts/check.sh` takes all 64 corners and the random points at once, about 35 minutes; it
+was run with `SAMPLES=3 SEED=1` before these fixes and passed the 15 points it reached in 15 minutes.
 
 ## What 3DCraft checks (assertions)
 
@@ -100,13 +112,13 @@ are most of it).
 | the panels are developable; their Gaussian curvature ≤ 10⁻⁹ mm⁻² | measured on the envelope faces the plates are made of: 0 |
 | keel and chines: no two hull panels share volume; the sheer (topside and deck) and the ridge likewise | the overlap measure (boolean intersection) of the drilled plates |
 | initial stability | the output GM ≥ 0 (the hull upright at the `levelFor` waterline) |
-| free floating: stability and trim | `floatingGM` ≥ 0 and `floatingTrim` within ±0.5° (`measure.floating`'s equilibrium, G from the outputs) |
+| free floating: stability and trim | `floatingGM` ≥ 0, `floatingTrim` within ±0.5° and `floatingStable` (`measure.floating`'s equilibrium, G from the outputs) |
 | plywood mass | the kernel's mass of the plates (okoume 500 kg/m³) is the weight formula's ± 4 % |
 | freeboard | the waterline for boat, paddler and load (`levelFor`) lies 45 mm below the sheer amidships |
 | the end pours are dry | above the highest waterline the freeboard allows |
 | the coaming stands on the deck; the cockpit lets the knees in | distance 0; its length ≥ 0.34 × height + room behind the seat |
 | every flat piece fits a 2440 mm sheet | per piece and joint parity |
-| stitch holes keep their distance from the edge | per plate: its hole walls lie at least `holeIn − holeD/2 − 0.5 mm` from its own rim |
+| stitch holes keep their distance from the edge | per plate: its hole walls lie at least `holeIn − holeD/2 − 0.5 mm` from its own rim (6.94 to 7.00 mm at the defaults; a hole is `holeIn` from the edge along its station, and the edge crosses the stations at a few degrees where the chines sweep in, so the 0.5 mm allows up to 21°) |
 | every stitch hole is drilled | the starboard plates carry exactly the holes the seams call for (the port side the same); no puzzle joint can run into one, as the seams leave out the stations within two of a joint |
 | stitch holes pair up across the keel, chine 1, the sheer and the ridge | the nearest hole walls across the seam are no farther apart than two holes at one station, `holeIn` either side of the chine |
 
@@ -141,19 +153,20 @@ The fuller ends show in Cp too: 0.666 against the Igdlorssuit's 0.524, on a wate
 
 **The free-floating equilibrium.** The outputs above take the waterline level (`levelFor`, the hull upright)
 and give the trim only as a lever, `LCB − LCG`. 3DCraft's `measure.floating` finds the equilibrium itself, with
-the waterplane free to heel and trim until the centre of buoyancy lies on the vertical through G. Its
-`floatingGM` and `floatingTrim` are outputs (`floatGM`, `floatTrim`) and assertions, with G at
-(`LCG`, 0, `KG`) from the outputs: the transverse GM at least 0, and the trim within ±0.5° either way (the ends
-within about 18 mm of the level waterline over its 4.2 m length; the seat is placed by a formula, so the check is
-what proves where it trims). At the defaults:
+the waterplane free to heel and trim until the centre of buoyancy lies on the vertical through G. Its measures
+are outputs (`floatOffset`, `floatHeel`, `floatTrim`, `floatGM`, `floatGML`) and assertions, with G at
+(`LCG`, 0, `KG`) from the outputs: the transverse GM at least 0, stable against a heel and a trim, and the trim
+within ±0.5° either way. That bound is chosen, not from a standard: the ends within about 18 mm of the level
+waterline over its 4.2 m length (the default trims 190 times less); the seat is placed by a formula, so the
+check is what proves where it trims. At the defaults (3DCraft 3c885c35):
 
-| Quantity | Outputs (`levelFor`, upright) | `measure.floating` (outputs `floatGM`, `floatTrim`; main 3c885c35) |
+| Quantity | Outputs (`levelFor`, upright) | Outputs of `measure.floating` |
 |---|---|---|
-| Waterline | T = 105.616 mm | offset 105.611 mm along the tilted normal (by hand, `measure.floating`) |
-| Trim | lever LCB − LCG = 0.728 mm | 0.00267° (4.66e-5 rad): the bow 0.19 mm down over the LWL |
-| Heel | 0 (assumed) | 0: upright |
-| Transverse GM | 34.65 mm | 34.65 mm, stable |
-| Longitudinal GM | | 15.6 m, stable (by hand) |
+| Waterline | T = 105.616 mm | `floatOffset` 105.611 mm along the tilted normal |
+| Trim | lever LCB − LCG = 0.728 mm | `floatTrim` 0.00267° (4.66e-5 rad): the bow 0.19 mm down over the LWL |
+| Heel | 0 (assumed) | `floatHeel` −3e-9 rad: upright |
+| Transverse GM | `GM` 34.65 mm | `floatGM` 34.65 mm |
+| Longitudinal GM | | `floatGML` 15.6 m |
 
 They agree. The trim the lever predicts, `atan((LCB − LCG) / GM_L) = atan(0.728 / 15618)`, is 0.00267°, which is
 what `measure.floating` finds; the offsets differ by 0.005 mm because the tilted plane's offset is measured from the
