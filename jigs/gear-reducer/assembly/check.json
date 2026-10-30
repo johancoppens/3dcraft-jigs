@@ -1,0 +1,47 @@
+{
+ "file": "dist/gear-reducer.3dcraftasm",
+ "at_rest": {
+  "dof": 0,
+  "identity": [
+   "Housing",
+   "Shaft1",
+   "Shaft2",
+   "Shaft3",
+   "Gear1",
+   "Gear2",
+   "Gear3",
+   "Gear4"
+  ]
+ },
+ "motion": [
+  {
+   "t": [
+    0,
+    1
+   ],
+   "samples": 65
+  },
+  {
+   "t": [
+    0,
+    0.05555555555555555
+   ],
+   "samples": 33
+  },
+  {
+   "t": [
+    0,
+    0.20588235294117646
+   ],
+   "samples": 33
+  }
+ ],
+ "renders": [
+  0,
+  0.125,
+  0.25
+ ],
+ "replay": {
+  "frames": 49
+ }
+}

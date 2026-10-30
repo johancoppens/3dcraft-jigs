@@ -12,7 +12,7 @@ swing). The flat parts are cut from sheet (or printed) and joined with bolts or 
 | Crank angle | Size | 0° | 0 to 360°, step 1° |
 | Legs | Size | 1 leg | 1 leg, or 2 legs half a turn apart on one axle |
 | Material | Parts | Birch plywood, laser-cut | table `sheets` |
-| Sheet thickness | Parts | 3 mm | the material's `tMin` (2 or 3 mm) to 6 mm |
+| Sheet thickness (`thick`) | Parts | 3 mm | the material's `tMin` (2 or 3 mm) to 6 mm |
 | Bar width | Parts | 9 mm | `wMin` = hole + 2 × web to `wMax` = 0.75 × crank |
 | Pins | Parts | M3 bolt | table `pins`: M3, M4, M5 bolts; 3, 4, 5 mm steel rod; 1/8 in brass rod |
 | Pin clearance | Parts | 0.2 mm | 0.05 to 0.6 mm |
@@ -105,9 +105,9 @@ k pass right over O once a turn, which is why the drive is behind the frame.
    triangle and bar c.
 4. Build outwards layer by layer with a washer between layers. Pin lengths between the outer faces (add a
    bolt's head and nut, or room for e-clips on rod):
-   - A, D, E, F: three layers, `2 (t + gap) + t` (11 mm at the defaults);
-   - C: two layers, `t + gap + t` (7 mm);
-   - B: frame to layer 2, `2 (t + gap) + t` (11 mm);
+   - A, D, E, F: three layers, `2 (thick + gap) + thick` (11 mm at the defaults);
+   - C: two layers, `thick + gap + thick` (7 mm);
+   - B: frame to layer 2, `2 (thick + gap) + thick` (11 mm);
    - O: the stub behind the frame (`dg = max(10 mm, 2 w)`, for a pulley, gear or crank handle) to the
      crank's face (25 mm at the defaults).
 5. Tighten nuts until the joints turn without play (nylon lock nuts hold that setting), then turn the crank
@@ -172,3 +172,84 @@ of the crank angle in 10° steps with two legs and the widest bars passes every 
   cannot be mitred round that turn.
 - The cut sheet lays the parts out as they stand at the form's crank angle. Set the crank angle to taste
   before exporting, or nest the parts in your laser software.
+
+## As an assembly
+
+This Jig works every joint out by hand, as circle intersections. `dist/strandbeest-leg.3dcraftasm` and
+`dist/strandbeest-walker.3dcraftasm` build the same leg again from parts, and 3DCraft's assembly solver
+finds the joints instead. `assembly/gen.py` writes the command batches that build them
+(`assembly/01-bar.json` to `05-strandbeest-walker.json`) and `assembly/check.json`;
+`scripts/asm.py all strandbeest-leg` builds and checks them. Both files are packed: they carry their parts
+and open anywhere.
+
+**Parts.** One bar (`bar.3dcraft`: 3 mm plywood, 9 mm wide, a hole for a 3 mm pin with 0.2 mm clearance at
+each end; its length between the holes, `len`, is a public parameter) and one pin (`pin.3dcraft`, 3 mm;
+`len` public too). Every link of the leg is an instance of the bar with its own length: the frame O-B
+(√(a² + l²)), the crank m, and the bars b to k. The two rigid triangles of the Jig (the hip B C D and the
+foot E F G) are three bars each, pinned at their corners: the solver closes them like every other loop. A
+pin goes through every joint, fixed to the rearmost part there, from that part's back face to the front
+face of the foremost.
+
+**The leg** (`leg.3dcraftasm`, built into `build/strandbeest/` and packed into the two files): the frame
+is fixed to the world (its axle hole on the world's y axis, the bar pointing at B), and a revolute joins
+the parts at every joint, sixteen in all. The parts start where the Jig's joints put them at crank angle
+0, rounded to the millimetre and to 5°, so the solver really assembles the leg. Nothing drives it: the
+crank can still turn (one degree of freedom).
+
+**Layers.** The parts lie in seven layers, from the frame towards the front (-y), 3 mm thick with 1 mm
+between them: 0 frame, 1 crank, 2 bars j, c and f, 3 bars b and g, 4 bars d and i, 5 bars k, e and h, 6 a
+second crank arm (the web). `gen.py` found this layering by search, with its own simulation of the leg at
+every 2° of crank: parts on one layer stay at least 1 mm apart, parts joined by a pin are on different
+layers, and no pin passes a part on a layer between its ends within 1 mm. Bars j and k pass right over the
+axle O once a turn, so no shaft can run through the leg: the crank pin A runs from the crank to the web,
+and crank, pin A and web make one crank throw (glue or key them, as the crank to the axle). The next leg is
+driven from the web.
+
+**One leg** (`strandbeest-leg.3dcraftasm`): the leg as a flexible subassembly (its own joints move in the
+parent), on a 20 mm drive shaft behind the frame, fixed to the leg's axle and turning about the world's y
+axis. The timeline t turns it once: the crank angle is `theta = theta0 + 360 deg * t` (`theta0` = 0,
+counter-clockwise seen from the front, as the Jig's), and the drive joint is set to `-theta` (it turns about
++y). The foot is traced (`view.trace` of the foot pin's centre), and the trace written as SVG.
+
+**Four legs** (`strandbeest-walker.3dcraftasm`): four instances of the same leg as flexible
+subassemblies in a row along the axle, 43 mm apart, on one crankshaft: the drive shaft behind the first
+leg, and between two legs a 6 mm journal fixed to the web of one and to the axle of the next, a quarter
+turn on (the phase offsets). Every leg starts at crank angle 0; the solve at rest turns legs 2 to 4 a
+quarter, a half and three quarters of a turn on, and they stay on Jansen's branch (the feet show it).
+
+**Assertions** (at every regeneration, and over the motion):
+- *the foot is where the Jig's circle intersections put it*: the assembly carries the Jig's closed form
+  as its own variables (A, then C, D, E, F and G as circle intersections of the crank angle, the same
+  formulas and branches as the Jig's `kin`), and the foot pin's centre (the centroid of its section
+  across the pin) must lie within 0.001 mm of G; for each leg of the walker at its own phase;
+- *no part overlaps another* (one leg: every pair of its 22 bodies); in the walker, *the crankshaft runs
+  clear of every part* (the drive shaft and the journals against every body: 3DCraft measures at most 500
+  pairs at once, and each leg is the one checked alone).
+
+**Checked** (3DCraft 57ba7632, `scripts/asm.py check strandbeest-leg`, under a minute):
+- the leg alone solves with the crank free (one degree of freedom left), every joint within 2e-7 mm of
+  the Jig's circle intersections at the crank angle it comes to rest at (21.5°: undriven, the crank
+  settles near where it was put, 0°), on Jansen's branch;
+- one leg: solved at rest with no degree of freedom left; over a whole turn, sampled at 73 moments (5°
+  apart; what happens between two samples is not seen), the foot is where the Jig's circle intersections
+  put it at every sample (largest miss 1.5e-6 mm) and no part overlaps another; the trace of the foot
+  (73 points) misses the Jig's path (the same closed form, computed by `scripts/asm.py` itself) by at most
+  1.5e-6 mm; it is closed, 148.9 mm long, 67.86 mm wide and 22.31 mm high (the Jig: stride 67.8 mm, step
+  height 22.2 mm);
+- four legs: solved at rest with no degree of freedom left; at 25 moments over a turn every foot is where
+  the circle intersections put it at its own phase (largest miss 9.2e-7 mm), and the crankshaft runs
+  clear of every part; each foot's trace (73 points) matches the closed form at its phase (0°, 90°, 180°,
+  270°) within 9.2e-7 mm.
+
+**Not modelled.** The crank, pin A and web are held together by a fixed mate, as a glued or keyed throw;
+the pins are fixed to one part each, where a real pin turns in every hole. The walker's legs stand side by
+side on one frame line, not on a chassis, and nothing touches the ground. The parts are the Jig's default
+material and sizes (3 mm sheet, 9 mm bars, 3 mm pins); the leg's crank is 15 mm, so its bars are Jansen's
+numbers in millimetres.
+
+**Found in 3DCraft** (building these): a flexible subassembly brings its own drivers into the parent,
+with the values they have in its own file. A leg whose crank its own file drives (tried: `joint.set` of
+its crank to 30°) cannot be turned by a parent: the parent's drive and the leg's driver contradict each
+other ("over-constrained: ... the driver of Drive.angle, the driver of JointO.angle"). So the leg file is
+undriven, and both the one-leg assembly and the walker drive it from outside; a leg file cannot both play
+its own motion and serve as a part of a machine.

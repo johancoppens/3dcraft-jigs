@@ -52,6 +52,21 @@ standard.
 | [`rack-panel`](jigs/rack-panel/) | A 19-inch rack front panel (EIA-310) of 1 to 4 U in aluminium or steel sheet: flat or with bent-back flanges, M6 slots or holes on the rail pattern, handle holes, a row of D-sub or XLR cut-outs or a window, flat pattern | CC-BY-4.0 |
 | [`rack-cabinet`](jigs/rack-cabinet/) | A wall-mount 19-inch rack cabinet of 6 to 15 U, every part bent from sheet: sides, lid and pan with knock-outs, wall plate screwed to the sides by six tabs, L or C rails with cage-nut or M6 holes front and rear bolted to the sides, a vented door with hinge holes, closed corners; every hole in the flat patterns; rack-panels fit it | CC-BY-4.0 |
 
+**Assemblies.** Three Jigs also come as 3DCraft assemblies (`.3dcraftasm`) that move: instances of the Jig's
+bodies (or of parts) joined by mates, the gears by gear couplings, a joint driven by the timeline `t`, and
+assertions checked over the motion. Each is built from its Jig's folder (`jigs/<id>/assembly/`) and
+packed, so it opens anywhere. They need 3DCraft 57ba7632 or newer (format version 52).
+
+| Assembly | What moves | Checked over the motion |
+|---|---|---|
+| [`gear-reducer.3dcraftasm`](jigs/gear-reducer/#as-an-assembly) | the `gear-reducer` Jig's housing, shafts and gears: the input turns once | the output's turn against z1 z3 / (z2 z4) from the tooth counts, no overlap, the flank clearances |
+| [`planetary-gearbox.3dcraftasm`](jigs/planetary-gearbox/#as-an-assembly) | the `planetary-gearbox` Jig's sun, three planets, ring and carrier | Willis' formula, no overlap, the flank clearances |
+| [`strandbeest-leg.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | Jansen's leg rebuilt from one bar part and pins, the solver finding the joints; the foot traced | the foot against the Jig's circle intersections, no overlap |
+| [`strandbeest-walker.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | four such legs as flexible subassemblies on one crankshaft, a quarter turn apart | every foot against the Jig's path at its phase |
+
+Open one in 3DCraft and play the timeline (the player's Motion mode), or drive it from a script:
+`craft3d-cli run dist/gear-reducer.3dcraftasm --cmd view.motion --params '{"t": 0.25}' --cmd view.render --params '{"path": "reducer.png"}'`.
+
 ## Using a Jig
 
 **Desktop.** Open a `.3dcraftjig` file (File › Open, or double-click it once 3DCraft is installed). It opens
@@ -91,6 +106,10 @@ scripts/shaftlib.py    shared bore and set-screw options (gt2-pulley, spur-gear 
 scripts/gridfinitylib.py  the Gridfinity dimensions and profiles (gridfinity-bin, gridfinity-baseplate gen.py)
 scripts/racklib.py     the 19-inch rack (EIA-310) dimensions and the sheet stock table (rack-panel, rack-cabinet gen.py)
 scripts/gallery.py     dist/index.html and dist/thumbs/ from the built Jigs (Python standard library only)
+jigs/<id>/assembly/    (optional) the Jig as an assembly: gen.py writes NN-<what>.json (command batches run in
+                       order, ending with the packed dist/<name>.3dcraftasm) and check.json (what asm.py proves)
+scripts/asm.py         build the assemblies and check them over their motion (motion.check, traces, renders)
+build/                 (not committed) intermediate parts and assemblies, and the evidence asm.py writes
 dist/                  the built Jigs, their thumbnails and the gallery page
 ```
 
@@ -119,7 +138,8 @@ format version 37; `rack-panel` (sheet metal) was built and checked at 3DCraft 3
 `rack-cabinet` and `sheet-metal-enclosure` (flanges with an outline of their own, flange ids) were built and
 checked at 3DCraft 1f92b83b and are at format version 50 (their bend sequences checked at 0dc5efb6, whose
 sheet metal is the same); `miura-ori` (creases from sketch patterns, folding flat, thick panels) is at format
-version 50, built and checked at 0dc5efb6 and 1f92b83b; `sea-kayak` is at format version 50, built and checked at 3c885c35. Each needs that build or a newer one. Put it on `PATH`
+version 50, built and checked at 0dc5efb6 and 1f92b83b; `sea-kayak` is at format version 50, built and checked at 3c885c35; `strandbeest-leg` (its sheet
+thickness renamed `thick`, since `t` is the timeline) was rebuilt and checked at 57ba7632. Each needs that build or a newer one. Put it on `PATH`
 or point `CRAFT3D_CLI` at it.
 
 ```sh
@@ -128,6 +148,7 @@ scripts/build.sh                 # every Jig, then dist/index.html; or scripts/b
 scripts/check.sh                 # every Jig over its range; exit 1 when a point fails
 SAMPLES=64 SEED=7 DEEP=1 scripts/check.sh gt2-pulley   # a longer, deeper run
 python3 scripts/gallery.py dist  # only the gallery
+scripts/asm.py all               # build the assemblies from dist/ and check them over their motion
 ```
 
 `check.sh` runs `craft3d-cli check-range` on each Jig with a fixed seed: the defaults, the corners of the
@@ -142,6 +163,15 @@ punch and a V-die of 8 t unless `press.json` names the opening (the tools are in
 within 0.5 mm of the part. `bendSequence` is a command, not an assertion, so this is a script beside
 `check.sh` and not part of `check-range`; what each Jig's parts are proven to do, and what 3DCraft cannot
 prove yet, is in its README.
+
+**Assemblies.** `scripts/asm.py build` runs each `jigs/<id>/assembly/NN-*.json` with `craft3d-cli run
+--script` (each starts with `assembly.new` or `file.new` and saves its file); `scripts/asm.py check` opens the
+built assembly and proves what `check.json` asks: solved at rest (and, for the gears, every instance exactly
+where the Jig puts it), every assertion over the motion with `motion.check` at the given samples (a sampled
+check: what happens between two samples is not seen; a failure or an error fails the run, an assertion only
+*notProven* is printed as a warning, as `check-range` counts it), traces against closed forms, and renders
+and an animated GIF in `build/evidence/<name>/` to look at. A `motion.check` on an assembly holds memory for
+every moment it measures, so `asm.py` measures at most 17 moments per process (with `MALLOC_ARENA_MAX=2`).
 
 **CI.** There is no GitHub-hosted workflow on purpose (it would cost Actions minutes). Build and check will
 run on the developer's own runners later; until then run `scripts/build.sh && scripts/check.sh` before a
