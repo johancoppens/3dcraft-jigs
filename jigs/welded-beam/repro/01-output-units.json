@@ -1,0 +1,7 @@
+[
+["variable.set", {"name": "load", "expr": "1000"}],
+["feature.block", {"name": "Bar", "size": ["100 mm", "10 mm", "10 mm"]}],
+["variable.measure", {"name": "area", "measure": "sectionArea", "of": "Bar", "plane": "yz", "offset": "50 mm"}],
+["variable.output", {"name": "stress", "expr": "load / (area / (1 mm)^2)"}],
+["output.list", {}]
+]
