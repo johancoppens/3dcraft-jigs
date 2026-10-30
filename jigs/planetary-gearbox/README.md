@@ -87,3 +87,80 @@ MB native.
 
 `build.json` was written by `python3 gen.py > build.json`; edit `gen.py` and run it again to change the
 model.
+
+## As an assembly
+
+`dist/planetary-gearbox.3dcraftasm` puts this Jig's bodies together as a 3DCraft assembly that moves:
+the ring, the carrier, the sun and three planets are instances of the Jig, each picking one body by the
+feature that made it. The assembly holds the Jig's public parameters as its own variables (module 1.5 mm,
+sun 12, ring 48, face width 10 mm, backlash 0.1 mm, 3 planets) and passes them to every instance, so all
+six share one configuration. Some values are copies of the Jig at its defaults: the module (1.5 mm, the
+Jig's `moduleSize` 4), the carrier's 0.5 mm gap and 4 mm output shaft (the joint's height), and the edge
+names (`gen.py`, read with `document.edges` from the Jig's current `build.json`). Zs, Zr, w and backlash may
+be changed in the assembly; another module would misplace the carrier's joint. After the Jig is rebuilt,
+run `scripts/asm.py all planetary-gearbox` again (the packed copy is the Jig as it was); the check at rest
+(every instance exactly where the Jig puts it) is what catches an edge that moved. It is packed: it carries a copy of the Jig and opens anywhere.
+`assembly/gen.py` writes the command batch that builds it (`assembly/01-planetary-gearbox.json`) and
+`assembly/check.json`; `scripts/asm.py all planetary-gearbox` builds and checks it.
+
+**Mates.** Every mate's frame is a circular edge, which the Jig turns with its body, so a mate's zero is
+the Jig's own tooth phase and every instance stays exactly where the Jig puts it.
+
+| Mate | Kind | Between |
+|---|---|---|
+| `RingHeld` | fixed | the world's z axis and the ring's outer circle (turned by the Jig's `rTurn`) |
+| `Output` | revolute | the world's z axis and the top edge of the carrier's output shaft |
+| `SunOnCarrier` | revolute | the carrier's output shaft and the sun's bore |
+| `Pin1` to `Pin3` | revolute | carrier pin k and planet k's bore (the angle: planet k's tooth phase) |
+
+**Couplings.** Each mesh is a gear coupling between two joints: `SunPlanetk` (sun on the carrier s and
+planet k on its pin p_k, ratio Zp / Zs: s + (Zp / Zs) p_k = 0, an external pair) and `PlanetRingk`
+(planet k and the carrier's turn c, ratio Zr / Zp: p_k + (Zr / Zp) c = 0, a planet rolling in the fixed
+ring). Willis' formula is not written into the model; it follows from the meshes.
+
+**Motion.** The timeline t drives the sun's joint on the carrier, `SunOnCarrier_angle = 360 deg * t`: one
+turn of the sun relative to the carrier, during which the carrier turns a quarter and the sun 450 deg on
+the housing. The sun is the input of the gearbox, so it would be driven on the housing. 3DCraft couples
+two joints at a time, though, and the sun meshes with planets whose pins turn with the carrier: the mesh
+ties three angles, the sun's, the planet's and the carrier's. So the sun's joint sits on the carrier, and
+t drives that joint (see *Missing in 3DCraft* below).
+
+**Assertions** (measured at every regeneration, and over the motion by `motion.check`):
+- *Carrier turns as Willis' formula says*: the carrier's turn, measured on the model (the centroid of
+  planet 1's mid-plane section goes round the sun with the carrier), equals s Zs / Zr, which is Willis'
+  (s + c) / c = 1 + Zr / Zs solved for c, within 0.01° (3.9 µm at the planet's centre; the assembly is
+  solved to its tolerance of 1 µm, so a tighter bound would test the solver's rounding);
+- *Sun and planet 1 mesh with the backlash* and *Planet 1 and the ring mesh with the backlash*: the
+  clearance between their flanks between 0.3 and 0.7 of the normal backlash jn = 0.1 mm × cos 20°;
+- *No part overlaps another*.
+
+**Checked** (3DCraft 57ba7632, `scripts/asm.py check planetary-gearbox`, about 7 minutes):
+- at rest: solved with no degree of freedom left, and all six instances exactly where the Jig puts them;
+- over the motion, sampled (what happens between two samples is not seen): 65 moments over a whole turn
+  of the sun on the carrier, and 33 moments over one sun tooth (t from 0 to 1/12), the meshes' whole
+  cycle. Willis' formula passes at every sample (largest miss 7.6e-6 rad, 0.00043°, against 0.01°) and
+  no part overlaps another.
+  The two flank clearances are found within their bounds at every sample (0.0455 to 0.0470 mm sun to
+  planet, 0.0446 to 0.0468 mm planet to ring, against jn / 2 = 0.047 mm as designed), but they are
+  *notProven*: 3DCraft proves only a lower bound of 0.013 to 0.027 mm for a clearance between these
+  spline flanks (as in the `gear-reducer` Jig); a warning, not a pass;
+- Willis again, without the model's centroid measure: `view.trace` of a corner of a sun tooth and of
+  planet 1's centre over the turn gives the sun's turn on the housing over the carrier's as 5.000000000
+  = 1 + 48 / 12 (largest miss 7e-13 deg over 65 samples).
+- What the couplings decide and what is checked independently: Willis' ratio is Zp / Zs times Zr / Zp,
+  the couplings' values, so the Willis assertion and the traces check that the two meshes are composed
+  the right way round and with the right signs (external, internal), not that they are the gears' own
+  ratios. That is checked by the teeth: negative controls, run once on a copy, (a) one ring coupling
+  reversed: its planet and the other two contradict each other, and the motion stops at t = 0 (a dead
+  point); (b) all three reversed: the planets overlap the ring by 76 mm³ at the second of 9 samples over
+  one sun tooth. With 3 samples, (b) passed: those samples fell on whole tooth pitches of the error, so
+  a sampled check is only as good as its samples (hence 33 within one tooth here).
+
+**Missing in 3DCraft** (found building this assembly):
+- `coupling.add` couples two joints (gear, rack, screw). A planetary mesh ties three angles; 3DCraft's
+  solver has a linear coupling of any number of joints (its "planetary stage"), but the command does not
+  offer it. With it, the sun would turn on the housing and be driven there.
+- No measure of a joint's angle or an instance's pose for an assertion: the carrier's turn is measured
+  from the centroid of a planet's section.
+- `motion.check` on an assembly holds memory for every moment it measures (about 25 MB a moment here with
+  `MALLOC_ARENA_MAX=2`, about 300 MB without), so `scripts/asm.py` runs it 17 moments at a time.

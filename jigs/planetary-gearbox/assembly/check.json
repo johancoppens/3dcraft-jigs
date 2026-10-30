@@ -1,0 +1,56 @@
+{
+ "file": "dist/planetary-gearbox.3dcraftasm",
+ "at_rest": {
+  "dof": 0,
+  "identity": [
+   "Ring",
+   "Carrier",
+   "Sun",
+   "Planet1",
+   "Planet2",
+   "Planet3"
+  ]
+ },
+ "motion": [
+  {
+   "t": [
+    0,
+    1
+   ],
+   "samples": 65
+  },
+  {
+   "t": [
+    0,
+    0.08333333333333333
+   ],
+   "samples": 33
+  }
+ ],
+ "traces": [
+  {
+   "name": "Sun tooth",
+   "point": "Sun/F2:startVertex(e4,e8)",
+   "samples": 65
+  },
+  {
+   "name": "Planet 1 centre",
+   "point": "Planet1/F7:copy(0)/F4:startEdge(e15)",
+   "samples": 65
+  }
+ ],
+ "willis": {
+  "sun": "Sun tooth",
+  "carrier": "Planet 1 centre",
+  "ratio": 5.0,
+  "tol_deg": 0.01
+ },
+ "renders": [
+  0,
+  0.25,
+  0.5
+ ],
+ "replay": {
+  "frames": 49
+ }
+}

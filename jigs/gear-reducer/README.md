@@ -173,3 +173,69 @@ to the housing failed), fixed.
 Designed in the 3DCraft test drive of 2026-10-25, where an agent built the reducer headless with commands
 only (`reducer.3dcraft`, 277 features, 21 assertions); this Jig adapts its generator. `build.json` was
 written by `python3 gen.py > build.json`; edit `gen.py` and run it again to change the model.
+
+## As an assembly
+
+`dist/gear-reducer.3dcraftasm` puts this Jig's moving parts together as a 3DCraft assembly that turns: the
+rear half of the housing (`HousingTop`), the three shafts and the four gears are instances of the Jig at
+its defaults, each picking one body by the feature that made it. The front half, the bearings, keys,
+spacers and bolts are left out (the front half would hide the gears; the keys and bearings turn with
+their shafts). It is packed: it carries a copy of the Jig and opens anywhere. `assembly/gen.py` writes the
+command batch that builds it (`assembly/01-gear-reducer.json`) and `assembly/check.json`;
+`scripts/asm.py all gear-reducer` builds and checks it.
+
+**Mates.** Every frame but the world's z axis is a circular edge: a circle's frame starts where the circle starts, and the Jig
+draws every circle from +x and turns a body with its shaft, which at the defaults leaves every gear at 0°
+(63 and 49 teeth are odd: only an even wheel is turned half a pitch). So a mate's zero is the Jig's own
+tooth phase. The edges and their heights were read from the Jig's bodies (`document.edges`); an offset is
+the difference of two heights along the shaft. At rest every instance is exactly where the Jig puts it,
+which the check proves.
+
+| Mate | Kind | Between |
+|---|---|---|
+| `HousingHeld` | fixed | the world's z axis and the input shaft's bearing seat in the housing |
+| `Shaft1` to `Shaft3` | revolute | shaft k and its bearing seat in the housing |
+| `Keyed1` to `Keyed4` | fixed | gear k and its shaft (the key's job) |
+
+**Couplings.** `Stage1` couples shaft 1 and shaft 2 (ratio z2 / z1 = 63 / 18), `Stage2` shaft 2 and shaft 3
+(z4 / z3 = 49 / 17): external gears, so each pair turns opposite ways. **Motion:** the timeline t drives
+the input, `Shaft1_angle = 360 deg * t`, one turn.
+
+**Assertions** (at every regeneration, and over the motion):
+- *Output turns at z1 z3 / (z2 z4) of the input*: the output's turn is measured on the model, not read
+  from the solver: the output shaft's keyway (cut along +x at rest) puts the centroid of the shaft's
+  section at mid-key 0.68 mm off its axis, on the far side; its direction must be the input's turn × 18 ×
+  17 / (63 × 49) = 1 / 10.088 within 0.001° (and the centroid at least 0.3 mm off the axis, so the
+  direction means something);
+- *Stage 1 / Stage 2 mesh with the backlash*: the flank clearance between 0.3 and 0.7 of the normal
+  backlash jn = 0.12 mm × cos 20°, as the Jig asserts it;
+- *No part overlaps another* (the housing, shafts and gears).
+
+**Checked** (3DCraft 57ba7632, `scripts/asm.py check gear-reducer`, about 8 minutes):
+- at rest: solved with no degree of freedom left, and all eight instances exactly where the Jig puts them;
+- over the motion, sampled (what happens between two samples is not seen): 65 moments over the input's
+  turn (5.6° apart, about a quarter of a pinion tooth), 33 over one tooth of pinion 1 (t from 0 to 1/18,
+  stage 1's whole mesh cycle) and 33 over one tooth of pinion 3 (t from 0 to 63 / (18 × 17), stage 2's).
+  The output's turn passes at every sample (largest miss 5.4e-7 rad, against the 1.7e-5 rad allowed) and
+  no part overlaps another. The flank clearances are found within their bounds at every sample (stage 1
+  0.0550 to 0.0564 mm, stage 2 0.0554 to 0.0564 mm, against jn / 2 = 0.0564 mm as designed) but are
+  mostly *notProven*: 3DCraft proves only a lower bound of 0.014 to 0.029 mm between these spline flanks,
+  as in the Jig itself (see *Limits of 3DCraft today*); a warning, not a pass.
+- What the couplings decide and what is checked independently: the ratios z2 / z1 and z4 / z3 are put in
+  by the couplings, so the output's turn checks that they are composed the right way round and with the
+  right signs; that they are the gears' own ratios is checked by the teeth: a sign reversed in stage 1
+  (tried) makes the gears overlap at the next sample; a wrong ratio (not tried) would let the teeth drift
+  out of phase until they meet.
+
+Bodies other than the moving ones, and the Jig's other parameters, are not in the assembly: the edges'
+heights and the tooth counts are those of the Jig at its defaults, written into `gen.py`, so the assembly
+places that one reducer. The edge names belong to the Jig's current `build.json`: after the Jig is
+rebuilt, run `scripts/asm.py all gear-reducer` again (the packed copy is the Jig as it was); the check at
+rest (every instance exactly where the Jig puts it) is what catches an edge that moved.
+
+**Missing in 3DCraft** (found building this assembly):
+- No measure of a joint's angle or an instance's pose for an assertion: the output's turn is measured from
+  the centroid of a section through the output shaft's keyway, at a height (43 mm) copied from the Jig.
+- `motion.check` on an assembly holds memory for every moment it measures (about 25 MB a moment with
+  `MALLOC_ARENA_MAX=2`, far more without), so `scripts/asm.py` runs it 17 moments at a time.
+- A clearance between spline flanks is found but not proven (as in the Jig).

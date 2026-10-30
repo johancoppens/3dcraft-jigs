@@ -28,7 +28,7 @@ normalised discriminant (the sine squared of the angle at P), and sg the branch:
 at every angle.
 
 Layers (one leg, from the frame outwards; layer n has its back face at depth
-n (t + gap) in front of the frame's back face):
+n (thick + gap) in front of the frame's back face):
     0  frame                        (pins O and B through it)
     1  crank, hip triangle, foot triangle
     2  bar j, bar c
@@ -76,7 +76,7 @@ INPUTS = [
     ("theta", "0 deg"),
     ("legs", "1"),
     ("material", "1"),
-    ("t", "3 mm"),
+    ("thick", "3 mm"),
     ("w", "9 mm"),
     ("pin", "1"),
     ("clr", "0.2 mm"),
@@ -296,16 +296,16 @@ def main():
         ("wMin", "ceil(hole + 2 * web, 0.1 mm)"),
         ("wMax", "floor(0.75 * crank, 0.1 mm)"),
         ("crankMin", "ceil((hole + 2 * web) / 0.75, 0.5 mm)"),
-        ("pitch", "t + gap"),                  # layer to layer
+        ("pitch", "thick + gap"),                  # layer to layer
         ("dg", "max(10 mm, 2 * w)"),           # drive gap behind the frame (axle stub, or between the frames)
         ("rt", "0.04 * crank"),                # foot path tube (thicker breaks the mitre at the sharp turn)
         ("Mx", "-La / 2"),                     # frame's mounting hole
         ("My", "0.6 * La"),
-        ("zTop", "3 * pitch + t"),             # front face of leg 1's stack
+        ("zTop", "3 * pitch + thick"),             # front face of leg 1's stack
         ("zPath", "zTop + gap + 2 * rt"),
     ]
-    # Layer underside z, leg 1 (in front of the frame at z 0..t) and leg 2 (behind the second frame).
-    zb = {1: lambda n: "%d * pitch" % n, 2: lambda n: "-dg - t - %d * pitch" % n}
+    # Layer underside z, leg 1 (in front of the frame at z 0..thick) and leg 2 (behind the second frame).
+    zb = {1: lambda n: "%d * pitch" % n, 2: lambda n: "-dg - thick - %d * pitch" % n}
 
     # Kinematics of the legs at the form's angle (leg 2 half a turn later), and the samples.
     legs = {1: kin(v, "p", "theta"), 2: kin(v, "r", "theta + 180 deg")}
@@ -361,10 +361,10 @@ def main():
     rounded_polygon(sk, frame_pts, "0.75 * w")
     for p in frame_pts:
         sk.circle(p, hr)
-    s.append(["feature.extrude", {"sketch": "FrameSketch", "distance": "t", "name": "FrameLocal"}])
+    s.append(["feature.extrude", {"sketch": "FrameSketch", "distance": "thick", "name": "FrameLocal"}])
     s.append(["feature.transform", {"source": "FrameLocal", "translate": ["0 mm", "dg", "0 mm"], "keep": True,
                                     "name": "Frame2", "when": two}])
-    s.append(["feature.transform", {"source": "FrameLocal", "translate": ["0 mm", "-t", "0 mm"], "name": "Frame"}])
+    s.append(["feature.transform", {"source": "FrameLocal", "translate": ["0 mm", "-thick", "0 mm"], "name": "Frame"}])
 
     # The moving parts, each drawn once in its own frame and placed for each leg.
     placed = {1: {}, 2: {}}
@@ -386,13 +386,13 @@ def main():
             holes = [pts[0], pts[2]]          # no pin at the foot
         for h in holes:
             sk.circle(h, hr)
-        s.append(["feature.extrude", {"sketch": nm + "Sketch", "distance": "t", "name": nm + "Local"}])
+        s.append(["feature.extrude", {"sketch": nm + "Sketch", "distance": "thick", "name": nm + "Local"}])
         for q in (2, 1):
             J = legs[q]
             # turned about -y (counter-clockwise in the leg's plane seen from the front, -y),
-            # its underside (the leg's plane z) at world y = -z - t
+            # its underside (the leg's plane z) at world y = -z - thick
             p = {"source": nm + "Local", "angle": "%s%dAng - 90 deg" % (nm, q), "axis": [0, -1, 0],
-                 "translate": [J[p0][0], "-(%s) - t" % zb[q](layer), J[p0][1]], "name": "%s%d" % (nm, q)}
+                 "translate": [J[p0][0], "-(%s) - thick" % zb[q](layer), J[p0][1]], "name": "%s%d" % (nm, q)}
             if q == 2:
                 p["keep"] = True
                 p["when"] = two
@@ -401,7 +401,7 @@ def main():
 
     # Pins: from the underside of the lowest layer they join to the top of the highest.
     def top(q, n):
-        return "%d * pitch + t" % n if q == 1 else "-dg - %d * pitch" % n
+        return "%d * pitch + thick" % n if q == 1 else "-dg - %d * pitch" % n
 
     pins = {1: {}, 2: {}}
     PINSPAN = [("A", 1, 3), ("C", 1, 2), ("D", 1, 3), ("E", 1, 3), ("F", 1, 3)]
@@ -418,18 +418,18 @@ def main():
             s.append(["feature.cylinder", p])
             pins[q][j] = nm
     # The crank axle: 1 leg, from a stub behind the frame to the crank's face; 2 legs, crank to crank.
-    s.append(["feature.cylinder", {"radius": "pd / 2", "height": "if(legs == 2, 2 * pitch + 2 * t + dg, pitch + t + dg)",
-                                   "axis": [0, 1, 0], "position": ["0 mm", "-pitch - t", "0 mm"], "name": "Axle"}])
+    s.append(["feature.cylinder", {"radius": "pd / 2", "height": "if(legs == 2, 2 * pitch + 2 * thick + dg, pitch + thick + dg)",
+                                   "axis": [0, 1, 0], "position": ["0 mm", "-pitch - thick", "0 mm"], "name": "Axle"}])
     # The fixed pivot's shaft: through the frame(s), the hip triangle and bar c.
-    s.append(["feature.cylinder", {"radius": "pd / 2", "height": "if(legs == 2, 4 * pitch + 2 * t + dg, 2 * pitch + t)",
-                                   "axis": [0, 1, 0], "position": ["-La", "-2 * pitch - t", "-Ll"], "name": "PivotShaft"}])
+    s.append(["feature.cylinder", {"radius": "pd / 2", "height": "if(legs == 2, 4 * pitch + 2 * thick + dg, 2 * pitch + thick)",
+                                   "axis": [0, 1, 0], "position": ["-La", "-2 * pitch - thick", "-Ll"], "name": "PivotShaft"}])
     # Two legs: spacers between the frames at B and M, and a bolt at M.
     for nm, (x, y) in (("SpacerB", ("-La", "-Ll")), ("SpacerM", ("Mx", "My"))):
         sk = Sketch(s, nm + "Sketch")
         sk.circle([x, y], "0.75 * w")
         sk.circle([x, y], hr)
         s.append(["feature.extrude", {"sketch": nm + "Sketch", "distance": "dg", "name": nm, "when": two}])
-    s.append(["feature.cylinder", {"radius": "pd / 2", "height": "dg + 2 * t", "axis": [0, 1, 0], "position": ["Mx", "-t", "My"],
+    s.append(["feature.cylinder", {"radius": "pd / 2", "height": "dg + 2 * thick", "axis": [0, 1, 0], "position": ["Mx", "-thick", "My"],
                                    "name": "MountBolt", "when": two}])
 
     # The foot path: the foot at every 15 degrees of crank, as a tube in front of the leg. The stance
@@ -512,7 +512,7 @@ def main():
     # Leg 2 is the same stack behind the second frame; a set of it would name nothing with one leg,
     # so it is covered by the overlap check and by construction (the same layer formulas, mirrored).
     a("The leg runs free of its frame (in front of it by at least half the layer gap)", measure="boxMax",
-      of={"set": "Leg 1"}, axis="y", max="-t - gap / 2")
+      of={"set": "Leg 1"}, axis="y", max="-thick - gap / 2")
     a("Stance is flat: the foot's lowest 120 deg of crank stays within 3 % of the stride in height",
       measure="extent", of="Stance", axis="z", max="%s * stride + 2.2 * rt" % FLAT)
     a("Foot path as wide as the stride", measure="extent", of={"set": "Foot path"}, axis="x",
@@ -534,7 +534,7 @@ def main():
         ("material", dict(label="Material", description="What the flat parts are cut or printed from (table "
                           "sheets: thinnest sheet and least web round a hole)", group="Parts", order=1,
                           kind="choice", choicesFrom="sheets")),
-        ("t", dict(label="Sheet thickness", description="Thickness of every flat part", group="Parts", order=2,
+        ("thick", dict(label="Sheet thickness", description="Thickness of every flat part", group="Parts", order=2,
                    min="tMin", max="6 mm", step="0.1 mm", unit="mm")),
         ("w", dict(label="Bar width", description="Width of the bars and of the rim round the triangles' pins; at "
                    "least the pin hole and the material's web on both sides, at most 3/4 of the crank (so the "
