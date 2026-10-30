@@ -50,6 +50,9 @@ def build():
         # The Jig's public parameters, held by the assembly and passed to every instance, so the
         # mates' offsets and phases below follow the same values (the Jig's defaults).
         ["variable.set", {"name": "moduleSize", "expr": "4"}],
+        # Copies of the Jig, at its defaults: the module of moduleSize 4 (its table `modules`), and below
+        # the carrier's 0.5 mm gap and 4 mm shaft. Only Zs, Zr, w and backlash may be changed here (the
+        # Jig's assembly conditions permitting); another moduleSize would misplace the carrier's joint.
         ["variable.set", {"name": "module", "expr": "1.5 mm"}],
         ["variable.set", {"name": "Zs", "expr": "12"}],
         ["variable.set", {"name": "Zr", "expr": "48"}],
@@ -102,7 +105,9 @@ def build():
         # so c = s Zs / Zr. Compared as an angle difference, wrapped to (-180, 180] deg.
         ["variable.output", {"name": "willisError", "expr": "abs(atan2(sin(carrierTurn - SunOnCarrier_angle * Zs / Zr), cos(carrierTurn - SunOnCarrier_angle * Zs / Zr)))"}],
         ["assert.add", {"name": "Carrier turns as Willis' formula says (sun on housing / carrier = 1 + Zr / Zs)",
-                        "measure": "value", "expr": "willisError", "max": "0.001 deg"}],
+                        # 0.01 deg is 3.9 um at planet 1's centre (22.5 mm out); the assembly solves to
+                        # its tolerance of 1 um, so a much tighter bound would test the solver's rounding.
+                        "measure": "value", "expr": "willisError", "max": "0.01 deg"}],
         ["assert.add", {"name": "Sun and planet 1 mesh with the backlash (0.3 to 0.7 jn)", "measure": "clearance",
                         "from": "Sun", "to": "Planet1", "min": "0.3 * jn", "max": "0.7 * jn"}],
         ["assert.add", {"name": "Planet 1 and the ring mesh with the backlash (0.3 to 0.7 jn)", "measure": "clearance",

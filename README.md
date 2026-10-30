@@ -55,12 +55,14 @@ standard.
 **Assemblies.** Three Jigs also come as 3DCraft assemblies (`.3dcraftasm`) that move: instances of the Jig's
 bodies (or of parts) joined by mates, the gears by gear couplings, a joint driven by the timeline `t`, and
 assertions checked over the motion. Each is built from its Jig's folder (`jigs/<id>/assembly/`) and
-packed, so it opens anywhere. They need 3DCraft 57ba7632 or newer (format version 52).
+packed, so it opens anywhere (licence CC-BY-4.0, as their Jigs). They need 3DCraft 57ba7632 or newer
+(format version 52). Rebuild them (`scripts/asm.py all`) after rebuilding their Jigs: they pack the Jig
+as it was, and name its edges as its current `build.json` makes them.
 
 | Assembly | What moves | Checked over the motion |
 |---|---|---|
-| [`gear-reducer.3dcraftasm`](jigs/gear-reducer/#as-an-assembly) | the `gear-reducer` Jig's housing, shafts and gears: the input turns once | the output's turn against z1 z3 / (z2 z4) from the tooth counts, no overlap, the flank clearances |
-| [`planetary-gearbox.3dcraftasm`](jigs/planetary-gearbox/#as-an-assembly) | the `planetary-gearbox` Jig's sun, three planets, ring and carrier | Willis' formula, no overlap, the flank clearances |
+| [`gear-reducer.3dcraftasm`](jigs/gear-reducer/#as-an-assembly) | the `gear-reducer` Jig's housing, shafts and gears: the input turns once | the output's turn against z1 z3 / (z2 z4) from the tooth counts, no overlap; flank clearances found within bounds, not proven |
+| [`planetary-gearbox.3dcraftasm`](jigs/planetary-gearbox/#as-an-assembly) | the `planetary-gearbox` Jig's sun, three planets, ring and carrier | Willis' formula, no overlap; flank clearances found within bounds, not proven |
 | [`strandbeest-leg.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | Jansen's leg rebuilt from one bar part and pins, the solver finding the joints; the foot traced | the foot against the Jig's circle intersections, no overlap |
 | [`strandbeest-walker.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | four such legs as flexible subassemblies on one crankshaft, a quarter turn apart | every foot against the Jig's path at its phase |
 

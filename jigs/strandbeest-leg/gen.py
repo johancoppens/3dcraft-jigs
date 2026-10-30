@@ -390,7 +390,7 @@ def main():
         for q in (2, 1):
             J = legs[q]
             # turned about -y (counter-clockwise in the leg's plane seen from the front, -y),
-            # its underside (the leg's plane z) at world y = -z - t
+            # its underside (the leg's plane z) at world y = -z - thick
             p = {"source": nm + "Local", "angle": "%s%dAng - 90 deg" % (nm, q), "axis": [0, -1, 0],
                  "translate": [J[p0][0], "-(%s) - thick" % zb[q](layer), J[p0][1]], "name": "%s%d" % (nm, q)}
             if q == 2:

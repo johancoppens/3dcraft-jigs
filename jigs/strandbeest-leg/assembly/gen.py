@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Writes the Strandbeest assemblies (python3 -I gen.py): the command batches 01-bar.json to
-06-strandbeest-walker.json, run in order by scripts/asm.py, and check.json.
+05-strandbeest-walker.json, run in order by scripts/asm.py, and check.json.
 
 The strandbeest-leg Jig works every joint out by hand, as circle-circle intersections. Here the leg is
 built again from parts and the assembly solver finds the joints instead:
@@ -398,7 +398,8 @@ def driven(out, legs, lay, pins):
         gx, gy = closed_form(s, "f%d" % (idx + 1), th)
         foot = [p for p in pins if p[0] == "PinG"][0]
         owner = foot[2]
-        mid = y - lay[owner] * PITCH - (1 * PITCH + THICK) / 2
+        span = max(lay[n] for n in foot[4]) - lay[owner]
+        mid = y - lay[owner] * PITCH - (span * PITCH + THICK) / 2
         s.append(["variable.measure", {"name": "g%dx" % (idx + 1), "measure": "sectionCentroid", "of": "%s/PinG" % name,
                                        "plane": "zx", "offset": mm(mid), "axis": "x"}])
         s.append(["variable.measure", {"name": "g%dz" % (idx + 1), "measure": "sectionCentroid", "of": "%s/PinG" % name,

@@ -20,7 +20,9 @@ swing). The flat parts are cut from sheet (or printed) and joined with bolts or 
 
 The crank length sets the scale: every bar is Jansen's number times `crank / 15`. At the default 15 mm
 the bars are Jansen's numbers in millimetres and the leg is 135 mm tall (`legHeight`); a 25 cm leg needs a
-crank of about 28 mm. **Tables.** `sheets` gives each material's thinnest sheet and the least web
+crank of about 28 mm. **Renamed (2026-10-30):** the sheet thickness was `t` and is `thick`: `t` is the name of 3DCraft's
+timeline (a plain number from 0 to 1 that motion is a formula of), and with a thickness holding the name
+this Jig could not be given a motion. Scripts that set `t` must set `thick` now. **Tables.** `sheets` gives each material's thinnest sheet and the least web
 of material round a pin hole (1.5 mm for sheet, 1.6 mm for printed parts, four 0.4 mm perimeters).
 `pins` gives the pin diameters.
 
@@ -187,8 +189,8 @@ each end; its length between the holes, `len`, is a public parameter) and one pi
 `len` public too). Every link of the leg is an instance of the bar with its own length: the frame O-B
 (√(a² + l²)), the crank m, and the bars b to k. The two rigid triangles of the Jig (the hip B C D and the
 foot E F G) are three bars each, pinned at their corners: the solver closes them like every other loop. A
-pin goes through every joint, fixed to the rearmost part there, from that part's back face to the front
-face of the foremost.
+pin goes through every joint, fixed to the rearmost part there (the axle O to the crank), from that part's
+back face to the front face of the foremost (the axle from 10 mm behind the frame).
 
 **The leg** (`leg.3dcraftasm`, built into `build/strandbeest/` and packed into the two files): the frame
 is fixed to the world (its axle hole on the world's y axis, the bar pointing at B), and a revolute joins
@@ -227,9 +229,6 @@ quarter, a half and three quarters of a turn on, and they stay on Jansen's branc
   pairs at once, and each leg is the one checked alone).
 
 **Checked** (3DCraft 57ba7632, `scripts/asm.py check strandbeest-leg`, under a minute):
-- the leg alone solves with the crank free (one degree of freedom left), every joint within 2e-7 mm of
-  the Jig's circle intersections at the crank angle it comes to rest at (21.5°: undriven, the crank
-  settles near where it was put, 0°), on Jansen's branch;
 - one leg: solved at rest with no degree of freedom left; over a whole turn, sampled at 73 moments (5°
   apart; what happens between two samples is not seen), the foot is where the Jig's circle intersections
   put it at every sample (largest miss 1.5e-6 mm) and no part overlaps another; the trace of the foot
@@ -253,3 +252,13 @@ its crank to 30°) cannot be turned by a parent: the parent's drive and the leg'
 other ("over-constrained: ... the driver of Drive.angle, the driver of JointO.angle"). So the leg file is
 undriven, and both the one-leg assembly and the walker drive it from outside; a leg file cannot both play
 its own motion and serve as a part of a machine.
+
+**Also missing in 3DCraft:**
+- No measure of a point's position for an assertion: the foot is measured as the centroid of the foot
+  pin's section across its middle.
+- An overlap assertion measures at most 500 pairs of bodies: the walker's legs are not checked against each
+  other (they stand 43 mm apart along the axle, and each is the leg checked alone).
+- `motion.check` on an assembly holds memory for every moment it measures, so `scripts/asm.py` runs it 17
+  moments at a time.
+- The world's axes have frames whose x axis is not stated: the drive joint's zero (180° about `world/y`)
+  was found by tracing the foot; the check against the closed form at every sample proves it right.

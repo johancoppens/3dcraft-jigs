@@ -76,6 +76,9 @@ def run(args, label):
 
 
 def ids_with_assemblies(ids):
+    for jig in ids:
+        if not os.path.exists(os.path.join(ROOT, "jigs", jig, "assembly", "check.json")):
+            raise SystemExit("jigs/%s has no assembly/check.json" % jig)
     if ids:
         return ids
     return sorted(os.path.basename(os.path.dirname(os.path.dirname(p)))
@@ -83,10 +86,21 @@ def ids_with_assemblies(ids):
 
 
 def build(jig):
-    os.makedirs(os.path.join(ROOT, "build"), exist_ok=True)
     for script in sorted(glob.glob(os.path.join(ROOT, "jigs", jig, "assembly", "[0-9][0-9]-*.json"))):
         rel = os.path.relpath(script, ROOT)
-        run(["run", "--script", rel], rel)
+        with open(script) as f:
+            saves = sorted({p["path"] for c, p in json.load(f) if c == "file.save"})
+        # file.save makes no folders; a batch saves early (sources are read relative to its file), so a
+        # failed one would leave a half-built file: it is removed.
+        for path in saves:
+            os.makedirs(os.path.dirname(os.path.join(ROOT, path)), exist_ok=True)
+        try:
+            run(["run", "--script", rel], rel)
+        except SystemExit:
+            for path in saves:
+                if os.path.exists(os.path.join(ROOT, path)):
+                    os.remove(os.path.join(ROOT, path))
+            raise
         print("built %s" % rel)
 
 
@@ -148,25 +162,33 @@ def motion_check(asm, t, samples):
     the same as one run would measure: a moment is a function of t alone). Returns the merged result:
     per assertion its worst status, the samples that failed, the first failure, min and max."""
     t0, t1 = t
+    if samples < 2:
+        raise SystemExit("%s: a motion check needs 2 samples or more" % asm)
     dt = (t1 - t0) / (samples - 1)
     merged, dead, at = {}, [], 0
-    while at < samples - 1 or (samples == 1 and at == 0):
+    # inactive at some samples and passed at the others is passed; any failure outranks the rest
+    rank = ["inactive", "passed", "notProven", "error", "failed"]
+    while at < samples - 1:
         last = min(at + CHUNK - 1, samples - 1)
         n = last - at + 1
         r = run_cmds(asm, [("motion.check", {"t": [t0 + at * dt, t0 + last * dt], "samples": n})])[0]
         dead += r.get("deadPoints") or []
         for a in r.get("assertions", []):
-            m = merged.setdefault(a["name"], {"name": a["name"], "status": "passed", "failed": 0, "first": None,
+            m = merged.setdefault(a["name"], {"name": a["name"], "status": "inactive", "failed": 0, "first": {},
                                                "min": None, "max": None, "unit": a.get("unit")})
-            rank = ["passed", "inactive", "notProven", "error", "failed"]
             if rank.index(a["status"]) > rank.index(m["status"]):
                 m["status"] = a["status"]
-            m["failed"] += a.get("failed", 0)
-            m["first"] = m["first"] or a.get("firstFailure") or a.get("firstError") or a.get("firstNotProven")
+            m["failed"] += a.get("failed", 0)     # a sample on a chunk boundary is measured twice
+            for key in ("firstFailure", "firstError", "firstNotProven"):
+                if a.get(key) and key not in m["first"]:
+                    m["first"][key] = a[key]
             for key, pick in (("min", min), ("max", max)):
                 if a.get(key):
                     m[key] = a[key] if m[key] is None else (a[key] if pick(a[key]["value"], m[key]["value"]) == a[key]["value"] else m[key])
         at = last if last > at else samples
+    for m in merged.values():
+        f = m["first"]
+        m["first"] = f.get("firstFailure") or f.get("firstError") or f.get("firstNotProven")
     return list(merged.values()), dead
 
 

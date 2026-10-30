@@ -184,7 +184,7 @@ their shafts). It is packed: it carries a copy of the Jig and opens anywhere. `a
 command batch that builds it (`assembly/01-gear-reducer.json`) and `assembly/check.json`;
 `scripts/asm.py all gear-reducer` builds and checks it.
 
-**Mates.** Every frame is a circular edge: a circle's frame starts where the circle starts, and the Jig
+**Mates.** Every frame but the world's z axis is a circular edge: a circle's frame starts where the circle starts, and the Jig
 draws every circle from +x and turns a body with its shaft, which at the defaults leaves every gear at 0°
 (63 and 49 teeth are odd: only an even wheel is turned half a pitch). So a mate's zero is the Jig's own
 tooth phase. The edges and their heights were read from the Jig's bodies (`document.edges`); an offset is
@@ -224,9 +224,18 @@ the input, `Shaft1_angle = 360 deg * t`, one turn.
 - What the couplings decide and what is checked independently: the ratios z2 / z1 and z4 / z3 are put in
   by the couplings, so the output's turn checks that they are composed the right way round and with the
   right signs; that they are the gears' own ratios is checked by the teeth: a sign reversed in stage 1
-  (tried) makes the gears overlap at the next sample, and a wrong ratio would let the teeth drift out of
-  phase until they meet.
+  (tried) makes the gears overlap at the next sample; a wrong ratio (not tried) would let the teeth drift
+  out of phase until they meet.
 
 Bodies other than the moving ones, and the Jig's other parameters, are not in the assembly: the edges'
 heights and the tooth counts are those of the Jig at its defaults, written into `gen.py`, so the assembly
-places that one reducer.
+places that one reducer. The edge names belong to the Jig's current `build.json`: after the Jig is
+rebuilt, run `scripts/asm.py all gear-reducer` again (the packed copy is the Jig as it was); the check at
+rest (every instance exactly where the Jig puts it) is what catches an edge that moved.
+
+**Missing in 3DCraft** (found building this assembly):
+- No measure of a joint's angle or an instance's pose for an assertion: the output's turn is measured from
+  the centroid of a section through the output shaft's keyway, at a height (43 mm) copied from the Jig.
+- `motion.check` on an assembly holds memory for every moment it measures (about 25 MB a moment with
+  `MALLOC_ARENA_MAX=2`, far more without), so `scripts/asm.py` runs it 17 moments at a time.
+- A clearance between spline flanks is found but not proven (as in the Jig).
