@@ -161,6 +161,9 @@ def sm(sketch, name, flanges, relief=True, when=None, cover=None, cutouts=None):
          "flanges": flanges}
     if relief:
         p["relief"] = {"shape": "reliefShape", "size": "s"}
+        # And a bend relief at every end of a bend inside its edge (the tabs): the corners' shape, but
+        # round for tear (a tear there made the back's flat cross itself).
+        p["bendRelief"] = {"shape": "if(reliefShape == 3, 2, reliefShape)", "size": "s"}
     if cover:
         p["corner"] = {"kind": "corner", "gap": "gap"}
         p["corners"] = [{"flanges": [i, j], "kind": "corner", "over": i} for i, j in cover]

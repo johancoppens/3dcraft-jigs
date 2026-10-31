@@ -44,7 +44,8 @@ the inputs (`gen.py` writes `build.json`; it computes no geometry).
   4.5 mm for M4) in the lid's top and in the middle of the return flanges, near the front and the back.
   The holes in the lid are holes of its sketch. Each **return flange** is a flange with an **outline of its
   own** (`outline`: the sketches `ReturnRight` and `ReturnLeft`, a rectangle on the wall's tip between the
-  corner reliefs with its two holes), drawn in the floor's plane as if the bends had no width, the hole
+  corner reliefs with its two holes; with closed corners it stops a relief and 1 mm shorter at each end,
+  with a bend relief there, below), drawn in the floor's plane as if the bends had no width, the hole
   in the middle of the flange; 3DCraft lays the outline out past the two bends' allowances, so the holes
   follow any thickness, radius or K-factor and are cut flat. The screws' assertions prove that they line
   up once bent. (Before, the holes were drawn in the base's sketch at x = ± `flatHoleX`, the bend
@@ -89,6 +90,14 @@ on the base's flat pattern with the defaults (vents and feet off, relief 2.5 mm)
 37 497.83 mm² rect (5.37 mm² less: four times r² − π r²/4), 37 438.92 mm² tear (64.27 mm² less). That is
 the notch in the floor only; SendCutSend notes that round reliefs leave slightly larger gaps at the bend
 ends, so where the look of the corner matters choose rect.
+
+**Bend reliefs.** With closed corners the walls' flats run on past their corners, so a return flange that
+reached the corner relief would end its bend inside that run-on, where 3DCraft builds no bend relief yet
+(*owed*, it says). There the return flange stops a relief and 1 mm short of the wall tip's end, and each end
+of its bend gets a **bend relief** (`bendRelief`, 3DCraft b3562515) of the corner relief's size, round where
+the corners are tear (a tear there ran a short wall's flat into itself); the screws keep max(8 mm,
+2.5 t + R + clearance hole) from the flange's ends, at least a hole apart. The relief assertion checks these
+bend ends as well as the corners. With open corners nothing changed.
 
 Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (#B9BEC4) for 5754, a
 lighter, bluer tint (#C8CED6) for stainless 304; the screws brass.
@@ -252,7 +261,10 @@ the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal 
 
 ## Checked
 
-Checked at 3DCraft 1f92b83b (format 50, the return flanges with outlines of their own): `check-range` 89
+Checked at 3DCraft 4e7fa69a (format 58, bend reliefs at the return flanges' ends): `check-range` 89 of 89, with
+`SAMPLES=64 SEED=7 DEEP=1` 137 of 137; `scripts/bendcheck.py` 25 of 25 points pass (the lid proven at 5, the known
+collision of the deep, narrow lid at 1, not proven at 19; the base refused at 19 and not proven at 6). Before, at
+3DCraft 1f92b83b (format 50, the return flanges with outlines of their own): `check-range` 89
 of 89 points passed (64 corners, every choice, 16 random; seed 1), none with unproven assertions; with
 `SAMPLES=64 SEED=7 DEEP=1` 137 of 137; regeneration median 29 ms a point. The bend sequence (*Bend order*)
 was checked at 0dc5efb6, whose sheet metal 1f92b83b keeps unchanged. Before, at a3ee23a9 (format 46): 89 of 89, and with `SAMPLES=64 SEED=7

@@ -37,7 +37,7 @@ standard.
 | [`spur-gear`](jigs/spur-gear/) | An involute spur gear (module, teeth, pressure angle): bore types, hub with set screws, web and lightening holes | CC-BY-4.0 |
 | [`planetary-gearbox`](jigs/planetary-gearbox/) | A planetary gear set (sun, planets, ring, carrier) with involute teeth and its assembly conditions | CC-BY-4.0 |
 | [`gear-reducer`](jigs/gear-reducer/) | A two-stage spur gear reducer from a target ratio: involute gears keyed on stepped shafts (DIN 6885), ISO 15 bearings, a split cast housing, twenty-two assertions on fits and clearances | CC-BY-4.0 |
-| [`strandbeest-leg`](jigs/strandbeest-leg/) | Theo Jansen's walking linkage from his "holy numbers": drag the crank angle and the leg walks, joints solved by circle intersections, foot path drawn, layered bars and pins checked, cut sheet | CC-BY-4.0 |
+| [`strandbeest-leg`](jigs/strandbeest-leg/) | A Jansen linkage leg, after the mechanism of Theo Jansen's Strandbeests, from his "holy numbers": drag the crank angle and the leg walks, joints solved by circle intersections, foot path drawn, layered bars and pins checked, cut sheet | CC-BY-4.0 |
 | [`orrery`](jigs/orrery/) | A hand-cranked geared orrery, Mercury to Saturn and the Moon, whose two-stage trains were searched to match the real sidereal periods (one crank turn a year, the date sets every planet to its mean longitude), with a cut sheet for laser-cut gears | CC-BY-4.0 |
 | [`pillow-block`](jigs/pillow-block/) | A pillow block bearing housing for a deep-groove bearing from a table (608, 60xx, 62xx), with slots and a grease nipple | CC-BY-4.0 |
 | [`drag-chain`](jigs/drag-chain/) | A printable cable drag chain with snap-in hinge pins and clip-on bridges, laid out round its bend radius | CC-BY-4.0 |
@@ -56,16 +56,16 @@ standard.
 **Assemblies.** Three Jigs also come as 3DCraft assemblies (`.3dcraftasm`) that move: instances of the Jig's
 bodies (or of parts) joined by mates, the gears by gear couplings, a joint driven by the timeline `t`, and
 assertions checked over the motion. Each is built from its Jig's folder (`jigs/<id>/assembly/`) and
-packed, so it opens anywhere (licence CC-BY-4.0, as their Jigs). They need 3DCraft 57ba7632 or newer
-(format version 52). Rebuild them (`scripts/asm.py all`) after rebuilding their Jigs: they pack the Jig
+packed, so it opens anywhere (licence CC-BY-4.0, as their Jigs). They need 3DCraft 4e7fa69a or newer
+(format version 58). Rebuild them (`scripts/asm.py all`) after rebuilding their Jigs: they pack the Jig
 as it was, and name its edges as its current `build.json` makes them.
 
 | Assembly | What moves | Checked over the motion |
 |---|---|---|
 | [`gear-reducer.3dcraftasm`](jigs/gear-reducer/#as-an-assembly) | the `gear-reducer` Jig's housing, shafts and gears: the input turns once | the output's turn against z1 z3 / (z2 z4) from the tooth counts, no overlap; flank clearances found within bounds, not proven |
 | [`planetary-gearbox.3dcraftasm`](jigs/planetary-gearbox/#as-an-assembly) | the `planetary-gearbox` Jig's sun, three planets, ring and carrier | Willis' formula, no overlap; flank clearances found within bounds, not proven |
-| [`strandbeest-leg.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | Jansen's leg rebuilt from one bar part and pins, the solver finding the joints; the foot traced | the foot against the Jig's circle intersections, no overlap |
-| [`strandbeest-walker.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | four such legs as flexible subassemblies on one crankshaft, a quarter turn apart | every foot against the Jig's path at its phase |
+| [`strandbeest-leg.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | the Jansen linkage leg rebuilt from one bar part and pins, the solver finding the joints; the foot traced | the foot against the Jig's circle intersections, no overlap |
+| [`strandbeest-walker.3dcraftasm`](jigs/strandbeest-leg/#as-an-assembly) | the Jansen linkage walker: four such legs as flexible subassemblies on one crankshaft, a quarter turn apart | every foot against the Jig's path at its phase |
 
 Open one in 3DCraft and play the timeline (the player's Motion mode), or drive it from a script:
 `craft3d-cli run dist/gear-reducer.3dcraftasm --cmd view.motion --params '{"t": 0.25}' --cmd view.render --params '{"path": "reducer.png"}'`.
@@ -136,13 +136,10 @@ it after changing a `build.json` or upgrading 3DCraft, and commit the result tog
 
 You need `craft3d-cli` from 3DCraft, any build that has `jig.export` and `check-range` (the files in `dist/`
 were built with different builds of 3DCraft `main`, so a Jig needs a build that reads its format version or a newer
-one). Most were built and checked at 3faaaea0 (format version 36); `gridfinity-bin` and `gridfinity-baseplate` are at
-format version 37; `rack-panel` (sheet metal) was built and checked at 3DCraft 3c885c35 and is at format version 50;
-`rack-cabinet` and `sheet-metal-enclosure` (flanges with an outline of their own, flange ids) were built and
-checked at 3DCraft 1f92b83b and are at format version 50 (their bend sequences checked at 0dc5efb6, whose
-sheet metal is the same); `miura-ori` (creases from sketch patterns, folding flat, thick panels) is at format
-version 50, built and checked at 0dc5efb6 and 1f92b83b; `sea-kayak` is at format version 50, built and checked at 3c885c35; `strandbeest-leg` (its sheet
-thickness renamed `thick`, since `t` is the timeline) was rebuilt and checked at 57ba7632. `welded-beam` (made with 3DCraft commands only: a `source.3dcraft` built by the batches in its `edits/`) is at format version 53, built and checked at 57ba7632. Each needs that build or a newer one. Put it on `PATH`
+one). Every Jig and assembly in `dist/` was rebuilt at 3DCraft 4e7fa69a (format version 58) and checked there
+with `check.sh`, `asm.py all` and, for the two sheet-metal Jigs changed, `bendcheck.py`: every Jig passes except
+`wavy-vase` (79 of 81: two lofts 3DCraft cannot mesh for its self-intersection check, a known 3DCraft limit; see
+its README). Each needs that build or a newer one. Put it on `PATH`
 or point `CRAFT3D_CLI` at it.
 
 ```sh

@@ -1,6 +1,8 @@
-# Strandbeest leg
+# Jansen linkage leg
 
-Theo Jansen's walking linkage, the leg of his *Strandbeesten* (beach animals). One crank and eleven bars,
+A walking leg after the mechanism of Theo Jansen's *Strandbeesten* (beach animals), his kinetic artworks;
+"Strandbeest" is his name for them, so this Jig is called after the linkage. The file names keep the id
+`strandbeest-leg`. One crank and eleven bars,
 two of them rigid triangles, turn the crank's rotation into a foot path with a long, nearly flat stroke
 along the ground and a high return. Drag the **crank angle** and the leg walks: every joint is solved by
 formulas, and the foot's path is drawn in front of the leg (terracotta: the stance, slate blue: the

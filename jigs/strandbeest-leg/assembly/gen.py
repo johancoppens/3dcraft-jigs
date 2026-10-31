@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes the Strandbeest assemblies (python3 -I gen.py): the command batches 01-bar.json to
+"""Writes the Jansen linkage assemblies (python3 -I gen.py): the command batches 01-bar.json to
 05-strandbeest-walker.json, run in order by scripts/asm.py, and check.json.
 
 The strandbeest-leg Jig works every joint out by hand, as circle-circle intersections. Here the leg is
@@ -204,7 +204,7 @@ def bar_part():
         ["body.appearance", {"body": "Bar", "color": "#C89B62", "roughness": 0.7}],
         ["variable.publish", {"name": "len", "label": "Length", "description": "Centre to centre of the pin holes",
                               "group": "Size", "order": 1, "min": "5 mm", "max": "300 mm", "unit": "mm"}],
-        ["document.info", {"title": "Strandbeest bar", "description": "A flat bar with a pin hole at each end (3 mm plywood, 9 mm wide, holes for a 3 mm pin with 0.2 mm clearance); its length between the holes is a parameter.",
+        ["document.info", {"title": "Jansen linkage bar", "description": "A flat bar with a pin hole at each end (3 mm plywood, 9 mm wide, holes for a 3 mm pin with 0.2 mm clearance); its length between the holes is a parameter.",
                            "author": "3DCraft Jigs", "licence": "CC-BY-4.0"}],
         ["file.save", {"path": BUILD + "/bar.3dcraft"}],
     ]
@@ -300,7 +300,7 @@ def leg_asm(lay, deg):
             s.append(["mate.add", {"kind": "fixed", "name": "Fix" + name, "a": "%s/%s" % (owner, hole_of[(owner, J)]),
                                    "b": "%s/%s" % (name, PIN_BACK), "flip": True}])
     s += [
-        ["document.info", {"title": "Strandbeest leg (undriven)", "description": "Jansen's leg from one bar part and pins, its joints found by the assembly solver; the crank turns freely.",
+        ["document.info", {"title": "Jansen linkage leg (undriven)", "description": "Jansen's leg from one bar part and pins, its joints found by the assembly solver; the crank turns freely.",
                            "author": "3DCraft Jigs", "licence": "CC-BY-4.0"}],
         ["file.save", {"path": path}],
     ]
@@ -419,9 +419,9 @@ def main():
     one = driven(LEG_OUT, [("Leg", BUILD + "/leg.3dcraftasm", 0, 0.0)], lay, pins)
     one += [
         ["assert.add", {"name": "No part overlaps another", "measure": "overlap", "of": {"kind": "body"}, "is": False}],
-        ["document.info", {"title": "Strandbeest leg (assembly)",
-                           "description": "Theo Jansen's leg built from one bar part and pins, its joints found by 3DCraft's assembly solver instead of the Jig's circle intersections; a drive shaft turns the crank over the timeline t, and the foot's path is checked against the Jig's.",
-                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "strandbeest", "motion"]}],
+        ["document.info", {"title": "Jansen linkage leg (assembly)",
+                           "description": "A Jansen linkage leg, after the mechanism of Theo Jansen's Strandbeests, built from one bar part and pins, its joints found by 3DCraft's assembly solver instead of the Jig's circle intersections; a drive shaft turns the crank over the timeline t, and the foot's path is checked against the Jig's.",
+                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "Strandbeest", "motion"]}],
         ["assembly.pack", {}],
         ["file.save", {"path": LEG_OUT}],
     ]
@@ -434,9 +434,9 @@ def main():
         # against every part (3DCraft measures at most 500 pairs at once).
         ["assert.add", {"name": "The crankshaft runs clear of every part", "measure": "overlap",
                         "of": ["DriveShaft"] + ["Journal%d" % k for k in range(1, len(legs))], "to": {"kind": "body"}, "is": False}],
-        ["document.info", {"title": "Strandbeest walker, four legs (assembly)",
-                           "description": "Four Strandbeest legs as flexible subassemblies on one crankshaft, a quarter turn apart: the drive shaft and the journals between the legs' crank throws; t turns the crankshaft once and every foot follows the Jig's path at its phase.",
-                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "strandbeest", "motion"]}],
+        ["document.info", {"title": "Jansen linkage walker, four legs (assembly)",
+                           "description": "Four Jansen linkage legs, after the mechanism of Theo Jansen's Strandbeests, as flexible subassemblies on one crankshaft, a quarter turn apart: the drive shaft and the journals between the legs' crank throws; t turns the crankshaft once and every foot follows the Jig's path at its phase.",
+                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "Strandbeest", "motion"]}],
         ["assembly.pack", {}],
         ["file.save", {"path": WALKER_OUT}],
     ]

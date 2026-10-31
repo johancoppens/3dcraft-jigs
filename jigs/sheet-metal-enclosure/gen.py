@@ -76,11 +76,15 @@ DERIVED = [
     ("frontL", "zl - R - fit"),                 # the lid's front and back walls end fit above the floor
     # Screws: through the lid's top and the return flanges' middle.
     ("xs", "Wi / 2 - R - retL / 2"),
-    ("ys", "b - relief - max(8 mm, holeEdge + dc)"),
     # The return flanges' outlines (sketches of their own, drawn as if the bends had no width): on the
     # side walls' tips at x = +-(a + wallL), along them between the corner reliefs.
     ("retX", "a + wallL"),
-    ("retY", "b - relief"),                     # the tip's own span: the wall ends at the corner reliefs
+    # The tip's own span (the wall ends at the corner reliefs) when the corners are open. A closed corner
+    # runs the wall's flat on past, so the flange would end its bend inside that run-on, where 3DCraft
+    # builds no bend relief; it then stops a relief and 1 mm short of the tip's end instead, with a bend
+    # relief at each end and 1 mm of the edge left beside it.
+    ("retY", "if(corner == 1, b - relief, b - 2 * relief - 1 mm)"),
+    ("ys", "max(dc, retY - max(8 mm, holeEdge + dc))"),  # the screws, near the return flanges' ends
     ("headD", "screws[screw].head"),
     ("headK", "screws[screw].k"),
     ("shankL", "2 * t + 3 * d"),                # through both sheets and a nut below
@@ -121,6 +125,9 @@ def sheet(sketch, name, flanges, walls, others, cutouts):
     return {
         "sketch": sketch, "name": name, "thickness": "t", "radius": "R", "kFactor": "K",
         "relief": {"shape": "reliefShape", "size": "relief"},
+        # The bend reliefs at the return flanges' ends: the corner reliefs' shape, but round for tear (a
+        # tear there, a disc tangent to the edge and the strip's end, ran the short wall's flat into itself).
+        "bendRelief": {"shape": "if(reliefShape == 3, 2, reliefShape)", "size": "relief"},
         "corner": {"kind": "corner", "gap": "gap"},
         "corners": [{"flanges": [w, o], "kind": "corner", "over": w} for w in walls for o in others],
         "cutouts": cutouts,
