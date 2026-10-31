@@ -33,7 +33,8 @@ narrowed while checking: more than 12 waves or more than 90° of twist on a shor
 3DCraft 0.1.0 cannot mesh for its self-intersection check. At 3DCraft 4e7fa69a two random points fail that way inside
 the range (twist 51° on a vase 78 mm high, 7 waves; twist -48° on one 186 mm high, 10 waves): the loft's
 self-intersection check needs about 1700 to 2500 segments per side at the document's 0.001 mm tolerance, above
-its limit of 1024. Reported to 3DCraft (open); the range is not narrowed for it.
+its limit of 1024. A known 3DCraft limit (the loft's self-intersection check meshes at most 1024 segments per side),
+taken up on the 3DCraft side; the Jig neither works round it nor narrows its range for it.
 
 `build.json` was written by `python3 gen.py > build.json`; edit `gen.py` and run it again to change the
 model.

@@ -84,18 +84,12 @@ def main():
     # Inputs.
     var("moduleSize", str(DEFAULT_MODULE))
     var("Zs", "12")
-    var("Zr", "48")
+    var("ringStep", "0")                                # which ring that fits: 0 the smallest
     var("N", "3")
     var("w", "10 mm")
     var("backlash", "0.1 mm")
     var("module", "modules[moduleSize].value")
     var("alpha", "20 deg")
-    # The planets' teeth, and the assembly conditions.
-    var("Zp", "(Zr - Zs) / 2")
-    var("ratio", "1 + Zr / Zs")                         # sun in, carrier out, ring held
-    var("a", "module * (Zs + Zp) / 2")                  # centre distance sun - planet
-    var("assembles", "mod(Zs + Zr, N) == 0 && mod(Zr - Zs, 2) == 0")
-    var("tipGap", "2 * a * sin(180 deg / N) - module * (Zp + 2)")  # between neighbouring planets' tips
     # The ring teeth's range, built so that every value in it assembles, the
     # planets clear each other and the teeth do not interfere: Zr = Zs + 2 Zp,
     # with Zp = -Zs (mod Nq) (Nq = N, or N / 2 for an even N), so Zr runs in
@@ -108,7 +102,18 @@ def main():
     var("Zp1", "ZpLo + mod(-Zs - ZpLo, Nq)")
     var("ZpHi", "min(30, floor((Zs * sin(180 deg / N) - 2.5) / (1 - sin(180 deg / N))))")
     var("ZrMin", "Zs + 2 * Zp1")
-    var("ZrMax", "Zs + 2 * (Zp1 + Nq * floor((ZpHi - Zp1) / Nq))")
+    var("ringSteps", "floor((ZpHi - Zp1) / Nq)")        # the rings that fit are ZrMin + 2 Nq k, k = 0 .. ringSteps
+    var("ZrMax", "Zs + 2 * (Zp1 + Nq * ringSteps)")
+    # The ring is chosen by its place k in that list, not by its teeth: a step counts from 0 when its
+    # minimum is a formula (3DCraft since 06fb1f81), so a step of 2 Nq on the teeth from ZrMin cannot be
+    # published; k = 0 .. ringSteps in steps of 1 gives a ring that fits at every value.
+    var("Zr", "ZrMin + 2 * Nq * ringStep")
+    # The planets' teeth, and the assembly conditions.
+    var("Zp", "(Zr - Zs) / 2")
+    var("ratio", "1 + Zr / Zs")                         # sun in, carrier out, ring held
+    var("a", "module * (Zs + Zp) / 2")                  # centre distance sun - planet
+    var("assembles", "mod(Zs + Zr, N) == 0 && mod(Zr - Zs, 2) == 0")
+    var("tipGap", "2 * a * sin(180 deg / N) - module * (Zp + 2)")  # between neighbouring planets' tips
     var("ZsMin", "choose(N - 2, 10, 11, 17, 24)")       # the least sun for which that range is not empty
     # Involute interference of the ring's tip with the planet (KHK): the
     # ring's tip circle must meet the line of action no nearer the ring's
@@ -193,6 +198,10 @@ def main():
     cmd("set.define", name="Gears", kind="body",
         where={"any": [{"set": "Planets"}, {"name": "Sun"}, {"name": "Ring"}]})
     planets = {"kind": "body", "where": {"set": "Planets"}}
+    # The teeth the ring size gives, shown beside the form.
+    cmd("variable.output", name="ringTeeth", expr="Zr", label="Ring teeth")
+    cmd("variable.output", name="planetTeeth", expr="Zp", label="Planet teeth")
+    cmd("variable.output", name="reduction", expr="ratio", label="Reduction (ring held)")
     cmd("assert.add", name="Assembly conditions: (sun + ring) / planets whole, planets apart, no ring tip interference",
         measure="count", of=planets, eq="if(assembles && ringTipOk && tipGap >= 0.49 * module, N, 0)")
     cmd("assert.add", name="Neighbouring planets clear each other", measure="clearance",
@@ -210,9 +219,11 @@ def main():
                    kind="integer", min="3", max="6")),
         ("Zs", dict(label="Sun teeth", description="Teeth of the sun gear (the input). More planets need a larger sun "
                     "so they clear each other", group="Gears", order=3, kind="integer", min="ZsMin", max="30")),
-        ("Zr", dict(label="Ring teeth", description="Teeth of the ring gear. Its range and step keep (sun + ring) / "
-                    "planets whole and the planets clear of each other; planet teeth = (ring - sun) / 2",
-                    group="Gears", order=4, kind="integer", min="ZrMin", max="ZrMax", step="2 * Nq")),
+        ("ringStep", dict(label="Ring size", description="Which of the ring gears that fit this sun and these planets: "
+                          "0 the smallest (planets of at least 17 teeth), each step 2 Nq ring teeth more (Nq = planets, "
+                          "or half of an even number), so (sun + ring) / planets stays whole and the planets clear each "
+                          "other. The outputs ringTeeth and planetTeeth give the teeth",
+                          group="Gears", order=4, kind="integer", min="0", max="ringSteps")),
         ("w", dict(label="Face width", description="Thickness of the gears and the ring", group="Size", order=1,
                    min="4 mm", max="30 mm", step="0.5 mm", unit="mm")),
         ("backlash", dict(label="Backlash", description="Play between meshing teeth on the pitch circle; 0.1 to 0.2 mm "
@@ -226,8 +237,9 @@ def main():
     cmd("document.info",
         title="Planetary gearbox",
         description="A planetary gear set with true involute teeth: a sun, 3 to 6 planets, an internal ring gear and a "
-                    "carrier with pins and an output shaft, each its own body. Choose the module and the teeth of the sun "
-                    "and the ring; the planets' teeth are (ring - sun) / 2. The ring's range and step keep the set "
+                    "carrier with pins and an output shaft, each its own body. Choose the module, the sun's teeth and the "
+                    "ring's size among those that fit (outputs ringTeeth and planetTeeth); the planets' teeth are "
+                    "(ring - sun) / 2. Every ring offered keeps the set "
                     "assemblable ((sun + ring) / planets whole), the planets clear of each other and the ring's tips "
                     "clear of the planets' feet, and assertions check that on the model. Reduction with the ring held: "
                     "1 + ring / sun (variable ratio). Export STL or 3MF to print (choose the bodies), STEP for CAD.",

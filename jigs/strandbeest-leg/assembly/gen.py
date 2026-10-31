@@ -421,7 +421,7 @@ def main():
         ["assert.add", {"name": "No part overlaps another", "measure": "overlap", "of": {"kind": "body"}, "is": False}],
         ["document.info", {"title": "Jansen linkage leg (assembly)",
                            "description": "A Jansen linkage leg, after the mechanism of Theo Jansen's Strandbeests, built from one bar part and pins, its joints found by 3DCraft's assembly solver instead of the Jig's circle intersections; a drive shaft turns the crank over the timeline t, and the foot's path is checked against the Jig's.",
-                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "motion"]}],
+                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "Strandbeest", "motion"]}],
         ["assembly.pack", {}],
         ["file.save", {"path": LEG_OUT}],
     ]
@@ -436,7 +436,7 @@ def main():
                         "of": ["DriveShaft"] + ["Journal%d" % k for k in range(1, len(legs))], "to": {"kind": "body"}, "is": False}],
         ["document.info", {"title": "Jansen linkage walker, four legs (assembly)",
                            "description": "Four Jansen linkage legs, after the mechanism of Theo Jansen's Strandbeests, as flexible subassemblies on one crankshaft, a quarter turn apart: the drive shaft and the journals between the legs' crank throws; t turns the crankshaft once and every foot follows the Jig's path at its phase.",
-                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "motion"]}],
+                           "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "Strandbeest", "motion"]}],
         ["assembly.pack", {}],
         ["file.save", {"path": WALKER_OUT}],
     ]

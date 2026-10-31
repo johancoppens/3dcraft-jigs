@@ -138,8 +138,8 @@ You need `craft3d-cli` from 3DCraft, any build that has `jig.export` and `check-
 were built with different builds of 3DCraft `main`, so a Jig needs a build that reads its format version or a newer
 one). Every Jig and assembly in `dist/` was rebuilt at 3DCraft 4e7fa69a (format version 58) and checked there
 with `check.sh`, `asm.py all` and, for the two sheet-metal Jigs changed, `bendcheck.py`: every Jig passes except
-`planetary-gearbox` (61 of 87: its ring's step, see its README) and `wavy-vase` (79 of 81: two lofts 3DCraft cannot
-mesh for its self-intersection check), both open. Each needs that build or a newer one. Put it on `PATH`
+`wavy-vase` (79 of 81: two lofts 3DCraft cannot mesh for its self-intersection check, a known 3DCraft limit; see
+its README). Each needs that build or a newer one. Put it on `PATH`
 or point `CRAFT3D_CLI` at it.
 
 ```sh

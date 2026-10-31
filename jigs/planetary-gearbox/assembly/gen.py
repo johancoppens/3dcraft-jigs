@@ -51,11 +51,13 @@ def build():
         # mates' offsets and phases below follow the same values (the Jig's defaults).
         ["variable.set", {"name": "moduleSize", "expr": "4"}],
         # Copies of the Jig, at its defaults: the module of moduleSize 4 (its table `modules`), and below
-        # the carrier's 0.5 mm gap and 4 mm shaft. Only Zs, Zr, w and backlash may be changed here (the
+        # the carrier's 0.5 mm gap and 4 mm shaft. Only Zs, ringStep, w and backlash may be changed here (the
         # Jig's assembly conditions permitting); another moduleSize would misplace the carrier's joint.
         ["variable.set", {"name": "module", "expr": "1.5 mm"}],
         ["variable.set", {"name": "Zs", "expr": "12"}],
-        ["variable.set", {"name": "Zr", "expr": "48"}],
+        ["variable.set", {"name": "ringStep", "expr": "0"}],
+        # The ring's teeth as the Jig works them out for 3 planets (Nq = 3): 48 for a sun of 12.
+        ["variable.set", {"name": "Zr", "expr": "Zs + 2 * (17 + mod(-Zs - 17, 3)) + 6 * ringStep"}],
         ["variable.set", {"name": "w", "expr": "10 mm"}],
         ["variable.set", {"name": "backlash", "expr": "0.1 mm"}],
         # As the Jig works them out.
@@ -69,7 +71,7 @@ def build():
         # Normal backlash: each flank is thinned by backlash / 4 on the pitch circle.
         ["variable.set", {"name": "jn", "expr": "backlash * cos(20 deg)"}],
     ]
-    params = {"moduleSize": "moduleSize", "N": "3", "Zs": "Zs", "Zr": "Zr", "w": "w", "backlash": "backlash"}
+    params = {"moduleSize": "moduleSize", "N": "3", "Zs": "Zs", "ringStep": "ringStep", "w": "w", "backlash": "backlash"}
     for name, body, colour in (("Ring", "Ring", None), ("Carrier", "Carrier", None), ("Sun", "Sun", None)):
         s.append(["instance.add", {"source": JIG, "body": body, "name": name, "params": params}])
     for k in range(N):

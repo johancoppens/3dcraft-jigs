@@ -566,7 +566,7 @@ def main():
         "author": "3DCraft Jigs",
         "licence": "CC-BY-4.0",
         "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/" + ID,
-        "tags": ["mechanism", "linkage", "kinetic", "Jansen linkage", "Theo Jansen", "walking", "laser", "plywood", "3D print"]}])
+        "tags": ["mechanism", "linkage", "kinetic", "Jansen linkage", "Theo Jansen", "Strandbeest", "walking", "laser", "plywood", "3D print"]}])
     s.append(["jig.export", {"path": "dist/%s.3dcraftjig" % ID}])
     return s
 

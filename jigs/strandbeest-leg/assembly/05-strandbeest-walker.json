@@ -173,7 +173,7 @@
 ["variable.measure", {"name": "g4z", "measure": "sectionCentroid", "of": "Leg4/PinG", "plane": "zx", "offset": "-148.5 mm", "axis": "z"}],
 ["assert.add", {"name": "Leg4's foot is where the Jig's circle intersections put it", "measure": "value", "expr": "hypot(g4x - f4Gx, g4z - f4Gy)", "max": "0.001 mm"}],
 ["assert.add", {"name": "The crankshaft runs clear of every part", "measure": "overlap", "of": ["DriveShaft", "Journal1", "Journal2", "Journal3"], "to": {"kind": "body"}, "is": false}],
-["document.info", {"title": "Jansen linkage walker, four legs (assembly)", "description": "Four Jansen linkage legs, after the mechanism of Theo Jansen's Strandbeests, as flexible subassemblies on one crankshaft, a quarter turn apart: the drive shaft and the journals between the legs' crank throws; t turns the crankshaft once and every foot follows the Jig's path at its phase.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "motion"]}],
+["document.info", {"title": "Jansen linkage walker, four legs (assembly)", "description": "Four Jansen linkage legs, after the mechanism of Theo Jansen's Strandbeests, as flexible subassemblies on one crankshaft, a quarter turn apart: the drive shaft and the journals between the legs' crank throws; t turns the crankshaft once and every foot follows the Jig's path at its phase.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "Strandbeest", "motion"]}],
 ["assembly.pack", {}],
 ["file.save", {"path": "dist/strandbeest-walker.3dcraftasm"}]
 ]

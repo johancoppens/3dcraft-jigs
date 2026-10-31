@@ -71,7 +71,7 @@
 ["variable.measure", {"name": "g1z", "measure": "sectionCentroid", "of": "Leg/PinG", "plane": "zx", "offset": "-19.5 mm", "axis": "z"}],
 ["assert.add", {"name": "Leg's foot is where the Jig's circle intersections put it", "measure": "value", "expr": "hypot(g1x - f1Gx, g1z - f1Gy)", "max": "0.001 mm"}],
 ["assert.add", {"name": "No part overlaps another", "measure": "overlap", "of": {"kind": "body"}, "is": false}],
-["document.info", {"title": "Jansen linkage leg (assembly)", "description": "A Jansen linkage leg, after the mechanism of Theo Jansen's Strandbeests, built from one bar part and pins, its joints found by 3DCraft's assembly solver instead of the Jig's circle intersections; a drive shaft turns the crank over the timeline t, and the foot's path is checked against the Jig's.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "motion"]}],
+["document.info", {"title": "Jansen linkage leg (assembly)", "description": "A Jansen linkage leg, after the mechanism of Theo Jansen's Strandbeests, built from one bar part and pins, its joints found by 3DCraft's assembly solver instead of the Jig's circle intersections; a drive shaft turns the crank over the timeline t, and the foot's path is checked against the Jig's.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "tags": ["assembly", "linkage", "Jansen linkage", "Theo Jansen", "Strandbeest", "motion"]}],
 ["assembly.pack", {}],
 ["file.save", {"path": "dist/strandbeest-leg.3dcraftasm"}]
 ]
