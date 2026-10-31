@@ -12,6 +12,6 @@
 ["feature.extrude", {"sketch": "Outline", "distance": "thick", "name": "Bar"}],
 ["body.appearance", {"body": "Bar", "color": "#C89B62", "roughness": 0.7}],
 ["variable.publish", {"name": "len", "label": "Length", "description": "Centre to centre of the pin holes", "group": "Size", "order": 1, "min": "5 mm", "max": "300 mm", "unit": "mm"}],
-["document.info", {"title": "Strandbeest bar", "description": "A flat bar with a pin hole at each end (3 mm plywood, 9 mm wide, holes for a 3 mm pin with 0.2 mm clearance); its length between the holes is a parameter.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0"}],
+["document.info", {"title": "Jansen linkage bar", "description": "A flat bar with a pin hole at each end (3 mm plywood, 9 mm wide, holes for a 3 mm pin with 0.2 mm clearance); its length between the holes is a parameter.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0"}],
 ["file.save", {"path": "build/strandbeest/bar.3dcraft"}]
 ]

@@ -74,7 +74,15 @@ the gears' own sketches, so no gear needs a boolean (light enough for the web ve
 spider 0.5 mm above the gears: a hub, an arm and a pin per planet (a circular pattern of N), and an output
 shaft.
 
-**Checked.** `check-range --deep` passes 87 of 87 points (all 64 corners, every module, 16 random;
+**Fails at 3DCraft 4e7fa69a (open).** `check-range` passes 61 of 87 points: since 3DCraft 06fb1f81
+(2026-10-26) a step counts from the minimum only when the minimum is a value, from 0 when it is a formula, so
+the ring's step of 2 Nq no longer runs from `ZrMin`: the range check (and the form) take ring teeth such as 48
+with a sun of 10 and 3 planets, which the planets cannot share evenly, and *Assembly conditions* fails (or
+the planet's outline, at an odd Zr - Zs). The ring's valid values cannot be put on a grid from 0; the fix
+changes the parameters (for instance a ring size index from 0 whose teeth are ZrMin + 2 Nq k) and waits for
+the developer.
+
+**Checked** before that, at 3faaaea0: `check-range --deep` passes 87 of 87 points (all 64 corners, every module, 16 random;
 seed 1), and without `--deep` 103 of 103 (32 random). One regeneration takes about 0.6 s and 215 to 370
 MB native.
 
@@ -133,6 +141,11 @@ t drives that joint (see *Missing in 3DCraft* below).
 - *Sun and planet 1 mesh with the backlash* and *Planet 1 and the ring mesh with the backlash*: the
   clearance between their flanks between 0.3 and 0.7 of the normal backlash jn = 0.1 mm × cos 20°;
 - *No part overlaps another*.
+
+**At 3DCraft 4e7fa69a** (`scripts/asm.py all`): as below, except that over the whole turn Willis' formula is
+*notProven* at a moment where 3DCraft's boolean cannot cut planet 1 at the plane its centroid is measured with
+("imprint lost: a curve in which two faces cross does not divide them"; a 3DCraft limit, reported); over one
+sun tooth it passes, and Willis from the traces is 5.000000000 (worst miss 8.1e-13 deg).
 
 **Checked** (3DCraft 57ba7632, `scripts/asm.py check planetary-gearbox`, about 7 minutes):
 - at rest: solved with no degree of freedom left, and all six instances exactly where the Jig puts them;

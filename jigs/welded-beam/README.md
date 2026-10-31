@@ -179,7 +179,7 @@ output is computed again when you change a parameter, and shown on the Parameter
 |---|---|
 | `sectionArea`, `Iy`, `Iz`, `zNeutral` | **The section, measured on the model** (`measure.section` of the four walls), just beside the first bulkhead, where no tab, slot or cutout is. `Iy` is for bending under a vertical load, `Iz` sideways. The assertions check them against the formula from the plates' rectangles: the model is the beam the numbers describe. |
 | `sectionAreaNet`, `IyNet`, `zNeutralNet` | The section through the middle of a bay, through the cutouts |
-| `massKg` | The whole beam, from the bodies and the material's density |
+| `massKg` | The whole beam, from the bodies and the material's density (a mass, in kg; the formulas divide it by 1 kg where they work in plain numbers) |
 | `Mmax_Nmm`, `Vmax_N` | The largest bending moment and shear force, own weight included [9] |
 | `deflection` | Bending deflection with `Iy` + shear deflection of the side plates [9]. Without cutouts this is the beam. |
 | `deflectionNet` | The same with `IyNet` and the side plates' net height. With cutouts the real deflection lies between the two: near `deflection` for small holes, near this one for large. |
@@ -240,6 +240,9 @@ sheet-metal enclosure.
 
 ## Checked
 
+At 3DCraft 4e7fa69a (format version 58), with `source.3dcraft` rebuilt from `edits/` (a measured mass is a
+mass there, so `07-strength.json` divides `massKg` by 1 kg): `check-range` passes 117 of 117 points. Before:
+
 With 3DCraft `main` at 57ba7632 (format version 53). `check-range` passes 117 of 117 points (the defaults, 64
 corners of the 36 parameters' box, every choice, 16 random). With `--deep --samples 500 --seed 7
 --max-corners 1024` it passes 1561 of 1561 (1024 corners, every choice, 500 random), none unproven.
@@ -261,13 +264,16 @@ By hand, beside the range check: every open side and every cutout pattern on eac
 Each with a minimal command batch in [`repro/`](repro/), for the 3DCraft repository's `plan/repro`. None stops
 the Jig. They are noted so the Jig can use them when they come, not worked around.
 
-- **Outputs with a unit or label of their own** (`repro/01-output-units.json`). There is no force, stress or
-  torque unit, and `variable.output` has no label or display unit, so a stress is a plain number. Its unit is
-  therefore in its name (`sigmaMax_MPa`), and loads are plain numbers in N, N/m and N m.
+- **Outputs with a unit or label of their own** (`repro/01-output-units.json`). Was missing at 57ba7632: no
+  force, stress or torque unit, and no label or display unit on `variable.output`, so a stress is a plain number
+  with its unit in its name (`sigmaMax_MPa`) and loads are plain numbers in N, N/m and N m. 3DCraft 4e7fa69a has
+  N, Pa, MPa, kg and s in expressions, `label` and `unit` on outputs, and measures `mass` as a mass: the Jig
+  divides `massKg` by 1 kg in its two formulas and has not moved its loads and stresses to units yet (open).
 - **The torsion constant and the shear centre of a section** (`repro/02-section-torsion.json`).
   `measure.section` gives the area, centroid and second moments, but not the torsion constant J or the shear
   centre, so `torsionJ` and `shearCentreOffset` are formulas of the plates rather than measures of the model.
   With cutouts that is the gap: the real torsional stiffness of the perforated box can only be bounded.
+  3DCraft 4e7fa69a measures both (`sectionTorsion`, `sectionShearCentre`); the Jig does not use them yet (open).
 - **A cut sheet per plate thickness** (`repro/03-set-by-thickness.json`). A named set is a query on the
   geometry and cannot follow a variable. When the thicknesses are parameters, "every plate of 4 mm" cannot be
   one set: there is one set per part, and plates of one thickness are put together when nesting.

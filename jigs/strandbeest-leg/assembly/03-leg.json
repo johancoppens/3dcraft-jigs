@@ -66,6 +66,6 @@
 ["mate.add", {"kind": "fixed", "name": "FixPinE", "a": "BarC/F2:startEdge(e14)", "b": "PinE/F1:edge(0)", "flip": true}],
 ["mate.add", {"kind": "fixed", "name": "FixPinF", "a": "BarF/F2:startEdge(e14)", "b": "PinF/F1:edge(0)", "flip": true}],
 ["mate.add", {"kind": "fixed", "name": "FixPinG", "a": "BarI/F2:startEdge(e14)", "b": "PinG/F1:edge(0)", "flip": true}],
-["document.info", {"title": "Strandbeest leg (undriven)", "description": "Jansen's leg from one bar part and pins, its joints found by the assembly solver; the crank turns freely.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0"}],
+["document.info", {"title": "Jansen linkage leg (undriven)", "description": "Jansen's leg from one bar part and pins, its joints found by the assembly solver; the crank turns freely.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0"}],
 ["file.save", {"path": "build/strandbeest/leg.3dcraftasm"}]
 ]

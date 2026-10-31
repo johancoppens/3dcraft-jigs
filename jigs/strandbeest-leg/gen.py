@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes build.json for the Strandbeest leg Jig (python3 -I gen.py > build.json).
+"""Writes build.json for the Jansen linkage leg Jig (python3 -I gen.py > build.json).
 
 Theo Jansen's walking linkage: a crank and eleven bars (two of them rigid
 triangles) that turn the crank's rotation into a foot path with a long, nearly
@@ -555,8 +555,8 @@ def main():
         s.append(["variable.publish", p_])
 
     s.append(["document.info", {
-        "title": "Strandbeest leg",
-        "description": "Theo Jansen's walking linkage: a crank and eleven bars (Jansen's \"holy numbers\") that turn "
+        "title": "Jansen linkage leg",
+        "description": "A walking leg after the mechanism of Theo Jansen's Strandbeests: a crank and eleven bars (Jansen's \"holy numbers\") that turn "
                        "rotation into a walking foot path with a long, flat stroke along the ground. Drag the crank "
                        "angle and the leg walks; the foot's path is drawn in front of it. Set the size, one or two "
                        "legs, the sheet, the bar width and the pins; every joint is solved by formulas and the "
@@ -566,7 +566,7 @@ def main():
         "author": "3DCraft Jigs",
         "licence": "CC-BY-4.0",
         "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/" + ID,
-        "tags": ["mechanism", "linkage", "kinetic", "Strandbeest", "Theo Jansen", "walking", "laser", "plywood", "3D print"]}])
+        "tags": ["mechanism", "linkage", "kinetic", "Jansen linkage", "Theo Jansen", "walking", "laser", "plywood", "3D print"]}])
     s.append(["jig.export", {"path": "dist/%s.3dcraftjig" % ID}])
     return s
 

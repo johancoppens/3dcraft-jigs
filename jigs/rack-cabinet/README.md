@@ -46,12 +46,10 @@ a relief where two bends meet):
   its hole 2.5 t + r from the bend, with one M6 hole of 6.6 mm in the middle), drawn as if the bend had
   no width, so 3DCraft places the hole on the folded tab; the sides have the matching holes, so the back
   is screwed (M6 screw and nut, or a rivnut in the side) to both sides. Before, the back had four full
-  flanges and was held by nothing. The tabs' bends end inside the plate's edge **without a bend relief**
-  (3DCraft does not build one at an inset bend's end yet): the sheet beside a tab's bend is not cut free,
-  so the bend's ends may bulge a little; ask your shop, or cut a relief slot at each end by hand. With the
-  tabs inset, no two of the back's bends meet at a corner any more (a flange with an outline of its own
-  is not a corner to 3DCraft), so the assertion that every corner of two bends is relieved has nothing
-  to check on the back.
+  flanges and was held by nothing. The tabs' bends end inside the plate's edge, and each end has a **bend relief** (3DCraft's `bendRelief`,
+  since 3DCraft b3562515): a notch of the *Corner relief* shape and size beside the bend's end, so the sheet
+  there is cut free; round where the corners are tear (a tear there made the back's flat cross itself at
+  two points of the range). The relief assertion checks these bend ends as well as the corners.
 - **Rail right / left** (front) and **Rear rail right / left**: the front face carries the EIA-310 holes,
   three per U on 465.1 mm centres, from the inner edge at 225 mm (the 450 mm opening); its leg is bent back
   against the side (x = 260 mm), and a C rail has a return at the leg's back. The leg (30 mm, longer in 3 mm
@@ -134,7 +132,7 @@ checked by the bolt-hole assertions). A flange with an outline of its own (as th
 hold them without the formula, but not here: the side's lip meets the top and bottom flanges at relieved
 corners, and an outlined flange is not a corner (no relief would be cut there); the C rail's return sits
 on the leg's tip, and an outlined flange has no tip to carry one. Owed: a relief or a closed corner, and a
-flange, on an outlined flange's lines; a bend relief at an inset bend's ends (the back's tabs). Fixed since the first version and used now: the
+flange, on an outlined flange's lines. Fixed since the first version and used now: the
 sheet-metal measures skip parts that are off (repro-rack-2), holes with a condition (`cutouts`) and holes in
 flanges, narrow slots in thick sheet (repro-rack-5: the door's vents are 6 mm wide in every sheet again),
 closed corners, the flat pattern in the export dialog and on one sheet, an assertion's condition `when`
@@ -164,7 +162,9 @@ checks and reports every part at every point. (Before the screw tabs the back, w
 was proven at the defaults.) Owed by 3DCraft: a tool length per bend (segmented punches and dies), flanges
 on one line bent in one stroke, and the rest proof past a closed corner.
 
-**Checked** at 3DCraft 1f92b83b (format 50, the back's screw tabs): `check-range` 92 of 92 points passed (64
+**Checked** at 3DCraft 4e7fa69a (format 58, bend reliefs at the back's tabs): `check-range` 92 of 92 points
+passed, with `SAMPLES=64 SEED=7 DEEP=1` 140 of 140; `scripts/bendcheck.py rack-cabinet` 28 of 28 points pass.
+Before, at 3DCraft 1f92b83b (format 50, the back's screw tabs): `check-range` 92 of 92 points passed (64
 corners, every choice, 16 random; seed 1), none with unproven assertions; with `SAMPLES=64 SEED=7 DEEP=1`
 140 of 140; regeneration median about 145 ms a point. The bend sequence (above) was checked at 0dc5efb6,
 whose sheet metal 1f92b83b keeps unchanged. Before, at a3ee23a9 (format 46): 92 of 92, and with `SAMPLES=64 SEED=7 DEEP=1` 140 of

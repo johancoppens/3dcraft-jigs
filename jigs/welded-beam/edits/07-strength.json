@@ -92,7 +92,7 @@
   ["variable.output", {"name": "cutBulkheads", "expr": "nB"}],
   ["variable.output", {"name": "cutInsideWidth", "expr": "wi"}],
   ["variable.output", {"name": "cutInsideHeight", "expr": "hi"}],
-  ["variable.output", {"name": "qN_mm", "expr": "lineLoad / 1000 + massKg * 9.81 / (length / 1 mm)"}],
+  ["variable.output", {"name": "qN_mm", "expr": "lineLoad / 1000 + massKg / (1 kg) * 9.81 / (length / 1 mm)"}],
   ["variable.output", {"name": "Mmax_Nmm", "expr": "choose(support, load * length / 1 mm + qN_mm * (length / 1 mm)^2 / 2, load * length / 1 mm / 4 + qN_mm * (length / 1 mm)^2 / 8, load * length / 1 mm / 8 + qN_mm * (length / 1 mm)^2 / 12)"}],
   ["variable.output", {"name": "Vmax_N", "expr": "choose(support, load + qN_mm * length / 1 mm, (load + qN_mm * length / 1 mm) / 2, (load + qN_mm * length / 1 mm) / 2)"}],
   ["variable.output", {"name": "deflection", "expr": "(choose(support, load * (length / 1 mm)^3 / 3 + qN_mm * (length / 1 mm)^4 / 8, load * (length / 1 mm)^3 / 48 + 5 * qN_mm * (length / 1 mm)^4 / 384, load * (length / 1 mm)^3 / 192 + qN_mm * (length / 1 mm)^4 / 384) / (Emat * Iy / (1 mm)^4) + choose(support, load * (length / 1 mm) + qN_mm * (length / 1 mm)^2 / 2, load * (length / 1 mm) / 4 + qN_mm * (length / 1 mm)^2 / 8, load * (length / 1 mm) / 4 + qN_mm * (length / 1 mm)^2 / 8) / (Gmat * (aL + aR) / (1 mm)^2)) * 1 mm"}],
@@ -111,7 +111,7 @@
   ["variable.output", {"name": "shearUse_pct", "expr": "100 * (tauShear_MPa + tauTorsion_MPa) / (fd / sqrt(3))"}],
   ["variable.output", {"name": "bucklingReserve", "expr": "if(sigmaMax_MPa > 0, min(sigCrTop / max(sigmaTop_MPa, 1e-9), sigCrBot / max(sigmaBot_MPa, 1e-9), min(sigCrWebL, sigCrWebR) / sigmaMax_MPa), 999)"}],
   ["variable.output", {"name": "edgeTabUse_pct", "expr": "100 * Vmax_N * max(aT * (height - tTop / 2 - zNeutral) / max(1, eTL + eTR), aB * (zNeutral - tBot / 2) / max(1, eBL + eBR)) / Iy * dT / (tabArea / (1 mm)^2 * fd / sqrt(3))"}],
-  ["variable.output", {"name": "f1_Hz", "expr": "lam2 / (2 * pi) * sqrt(Emat * 1e6 * Iy / (1 mm)^4 * 1e-12 / (massKg / (length / 1 m)) / (length / 1 m)^4)"}],
+  ["variable.output", {"name": "f1_Hz", "expr": "lam2 / (2 * pi) * sqrt(Emat * 1e6 * Iy / (1 mm)^4 * 1e-12 / (massKg / (1 kg) / (length / 1 m)) / (length / 1 m)^4)"}],
   ["variable.output", {"name": "strengthOK", "expr": "bendingUse_pct <= 100 && shearUse_pct <= 100 && bucklingReserve >= 1 && edgeTabUse_pct <= 100"}],
   ["variable.output", {"name": "tappedThreadOK", "expr": "!(endPlates && hole >= 7) || tEnd >= if(material <= 2, 0.8, 1.5) * holes[hole].M"}],
 
