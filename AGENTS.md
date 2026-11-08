@@ -71,7 +71,7 @@ log/ plan/              local only (gitignored): dev log, plans
 - **Memory and time.** The developer's laptop has crashed on runaway processes. `tools/jigs.py` caps every run; by
   hand, always `systemd-run --user --scope -q -p MemoryMax=3G -p MemorySwapMax=0 timeout 900 craft3d-cli …`. Exit
   137 means the cap was hit: that is a finding, never a reason to raise the cap. When several agents work at once, the
-  coordinator sets a shared slice (`systemctl --user set-property --runtime jigs.slice MemoryMax=10G
+  coordinator sets a shared slice (`systemctl --user set-property --runtime jigs.slice MemoryMax=8G
   MemorySwapMax=0`): then `export CRAFT3D_SLICE=jigs.slice` (the tool adds it) and add `--slice=jigs.slice` to every
   `systemd-run` you type. One render or `check-range` at a time per agent. No cargo builds are needed here; never
   build 3DCraft from this repo. A 3DCraft window you start gets `--recovery-dir none`.
