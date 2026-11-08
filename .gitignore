@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .worktrees/
 build/
+NOTES.md
+.scratch/
+log/
+plan/

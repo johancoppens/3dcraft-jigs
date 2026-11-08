@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Writes the gallery of the built Jigs: DIST/index.html and DIST/thumbs/<id>.png.
 
-    python3 scripts/gallery.py [DIST]        (default: dist next to this script)
+    python3 tools/gallery.py [DIST]        (default: dist next to this script)
 
 A .3dcraftjig is a stored ZIP holding manifest.json (the document, with its
 info and public parameters) and thumb.png; only the Python standard library
@@ -9,7 +9,7 @@ is used. The page is plain HTML and CSS (no JavaScript), meant to be served
 under /jigs/ next to the 3DCraft web build at /3dcraft/: each card opens its
 Jig in the web build (../3dcraft/?open=/jigs/<id>.3dcraftjig) or downloads it.
 The colours are 3DCraft's own (its Mission theme: warm greys, amber for what
-acts, indigo for information), and the logo, scripts/assets/craft3d-logo.png
+acts, indigo for information), and the logo, tools/assets/craft3d-logo.png
 (the app's icon), is written into the page.
 """
 import base64
@@ -102,7 +102,7 @@ footer img { width: 20px; height: 20px; vertical-align: -5px; margin-right: 6px;
 
 
 def logo_uri():
-    """The 3DCraft logo (scripts/assets, the app's own 128 px icon) as a data URI,
+    """The 3DCraft logo (tools/assets, the app's own 128 px icon) as a data URI,
     so the page needs no file beside it."""
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "craft3d-logo.png")
     try:
@@ -165,10 +165,12 @@ def main():
     for name in jigs:
         jig_id = name[: -len(".3dcraftjig")]
         info, params, thumb = read_jig(os.path.join(dist, name))
-        if thumb:
-            with open(os.path.join(dist, "thumbs", jig_id + ".png"), "wb") as f:
+        # tools/jigs.py render writes the gallery's picture; the Jig's own thumbnail is the fallback.
+        picture = os.path.join(dist, "thumbs", jig_id + ".png")
+        if thumb and not os.path.exists(picture):
+            with open(picture, "wb") as f:
                 f.write(thumb)
-        cards.append(card(jig_id, info, params, thumb is not None))
+        cards.append(card(jig_id, info, params, os.path.exists(picture)))
     logo = logo_uri()
     page = """<!doctype html>
 <html lang="en">

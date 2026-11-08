@@ -1,0 +1,6 @@
+{
+  "commit": "f4b0813cc124abb6d6ff8c6378b54abf1d83f908",
+  "format_version": 69,
+  "date": "2026-11-06",
+  "note": "The 3DCraft commit every Jig is built and checked with (its full gate passed). Move it only as the coordinator, after rebuilding and checking every Jig."
+}

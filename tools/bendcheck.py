@@ -3,7 +3,7 @@
 check proves (document.sample: the defaults, the corners of the ranges, every choice, random points from
 a fixed seed), with 3DCraft's sheetMetal.bendSequence and standard tooling.
 
-    scripts/bendcheck.py <id> [--samples N] [--seed S] [--max-corners N] [--points K]
+    tools/bendcheck.py <id> [--samples N] [--seed S] [--max-corners N] [--points K]
 
 (defaults: 8 random points, 8 corners, seed 1: about 25 points; a point costs seconds to minutes).
 
