@@ -87,7 +87,7 @@ it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}
 ## J-009: A material pattern's colours cannot be expressions (see F-171)
 
 - **Kind:** missing capability. **Jig:** laser-box.
-- **What happens, and what should:** `pattern.colors` and `body.appearance` `color` take literals, so a veneer cannot follow a choice of wood.
+- **What happens, and what should:** A pattern's `colors` take literals only, although `body.appearance` `color` takes expressions as `[r, g, b]`, so a veneer's grain cannot follow a choice of wood.
 - **Reproducer:** `findings/J-009-pattern-colours-from-a-table/repro.json`
 - **Workaround and impact:** One wood only.
 
