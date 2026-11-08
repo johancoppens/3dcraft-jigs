@@ -1,0 +1,105 @@
+{
+  "id": "keyboard-plate",
+  "title": "Sandwich keyboard plate",
+  "summary": "rows, stagger, thumb keys, cut sheet",
+  "description": "A laser-cut sandwich keyboard for MX-style mechanical switches: a switch plate, a bottom plate and M2 standoffs, column-staggered, split or in one piece, with room for a controller. Choose rows, columns, stagger, thumb keys and plate material.",
+  "domain": "Laser cutting, electronics",
+  "process": "Laser cutting (CO2 for acrylic, fibre for aluminium)",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 5,
+    "rationale": "Counts change topology across coupled multi-body booleans and kerf offsets, all on planar plates."
+  },
+  "standards": [
+    "Cherry Corporation, MX Series Desktop Profile 0.60 Inch Keyswitches, web data sheet printed 2007-01-22: metal frame cutout 0.551 +-0.002 in (14.0 +-0.05 mm) square, R 0.012 in max, frame 0.06 +-0.004 in (1.5 +-0.1 mm); housing 0.61 in (15.6 mm), 0.46 in (11.6 mm), 0.20 in (5.0 mm) below the frame; pins 0.13 in (3.3 mm)",
+    "Cherry Tastenmodul MX data sheet, July 1985: cutout 14 +-0.05 mm square, R 0.3 max",
+    "Cherry GmbH, CHERRY MX1A-Fxxx data sheet, 2015-12-17: standard lead spacing 19.05 mm",
+    "ISO 273 clearance holes: M2 medium 2.4 mm (as listed in a fastener maker's ISO 273 chart; the ISO text itself not consulted)"
+  ],
+  "materials": [
+    "Cast acrylic sheet, 1.5 mm (switch plate) and 2 mm (bottom plate), smoke or clear",
+    "Anodised aluminium sheet, 1.5 mm (fibre laser)",
+    "12 M2 round spacers, diameter 4 mm, 10, 12 or 15 mm long; 24 M2 pan-head screws, length from the form"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        60,
+        -360,
+        430
+      ],
+      "target": [
+        0,
+        4,
+        6
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 26
+    },
+    "look": {
+      "rotation": 90
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/switch-plates.svg",
+      "set": "Cut sheet, switch plates",
+      "gap": "3 mm",
+      "width": "400 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/bottom-plates.svg",
+      "set": "Cut sheet, bottom plates",
+      "gap": "3 mm",
+      "width": "400 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/one-piece-switch-plate.dxf",
+      "set": "Cut sheet, switch plates",
+      "gap": "3 mm",
+      "values": {
+        "construction": 2
+      }
+    },
+    {
+      "command": "cut.list",
+      "format": "csv"
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 338,
+    "variables": 117,
+    "parameters": 12,
+    "features": 109,
+    "assertions": 34,
+    "warnings": 0,
+    "build_s": 7.28,
+    "load_s": 1.35,
+    "load_cpu_s": 3.72,
+    "file_bytes": 263160,
+    "range_points": 108,
+    "range_unproven": 0,
+    "range_mean_s": 0.51,
+    "range_worst_s": 1.88
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
