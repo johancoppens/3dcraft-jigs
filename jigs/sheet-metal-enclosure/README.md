@@ -1,272 +1,250 @@
 # Sheet-metal enclosure
 
-A two-part sheet-metal case for electronics, the kind a laser cutter and a press brake make from one sheet
-each: a **base** (a floor, two side walls bent up with a return flange bent inwards at the top of each, and
-a low lip at the front and the back) and a **lid** (a top with short side skirts and a front and a back wall
-bent down) that sits on the return flanges and is screwed to them. The model shows the folded parts
-assembled, the lid fitted on the base, with the screws; the flat patterns with their bend lines and the
-bend table come out by command (below); every hole, the return flanges' screw holes included, is cut in
-the flat. A script proves which parts a press brake can bend, and in which order (*Bend order*). The corners are closed (overlap by default) with a gap you set. The sheet-metal counterpart of
-[`electronics-enclosure`](../electronics-enclosure/). Licence: CC-BY-4.0.
+Tell the form what goes in the case: a board, a power supply or a stack of them, how far its mounting holes sit in from
+the edges and how tall its tallest part stands. It builds a two-part sheet-metal case around that: a **chassis** (floor,
+front and back walls, return flanges with clinch nuts) and a **cover** (top and two sides, held by brass screws), each
+laser cut from one flat sheet and bent on a press brake. Die, radius and shortest leg come from a shop's published
+table, the bend order is proven at every change of the form, and the flat patterns with their bend lines export with
+nothing to pick.
 
-| Parameter | Group | Default | Range |
+![The case on the bench, the cover on and the green board showing through the vent slots](preview.png)
+
+## What it shows
+
+- **Two press-brake parts, each one sheet** (`feature.sheetMetal`). The chassis is a floor with two walls bent up and
+  a return flange bent in again on each (`tip`, with an `outline` that carries the clinch-nut holes, drawn as if the
+  bends had no width, so 3DCraft lays them out past the allowances). The cover is a top with two skirts bent down. The
+  connector holes and vent slots are `cutouts`, each sketch switched on and off by the form (`feature.when`), so they
+  are in the flat pattern. `bendRelief` cuts the notch at each end of a return bend.
+- **Tables drive the shop's numbers** (`table.set`, `choicesFrom`). `sheet_stock` holds die, inner radius and shortest
+  leg per thickness; `materials` the minimum radius, K-factor bands, density and colour. Radius, K-factor, allowance,
+  hole margin, flange lengths and fastener size follow by formula.
+- **The form asks what the maker knows.** The board's width and depth, the inset of its mounting holes, how many are
+  stacked, the tallest part, the standoff, the room around it. The case's inside grows round that; outside sizes, blank
+  sizes and mass are outputs.
+- **The form changes the structure.** Boards add standoffs, spacers and height. The connector count and the vent
+  choice add or remove cut-outs (`sketch.pattern`, counts from formulas). The cover screws multiply with the width.
+- **Ranges that know the press brake.** The tallest part and the number of boards are limited by what a straight punch
+  can bend (*Ranges and the press brake*), the connector holes by the panel they must fit, the depth by the two return
+  flanges.
+- **The bend order is proven by the model.** The assertion `bendable` runs the search of `sheetMetal.bendSequence` at
+  every change of the form, with a straight punch and the table's V-die. `press.json` asks `tools/bendcheck.py` for the
+  same proof with its own tooling.
+
+A static drawing is one board's case. This is the case for your board, in your stock, at your shop.
+
+## The real thing
+
+**The design.** The instrument case a sheet-metal shop folds every week. A U-shaped chassis carries the floor and the
+front and back panels, so connectors stay on the chassis when the cover comes off. A U-shaped cover wraps the top and
+the sides. There are no welded or closed corners to dress: the cover's edges are flush with the walls' outer faces and
+the cover slides down over the open sides with 0.5 mm of clearance a side. Air comes in low through the side slots and
+leaves through the top. Long top slots are cut into rows with bridges between them, so no strip between two slots is
+longer than 12 webs (72 mm in thin sheet, my judgement of what stays flat). The old version of this Jig put the connectors on the lid and could not prove its base
+bendable; this one puts them on the chassis and proves both parts everywhere the form lets you go.
+
+**Making it, in order.**
+
+1. Laser cut both flat patterns, as exported.
+2. Chassis: bend the two return flanges first, on the flat.
+3. Press the clinch nuts into the return flanges from the underside now, the flange held in the press. Not before the
+   return bends: at the hole-to-bend distances used here, a nut already in place would meet the punch's flank as the
+   flange comes up (my reading of the tool geometry, not modelled). Not after the walls: the walls would be in the way.
+   On a large blank the rest of the sheet hangs far below the anvil, so ask the shop how it holds it (an offset anvil,
+   or pressing the nuts after the walls with one).
+4. Bend the two walls, one after the other. The second wall is the one the height limit below is about.
+5. Cover: bend the two skirts, either first.
+6. Powder coat DC01, masking the nut threads. Aluminium and stainless may stay as they are, or be bead blasted. The
+   0.5 mm fit a side leaves room for the coat.
+7. Assemble, the chassis upright on blocks or over a bench edge so you can reach underneath and gravity holds the board on its standoffs (turned over, the loose board falls away), the feet still off:
+   - Screw the standoffs **to the board first** (M3, from above). The return flanges overhang the board's edges front
+     and back, so a driver cannot reach the board's screws once the board is in the chassis. Build a stack the same way,
+     spacers between the boards.
+   - Slide the board and its standoffs in **from an open side** of the chassis, the standoffs on the floor. A scan of 144
+     points of the range with the path of the content as a box from one side to the other found it clear of the walls,
+     return flanges and nuts.
+   - Screw the standoffs down from below, through the floor. Lower the cover over it and fit its screws, about 2 t plus the
+     nut's height long: M3 × 5 up to 1.5 mm sheet, M4 × 8 from 2 mm (the 2 mm head room below the nuts takes what comes
+     through). Press on the four rubber feet.
+
+The model does not cover electrical safety. A metal case on a mains supply needs its protective earth bonded by
+someone competent: the powder coat insulates, and neither the Jig nor its checks say anything about that.
+
+**The shop's table.** Four stock thicknesses, the same for the three materials:
+
+| Thickness (mm) | V-die (mm), all three | Inner radius (mm), steel / aluminium / stainless | Shortest leg (mm), steel and aluminium / stainless |
 |---|---|---|---|
-| Inside width | Size | 160 mm | 100 to 400 mm, step 1 mm (between the side walls) |
-| Inside depth | Size | 120 mm | 80 to 300 mm, step 1 mm (between the front and back lips); raised where the screws at the front and the back need more room (2 mm between their heads) |
-| Inside height | Size | 50 mm | 30 to 200 mm, step 1 mm (floor to the lid's underside) |
-| Material | Sheet | Steel DC01 | Steel DC01, Aluminium 5754, Stainless 304 (the table below) |
-| Thickness | Sheet | 1 mm | 0.8 to 2 mm, step 0.1 mm |
-| Extra bend radius | Sheet | 0 | 0 to 2 thicknesses, step 0.1: the inner radius is (the table's minimum + this) × thickness |
-| Screws | Fit | M3 | M3, M4 |
-| Lid clearance | Fit | 0.5 mm | 0.2 to 1 mm, step 0.1 mm |
-| Corners | Corners | Overlap | Open, Butt, Overlap, Miter (below) |
-| Corner gap | Corners | 0.5 mm | 0.4 to 2 mm, step 0.1 mm; for a butt at most min(2 mm, thickness − 0.1 mm) |
-| Corner relief | Corners | Round | Rect, Round, Tear, R + t + 0.5 mm along each edge |
-| Vent slots | Options | on | on / off |
-| Feet holes | Options | on | on / off |
+| 1 | 8 | 1.40 / 1.27 / 1.58 | 5.90 / 5.90 |
+| 1.5 | 10 | 1.65 / 1.47 / 1.90 | 7.50 / 7.60 |
+| 2 | 12 | 1.88 / 1.67 / 2.22 | 9.10 / 9.20 |
+| 2.5 | 16 | 2.41 / 2.11 / 2.94 | 12.00 / 12.10 |
 
-## How it is built
+Read from [247TailorSteel, *Bending guidelines*](https://www.247tailorsteel.com/en/bending-guidelines): groove width,
+leg length ("the minimum overlay of the sheet on the mold") and internal radius of a 90 degree bend. The shop lists
+CRS CR4, AlMg3 EN AW 5754 H111 and AISI304L 2B. It does not name DC01; taking CRS CR4 for DC01 is my reading (both are
+cold-rolled soft steels of EN 10130 type). It has no aluminium at 0.8 or 1.25 mm, so those are left out. 3 mm is left
+out because 3 mm stainless, with its 15 mm leg, leaves no wall height a straight punch can bend at some depths.
 
-Both parts are `feature.sheetMetal`: a flat base from a sketch (holes allowed) with flanges bent from its
-edges or from the far edge of an earlier flange, every bend with the inner radius R and the material's
-K-factor, so the flat pattern carries the bend allowance θ (R + K t) per bend. Every size is a formula of
-the inputs (`gen.py` writes `build.json`; it computes no geometry).
+**Minimum radius per material.** The radius used is the larger of the shop's and this one.
 
-- **Base.** The floor is the inside size less R each side, so the walls' inner faces lie at ± width / 2 and
-  the lips' at ± depth / 2. Side walls `height − t − 2R` long (the return flange's top is then the inside
-  height above the floor), return flanges bent up again (inwards), front and back lips. The floor's four
-  corners, where a wall and a lip meet, have a **corner relief** (below) and are **closed**: the walls
-  cover the lips' ends.
-- **Lid.** Its top lies on the return flanges; its side skirts and its front and back walls are bent down
-  outside the base with the **lid clearance** all round (the walls stop that far above the floor); its
-  corners are relieved and closed as the base's, the front and back walls covering the skirts' ends.
-- **Screws.** Four pan-head screws (ISO 7045 sizes) through clearance holes (ISO 273 medium: 3.4 mm for M3,
-  4.5 mm for M4) in the lid's top and in the middle of the return flanges, near the front and the back.
-  The holes in the lid are holes of its sketch. Each **return flange** is a flange with an **outline of its
-  own** (`outline`: the sketches `ReturnRight` and `ReturnLeft`, a rectangle on the wall's tip between the
-  corner reliefs with its two holes; with closed corners it stops a relief and 1 mm shorter at each end,
-  with a bend relief there, below), drawn in the floor's plane as if the bends had no width, the hole
-  in the middle of the flange; 3DCraft lays the outline out past the two bends' allowances, so the holes
-  follow any thickness, radius or K-factor and are cut flat. The screws' assertions prove that they line
-  up once bent. (Before, the holes were drawn in the base's sketch at x = ± `flatHoleX`, the bend
-  allowance π/2 (R + K t) worked out by hand: platform gap 8 below, closed.)
-- **Vent slots** (option): a row of slots across the middle of the lid's top, half the inside depth long,
-  max(4 mm, 2 t) wide, at a pitch of twice the width plus 2 mm, between the return flanges.
-- **Feet holes** (option): four clearance holes in the floor's corners, for screw-on feet or standoffs.
-- The vents and the feet holes are `cutouts` sketches of the lid and the base, each switched on and off by
-  its option (`when`), so they are cut in the flat pattern too. (Before, each option was a second variant
-  of the part and the return flanges were drilled by a boolean: two parts and three booleans fewer now.)
+- **DC01.** The [steel overview at Henstol](https://henstol.pl/de/blog/biegeradius-stahlblech/) reports that
+  ArcelorMittal's data sheet gives no minimum radius for DC01, so the Jig takes R = t, the value in
+  [Laserteile-online's bending limits](https://laserteile-online.eu/en/knowledge/manufacturing-guidelines) for 1 to
+  2.5 mm (secondary, a shop's table). At 1 and 1.5 mm the shop's radius above is larger and is used. At 2 and 2.5 mm
+  the rule sets R = t, 2.0 and 2.5 mm, about 0.1 mm more than 1.88 and 2.41 mm.
+- **EN AW-5754 H111.** EN 485-2's minimum radius factors for a 90 degree bend, as tabulated by
+  [Metallservice](https://www.metallservice.ch/msm/msm-home/services/metall-lexion/mechanische-kennwerte-f%C3%BCr-walzblankes-aluminium-halbzeug.pdf)
+  and [color-metal.ro](https://color-metal.ro/en/determining-minimum-bending-radius) (both secondary; I have not read
+  the standard): 0.5 t up to 1.5 mm, 1.0 t above. At 2 and 2.5 mm that exceeds the shop's radius (2.0 against 1.67,
+  2.5 against 2.11) and the Jig uses it, so the shop needs a punch with that nose.
+- **Stainless 304.** [Outokumpu, *Forming of stainless steel*](https://www.outokumpu.com/expertise/stainless-basics/forming):
+  "For austenitic and ferritic stainless steel this ratio is 1". The shop's radii are all above that.
 
-## Corners and reliefs
+**K-factor.** The rule-of-thumb air-bending table in the
+[METU MECH 114 handout *Sheet Metal Work*](https://users.metu.edu.tr/sonmez/MECH%20114/Sheet%20Metal%20Work.pdf),
+headed "Generic K-Factors": 0.33 / 0.38 / 0.40 for soft / medium / hard material up to r = t, 0.40 / 0.43 / 0.45 from
+t to 3 t. Reading soft as the aluminium, medium as the steel and hard as the stainless is mine (the handout heads soft
+"Aluminum" and medium and hard "Steel"). The table gives bands with an edge at r = t, where K would jump (0.43 to 0.38 for steel at 2 mm). The Jig interpolates in
+r/t between the band middles (r/t 0.5 and 2), so it follows the table there and has no jump: that is my treatment, not the
+handout's. K moves with the shop's tooling
+and the flat pattern is only as true as this number. The form has no K input: a shop with its own bend deduction re-unfolds
+the part from the bend lines and the allowances the form reports, or changes the table in `build.json`.
 
-**Corners.** Where two flanges meet at a corner the Jig closes the corner by the *Corners* choice
-(`feature.sheetMetal`'s `corner` and `corners`, the choice numbered 1 open, 2 butt, 3 overlap, 4 miter),
-the flats running on past their bends towards the other flange and stopping *Corner gap* from it:
+**Hole to bend.** Every hole keeps the larger of 2.5 t + R ([Fabcon, *Sheet Metal DFM: Pre-Release Guidelines*](https://fabcon.com/articles/?p=534):
+"Hole-to-bend distance: ≥ 2.5t + r", and AGENTS.md §4.3) and the shop's shortest leg (247: holes over 5 mm "may not
+fall within the leg length"; this Jig applies it to every hole, the conservative reading) from the tangent line of the
+nearest bend.
 
-- **Overlap** (the default): the covering flange runs flush with the other's outside face, the other
-  stops the gap short of the cover's inside face. On the base the walls cover the lips, on the lid the front
-  and back walls cover the skirts, so the tall flange's end is seen from the side and the seam is closed to
-  the eye. It is what a shop folds for an unwelded box: it closes the corner without welding, tolerates the
-  press brake's angle error (the covered flange has the gap to move) and needs no finishing.
-- **Butt**: as overlap, the covering flange also the gap short of flush (the gap must be less than the
-  thickness, so the range of *Corner gap* is narrowed to min(2 mm, t − 0.1 mm) when butt is chosen).
+**Bend reliefs.** Each return flange stops short of the wall's end, so that the cover's inner bend radius clears it,
+and each end of a return bend has a round notch R + t + 0.5 mm deep: [SendCutSend's depth rule](https://sendcutsend.com/blog/guide-to-designing-bend-reliefs/)
+("at least the material thickness + the bend radius + .02"). A strip at least 2 t and 2 mm wide stays beside the notch.
 
-*Corner gap* is at least 0.4 mm: SendCutSend asks at least 0.015 in (0.38 mm) between flanges that meet
-(*Guide to designing bend reliefs in sheet metal*, above), so the covered flange clears the cover when
-it is bent.
-- **Miter**: both flanges to the plane halving the corner, the gap apart; the ends are bevelled (cut square
-  by a laser, the gap takes that up), the joint to weld or braze.
-- **Open**: each flange ends at its bend, as before (the corner is open by the relief and the bend radii).
+**Fasteners.** Cover screws M3 up to 1.5 mm sheet, M4 from 2 mm, pan head, brass, through clearance holes in the cover
+(3.4 and 4.5 mm: the medium series of a [clearance table by Optimas](https://optimas.com/technical-resources/tapping-sizes/),
+ISO 273 itself not read). They go into self-clinching nuts in the return flanges: PEM CLS in steel and aluminium, SP in
+stainless. Holes 4.22 mm and 5.41 mm, centre-to-edge at least 4.8 and 6.9 mm ([CLS-M4-2 data sheet](https://www.pemnet.com/products/product-finder/cls-m4-2/)
+read; CLS-M3-2 and SP-M3-1 and SP-M4-1 from distributors' listings). Pick the shank code for your sheet thickness from
+PEM's bulletin. The return flanges always leave more than that distance. The heads and the nuts are drawn from these
+listings (pan head 5.6 × 2.4 mm M3, 8 × 3.1 mm M4; distributors differ on the M3's diameter, 5.6 or 6 mm) and only
+for looks and clearance. The standoffs (M3, 5.5 mm), rubber feet (14 mm, 6 mm high) and board thickness (1.6 mm) are
+my choices, not from a source. Densities (7850, 2670, 7900 kg/m³) are nominal: only the mass output uses them.
 
-**Reliefs.** Every corner keeps its relief: a closed corner needs it as the hole where the two bends would
-cross. Its shape is the *Corner relief* choice (relief `shape` by expression, 1 rect, 2 round, 3 tear),
-its size **R + t + 0.5 mm** along each edge, the same rule as in [`rack-cabinet`](../rack-cabinet/): the
-relief reaches past the bend zone (inner radius plus thickness) by half a millimetre. That is SendCutSend's
-rule for a **bend relief's depth** (at least bend radius + thickness + 0.020 in; *Guide to designing bend
-reliefs in sheet metal*, sendcutsend.com/blog/guide-to-designing-bend-reliefs), applied here to corner
-reliefs by analogy: SendCutSend gives no separate size for a corner relief. **Round** is the default: it
-has no sharp inside corner to start a crack from, and in the flat it removes the least material. Measured
-on the base's flat pattern with the defaults (vents and feet off, relief 2.5 mm): 37 503.19 mm² round,
-37 497.83 mm² rect (5.37 mm² less: four times r² − π r²/4), 37 438.92 mm² tear (64.27 mm² less). That is
-the notch in the floor only; SendCutSend notes that round reliefs leave slightly larger gaps at the bend
-ends, so where the look of the corner matters choose rect.
+**Look.** Anthracite powder coat (RAL 7016) on the steel, a matt natural tone for the aluminium, a lighter grey for the
+stainless. Brass screws and standoffs, and a green board and a dark part to show through the slots. Preview at
+`look.rotation` 0, the most neutral of the four rotations I tried; the warm workshop light still tints the front wall.
 
-**Bend reliefs.** With closed corners the walls' flats run on past their corners, so a return flange that
-reached the corner relief would end its bend inside that run-on, where 3DCraft builds no bend relief yet
-(*owed*, it says). There the return flange stops a relief and 1 mm short of the wall tip's end, and each end
-of its bend gets a **bend relief** (`bendRelief`, 3DCraft b3562515) of the corner relief's size, round where
-the corners are tear (a tear there ran a short wall's flat into itself); the screws keep max(8 mm,
-2.5 t + R + clearance hole) from the flange's ends, at least a hole apart. The relief assertion checks these
-bend ends as well as the corners. With open corners nothing changed.
+## Parameters
 
-Colours: the parts in the Jig palette's steel (#7D858C) for DC01 and aluminium (#B9BEC4) for 5754, a
-lighter, bluer tint (#C8CED6) for stainless 304; the screws brass.
+| Group | Parameter | Range | What it changes |
+|---|---|---|---|
+| What goes in it | Board width | from what the sheet needs (50 to 66 mm) to 400 mm | The inside width |
+| What goes in it | Board depth | from what the return flanges need (about 62 to 97 mm) to 300 mm | The inside depth |
+| What goes in it | Boards in the stack | 1 to what the press brake can bend, at most 4 | Standoffs, spacers, height |
+| What goes in it | Tallest part on a board | 3 mm to what the press brake can bend | The inside height |
+| What goes in it | Standoff height | 0 to 30 mm, less on the smallest cases | How far the first board stands off the floor |
+| What goes in it | Mounting holes from the edge | 3 mm to min(20 mm, half the board's smaller side − 22 mm), so at least 1.4 mm of board stays outside the hole | The four M3 holes in floor and board; the feet follow |
+| Fit | Room around, at least | 2 to 60 mm | Clear space to walls and sides. The case gives more where thick sheet needs the floor holes further from a bend |
+| Sheet | Material | Steel DC01 powder coated, Aluminium 5754 H111, Stainless 304 | Radius, K-factor, die, leg, colour, density |
+| Sheet | Sheet thickness | 1, 1.5, 2, 2.5 mm | Everything derived, and M3 or M4 cover screws |
+| Front panel and air | Connector holes in the front | 0 to what fits, at most 8 | Round holes across the front wall |
+| Front panel and air | Connector hole diameter | 4 mm to what the panel allows, at most 28 mm | Each hole |
+| Front panel and air | Ventilation | None, Top slots, Top and side slots | Vent cut-outs, the top slots bridged into rows on large cases. A row needs room: the smallest cases drop it, and the output counts what is cut |
 
-## Bend order
+Outputs at the defaults (160 × 100 mm board, 25 mm part, 1.5 mm steel): outside 184 × 123 mm and 51 mm high with feet
+and screw heads; inside height 39.6 mm against a press-brake limit of 54.6 mm; two sheet parts 0.81 kg; radius 1.65 mm, allowance 3.534 mm per bend, V-die 10 mm; chassis blank
+180 × 240.88 mm, cover blank 263.67 × 123 mm; 38 vent slots.
 
-Bend the **base** in this order: the two **return flanges** first (on the flat, before anything stands in
-the way), then the front and back **lips**, then the two **walls**. A wall with its return flange already
-bent is a U-shaped channel on the press brake: as it is bent up, the return flange swings towards the
-upper tool, so the walls may need a **gooseneck punch** (or a deep-throat one), depending on the inside
-height and the return flange's length; check with your shop. The lips must be up before the walls, since
-the walls close the corners over the lips' ends (overlap and butt). The **lid**: the skirts first, then
-the front and back walls, which cover the skirts' ends. (This order is the shop's rule of thumb; what
-3DCraft proves is below.)
+### Ranges and the press brake
 
-**Proven on a press brake** (`scripts/bendcheck.py sheet-metal-enclosure`, `press.json`; the root README
-says how). 3DCraft's `sheetMetal.bendSequence` searches the orders of a part's bends and proves a step
-clear when neither the punch nor the die comes within 0.5 mm of the part over the whole stroke. The tools
-(in the script): a straight punch (88 degrees, 12 mm wide, 120 mm tall in an 80 mm clamp), a gooseneck
-punch both ways round, and a V-die of the material's opening V (8 t for DC01, 6 t for 5754, 10 t for 304),
-each as long as the part's longest bend: so an order proven holds for segmented tools from each bend's
-length up to the longest bend's, not for a one-piece die longer than that. Run at 25 points (the defaults, 8 corners of the ranges, every
-choice, 8 random; seed 1) with 3DCraft at 0dc5efb6, every point passing:
+The chassis is a U with two return flanges. Bending its second wall leans the first wall, with its return flange, over
+the punch by 45 degrees at the end of the stroke. With `F` = inside depth − R (from the bend axis to the far wall) and
+`L` the return flange, the geometry of the tools in `tools/bendcheck.py` (a punch 12 mm wide and 120 mm tall in a clamp
+80 mm wide) gives the limit on the inside height:
 
-| Part | Proven | Not proven, and why |
-|---|---|---|
-| Lid, corners open | 4 of the 5 points with *Corners* open: skirts first, then the front and back walls, with the straight punch | 1 collides: inside height 200 mm over a depth of 82 mm (t = 2 mm, R = 8 mm): the last wall cannot be bent past the first, which stands 200 mm tall 88 mm away, with these tools (a real limit of the shape, for a taller box punch or a lid in two parts) |
-| Lid, corners closed | 1 of the 20 (a small lid, 100 × 80 × 30 mm, mitred): the same order | 19 points: 3DCraft cannot prove the first 0.09 degrees of a skirt's stroke when the tools, as long as the walls' bends, reach past the skirt's bend over a closed corner (*not proven*, not a collision; the same lid with open corners is proven) |
-| Base | none | 25 points: at 18 the search over its six bends' orders runs past 3DCraft's limit of 20000 distances (*refused*; with the corners open too), at 7 a first stroke is *not proven* past a closed corner, as the lid's |
-
-So the check proves the lid with open corners, and with closed ones only where the bends are about as long as each other. `press.json` asks it of the lid at the points with
-*Corners* open, and nothing of the base (`prove: false`, the reason in `owed`); the script still checks and
-reports both everywhere. The deep, narrow lid above is a finding about the design, recorded in
-`press.json` (`known`, with its values and reason) and left in the range (a shop with taller tooling, or a
-lid made in two parts, does it): the run accepts that verdict there and fails on any other point where the
-open-cornered lid is not proven.
-
-The tools are as long as the longest bend because `bendSequence` takes one tool length for every bend:
-a punch covering every bend overhangs the shorter ones, which is conservative (a feasible order also
-holds for a punch segmented to each bend) but makes a box's last bends collide with its standing ends
-where segmented tooling would clear them. Owed by 3DCraft (platform gap 10): a tool length per bend
-(segmented punches), the rest proof past a closed corner, a larger or caller-given search (or checking
-an order the caller gives).
-
-## The material table
-
-| Material | Min. inner radius | K-factor | V-die opening | Min. flange (0.7 V, to the mould line) |
-|---|---|---|---|---|
-| Steel DC01 (EN 10130, cold rolled) | 1.0 t | 0.42 | 8 t | 5.6 t |
-| Aluminium 5754 (AlMg3, H22) | 1.0 t | 0.38 | 6 t | 4.2 t |
-| Stainless 304 (1.4301) | 2.0 t | 0.45 | 10 t | 7 t |
-
-- Minimum inner radius: Fictiv's sheet-metal design guide gives 0.5–1.0 t for cold-rolled steel and for
-  5052 aluminium (an Al-Mg alloy like 5754) and 1.0–2.0 t for stainless 304; the table takes the upper
-  (safe) end of each. Air-bent on the die below, steel takes a natural radius of about V/6 to 0.16 V
-  (≈ 1.3 t), so a radius from the table is a minimum, not a promise; set Extra bend radius when your shop
-  says what its tooling gives.
-- K-factor: Fictiv, soft (aluminium) 0.33–0.40, medium (steel) 0.40–0.45, hard (stainless) 0.45–0.50;
-  OSHCut, about 0.4 for soft and 0.45 for harder metals. Cross-check for steel: DIN 6935's correction
-  factor k = 0.65 + ½ log₁₀(r/s) (the neutral fibre at k·s/2) gives K = 0.33 at r = s and 0.40 at r = 2s.
-- V-die opening: Durmapress, *How to select the right press brake V-die opening*: 6–8 t for mild steel,
-  8–10 t for stainless, 4–6 t for aluminium (the upper end taken).
-- Minimum flange: S. Benson, *The Fabricator* (press-brake bending tips): the shortest flange a standard
-  V die bends comfortably is about 70 % of the die width; it is measured from the outside mould line.
-- Hole to bend: 2.5 × thickness + bend radius from the hole's edge to the bend's tangent line, as Xometry's
-  sheet-metal design guide and Addmaker's *Tips for making sheet metal parts* give it (Fabcon's DFM guide
-  asks 2 t + R, a little less). Corner relief: R + t + 0.5 mm (*Corners and reliefs* above).
-- Bend allowance, setback, deduction: Machinery's Handbook (*Sheet metal work*), as 3DCraft's bend table
-  gives them; DIN 6935 for the deduction (*Ausgleichswert*).
-
-The tables are in `gen.py` (`MATERIALS`, `SCREWS`); 3DCraft has no material catalogue, so the data lives
-here.
-
-## Assertions (every point of the range)
-
-| Rule | Assertion |
-|---|---|
-| bend radius ≥ the table's minimum × t | `bendRadius` of both parts; and there are ten bends |
-| flange ≥ 0.7 V to the mould line | `flangeLength` measured to the mould line, every flange of both parts |
-| hole to bend ≥ 2.5 t + R | `holeToBend`: every hole and vent slot of both parts, the return flanges' screw holes included, from the bends beside its flat |
-| every corner where two bends meet is relieved | `relief` |
-| the closed corners' gap is as given | `cornerGap`: the least gap at every closed corner of both parts equals *Corner gap*, ± 0.001 mm; the assertion applies `when: corner != 1` (with *Corners* open there is nothing to measure, and it is inactive) |
-| the lid clears the base | the lid's skirts and walls lie exactly the clearance from the base's walls and lips, measured at the nearest point (the least distance between the faces) |
-| the lid rests on the base | the lid's underside touches the return flanges' tops (distance 0) |
-| the screw holes line up | each screw shank's least clearance to the lid and to the base is exactly (clearance − d) / 2 (± 0.01 mm), so it stands in both holes, centred; the base has four bores of the clearance diameter in the return flanges, and the four feet holes when they are asked for |
-| nothing overlaps | no two bodies share a volume (the lid rests on the return flanges, the heads on the lid) |
-
-The sheet-metal measures replace the face queries the Jig needed before (platform gaps 3 and 4, fixed).
-
-## Flat patterns and the bend table
-
-The flat patterns are DXF or SVG cut sheets: the outline on the layer `outline`, the bend lines on `bendUp`
-(dashed) and `bendDown` (dash-dot). Every bend of the base is up, every bend of the lid down, seen from
-the sketch's side (the inside of the base, the outside of the lid).
-
-```sh
-craft3d-cli run dist/sheet-metal-enclosure.3dcraftjig \
-  --cmd param.set --params '{"values": {"material": "Aluminium 5754", "t": "1.5 mm", "vents": false}}' \
-  --cmd file.export --params '{"path": "base.dxf", "sheetMetal": "Base"}' \
-  --cmd file.export --params '{"path": "lid.dxf", "sheetMetal": "Lid"}' \
-  --cmd sheetMetal.bends --params '{"feature": "Base"}' \
-  --cmd sheetMetal.bends --params '{"feature": "Lid"}'
+```
+min(F − L − 9.2, max(169.2 − F + 2 R − t, 55.5 + R, F − L − 57.3)) − 2.5    (mm)
 ```
 
-In the window, File › Export to .dxf or .svg offers the flat pattern of each part, and both on one sheet.
-`sheetMetal.bends` is the bend table: per bend its angle, inner radius, K-factor, bend allowance (and the
-unfold's measured one), setback, deduction and flange length; per corner how it is closed (kind, gap,
-which flange covers) and its relief; and the flat pattern's size and area.
+The first term keeps the return's tip beside the punch. The three inside the `max` keep it out of the clamp's corner:
+the bend stays below the clamp, or the return flange passes the corner, or it stays beside it. The same reasoning limits
+the cover's skirts. I derived this from the stroke and then checked it against the model: a scan of 49 combinations of
+thickness, material and depth in steps of 4 mm of height found no case where the formula allows a failing height, and it
+sits within one step of the true boundary. At most 200 mm: my judgement, since the 220 mm tool has no ram above it in the
+model and a real press brake does. The wall also has a floor: `L + R + 10 mm` of wall (the wall's own return must clear the punch as it is bent).
 
-Every hole is in the flat patterns: the return flanges' and the lid's screw holes, the feet holes and the
-vent slots when they are on. A closed corner's flange runs past its bend in the flat (a tab beside the
-relief); the overlap's and butt's ends are square, a miter's bevelled ends are cut square at the bottom
-skin's outline (the gap takes that up).
+The limit is not a simple "deeper is better": for 1.5 mm steel the tallest part may be 51 mm at a board depth of 80, 40 mm
+at 100 to 110, 63 mm at 140, and 123 mm at depth 100 with 60 mm of room. At the default board the inside height stops at
+54.6 mm and the tallest part at 40 mm. The form clamps there and its tallest-part description says why; the outputs give
+the inside height of this case and the height the press brake still allows. The ram of a real press brake is wider than
+the 80 mm clamp and is not modelled, so the 200 mm cap covers only the clamp's height, not a ram above it.
+A taller case at this depth needs other
+tooling; the one gooseneck outline I tried at the pin did worse than the straight punch, so the Jig does not offer it.
 
-Bend table with the defaults (steel DC01, 1 mm, R = 1 mm, K = 0.42): bend allowance 2.231 mm, setback
-2 mm, deduction 1.769 mm per 90° bend; base flat 283.7 × 142.5 mm (walls 47 mm, lips 10 mm, return
-flanges 11.4 mm), lid flat 189.5 × 224.5 mm (skirts 12 mm, walls 49.5 mm); round reliefs of 2.5 mm, the
-corners closed by overlap with a 0.5 mm gap.
+## Checks
 
-## Platform gaps (3DCraft at 0dc5efb6)
+Thirty assertions, each measured on the model:
 
-Repros in the 3DCraft repository, `plan/repro/repro-sheet-metal-enclosure-<n>.json`. Gaps 1 to 6 of the
-first version (the export dialog without flat patterns, no hole in a flange, the sheet-metal measures on a
-part a boolean took or one switched off, `*:` globs, slots with a small end radius) are fixed in 3DCraft;
-the Jig now uses what fixed them (holes in the flat, `cutouts`, the sheet-metal measures, vent slots
-4 mm wide in any thickness).
+- **Process:** `bendable` for both parts (straight 88 degree punch, table die, 0.5 mm clearance over the whole stroke);
+  inner radius at least the material's minimum (`bendRadius`); every flange at least the shop's leg to the mould line
+  (`flangeLength`); every hole and slot at the bend margin from a bend (`holeToBend`); bend ends relieved (`relief`).
+- **Closed forms, independent of the sheet-metal code:** chassis flat length and cover flat width (`flatExtent`) against
+  2 × (flats + allowances); cover volume against its flat pattern, less screw holes, top and side slots, plus the bend
+  correction θ t² L (0.5 − K).
+- **Fit:** nothing overlaps; the room to the walls at least as built; the room to the skirts and the cover's clearance
+  from the chassis exact; the cover rests on the return flanges (distance 0); each screw centred in its cover hole and
+  nut hole; the clinch nuts under the screws; the standoffs reaching the board; the tallest part clears the cover and hangs the head room below the nuts' level; its
+  height against the closed form; the boards' stack height.
+- **Counts and places:** four floor holes exactly under the board's mounting holes; the connector count, in the front
+  wall; the cover screws; the feet at their height and the floor screw heads above their soles; the clinch nuts under the return flanges; chassis and cover each as deep as the walls, so the cover ends flush.
 
-7. **`cornerGap` was broken when no corner is closed** and an assertion had no condition; fixed (3DCraft
-   a3ee23a9: assertion `when`, a lazy `if`). The gap assertion now applies `when: corner != 1` and is
-   inactive with the corners open.
-8. **A hole on a flange was placed by unfolding it by hand** (`flatHoleX`); closed at 0dc5efb6 by flanges
-   with an outline of their own, which the return flanges are now.
-9. **Screw tabs instead of whole return flanges are refused while the corners are closed.** Two inset
-   tabs on each wall's tip (the outline of each a tab with its hole) build with the corners open, but a
-   closed corner refuses a flange whose tip carries an inset flange ("its corner cannot be closed (not
-   supported)"). So the return flanges stay whole; owed by 3DCraft: closing a corner of a flange that
-   carries inset flanges or flanges on its sides.
-10. **What the bend-sequence check cannot prove** (*Bend order*): the base's search (more than 20000
-   distances), the bends of a part with closed corners when the tools reach past a bend's end, and a
-   tool length per bend (one length for every bend).
+**Would they notice?** I broke a scratch copy nineteen ways, one at a time, and each was caught: K-factor changed on
+either part, cover screw holes moved 1.5 mm, nut holes moved 2 mm, floor holes moved, connector holes on the back wall
+or moved to a bend, a wall length off by 2 mm, the bend radius at 60 %, the cover 1 mm too wide, the stack pitch off,
+a foot put over a floor screw, slot counts wrong, the inside height without room for the nuts, the cover 3 mm short at each end, a standoff too short, a clinch nut moved 3 mm. The side vent slots
+drawn inside out while this Jig was built were caught the same way, by the closed-form cover volume.
 
-## Sources
+**Range check.** `tools/jigs.py check` runs `check-range`: 104 points (defaults, corners, every choice, 32
+random from seed 1), every one passing, none unproven, with `tools/bendcheck.py` over 24 points on top: both
+parts proven at every one, chassis in the order 2, 3, 0, 1 (return flanges, then walls), cover 0, 1, with the straight
+punch. A separate grid by hand, 287 points over two random draws (every material and thickness, smallest and largest sizes,
+height at both ends, boards, inset, standoff, vents and connectors at their extremes, each read off its live range), found
+nothing failing. It found earlier that the height formula left the second wall colliding at two combinations; the
+thickness of the sheet is in the formula since.
 
-- Fictiv, *Sheet metal design guide* (blog.fictiv.com/specifications/sheet-metal): minimum bend radius per
-  material, K-factor ranges.
-- SendCutSend, *Guide to designing bend reliefs in sheet metal* (sendcutsend.com/blog/guide-to-designing-bend-reliefs)
-  and *What are SendCutSend's bend relief requirements?* (sendcutsend.com/faq/what-are-your-bend-relief-requirements):
-  relief depth at least bend radius + thickness + 0.020 in (the corner relief R + t + 0.5 mm here).
-- Xometry, *Sheet metal design guide*; Addmaker, *Tips for making sheet metal parts*
-  (mag.addmaker.tw, 2021); Fabcon, *Sheet metal DFM guide* (fabcon.com): hole-to-bend distance.
-- OSHCut, material details, stainless 304 (oshcut.com/materialdetails/stainless-steel-304-1-finish): K-factor
-  rule of thumb.
-- Durmapress, *How to select the right press brake V-die opening: rule of 8 & material chart*
-  (durmapress.com): die openings per material.
-- S. Benson, *Press brake bending tips for forming tapered bends and determining minimum flange lengths*,
-  The Fabricator (thefabricator.com): minimum flange ≈ 0.7 × die width.
-- DIN 6935:2011-10, *Kaltbiegen von Flacherzeugnissen aus Stahl*: the correction factor for the neutral
-  fibre and the bend deduction, as published descriptions give them.
-- E. Oberg et al., *Machinery's Handbook*, 30th ed., *Sheet metal work* › *Bend allowance*.
-- ISO 273 (clearance holes for bolts and screws, medium series); ISO 7045 (pan head screws).
+Not proven: the strength of the fasteners, your board's real connector positions, cooling (the slots are a usual
+pattern, not sized for a power), electrical safety, and bend accuracy beyond the table's K-factor.
 
-## Checked
+## Export
 
-Checked at 3DCraft 4e7fa69a (format 58, bend reliefs at the return flanges' ends): `check-range` 89 of 89, with
-`SAMPLES=64 SEED=7 DEEP=1` 137 of 137; `scripts/bendcheck.py` 25 of 25 points pass (the lid proven at 5, the known
-collision of the deep, narrow lid at 1, not proven at 19; the base refused at 19 and not proven at 6). Before, at
-3DCraft 1f92b83b (format 50, the return flanges with outlines of their own): `check-range` 89
-of 89 points passed (64 corners, every choice, 16 random; seed 1), none with unproven assertions; with
-`SAMPLES=64 SEED=7 DEEP=1` 137 of 137; regeneration median 29 ms a point. The bend sequence (*Bend order*)
-was checked at 0dc5efb6, whose sheet metal 1f92b83b keeps unchanged. Before, at a3ee23a9 (format 46): 89 of 89, and with `SAMPLES=64 SEED=7
-DEEP=1` 137 of 137; regeneration median about 33 ms a point (28 ms before the rework, with fewer parameters, open corners and
-the return flanges drilled by a boolean).
+- **Flat patterns, nothing to pick.** In the window: **File › Export**, **Flat patterns of every part**, DXF or SVG:
+  the chassis and the cover side by side at true size, outlines on the layer `outline`, each bend on `bendUp` (dashed)
+  or `bendDown` (dash-dot), every hole and slot in place. Or **Flat pattern of …** for one part. Headless: `file.export`
+  with `"sheetMetal": ["Chassis", "Cover"]`; `meta.json` proves both ways.
+- **For the press-brake operator:** `sheetMetal.bends` on each part gives per bend the angle, radius, K-factor,
+  allowance, setback, deduction and flange length, and the flat size. `cut.list` (csv) lists each flat pattern with
+  its size, area, cut length and holes, the hardware beside it marked as not plates.
+- **Order:** return flanges, nuts, walls for the chassis; either skirt first for the cover (*Making it*).
+
+## Files
+
+`build.json` (the source), `press.json`, `meta.json`, `formtest.md`, `preview.png`, and
+`dist/sheet-metal-enclosure.3dcraftjig`, `dist/thumbs/sheet-metal-enclosure.png` from the tool.
+
+## Rebuild
+
+```sh
+tools/jigs.py build sheet-metal-enclosure
+tools/jigs.py render sheet-metal-enclosure
+tools/jigs.py check sheet-metal-enclosure
+```
+
+## Difficulty
+
+6 out of 10. Two coupled press-brake parts, table-driven process data, ranges from tool geometry, bend order proven at every change.
+
+## Platform notes
+
+Nothing is worked around. Known and already reported: a flat pattern's DXF splits each straight edge at the bend zone
+(F-051 in `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`). The material's metallic and roughness cannot follow a table
+(`findings/J-xxx-appearance-numbers-not-expressions`), so aluminium and stainless differ from the powder coat by colour
+only.

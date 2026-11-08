@@ -1,38 +1,7 @@
 {
- "die": "V",
+ "die": "die_opening",
  "parts": [
-  {
-   "part": "Base",
-   "prove": false,
-   "owed": "the search over its six bends' orders runs past 3DCraft's 20000 distances (open corners); and closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees"
-  },
-  {
-   "part": "Lid",
-   "prove": {
-    "corner": 1
-   },
-   "owed": "closed corners: a bend whose tools reach past its end over a closed corner is not proven in its first degrees",
-   "known": [
-    {
-     "values": {
-      "Di": "82 mm",
-      "Hi": "200 mm",
-      "Wi": "100 mm",
-      "corner": "1",
-      "feet": "0",
-      "fit": "1 mm",
-      "gap": "0.4 mm",
-      "material": "3",
-      "radiusExtra": "2",
-      "reliefShape": "3",
-      "screw": "2",
-      "t": "2 mm",
-      "vents": "1"
-     },
-     "verdict": "collides",
-     "why": "inside height 200 mm over a depth of 82 mm: the last wall cannot be bent past the first, standing 200 mm tall 88 mm away, with these tools"
-    }
-   ]
-  }
+  {"part": "Chassis"},
+  {"part": "Cover"}
  ]
 }
