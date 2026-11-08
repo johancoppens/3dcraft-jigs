@@ -1,0 +1,119 @@
+{
+  "id": "cam-disc",
+  "title": "Disc cam with roller follower",
+  "summary": "give the motion, get the cam, or a refusal",
+  "description": "A disc cam with a translating roller follower laid out from a motion law: give the lift, the rise, dwell and return angles and the speed, and the form refuses a cam whose pressure angle or curvature cannot work and says which base circle would.",
+  "domain": "Machine building, mechanisms",
+  "process": "Wire EDM, CNC milling or profile grinding of the cam; turned and milled follower; catalogue track roller",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Piecewise formula curve with normal offset, closed-form and iterated limits as coupled ranges, seven bodies driven by a slider."
+  },
+  "standards": [
+    "R. L. Norton, cam design guidelines 6 and 7 (excerpt at designofmachinery.com, file Ch18 2nd ed. p. 551): pressure angle about 30 degrees for a translating follower, 35 with a low-friction slide; radius of curvature of the roller path above the roller radius, target above twice it",
+    "JTEKT/Koyo Needle Roller Bearings catalogue, pp. B-222 and B-226: stud-type track rollers KR and NUKR (boundary dimensions per ISO 6278)",
+    "DIN 6885-1 parallel keys: key width and hub keyway depth by shaft diameter",
+    "ISO 273 clearance holes for bolts, normal series (read from a chart labelled ISO 273)"
+  ],
+  "materials": [
+    "Hardened steel cam, ground profile",
+    "Stud-type track roller (KR or NUKR)",
+    "Blue-coated steel follower",
+    "Bearing bronze bush",
+    "Grey cast iron guide block"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.0001
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -180,
+        -620,
+        250
+      ],
+      "target": [
+        0,
+        0,
+        55
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 22
+    },
+    "look": {
+      "rotation": 270
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cam-profile.dxf",
+      "sketch": "Cam profile"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/bore-and-keyway.dxf",
+      "sketch": "Bore and keyway"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cam.step",
+      "bodies": [
+        "Cam"
+      ]
+    },
+    {
+      "command": "file.export",
+      "path": "exports/mechanism.step"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/harmonic-profile.dxf",
+      "sketch": "Cam profile",
+      "values": {
+        "motion_law": 2,
+        "lift": "40 mm",
+        "rise_angle": "60 deg",
+        "top_dwell_angle": "10 deg",
+        "return_angle": "60 deg",
+        "pressure_limit": "35 deg",
+        "roller": 5,
+        "shaft": 4,
+        "hub": 0,
+        "base_circle_radius": "55 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 447,
+    "variables": 300,
+    "parameters": 12,
+    "features": 52,
+    "assertions": 16,
+    "warnings": 0,
+    "build_s": 10.01,
+    "load_s": 1.25,
+    "load_cpu_s": 2.14,
+    "file_bytes": 169131,
+    "range_points": 115,
+    "range_unproven": 0,
+    "range_mean_s": 0.57,
+    "range_worst_s": 1.58
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

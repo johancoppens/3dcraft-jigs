@@ -1,0 +1,3979 @@
+[
+[
+"table.set",
+{
+"name": "motion_laws",
+"columns": [
+"law",
+"p1",
+"p3",
+"p4",
+"p5",
+"q1",
+"q2",
+"s_mean",
+"s2_mean",
+"cv",
+"ca",
+"accel_jump"
+],
+"rows": [
+[
+"Cycloidal",
+1,
+0,
+0,
+0,
+-0.15915494309189535,
+0,
+0.5,
+0.3966590731097944,
+2.0,
+6.283185307179586,
+0
+],
+[
+"Simple harmonic",
+0,
+0,
+0,
+0,
+0,
+0.5,
+0.5,
+0.375,
+1.5707963267948966,
+4.934802200544679,
+1
+],
+[
+"3-4-5 polynomial",
+0,
+10,
+-15,
+6,
+0,
+0,
+0.5,
+0.3917748917748918,
+1.875,
+5.77350269,
+0
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "track_rollers",
+"columns": [
+"roller",
+{
+"name": "diameter",
+"unit": "mm"
+},
+{
+"name": "width",
+"unit": "mm"
+},
+{
+"name": "stud",
+"unit": "mm"
+},
+{
+"name": "stud_length",
+"unit": "mm"
+},
+{
+"name": "stem",
+"unit": "mm"
+},
+"speed_rating",
+{
+"name": "guide_bolt_hole",
+"unit": "mm"
+},
+{
+"name": "guide_screw",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"KR 16 (16 mm)",
+16,
+11,
+6,
+16,
+12,
+17000,
+6.6,
+4
+],
+[
+"KR 19 (19 mm)",
+19,
+11,
+8,
+20,
+12,
+13000,
+6.6,
+4
+],
+[
+"KR 22 (22 mm)",
+22,
+12,
+10,
+23,
+16,
+10000,
+6.6,
+6
+],
+[
+"KR 26 (26 mm)",
+26,
+12,
+10,
+23,
+16,
+10000,
+6.6,
+6
+],
+[
+"KR 30 (30 mm)",
+30,
+14,
+12,
+25,
+20,
+8200,
+9,
+8
+],
+[
+"KR 32 (32 mm)",
+32,
+14,
+12,
+25,
+20,
+8200,
+9,
+8
+],
+[
+"NUKR 35 (35 mm)",
+35,
+18,
+16,
+32.5,
+25,
+6100,
+11,
+8
+],
+[
+"NUKR 40 (40 mm)",
+40,
+20,
+18,
+36.5,
+25,
+5300,
+11,
+8
+],
+[
+"NUKR 47 (47 mm)",
+47,
+24,
+20,
+40.5,
+30,
+4500,
+13.5,
+10
+],
+[
+"NUKR 52 (52 mm)",
+52,
+24,
+20,
+40.5,
+30,
+3700,
+13.5,
+10
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "shafts",
+"columns": [
+"shaft",
+{
+"name": "bore",
+"unit": "mm"
+},
+{
+"name": "key_width",
+"unit": "mm"
+},
+{
+"name": "hub_keyway_depth",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"16 mm",
+16,
+5,
+2.3
+],
+[
+"20 mm",
+20,
+6,
+2.8
+],
+[
+"25 mm",
+25,
+8,
+3.3
+],
+[
+"30 mm",
+30,
+8,
+3.3
+],
+[
+"35 mm",
+35,
+10,
+3.3
+],
+[
+"40 mm",
+40,
+12,
+3.3
+],
+[
+"45 mm",
+45,
+14,
+3.8
+],
+[
+"50 mm",
+50,
+14,
+3.8
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "lift",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_angle",
+"expr": "120 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "top_dwell_angle",
+"expr": "40 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "return_angle",
+"expr": "120 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "motion_law",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_speed",
+"expr": "120"
+}
+],
+[
+"variable.set",
+{
+"name": "pressure_limit",
+"expr": "30 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "base_circle_radius",
+"expr": "48 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "roller",
+"expr": "4"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "hub",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "drive_angle",
+"expr": "60 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_radius",
+"expr": "track_rollers[roller].diameter / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_width",
+"expr": "track_rollers[roller].width"
+}
+],
+[
+"variable.set",
+{
+"name": "stud_diameter",
+"expr": "track_rollers[roller].stud"
+}
+],
+[
+"variable.set",
+{
+"name": "stud_length",
+"expr": "track_rollers[roller].stud_length"
+}
+],
+[
+"variable.set",
+{
+"name": "stem_diameter",
+"expr": "track_rollers[roller].stem"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_overhang",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_width",
+"expr": "roller_width + cam_overhang"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_radius",
+"expr": "base_circle_radius + roller_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "base_dwell_angle",
+"expr": "360 deg - rise_angle - top_dwell_angle - return_angle"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_rad",
+"expr": "rise_angle / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "top_rad",
+"expr": "top_dwell_angle / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "return_rad",
+"expr": "return_angle / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "base_rad",
+"expr": "base_dwell_angle / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "law_p1",
+"expr": "motion_laws[motion_law].p1"
+}
+],
+[
+"variable.set",
+{
+"name": "law_p3",
+"expr": "motion_laws[motion_law].p3"
+}
+],
+[
+"variable.set",
+{
+"name": "law_p4",
+"expr": "motion_laws[motion_law].p4"
+}
+],
+[
+"variable.set",
+{
+"name": "law_p5",
+"expr": "motion_laws[motion_law].p5"
+}
+],
+[
+"variable.set",
+{
+"name": "law_q1",
+"expr": "motion_laws[motion_law].q1"
+}
+],
+[
+"variable.set",
+{
+"name": "law_q2",
+"expr": "motion_laws[motion_law].q2"
+}
+],
+[
+"variable.set",
+{
+"name": "curvature_ratio_min",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "curvature_sampled_ratio",
+"expr": "2.03"
+}
+],
+[
+"variable.set",
+{
+"name": "curvature_sizing_ratio",
+"expr": "curvature_sampled_ratio*1.01"
+}
+],
+[
+"variable.set",
+{
+"name": "bore_diameter",
+"expr": "shafts[shaft].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "bore_radius",
+"expr": "bore_diameter/2"
+}
+],
+[
+"variable.set",
+{
+"name": "key_width",
+"expr": "shafts[shaft].key_width"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_keyway_depth",
+"expr": "shafts[shaft].hub_keyway_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "rim_wall",
+"expr": "max(8 mm, 0.35*bore_diameter)"
+}
+],
+[
+"variable.set",
+{
+"name": "base_circle_for_bore",
+"expr": "sqrt((bore_radius + hub_keyway_depth)^2 + (key_width/2)^2) + rim_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s00",
+"expr": "law_p1*0.00 + law_p3*0.00^3 + law_p4*0.00^4 + law_p5*0.00^5 + law_q1*sin(2*pi*0.00) + law_q2*(1 - cos(pi*0.00))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v00",
+"expr": "law_p1 + 3*law_p3*0.00^2 + 4*law_p4*0.00^3 + 5*law_p5*0.00^4 + 2*pi*law_q1*cos(2*pi*0.00) + pi*law_q2*sin(pi*0.00)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a00",
+"expr": "6*law_p3*0.00 + 12*law_p4*0.00^2 + 20*law_p5*0.00^3 - 4*pi^2*law_q1*sin(2*pi*0.00) + pi^2*law_q2*cos(pi*0.00)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s01",
+"expr": "law_p1*0.05 + law_p3*0.05^3 + law_p4*0.05^4 + law_p5*0.05^5 + law_q1*sin(2*pi*0.05) + law_q2*(1 - cos(pi*0.05))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v01",
+"expr": "law_p1 + 3*law_p3*0.05^2 + 4*law_p4*0.05^3 + 5*law_p5*0.05^4 + 2*pi*law_q1*cos(2*pi*0.05) + pi*law_q2*sin(pi*0.05)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a01",
+"expr": "6*law_p3*0.05 + 12*law_p4*0.05^2 + 20*law_p5*0.05^3 - 4*pi^2*law_q1*sin(2*pi*0.05) + pi^2*law_q2*cos(pi*0.05)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s02",
+"expr": "law_p1*0.10 + law_p3*0.10^3 + law_p4*0.10^4 + law_p5*0.10^5 + law_q1*sin(2*pi*0.10) + law_q2*(1 - cos(pi*0.10))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v02",
+"expr": "law_p1 + 3*law_p3*0.10^2 + 4*law_p4*0.10^3 + 5*law_p5*0.10^4 + 2*pi*law_q1*cos(2*pi*0.10) + pi*law_q2*sin(pi*0.10)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a02",
+"expr": "6*law_p3*0.10 + 12*law_p4*0.10^2 + 20*law_p5*0.10^3 - 4*pi^2*law_q1*sin(2*pi*0.10) + pi^2*law_q2*cos(pi*0.10)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s03",
+"expr": "law_p1*0.15 + law_p3*0.15^3 + law_p4*0.15^4 + law_p5*0.15^5 + law_q1*sin(2*pi*0.15) + law_q2*(1 - cos(pi*0.15))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v03",
+"expr": "law_p1 + 3*law_p3*0.15^2 + 4*law_p4*0.15^3 + 5*law_p5*0.15^4 + 2*pi*law_q1*cos(2*pi*0.15) + pi*law_q2*sin(pi*0.15)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a03",
+"expr": "6*law_p3*0.15 + 12*law_p4*0.15^2 + 20*law_p5*0.15^3 - 4*pi^2*law_q1*sin(2*pi*0.15) + pi^2*law_q2*cos(pi*0.15)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s04",
+"expr": "law_p1*0.20 + law_p3*0.20^3 + law_p4*0.20^4 + law_p5*0.20^5 + law_q1*sin(2*pi*0.20) + law_q2*(1 - cos(pi*0.20))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v04",
+"expr": "law_p1 + 3*law_p3*0.20^2 + 4*law_p4*0.20^3 + 5*law_p5*0.20^4 + 2*pi*law_q1*cos(2*pi*0.20) + pi*law_q2*sin(pi*0.20)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a04",
+"expr": "6*law_p3*0.20 + 12*law_p4*0.20^2 + 20*law_p5*0.20^3 - 4*pi^2*law_q1*sin(2*pi*0.20) + pi^2*law_q2*cos(pi*0.20)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s05",
+"expr": "law_p1*0.25 + law_p3*0.25^3 + law_p4*0.25^4 + law_p5*0.25^5 + law_q1*sin(2*pi*0.25) + law_q2*(1 - cos(pi*0.25))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v05",
+"expr": "law_p1 + 3*law_p3*0.25^2 + 4*law_p4*0.25^3 + 5*law_p5*0.25^4 + 2*pi*law_q1*cos(2*pi*0.25) + pi*law_q2*sin(pi*0.25)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a05",
+"expr": "6*law_p3*0.25 + 12*law_p4*0.25^2 + 20*law_p5*0.25^3 - 4*pi^2*law_q1*sin(2*pi*0.25) + pi^2*law_q2*cos(pi*0.25)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s06",
+"expr": "law_p1*0.30 + law_p3*0.30^3 + law_p4*0.30^4 + law_p5*0.30^5 + law_q1*sin(2*pi*0.30) + law_q2*(1 - cos(pi*0.30))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v06",
+"expr": "law_p1 + 3*law_p3*0.30^2 + 4*law_p4*0.30^3 + 5*law_p5*0.30^4 + 2*pi*law_q1*cos(2*pi*0.30) + pi*law_q2*sin(pi*0.30)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a06",
+"expr": "6*law_p3*0.30 + 12*law_p4*0.30^2 + 20*law_p5*0.30^3 - 4*pi^2*law_q1*sin(2*pi*0.30) + pi^2*law_q2*cos(pi*0.30)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s07",
+"expr": "law_p1*0.35 + law_p3*0.35^3 + law_p4*0.35^4 + law_p5*0.35^5 + law_q1*sin(2*pi*0.35) + law_q2*(1 - cos(pi*0.35))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v07",
+"expr": "law_p1 + 3*law_p3*0.35^2 + 4*law_p4*0.35^3 + 5*law_p5*0.35^4 + 2*pi*law_q1*cos(2*pi*0.35) + pi*law_q2*sin(pi*0.35)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a07",
+"expr": "6*law_p3*0.35 + 12*law_p4*0.35^2 + 20*law_p5*0.35^3 - 4*pi^2*law_q1*sin(2*pi*0.35) + pi^2*law_q2*cos(pi*0.35)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s08",
+"expr": "law_p1*0.40 + law_p3*0.40^3 + law_p4*0.40^4 + law_p5*0.40^5 + law_q1*sin(2*pi*0.40) + law_q2*(1 - cos(pi*0.40))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v08",
+"expr": "law_p1 + 3*law_p3*0.40^2 + 4*law_p4*0.40^3 + 5*law_p5*0.40^4 + 2*pi*law_q1*cos(2*pi*0.40) + pi*law_q2*sin(pi*0.40)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a08",
+"expr": "6*law_p3*0.40 + 12*law_p4*0.40^2 + 20*law_p5*0.40^3 - 4*pi^2*law_q1*sin(2*pi*0.40) + pi^2*law_q2*cos(pi*0.40)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s09",
+"expr": "law_p1*0.45 + law_p3*0.45^3 + law_p4*0.45^4 + law_p5*0.45^5 + law_q1*sin(2*pi*0.45) + law_q2*(1 - cos(pi*0.45))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v09",
+"expr": "law_p1 + 3*law_p3*0.45^2 + 4*law_p4*0.45^3 + 5*law_p5*0.45^4 + 2*pi*law_q1*cos(2*pi*0.45) + pi*law_q2*sin(pi*0.45)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a09",
+"expr": "6*law_p3*0.45 + 12*law_p4*0.45^2 + 20*law_p5*0.45^3 - 4*pi^2*law_q1*sin(2*pi*0.45) + pi^2*law_q2*cos(pi*0.45)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s10",
+"expr": "law_p1*0.50 + law_p3*0.50^3 + law_p4*0.50^4 + law_p5*0.50^5 + law_q1*sin(2*pi*0.50) + law_q2*(1 - cos(pi*0.50))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v10",
+"expr": "law_p1 + 3*law_p3*0.50^2 + 4*law_p4*0.50^3 + 5*law_p5*0.50^4 + 2*pi*law_q1*cos(2*pi*0.50) + pi*law_q2*sin(pi*0.50)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a10",
+"expr": "6*law_p3*0.50 + 12*law_p4*0.50^2 + 20*law_p5*0.50^3 - 4*pi^2*law_q1*sin(2*pi*0.50) + pi^2*law_q2*cos(pi*0.50)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s11",
+"expr": "law_p1*0.55 + law_p3*0.55^3 + law_p4*0.55^4 + law_p5*0.55^5 + law_q1*sin(2*pi*0.55) + law_q2*(1 - cos(pi*0.55))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v11",
+"expr": "law_p1 + 3*law_p3*0.55^2 + 4*law_p4*0.55^3 + 5*law_p5*0.55^4 + 2*pi*law_q1*cos(2*pi*0.55) + pi*law_q2*sin(pi*0.55)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a11",
+"expr": "6*law_p3*0.55 + 12*law_p4*0.55^2 + 20*law_p5*0.55^3 - 4*pi^2*law_q1*sin(2*pi*0.55) + pi^2*law_q2*cos(pi*0.55)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s12",
+"expr": "law_p1*0.60 + law_p3*0.60^3 + law_p4*0.60^4 + law_p5*0.60^5 + law_q1*sin(2*pi*0.60) + law_q2*(1 - cos(pi*0.60))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v12",
+"expr": "law_p1 + 3*law_p3*0.60^2 + 4*law_p4*0.60^3 + 5*law_p5*0.60^4 + 2*pi*law_q1*cos(2*pi*0.60) + pi*law_q2*sin(pi*0.60)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a12",
+"expr": "6*law_p3*0.60 + 12*law_p4*0.60^2 + 20*law_p5*0.60^3 - 4*pi^2*law_q1*sin(2*pi*0.60) + pi^2*law_q2*cos(pi*0.60)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s13",
+"expr": "law_p1*0.65 + law_p3*0.65^3 + law_p4*0.65^4 + law_p5*0.65^5 + law_q1*sin(2*pi*0.65) + law_q2*(1 - cos(pi*0.65))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v13",
+"expr": "law_p1 + 3*law_p3*0.65^2 + 4*law_p4*0.65^3 + 5*law_p5*0.65^4 + 2*pi*law_q1*cos(2*pi*0.65) + pi*law_q2*sin(pi*0.65)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a13",
+"expr": "6*law_p3*0.65 + 12*law_p4*0.65^2 + 20*law_p5*0.65^3 - 4*pi^2*law_q1*sin(2*pi*0.65) + pi^2*law_q2*cos(pi*0.65)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s14",
+"expr": "law_p1*0.70 + law_p3*0.70^3 + law_p4*0.70^4 + law_p5*0.70^5 + law_q1*sin(2*pi*0.70) + law_q2*(1 - cos(pi*0.70))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v14",
+"expr": "law_p1 + 3*law_p3*0.70^2 + 4*law_p4*0.70^3 + 5*law_p5*0.70^4 + 2*pi*law_q1*cos(2*pi*0.70) + pi*law_q2*sin(pi*0.70)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a14",
+"expr": "6*law_p3*0.70 + 12*law_p4*0.70^2 + 20*law_p5*0.70^3 - 4*pi^2*law_q1*sin(2*pi*0.70) + pi^2*law_q2*cos(pi*0.70)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s15",
+"expr": "law_p1*0.75 + law_p3*0.75^3 + law_p4*0.75^4 + law_p5*0.75^5 + law_q1*sin(2*pi*0.75) + law_q2*(1 - cos(pi*0.75))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v15",
+"expr": "law_p1 + 3*law_p3*0.75^2 + 4*law_p4*0.75^3 + 5*law_p5*0.75^4 + 2*pi*law_q1*cos(2*pi*0.75) + pi*law_q2*sin(pi*0.75)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a15",
+"expr": "6*law_p3*0.75 + 12*law_p4*0.75^2 + 20*law_p5*0.75^3 - 4*pi^2*law_q1*sin(2*pi*0.75) + pi^2*law_q2*cos(pi*0.75)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s16",
+"expr": "law_p1*0.80 + law_p3*0.80^3 + law_p4*0.80^4 + law_p5*0.80^5 + law_q1*sin(2*pi*0.80) + law_q2*(1 - cos(pi*0.80))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v16",
+"expr": "law_p1 + 3*law_p3*0.80^2 + 4*law_p4*0.80^3 + 5*law_p5*0.80^4 + 2*pi*law_q1*cos(2*pi*0.80) + pi*law_q2*sin(pi*0.80)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a16",
+"expr": "6*law_p3*0.80 + 12*law_p4*0.80^2 + 20*law_p5*0.80^3 - 4*pi^2*law_q1*sin(2*pi*0.80) + pi^2*law_q2*cos(pi*0.80)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s17",
+"expr": "law_p1*0.85 + law_p3*0.85^3 + law_p4*0.85^4 + law_p5*0.85^5 + law_q1*sin(2*pi*0.85) + law_q2*(1 - cos(pi*0.85))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v17",
+"expr": "law_p1 + 3*law_p3*0.85^2 + 4*law_p4*0.85^3 + 5*law_p5*0.85^4 + 2*pi*law_q1*cos(2*pi*0.85) + pi*law_q2*sin(pi*0.85)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a17",
+"expr": "6*law_p3*0.85 + 12*law_p4*0.85^2 + 20*law_p5*0.85^3 - 4*pi^2*law_q1*sin(2*pi*0.85) + pi^2*law_q2*cos(pi*0.85)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s18",
+"expr": "law_p1*0.90 + law_p3*0.90^3 + law_p4*0.90^4 + law_p5*0.90^5 + law_q1*sin(2*pi*0.90) + law_q2*(1 - cos(pi*0.90))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v18",
+"expr": "law_p1 + 3*law_p3*0.90^2 + 4*law_p4*0.90^3 + 5*law_p5*0.90^4 + 2*pi*law_q1*cos(2*pi*0.90) + pi*law_q2*sin(pi*0.90)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a18",
+"expr": "6*law_p3*0.90 + 12*law_p4*0.90^2 + 20*law_p5*0.90^3 - 4*pi^2*law_q1*sin(2*pi*0.90) + pi^2*law_q2*cos(pi*0.90)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s19",
+"expr": "law_p1*0.95 + law_p3*0.95^3 + law_p4*0.95^4 + law_p5*0.95^5 + law_q1*sin(2*pi*0.95) + law_q2*(1 - cos(pi*0.95))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v19",
+"expr": "law_p1 + 3*law_p3*0.95^2 + 4*law_p4*0.95^3 + 5*law_p5*0.95^4 + 2*pi*law_q1*cos(2*pi*0.95) + pi*law_q2*sin(pi*0.95)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a19",
+"expr": "6*law_p3*0.95 + 12*law_p4*0.95^2 + 20*law_p5*0.95^3 - 4*pi^2*law_q1*sin(2*pi*0.95) + pi^2*law_q2*cos(pi*0.95)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_s20",
+"expr": "law_p1*1.00 + law_p3*1.00^3 + law_p4*1.00^4 + law_p5*1.00^5 + law_q1*sin(2*pi*1.00) + law_q2*(1 - cos(pi*1.00))"
+}
+],
+[
+"variable.set",
+{
+"name": "law_v20",
+"expr": "law_p1 + 3*law_p3*1.00^2 + 4*law_p4*1.00^3 + 5*law_p5*1.00^4 + 2*pi*law_q1*cos(2*pi*1.00) + pi*law_q2*sin(pi*1.00)"
+}
+],
+[
+"variable.set",
+{
+"name": "law_a20",
+"expr": "6*law_p3*1.00 + 12*law_p4*1.00^2 + 20*law_p5*1.00^3 - 4*pi^2*law_q1*sin(2*pi*1.00) + pi^2*law_q2*cos(pi*1.00)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v00",
+"expr": "lift/rise_rad*law_v00"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a00",
+"expr": "lift/rise_rad^2*law_a00"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v01",
+"expr": "lift/rise_rad*law_v01"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a01",
+"expr": "lift/rise_rad^2*law_a01"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v02",
+"expr": "lift/rise_rad*law_v02"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a02",
+"expr": "lift/rise_rad^2*law_a02"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v03",
+"expr": "lift/rise_rad*law_v03"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a03",
+"expr": "lift/rise_rad^2*law_a03"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v04",
+"expr": "lift/rise_rad*law_v04"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a04",
+"expr": "lift/rise_rad^2*law_a04"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v05",
+"expr": "lift/rise_rad*law_v05"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a05",
+"expr": "lift/rise_rad^2*law_a05"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v06",
+"expr": "lift/rise_rad*law_v06"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a06",
+"expr": "lift/rise_rad^2*law_a06"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v07",
+"expr": "lift/rise_rad*law_v07"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a07",
+"expr": "lift/rise_rad^2*law_a07"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v08",
+"expr": "lift/rise_rad*law_v08"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a08",
+"expr": "lift/rise_rad^2*law_a08"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v09",
+"expr": "lift/rise_rad*law_v09"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a09",
+"expr": "lift/rise_rad^2*law_a09"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v10",
+"expr": "lift/rise_rad*law_v10"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a10",
+"expr": "lift/rise_rad^2*law_a10"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v11",
+"expr": "lift/rise_rad*law_v11"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a11",
+"expr": "lift/rise_rad^2*law_a11"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v12",
+"expr": "lift/rise_rad*law_v12"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a12",
+"expr": "lift/rise_rad^2*law_a12"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v13",
+"expr": "lift/rise_rad*law_v13"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a13",
+"expr": "lift/rise_rad^2*law_a13"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v14",
+"expr": "lift/rise_rad*law_v14"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a14",
+"expr": "lift/rise_rad^2*law_a14"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v15",
+"expr": "lift/rise_rad*law_v15"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a15",
+"expr": "lift/rise_rad^2*law_a15"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v16",
+"expr": "lift/rise_rad*law_v16"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a16",
+"expr": "lift/rise_rad^2*law_a16"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v17",
+"expr": "lift/rise_rad*law_v17"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a17",
+"expr": "lift/rise_rad^2*law_a17"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v18",
+"expr": "lift/rise_rad*law_v18"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a18",
+"expr": "lift/rise_rad^2*law_a18"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v19",
+"expr": "lift/rise_rad*law_v19"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a19",
+"expr": "lift/rise_rad^2*law_a19"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_v20",
+"expr": "lift/rise_rad*law_v20"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_a20",
+"expr": "lift/rise_rad^2*law_a20"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v00",
+"expr": "lift/return_rad*law_v00"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a00",
+"expr": "lift/return_rad^2*law_a00"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v01",
+"expr": "lift/return_rad*law_v01"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a01",
+"expr": "lift/return_rad^2*law_a01"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v02",
+"expr": "lift/return_rad*law_v02"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a02",
+"expr": "lift/return_rad^2*law_a02"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v03",
+"expr": "lift/return_rad*law_v03"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a03",
+"expr": "lift/return_rad^2*law_a03"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v04",
+"expr": "lift/return_rad*law_v04"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a04",
+"expr": "lift/return_rad^2*law_a04"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v05",
+"expr": "lift/return_rad*law_v05"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a05",
+"expr": "lift/return_rad^2*law_a05"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v06",
+"expr": "lift/return_rad*law_v06"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a06",
+"expr": "lift/return_rad^2*law_a06"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v07",
+"expr": "lift/return_rad*law_v07"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a07",
+"expr": "lift/return_rad^2*law_a07"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v08",
+"expr": "lift/return_rad*law_v08"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a08",
+"expr": "lift/return_rad^2*law_a08"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v09",
+"expr": "lift/return_rad*law_v09"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a09",
+"expr": "lift/return_rad^2*law_a09"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v10",
+"expr": "lift/return_rad*law_v10"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a10",
+"expr": "lift/return_rad^2*law_a10"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v11",
+"expr": "lift/return_rad*law_v11"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a11",
+"expr": "lift/return_rad^2*law_a11"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v12",
+"expr": "lift/return_rad*law_v12"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a12",
+"expr": "lift/return_rad^2*law_a12"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v13",
+"expr": "lift/return_rad*law_v13"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a13",
+"expr": "lift/return_rad^2*law_a13"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v14",
+"expr": "lift/return_rad*law_v14"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a14",
+"expr": "lift/return_rad^2*law_a14"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v15",
+"expr": "lift/return_rad*law_v15"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a15",
+"expr": "lift/return_rad^2*law_a15"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v16",
+"expr": "lift/return_rad*law_v16"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a16",
+"expr": "lift/return_rad^2*law_a16"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v17",
+"expr": "lift/return_rad*law_v17"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a17",
+"expr": "lift/return_rad^2*law_a17"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v18",
+"expr": "lift/return_rad*law_v18"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a18",
+"expr": "lift/return_rad^2*law_a18"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v19",
+"expr": "lift/return_rad*law_v19"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a19",
+"expr": "lift/return_rad^2*law_a19"
+}
+],
+[
+"variable.set",
+{
+"name": "return_v20",
+"expr": "lift/return_rad*law_v20"
+}
+],
+[
+"variable.set",
+{
+"name": "return_a20",
+"expr": "lift/return_rad^2*law_a20"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_xi",
+"expr": "1 / (rise_rad * tan(pressure_limit))"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_x_star",
+"expr": "choose(motion_law, atan(2*pi*rise_xi)/(1 rad*pi), atan(pi*rise_xi)/(1 rad*pi), ((1 + 4*rise_xi) - sqrt(1 + 16*rise_xi^2))/2)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_size_ratio",
+"expr": "rise_xi*(law_p1 + 3*law_p3*rise_x_star^2 + 4*law_p4*rise_x_star^3 + 5*law_p5*rise_x_star^4 + 2*pi*law_q1*cos(2*pi*rise_x_star) + pi*law_q2*sin(pi*rise_x_star)) - (law_p1*rise_x_star + law_p3*rise_x_star^3 + law_p4*rise_x_star^4 + law_p5*rise_x_star^5 + law_q1*sin(2*pi*rise_x_star) + law_q2*(1 - cos(pi*rise_x_star)))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_xi",
+"expr": "1 / (return_rad * tan(pressure_limit))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_x_star",
+"expr": "choose(motion_law, atan(2*pi*return_xi)/(1 rad*pi), atan(pi*return_xi)/(1 rad*pi), ((1 + 4*return_xi) - sqrt(1 + 16*return_xi^2))/2)"
+}
+],
+[
+"variable.set",
+{
+"name": "return_size_ratio",
+"expr": "return_xi*(law_p1 + 3*law_p3*return_x_star^2 + 4*law_p4*return_x_star^3 + 5*law_p5*return_x_star^4 + 2*pi*law_q1*cos(2*pi*return_x_star) + pi*law_q2*sin(pi*return_x_star)) - (law_p1*return_x_star + law_p3*return_x_star^3 + law_p4*return_x_star^4 + law_p5*return_x_star^5 + law_q1*sin(2*pi*return_x_star) + law_q2*(1 - cos(pi*return_x_star)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_radius_for_pressure",
+"expr": "lift * max(rise_size_ratio, return_size_ratio)"
+}
+],
+[
+"variable.set",
+{
+"name": "base_circle_for_pressure",
+"expr": "pitch_radius_for_pressure - roller_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_iter_0",
+"expr": "max(pitch_radius_for_pressure, curvature_sizing_ratio*roller_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_rho_iter_0",
+"expr": "min(if(((pitch_iter_0 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_0 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s10)^2 + rise_v10^2))*((pitch_iter_0 + lift*law_s10)^2 + rise_v10^2)/((pitch_iter_0 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_0 + lift*law_s10)), 100000 mm), if(((pitch_iter_0 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_0 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s11)^2 + rise_v11^2))*((pitch_iter_0 + lift*law_s11)^2 + rise_v11^2)/((pitch_iter_0 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_0 + lift*law_s11)), 100000 mm), if(((pitch_iter_0 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_0 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s12)^2 + rise_v12^2))*((pitch_iter_0 + lift*law_s12)^2 + rise_v12^2)/((pitch_iter_0 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_0 + lift*law_s12)), 100000 mm), if(((pitch_iter_0 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_0 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s13)^2 + rise_v13^2))*((pitch_iter_0 + lift*law_s13)^2 + rise_v13^2)/((pitch_iter_0 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_0 + lift*law_s13)), 100000 mm), if(((pitch_iter_0 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_0 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s14)^2 + rise_v14^2))*((pitch_iter_0 + lift*law_s14)^2 + rise_v14^2)/((pitch_iter_0 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_0 + lift*law_s14)), 100000 mm), if(((pitch_iter_0 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_0 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s15)^2 + rise_v15^2))*((pitch_iter_0 + lift*law_s15)^2 + rise_v15^2)/((pitch_iter_0 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_0 + lift*law_s15)), 100000 mm), if(((pitch_iter_0 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_0 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s16)^2 + rise_v16^2))*((pitch_iter_0 + lift*law_s16)^2 + rise_v16^2)/((pitch_iter_0 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_0 + lift*law_s16)), 100000 mm), if(((pitch_iter_0 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_0 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s17)^2 + rise_v17^2))*((pitch_iter_0 + lift*law_s17)^2 + rise_v17^2)/((pitch_iter_0 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_0 + lift*law_s17)), 100000 mm), if(((pitch_iter_0 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_0 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s18)^2 + rise_v18^2))*((pitch_iter_0 + lift*law_s18)^2 + rise_v18^2)/((pitch_iter_0 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_0 + lift*law_s18)), 100000 mm), if(((pitch_iter_0 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_0 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s19)^2 + rise_v19^2))*((pitch_iter_0 + lift*law_s19)^2 + rise_v19^2)/((pitch_iter_0 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_0 + lift*law_s19)), 100000 mm), if(((pitch_iter_0 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_0 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s20)^2 + rise_v20^2))*((pitch_iter_0 + lift*law_s20)^2 + rise_v20^2)/((pitch_iter_0 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_0 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_rho_iter_0",
+"expr": "min(if(((pitch_iter_0 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_0 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s10)^2 + return_v10^2))*((pitch_iter_0 + lift*law_s10)^2 + return_v10^2)/((pitch_iter_0 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_0 + lift*law_s10)), 100000 mm), if(((pitch_iter_0 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_0 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s11)^2 + return_v11^2))*((pitch_iter_0 + lift*law_s11)^2 + return_v11^2)/((pitch_iter_0 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_0 + lift*law_s11)), 100000 mm), if(((pitch_iter_0 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_0 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s12)^2 + return_v12^2))*((pitch_iter_0 + lift*law_s12)^2 + return_v12^2)/((pitch_iter_0 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_0 + lift*law_s12)), 100000 mm), if(((pitch_iter_0 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_0 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s13)^2 + return_v13^2))*((pitch_iter_0 + lift*law_s13)^2 + return_v13^2)/((pitch_iter_0 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_0 + lift*law_s13)), 100000 mm), if(((pitch_iter_0 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_0 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s14)^2 + return_v14^2))*((pitch_iter_0 + lift*law_s14)^2 + return_v14^2)/((pitch_iter_0 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_0 + lift*law_s14)), 100000 mm), if(((pitch_iter_0 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_0 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s15)^2 + return_v15^2))*((pitch_iter_0 + lift*law_s15)^2 + return_v15^2)/((pitch_iter_0 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_0 + lift*law_s15)), 100000 mm), if(((pitch_iter_0 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_0 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s16)^2 + return_v16^2))*((pitch_iter_0 + lift*law_s16)^2 + return_v16^2)/((pitch_iter_0 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_0 + lift*law_s16)), 100000 mm), if(((pitch_iter_0 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_0 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s17)^2 + return_v17^2))*((pitch_iter_0 + lift*law_s17)^2 + return_v17^2)/((pitch_iter_0 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_0 + lift*law_s17)), 100000 mm), if(((pitch_iter_0 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_0 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s18)^2 + return_v18^2))*((pitch_iter_0 + lift*law_s18)^2 + return_v18^2)/((pitch_iter_0 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_0 + lift*law_s18)), 100000 mm), if(((pitch_iter_0 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_0 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s19)^2 + return_v19^2))*((pitch_iter_0 + lift*law_s19)^2 + return_v19^2)/((pitch_iter_0 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_0 + lift*law_s19)), 100000 mm), if(((pitch_iter_0 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_0 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_0 + lift*law_s20)^2 + return_v20^2))*((pitch_iter_0 + lift*law_s20)^2 + return_v20^2)/((pitch_iter_0 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_0 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_iter_0",
+"expr": "min(rise_rho_iter_0, return_rho_iter_0, pitch_iter_0)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_iter_1",
+"expr": "pitch_iter_0 + 2*max(0 mm, curvature_sizing_ratio*roller_radius - rho_iter_0)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_rho_iter_1",
+"expr": "min(if(((pitch_iter_1 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_1 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s10)^2 + rise_v10^2))*((pitch_iter_1 + lift*law_s10)^2 + rise_v10^2)/((pitch_iter_1 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_1 + lift*law_s10)), 100000 mm), if(((pitch_iter_1 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_1 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s11)^2 + rise_v11^2))*((pitch_iter_1 + lift*law_s11)^2 + rise_v11^2)/((pitch_iter_1 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_1 + lift*law_s11)), 100000 mm), if(((pitch_iter_1 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_1 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s12)^2 + rise_v12^2))*((pitch_iter_1 + lift*law_s12)^2 + rise_v12^2)/((pitch_iter_1 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_1 + lift*law_s12)), 100000 mm), if(((pitch_iter_1 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_1 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s13)^2 + rise_v13^2))*((pitch_iter_1 + lift*law_s13)^2 + rise_v13^2)/((pitch_iter_1 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_1 + lift*law_s13)), 100000 mm), if(((pitch_iter_1 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_1 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s14)^2 + rise_v14^2))*((pitch_iter_1 + lift*law_s14)^2 + rise_v14^2)/((pitch_iter_1 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_1 + lift*law_s14)), 100000 mm), if(((pitch_iter_1 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_1 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s15)^2 + rise_v15^2))*((pitch_iter_1 + lift*law_s15)^2 + rise_v15^2)/((pitch_iter_1 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_1 + lift*law_s15)), 100000 mm), if(((pitch_iter_1 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_1 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s16)^2 + rise_v16^2))*((pitch_iter_1 + lift*law_s16)^2 + rise_v16^2)/((pitch_iter_1 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_1 + lift*law_s16)), 100000 mm), if(((pitch_iter_1 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_1 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s17)^2 + rise_v17^2))*((pitch_iter_1 + lift*law_s17)^2 + rise_v17^2)/((pitch_iter_1 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_1 + lift*law_s17)), 100000 mm), if(((pitch_iter_1 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_1 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s18)^2 + rise_v18^2))*((pitch_iter_1 + lift*law_s18)^2 + rise_v18^2)/((pitch_iter_1 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_1 + lift*law_s18)), 100000 mm), if(((pitch_iter_1 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_1 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s19)^2 + rise_v19^2))*((pitch_iter_1 + lift*law_s19)^2 + rise_v19^2)/((pitch_iter_1 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_1 + lift*law_s19)), 100000 mm), if(((pitch_iter_1 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_1 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s20)^2 + rise_v20^2))*((pitch_iter_1 + lift*law_s20)^2 + rise_v20^2)/((pitch_iter_1 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_1 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_rho_iter_1",
+"expr": "min(if(((pitch_iter_1 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_1 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s10)^2 + return_v10^2))*((pitch_iter_1 + lift*law_s10)^2 + return_v10^2)/((pitch_iter_1 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_1 + lift*law_s10)), 100000 mm), if(((pitch_iter_1 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_1 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s11)^2 + return_v11^2))*((pitch_iter_1 + lift*law_s11)^2 + return_v11^2)/((pitch_iter_1 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_1 + lift*law_s11)), 100000 mm), if(((pitch_iter_1 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_1 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s12)^2 + return_v12^2))*((pitch_iter_1 + lift*law_s12)^2 + return_v12^2)/((pitch_iter_1 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_1 + lift*law_s12)), 100000 mm), if(((pitch_iter_1 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_1 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s13)^2 + return_v13^2))*((pitch_iter_1 + lift*law_s13)^2 + return_v13^2)/((pitch_iter_1 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_1 + lift*law_s13)), 100000 mm), if(((pitch_iter_1 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_1 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s14)^2 + return_v14^2))*((pitch_iter_1 + lift*law_s14)^2 + return_v14^2)/((pitch_iter_1 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_1 + lift*law_s14)), 100000 mm), if(((pitch_iter_1 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_1 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s15)^2 + return_v15^2))*((pitch_iter_1 + lift*law_s15)^2 + return_v15^2)/((pitch_iter_1 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_1 + lift*law_s15)), 100000 mm), if(((pitch_iter_1 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_1 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s16)^2 + return_v16^2))*((pitch_iter_1 + lift*law_s16)^2 + return_v16^2)/((pitch_iter_1 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_1 + lift*law_s16)), 100000 mm), if(((pitch_iter_1 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_1 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s17)^2 + return_v17^2))*((pitch_iter_1 + lift*law_s17)^2 + return_v17^2)/((pitch_iter_1 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_1 + lift*law_s17)), 100000 mm), if(((pitch_iter_1 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_1 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s18)^2 + return_v18^2))*((pitch_iter_1 + lift*law_s18)^2 + return_v18^2)/((pitch_iter_1 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_1 + lift*law_s18)), 100000 mm), if(((pitch_iter_1 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_1 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s19)^2 + return_v19^2))*((pitch_iter_1 + lift*law_s19)^2 + return_v19^2)/((pitch_iter_1 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_1 + lift*law_s19)), 100000 mm), if(((pitch_iter_1 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_1 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_1 + lift*law_s20)^2 + return_v20^2))*((pitch_iter_1 + lift*law_s20)^2 + return_v20^2)/((pitch_iter_1 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_1 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_iter_1",
+"expr": "min(rise_rho_iter_1, return_rho_iter_1, pitch_iter_1)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_iter_2",
+"expr": "if(pitch_iter_1 - pitch_iter_0 > 0.000001 mm, pitch_iter_1 + (curvature_sizing_ratio*roller_radius - rho_iter_1)/max((rho_iter_1 - rho_iter_0)/(pitch_iter_1 - pitch_iter_0), 0.25), pitch_iter_1)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_rho_iter_2",
+"expr": "min(if(((pitch_iter_2 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_2 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s10)^2 + rise_v10^2))*((pitch_iter_2 + lift*law_s10)^2 + rise_v10^2)/((pitch_iter_2 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_2 + lift*law_s10)), 100000 mm), if(((pitch_iter_2 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_2 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s11)^2 + rise_v11^2))*((pitch_iter_2 + lift*law_s11)^2 + rise_v11^2)/((pitch_iter_2 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_2 + lift*law_s11)), 100000 mm), if(((pitch_iter_2 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_2 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s12)^2 + rise_v12^2))*((pitch_iter_2 + lift*law_s12)^2 + rise_v12^2)/((pitch_iter_2 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_2 + lift*law_s12)), 100000 mm), if(((pitch_iter_2 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_2 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s13)^2 + rise_v13^2))*((pitch_iter_2 + lift*law_s13)^2 + rise_v13^2)/((pitch_iter_2 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_2 + lift*law_s13)), 100000 mm), if(((pitch_iter_2 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_2 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s14)^2 + rise_v14^2))*((pitch_iter_2 + lift*law_s14)^2 + rise_v14^2)/((pitch_iter_2 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_2 + lift*law_s14)), 100000 mm), if(((pitch_iter_2 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_2 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s15)^2 + rise_v15^2))*((pitch_iter_2 + lift*law_s15)^2 + rise_v15^2)/((pitch_iter_2 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_2 + lift*law_s15)), 100000 mm), if(((pitch_iter_2 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_2 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s16)^2 + rise_v16^2))*((pitch_iter_2 + lift*law_s16)^2 + rise_v16^2)/((pitch_iter_2 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_2 + lift*law_s16)), 100000 mm), if(((pitch_iter_2 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_2 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s17)^2 + rise_v17^2))*((pitch_iter_2 + lift*law_s17)^2 + rise_v17^2)/((pitch_iter_2 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_2 + lift*law_s17)), 100000 mm), if(((pitch_iter_2 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_2 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s18)^2 + rise_v18^2))*((pitch_iter_2 + lift*law_s18)^2 + rise_v18^2)/((pitch_iter_2 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_2 + lift*law_s18)), 100000 mm), if(((pitch_iter_2 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_2 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s19)^2 + rise_v19^2))*((pitch_iter_2 + lift*law_s19)^2 + rise_v19^2)/((pitch_iter_2 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_2 + lift*law_s19)), 100000 mm), if(((pitch_iter_2 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_2 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s20)^2 + rise_v20^2))*((pitch_iter_2 + lift*law_s20)^2 + rise_v20^2)/((pitch_iter_2 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_2 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_rho_iter_2",
+"expr": "min(if(((pitch_iter_2 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_2 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s10)^2 + return_v10^2))*((pitch_iter_2 + lift*law_s10)^2 + return_v10^2)/((pitch_iter_2 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_2 + lift*law_s10)), 100000 mm), if(((pitch_iter_2 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_2 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s11)^2 + return_v11^2))*((pitch_iter_2 + lift*law_s11)^2 + return_v11^2)/((pitch_iter_2 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_2 + lift*law_s11)), 100000 mm), if(((pitch_iter_2 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_2 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s12)^2 + return_v12^2))*((pitch_iter_2 + lift*law_s12)^2 + return_v12^2)/((pitch_iter_2 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_2 + lift*law_s12)), 100000 mm), if(((pitch_iter_2 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_2 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s13)^2 + return_v13^2))*((pitch_iter_2 + lift*law_s13)^2 + return_v13^2)/((pitch_iter_2 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_2 + lift*law_s13)), 100000 mm), if(((pitch_iter_2 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_2 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s14)^2 + return_v14^2))*((pitch_iter_2 + lift*law_s14)^2 + return_v14^2)/((pitch_iter_2 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_2 + lift*law_s14)), 100000 mm), if(((pitch_iter_2 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_2 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s15)^2 + return_v15^2))*((pitch_iter_2 + lift*law_s15)^2 + return_v15^2)/((pitch_iter_2 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_2 + lift*law_s15)), 100000 mm), if(((pitch_iter_2 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_2 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s16)^2 + return_v16^2))*((pitch_iter_2 + lift*law_s16)^2 + return_v16^2)/((pitch_iter_2 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_2 + lift*law_s16)), 100000 mm), if(((pitch_iter_2 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_2 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s17)^2 + return_v17^2))*((pitch_iter_2 + lift*law_s17)^2 + return_v17^2)/((pitch_iter_2 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_2 + lift*law_s17)), 100000 mm), if(((pitch_iter_2 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_2 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s18)^2 + return_v18^2))*((pitch_iter_2 + lift*law_s18)^2 + return_v18^2)/((pitch_iter_2 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_2 + lift*law_s18)), 100000 mm), if(((pitch_iter_2 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_2 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s19)^2 + return_v19^2))*((pitch_iter_2 + lift*law_s19)^2 + return_v19^2)/((pitch_iter_2 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_2 + lift*law_s19)), 100000 mm), if(((pitch_iter_2 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_2 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_2 + lift*law_s20)^2 + return_v20^2))*((pitch_iter_2 + lift*law_s20)^2 + return_v20^2)/((pitch_iter_2 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_2 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_iter_2",
+"expr": "min(rise_rho_iter_2, return_rho_iter_2, pitch_iter_2)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_iter_3",
+"expr": "if(pitch_iter_2 - pitch_iter_1 > 0.000001 mm, pitch_iter_2 + (curvature_sizing_ratio*roller_radius - rho_iter_2)/max((rho_iter_2 - rho_iter_1)/(pitch_iter_2 - pitch_iter_1), 0.25), pitch_iter_2)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_rho_iter_3",
+"expr": "min(if(((pitch_iter_3 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_3 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s10)^2 + rise_v10^2))*((pitch_iter_3 + lift*law_s10)^2 + rise_v10^2)/((pitch_iter_3 + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_iter_3 + lift*law_s10)), 100000 mm), if(((pitch_iter_3 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_3 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s11)^2 + rise_v11^2))*((pitch_iter_3 + lift*law_s11)^2 + rise_v11^2)/((pitch_iter_3 + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_iter_3 + lift*law_s11)), 100000 mm), if(((pitch_iter_3 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_3 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s12)^2 + rise_v12^2))*((pitch_iter_3 + lift*law_s12)^2 + rise_v12^2)/((pitch_iter_3 + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_iter_3 + lift*law_s12)), 100000 mm), if(((pitch_iter_3 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_3 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s13)^2 + rise_v13^2))*((pitch_iter_3 + lift*law_s13)^2 + rise_v13^2)/((pitch_iter_3 + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_iter_3 + lift*law_s13)), 100000 mm), if(((pitch_iter_3 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_3 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s14)^2 + rise_v14^2))*((pitch_iter_3 + lift*law_s14)^2 + rise_v14^2)/((pitch_iter_3 + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_iter_3 + lift*law_s14)), 100000 mm), if(((pitch_iter_3 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_3 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s15)^2 + rise_v15^2))*((pitch_iter_3 + lift*law_s15)^2 + rise_v15^2)/((pitch_iter_3 + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_iter_3 + lift*law_s15)), 100000 mm), if(((pitch_iter_3 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_3 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s16)^2 + rise_v16^2))*((pitch_iter_3 + lift*law_s16)^2 + rise_v16^2)/((pitch_iter_3 + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_iter_3 + lift*law_s16)), 100000 mm), if(((pitch_iter_3 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_3 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s17)^2 + rise_v17^2))*((pitch_iter_3 + lift*law_s17)^2 + rise_v17^2)/((pitch_iter_3 + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_iter_3 + lift*law_s17)), 100000 mm), if(((pitch_iter_3 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_3 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s18)^2 + rise_v18^2))*((pitch_iter_3 + lift*law_s18)^2 + rise_v18^2)/((pitch_iter_3 + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_iter_3 + lift*law_s18)), 100000 mm), if(((pitch_iter_3 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_3 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s19)^2 + rise_v19^2))*((pitch_iter_3 + lift*law_s19)^2 + rise_v19^2)/((pitch_iter_3 + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_iter_3 + lift*law_s19)), 100000 mm), if(((pitch_iter_3 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_3 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s20)^2 + rise_v20^2))*((pitch_iter_3 + lift*law_s20)^2 + rise_v20^2)/((pitch_iter_3 + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_iter_3 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_rho_iter_3",
+"expr": "min(if(((pitch_iter_3 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_3 + lift*law_s10)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s10)^2 + return_v10^2))*((pitch_iter_3 + lift*law_s10)^2 + return_v10^2)/((pitch_iter_3 + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_iter_3 + lift*law_s10)), 100000 mm), if(((pitch_iter_3 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_3 + lift*law_s11)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s11)^2 + return_v11^2))*((pitch_iter_3 + lift*law_s11)^2 + return_v11^2)/((pitch_iter_3 + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_iter_3 + lift*law_s11)), 100000 mm), if(((pitch_iter_3 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_3 + lift*law_s12)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s12)^2 + return_v12^2))*((pitch_iter_3 + lift*law_s12)^2 + return_v12^2)/((pitch_iter_3 + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_iter_3 + lift*law_s12)), 100000 mm), if(((pitch_iter_3 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_3 + lift*law_s13)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s13)^2 + return_v13^2))*((pitch_iter_3 + lift*law_s13)^2 + return_v13^2)/((pitch_iter_3 + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_iter_3 + lift*law_s13)), 100000 mm), if(((pitch_iter_3 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_3 + lift*law_s14)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s14)^2 + return_v14^2))*((pitch_iter_3 + lift*law_s14)^2 + return_v14^2)/((pitch_iter_3 + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_iter_3 + lift*law_s14)), 100000 mm), if(((pitch_iter_3 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_3 + lift*law_s15)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s15)^2 + return_v15^2))*((pitch_iter_3 + lift*law_s15)^2 + return_v15^2)/((pitch_iter_3 + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_iter_3 + lift*law_s15)), 100000 mm), if(((pitch_iter_3 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_3 + lift*law_s16)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s16)^2 + return_v16^2))*((pitch_iter_3 + lift*law_s16)^2 + return_v16^2)/((pitch_iter_3 + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_iter_3 + lift*law_s16)), 100000 mm), if(((pitch_iter_3 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_3 + lift*law_s17)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s17)^2 + return_v17^2))*((pitch_iter_3 + lift*law_s17)^2 + return_v17^2)/((pitch_iter_3 + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_iter_3 + lift*law_s17)), 100000 mm), if(((pitch_iter_3 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_3 + lift*law_s18)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s18)^2 + return_v18^2))*((pitch_iter_3 + lift*law_s18)^2 + return_v18^2)/((pitch_iter_3 + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_iter_3 + lift*law_s18)), 100000 mm), if(((pitch_iter_3 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_3 + lift*law_s19)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s19)^2 + return_v19^2))*((pitch_iter_3 + lift*law_s19)^2 + return_v19^2)/((pitch_iter_3 + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_iter_3 + lift*law_s19)), 100000 mm), if(((pitch_iter_3 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_3 + lift*law_s20)) > 0 mm^2, sqrt(((pitch_iter_3 + lift*law_s20)^2 + return_v20^2))*((pitch_iter_3 + lift*law_s20)^2 + return_v20^2)/((pitch_iter_3 + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_iter_3 + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_iter_3",
+"expr": "min(rise_rho_iter_3, return_rho_iter_3, pitch_iter_3)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_iter_4",
+"expr": "pitch_iter_3 + 2*max(0 mm, curvature_sizing_ratio*roller_radius - rho_iter_3)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_radius_for_curvature",
+"expr": "pitch_iter_4 + 0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "base_circle_for_curvature",
+"expr": "pitch_radius_for_curvature - roller_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "base_circle_min",
+"expr": "max(base_circle_for_pressure, base_circle_for_bore, base_circle_for_curvature)"
+}
+],
+[
+"variable.set",
+{
+"name": "base_circle_max",
+"expr": "max(300 mm, base_circle_min)"
+}
+],
+[
+"variable.set",
+{
+"name": "lift_max",
+"expr": "min(80 mm, (260 mm + roller_radius)/max(rise_size_ratio, return_size_ratio, 0.05))"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_angle_max",
+"expr": "270 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "top_dwell_max",
+"expr": "min(200 deg, 320 deg - rise_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "return_angle_max",
+"expr": "min(270 deg, 350 deg - rise_angle - top_dwell_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_pressure_angle",
+"expr": "max(atan(lift/rise_rad*law_v00/(pitch_radius + lift*law_s00)), atan(lift/rise_rad*law_v01/(pitch_radius + lift*law_s01)), atan(lift/rise_rad*law_v02/(pitch_radius + lift*law_s02)), atan(lift/rise_rad*law_v03/(pitch_radius + lift*law_s03)), atan(lift/rise_rad*law_v04/(pitch_radius + lift*law_s04)), atan(lift/rise_rad*law_v05/(pitch_radius + lift*law_s05)), atan(lift/rise_rad*law_v06/(pitch_radius + lift*law_s06)), atan(lift/rise_rad*law_v07/(pitch_radius + lift*law_s07)), atan(lift/rise_rad*law_v08/(pitch_radius + lift*law_s08)), atan(lift/rise_rad*law_v09/(pitch_radius + lift*law_s09)), atan(lift/rise_rad*law_v10/(pitch_radius + lift*law_s10)), atan(lift/rise_rad*law_v11/(pitch_radius + lift*law_s11)), atan(lift/rise_rad*law_v12/(pitch_radius + lift*law_s12)), atan(lift/rise_rad*law_v13/(pitch_radius + lift*law_s13)), atan(lift/rise_rad*law_v14/(pitch_radius + lift*law_s14)), atan(lift/rise_rad*law_v15/(pitch_radius + lift*law_s15)), atan(lift/rise_rad*law_v16/(pitch_radius + lift*law_s16)), atan(lift/rise_rad*law_v17/(pitch_radius + lift*law_s17)), atan(lift/rise_rad*law_v18/(pitch_radius + lift*law_s18)), atan(lift/rise_rad*law_v19/(pitch_radius + lift*law_s19)), atan(lift/rise_rad*law_v20/(pitch_radius + lift*law_s20)))"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_pitch_curvature_radius",
+"expr": "min(if(((pitch_radius + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_radius + lift*law_s10)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s10)^2 + rise_v10^2))*((pitch_radius + lift*law_s10)^2 + rise_v10^2)/((pitch_radius + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_radius + lift*law_s10)), 100000 mm), if(((pitch_radius + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_radius + lift*law_s11)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s11)^2 + rise_v11^2))*((pitch_radius + lift*law_s11)^2 + rise_v11^2)/((pitch_radius + lift*law_s11)^2 + 2*rise_v11^2 - rise_a11*(pitch_radius + lift*law_s11)), 100000 mm), if(((pitch_radius + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_radius + lift*law_s12)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s12)^2 + rise_v12^2))*((pitch_radius + lift*law_s12)^2 + rise_v12^2)/((pitch_radius + lift*law_s12)^2 + 2*rise_v12^2 - rise_a12*(pitch_radius + lift*law_s12)), 100000 mm), if(((pitch_radius + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_radius + lift*law_s13)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s13)^2 + rise_v13^2))*((pitch_radius + lift*law_s13)^2 + rise_v13^2)/((pitch_radius + lift*law_s13)^2 + 2*rise_v13^2 - rise_a13*(pitch_radius + lift*law_s13)), 100000 mm), if(((pitch_radius + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_radius + lift*law_s14)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s14)^2 + rise_v14^2))*((pitch_radius + lift*law_s14)^2 + rise_v14^2)/((pitch_radius + lift*law_s14)^2 + 2*rise_v14^2 - rise_a14*(pitch_radius + lift*law_s14)), 100000 mm), if(((pitch_radius + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_radius + lift*law_s15)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s15)^2 + rise_v15^2))*((pitch_radius + lift*law_s15)^2 + rise_v15^2)/((pitch_radius + lift*law_s15)^2 + 2*rise_v15^2 - rise_a15*(pitch_radius + lift*law_s15)), 100000 mm), if(((pitch_radius + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_radius + lift*law_s16)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s16)^2 + rise_v16^2))*((pitch_radius + lift*law_s16)^2 + rise_v16^2)/((pitch_radius + lift*law_s16)^2 + 2*rise_v16^2 - rise_a16*(pitch_radius + lift*law_s16)), 100000 mm), if(((pitch_radius + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_radius + lift*law_s17)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s17)^2 + rise_v17^2))*((pitch_radius + lift*law_s17)^2 + rise_v17^2)/((pitch_radius + lift*law_s17)^2 + 2*rise_v17^2 - rise_a17*(pitch_radius + lift*law_s17)), 100000 mm), if(((pitch_radius + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_radius + lift*law_s18)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s18)^2 + rise_v18^2))*((pitch_radius + lift*law_s18)^2 + rise_v18^2)/((pitch_radius + lift*law_s18)^2 + 2*rise_v18^2 - rise_a18*(pitch_radius + lift*law_s18)), 100000 mm), if(((pitch_radius + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_radius + lift*law_s19)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s19)^2 + rise_v19^2))*((pitch_radius + lift*law_s19)^2 + rise_v19^2)/((pitch_radius + lift*law_s19)^2 + 2*rise_v19^2 - rise_a19*(pitch_radius + lift*law_s19)), 100000 mm), if(((pitch_radius + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_radius + lift*law_s20)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s20)^2 + rise_v20^2))*((pitch_radius + lift*law_s20)^2 + rise_v20^2)/((pitch_radius + lift*law_s20)^2 + 2*rise_v20^2 - rise_a20*(pitch_radius + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_concave_radius",
+"expr": "min(if(((pitch_radius + lift*law_s00)^2 + 2*rise_v00^2 - rise_a00*(pitch_radius + lift*law_s00)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s00)^2 + rise_v00^2))*((pitch_radius + lift*law_s00)^2 + rise_v00^2)/(-((pitch_radius + lift*law_s00)^2 + 2*rise_v00^2 - rise_a00*(pitch_radius + lift*law_s00))), 100000 mm), if(((pitch_radius + lift*law_s01)^2 + 2*rise_v01^2 - rise_a01*(pitch_radius + lift*law_s01)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s01)^2 + rise_v01^2))*((pitch_radius + lift*law_s01)^2 + rise_v01^2)/(-((pitch_radius + lift*law_s01)^2 + 2*rise_v01^2 - rise_a01*(pitch_radius + lift*law_s01))), 100000 mm), if(((pitch_radius + lift*law_s02)^2 + 2*rise_v02^2 - rise_a02*(pitch_radius + lift*law_s02)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s02)^2 + rise_v02^2))*((pitch_radius + lift*law_s02)^2 + rise_v02^2)/(-((pitch_radius + lift*law_s02)^2 + 2*rise_v02^2 - rise_a02*(pitch_radius + lift*law_s02))), 100000 mm), if(((pitch_radius + lift*law_s03)^2 + 2*rise_v03^2 - rise_a03*(pitch_radius + lift*law_s03)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s03)^2 + rise_v03^2))*((pitch_radius + lift*law_s03)^2 + rise_v03^2)/(-((pitch_radius + lift*law_s03)^2 + 2*rise_v03^2 - rise_a03*(pitch_radius + lift*law_s03))), 100000 mm), if(((pitch_radius + lift*law_s04)^2 + 2*rise_v04^2 - rise_a04*(pitch_radius + lift*law_s04)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s04)^2 + rise_v04^2))*((pitch_radius + lift*law_s04)^2 + rise_v04^2)/(-((pitch_radius + lift*law_s04)^2 + 2*rise_v04^2 - rise_a04*(pitch_radius + lift*law_s04))), 100000 mm), if(((pitch_radius + lift*law_s05)^2 + 2*rise_v05^2 - rise_a05*(pitch_radius + lift*law_s05)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s05)^2 + rise_v05^2))*((pitch_radius + lift*law_s05)^2 + rise_v05^2)/(-((pitch_radius + lift*law_s05)^2 + 2*rise_v05^2 - rise_a05*(pitch_radius + lift*law_s05))), 100000 mm), if(((pitch_radius + lift*law_s06)^2 + 2*rise_v06^2 - rise_a06*(pitch_radius + lift*law_s06)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s06)^2 + rise_v06^2))*((pitch_radius + lift*law_s06)^2 + rise_v06^2)/(-((pitch_radius + lift*law_s06)^2 + 2*rise_v06^2 - rise_a06*(pitch_radius + lift*law_s06))), 100000 mm), if(((pitch_radius + lift*law_s07)^2 + 2*rise_v07^2 - rise_a07*(pitch_radius + lift*law_s07)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s07)^2 + rise_v07^2))*((pitch_radius + lift*law_s07)^2 + rise_v07^2)/(-((pitch_radius + lift*law_s07)^2 + 2*rise_v07^2 - rise_a07*(pitch_radius + lift*law_s07))), 100000 mm), if(((pitch_radius + lift*law_s08)^2 + 2*rise_v08^2 - rise_a08*(pitch_radius + lift*law_s08)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s08)^2 + rise_v08^2))*((pitch_radius + lift*law_s08)^2 + rise_v08^2)/(-((pitch_radius + lift*law_s08)^2 + 2*rise_v08^2 - rise_a08*(pitch_radius + lift*law_s08))), 100000 mm), if(((pitch_radius + lift*law_s09)^2 + 2*rise_v09^2 - rise_a09*(pitch_radius + lift*law_s09)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s09)^2 + rise_v09^2))*((pitch_radius + lift*law_s09)^2 + rise_v09^2)/(-((pitch_radius + lift*law_s09)^2 + 2*rise_v09^2 - rise_a09*(pitch_radius + lift*law_s09))), 100000 mm), if(((pitch_radius + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_radius + lift*law_s10)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s10)^2 + rise_v10^2))*((pitch_radius + lift*law_s10)^2 + rise_v10^2)/(-((pitch_radius + lift*law_s10)^2 + 2*rise_v10^2 - rise_a10*(pitch_radius + lift*law_s10))), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_pitch_length",
+"expr": "rise_rad/20/3*(1*sqrt((pitch_radius + lift*law_s00)^2 + (lift/rise_rad*law_v00)^2) + 4*sqrt((pitch_radius + lift*law_s01)^2 + (lift/rise_rad*law_v01)^2) + 2*sqrt((pitch_radius + lift*law_s02)^2 + (lift/rise_rad*law_v02)^2) + 4*sqrt((pitch_radius + lift*law_s03)^2 + (lift/rise_rad*law_v03)^2) + 2*sqrt((pitch_radius + lift*law_s04)^2 + (lift/rise_rad*law_v04)^2) + 4*sqrt((pitch_radius + lift*law_s05)^2 + (lift/rise_rad*law_v05)^2) + 2*sqrt((pitch_radius + lift*law_s06)^2 + (lift/rise_rad*law_v06)^2) + 4*sqrt((pitch_radius + lift*law_s07)^2 + (lift/rise_rad*law_v07)^2) + 2*sqrt((pitch_radius + lift*law_s08)^2 + (lift/rise_rad*law_v08)^2) + 4*sqrt((pitch_radius + lift*law_s09)^2 + (lift/rise_rad*law_v09)^2) + 2*sqrt((pitch_radius + lift*law_s10)^2 + (lift/rise_rad*law_v10)^2) + 4*sqrt((pitch_radius + lift*law_s11)^2 + (lift/rise_rad*law_v11)^2) + 2*sqrt((pitch_radius + lift*law_s12)^2 + (lift/rise_rad*law_v12)^2) + 4*sqrt((pitch_radius + lift*law_s13)^2 + (lift/rise_rad*law_v13)^2) + 2*sqrt((pitch_radius + lift*law_s14)^2 + (lift/rise_rad*law_v14)^2) + 4*sqrt((pitch_radius + lift*law_s15)^2 + (lift/rise_rad*law_v15)^2) + 2*sqrt((pitch_radius + lift*law_s16)^2 + (lift/rise_rad*law_v16)^2) + 4*sqrt((pitch_radius + lift*law_s17)^2 + (lift/rise_rad*law_v17)^2) + 2*sqrt((pitch_radius + lift*law_s18)^2 + (lift/rise_rad*law_v18)^2) + 4*sqrt((pitch_radius + lift*law_s19)^2 + (lift/rise_rad*law_v19)^2) + 1*sqrt((pitch_radius + lift*law_s20)^2 + (lift/rise_rad*law_v20)^2))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_pressure_angle",
+"expr": "max(atan(lift/return_rad*law_v00/(pitch_radius + lift*law_s00)), atan(lift/return_rad*law_v01/(pitch_radius + lift*law_s01)), atan(lift/return_rad*law_v02/(pitch_radius + lift*law_s02)), atan(lift/return_rad*law_v03/(pitch_radius + lift*law_s03)), atan(lift/return_rad*law_v04/(pitch_radius + lift*law_s04)), atan(lift/return_rad*law_v05/(pitch_radius + lift*law_s05)), atan(lift/return_rad*law_v06/(pitch_radius + lift*law_s06)), atan(lift/return_rad*law_v07/(pitch_radius + lift*law_s07)), atan(lift/return_rad*law_v08/(pitch_radius + lift*law_s08)), atan(lift/return_rad*law_v09/(pitch_radius + lift*law_s09)), atan(lift/return_rad*law_v10/(pitch_radius + lift*law_s10)), atan(lift/return_rad*law_v11/(pitch_radius + lift*law_s11)), atan(lift/return_rad*law_v12/(pitch_radius + lift*law_s12)), atan(lift/return_rad*law_v13/(pitch_radius + lift*law_s13)), atan(lift/return_rad*law_v14/(pitch_radius + lift*law_s14)), atan(lift/return_rad*law_v15/(pitch_radius + lift*law_s15)), atan(lift/return_rad*law_v16/(pitch_radius + lift*law_s16)), atan(lift/return_rad*law_v17/(pitch_radius + lift*law_s17)), atan(lift/return_rad*law_v18/(pitch_radius + lift*law_s18)), atan(lift/return_rad*law_v19/(pitch_radius + lift*law_s19)), atan(lift/return_rad*law_v20/(pitch_radius + lift*law_s20)))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_pitch_curvature_radius",
+"expr": "min(if(((pitch_radius + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_radius + lift*law_s10)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s10)^2 + return_v10^2))*((pitch_radius + lift*law_s10)^2 + return_v10^2)/((pitch_radius + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_radius + lift*law_s10)), 100000 mm), if(((pitch_radius + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_radius + lift*law_s11)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s11)^2 + return_v11^2))*((pitch_radius + lift*law_s11)^2 + return_v11^2)/((pitch_radius + lift*law_s11)^2 + 2*return_v11^2 - return_a11*(pitch_radius + lift*law_s11)), 100000 mm), if(((pitch_radius + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_radius + lift*law_s12)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s12)^2 + return_v12^2))*((pitch_radius + lift*law_s12)^2 + return_v12^2)/((pitch_radius + lift*law_s12)^2 + 2*return_v12^2 - return_a12*(pitch_radius + lift*law_s12)), 100000 mm), if(((pitch_radius + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_radius + lift*law_s13)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s13)^2 + return_v13^2))*((pitch_radius + lift*law_s13)^2 + return_v13^2)/((pitch_radius + lift*law_s13)^2 + 2*return_v13^2 - return_a13*(pitch_radius + lift*law_s13)), 100000 mm), if(((pitch_radius + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_radius + lift*law_s14)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s14)^2 + return_v14^2))*((pitch_radius + lift*law_s14)^2 + return_v14^2)/((pitch_radius + lift*law_s14)^2 + 2*return_v14^2 - return_a14*(pitch_radius + lift*law_s14)), 100000 mm), if(((pitch_radius + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_radius + lift*law_s15)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s15)^2 + return_v15^2))*((pitch_radius + lift*law_s15)^2 + return_v15^2)/((pitch_radius + lift*law_s15)^2 + 2*return_v15^2 - return_a15*(pitch_radius + lift*law_s15)), 100000 mm), if(((pitch_radius + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_radius + lift*law_s16)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s16)^2 + return_v16^2))*((pitch_radius + lift*law_s16)^2 + return_v16^2)/((pitch_radius + lift*law_s16)^2 + 2*return_v16^2 - return_a16*(pitch_radius + lift*law_s16)), 100000 mm), if(((pitch_radius + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_radius + lift*law_s17)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s17)^2 + return_v17^2))*((pitch_radius + lift*law_s17)^2 + return_v17^2)/((pitch_radius + lift*law_s17)^2 + 2*return_v17^2 - return_a17*(pitch_radius + lift*law_s17)), 100000 mm), if(((pitch_radius + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_radius + lift*law_s18)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s18)^2 + return_v18^2))*((pitch_radius + lift*law_s18)^2 + return_v18^2)/((pitch_radius + lift*law_s18)^2 + 2*return_v18^2 - return_a18*(pitch_radius + lift*law_s18)), 100000 mm), if(((pitch_radius + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_radius + lift*law_s19)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s19)^2 + return_v19^2))*((pitch_radius + lift*law_s19)^2 + return_v19^2)/((pitch_radius + lift*law_s19)^2 + 2*return_v19^2 - return_a19*(pitch_radius + lift*law_s19)), 100000 mm), if(((pitch_radius + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_radius + lift*law_s20)) > 0 mm^2, sqrt(((pitch_radius + lift*law_s20)^2 + return_v20^2))*((pitch_radius + lift*law_s20)^2 + return_v20^2)/((pitch_radius + lift*law_s20)^2 + 2*return_v20^2 - return_a20*(pitch_radius + lift*law_s20)), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_concave_radius",
+"expr": "min(if(((pitch_radius + lift*law_s00)^2 + 2*return_v00^2 - return_a00*(pitch_radius + lift*law_s00)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s00)^2 + return_v00^2))*((pitch_radius + lift*law_s00)^2 + return_v00^2)/(-((pitch_radius + lift*law_s00)^2 + 2*return_v00^2 - return_a00*(pitch_radius + lift*law_s00))), 100000 mm), if(((pitch_radius + lift*law_s01)^2 + 2*return_v01^2 - return_a01*(pitch_radius + lift*law_s01)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s01)^2 + return_v01^2))*((pitch_radius + lift*law_s01)^2 + return_v01^2)/(-((pitch_radius + lift*law_s01)^2 + 2*return_v01^2 - return_a01*(pitch_radius + lift*law_s01))), 100000 mm), if(((pitch_radius + lift*law_s02)^2 + 2*return_v02^2 - return_a02*(pitch_radius + lift*law_s02)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s02)^2 + return_v02^2))*((pitch_radius + lift*law_s02)^2 + return_v02^2)/(-((pitch_radius + lift*law_s02)^2 + 2*return_v02^2 - return_a02*(pitch_radius + lift*law_s02))), 100000 mm), if(((pitch_radius + lift*law_s03)^2 + 2*return_v03^2 - return_a03*(pitch_radius + lift*law_s03)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s03)^2 + return_v03^2))*((pitch_radius + lift*law_s03)^2 + return_v03^2)/(-((pitch_radius + lift*law_s03)^2 + 2*return_v03^2 - return_a03*(pitch_radius + lift*law_s03))), 100000 mm), if(((pitch_radius + lift*law_s04)^2 + 2*return_v04^2 - return_a04*(pitch_radius + lift*law_s04)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s04)^2 + return_v04^2))*((pitch_radius + lift*law_s04)^2 + return_v04^2)/(-((pitch_radius + lift*law_s04)^2 + 2*return_v04^2 - return_a04*(pitch_radius + lift*law_s04))), 100000 mm), if(((pitch_radius + lift*law_s05)^2 + 2*return_v05^2 - return_a05*(pitch_radius + lift*law_s05)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s05)^2 + return_v05^2))*((pitch_radius + lift*law_s05)^2 + return_v05^2)/(-((pitch_radius + lift*law_s05)^2 + 2*return_v05^2 - return_a05*(pitch_radius + lift*law_s05))), 100000 mm), if(((pitch_radius + lift*law_s06)^2 + 2*return_v06^2 - return_a06*(pitch_radius + lift*law_s06)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s06)^2 + return_v06^2))*((pitch_radius + lift*law_s06)^2 + return_v06^2)/(-((pitch_radius + lift*law_s06)^2 + 2*return_v06^2 - return_a06*(pitch_radius + lift*law_s06))), 100000 mm), if(((pitch_radius + lift*law_s07)^2 + 2*return_v07^2 - return_a07*(pitch_radius + lift*law_s07)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s07)^2 + return_v07^2))*((pitch_radius + lift*law_s07)^2 + return_v07^2)/(-((pitch_radius + lift*law_s07)^2 + 2*return_v07^2 - return_a07*(pitch_radius + lift*law_s07))), 100000 mm), if(((pitch_radius + lift*law_s08)^2 + 2*return_v08^2 - return_a08*(pitch_radius + lift*law_s08)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s08)^2 + return_v08^2))*((pitch_radius + lift*law_s08)^2 + return_v08^2)/(-((pitch_radius + lift*law_s08)^2 + 2*return_v08^2 - return_a08*(pitch_radius + lift*law_s08))), 100000 mm), if(((pitch_radius + lift*law_s09)^2 + 2*return_v09^2 - return_a09*(pitch_radius + lift*law_s09)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s09)^2 + return_v09^2))*((pitch_radius + lift*law_s09)^2 + return_v09^2)/(-((pitch_radius + lift*law_s09)^2 + 2*return_v09^2 - return_a09*(pitch_radius + lift*law_s09))), 100000 mm), if(((pitch_radius + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_radius + lift*law_s10)) < 0 mm^2, sqrt(((pitch_radius + lift*law_s10)^2 + return_v10^2))*((pitch_radius + lift*law_s10)^2 + return_v10^2)/(-((pitch_radius + lift*law_s10)^2 + 2*return_v10^2 - return_a10*(pitch_radius + lift*law_s10))), 100000 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "return_pitch_length",
+"expr": "return_rad/20/3*(1*sqrt((pitch_radius + lift*law_s00)^2 + (lift/return_rad*law_v00)^2) + 4*sqrt((pitch_radius + lift*law_s01)^2 + (lift/return_rad*law_v01)^2) + 2*sqrt((pitch_radius + lift*law_s02)^2 + (lift/return_rad*law_v02)^2) + 4*sqrt((pitch_radius + lift*law_s03)^2 + (lift/return_rad*law_v03)^2) + 2*sqrt((pitch_radius + lift*law_s04)^2 + (lift/return_rad*law_v04)^2) + 4*sqrt((pitch_radius + lift*law_s05)^2 + (lift/return_rad*law_v05)^2) + 2*sqrt((pitch_radius + lift*law_s06)^2 + (lift/return_rad*law_v06)^2) + 4*sqrt((pitch_radius + lift*law_s07)^2 + (lift/return_rad*law_v07)^2) + 2*sqrt((pitch_radius + lift*law_s08)^2 + (lift/return_rad*law_v08)^2) + 4*sqrt((pitch_radius + lift*law_s09)^2 + (lift/return_rad*law_v09)^2) + 2*sqrt((pitch_radius + lift*law_s10)^2 + (lift/return_rad*law_v10)^2) + 4*sqrt((pitch_radius + lift*law_s11)^2 + (lift/return_rad*law_v11)^2) + 2*sqrt((pitch_radius + lift*law_s12)^2 + (lift/return_rad*law_v12)^2) + 4*sqrt((pitch_radius + lift*law_s13)^2 + (lift/return_rad*law_v13)^2) + 2*sqrt((pitch_radius + lift*law_s14)^2 + (lift/return_rad*law_v14)^2) + 4*sqrt((pitch_radius + lift*law_s15)^2 + (lift/return_rad*law_v15)^2) + 2*sqrt((pitch_radius + lift*law_s16)^2 + (lift/return_rad*law_v16)^2) + 4*sqrt((pitch_radius + lift*law_s17)^2 + (lift/return_rad*law_v17)^2) + 2*sqrt((pitch_radius + lift*law_s18)^2 + (lift/return_rad*law_v18)^2) + 4*sqrt((pitch_radius + lift*law_s19)^2 + (lift/return_rad*law_v19)^2) + 1*sqrt((pitch_radius + lift*law_s20)^2 + (lift/return_rad*law_v20)^2))"
+}
+],
+[
+"variable.set",
+{
+"name": "peak_pressure_angle",
+"expr": "max(rise_pressure_angle, return_pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_curvature_radius_min",
+"expr": "min(rise_pitch_curvature_radius, return_pitch_curvature_radius, pitch_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_curvature_radius_min",
+"expr": "pitch_curvature_radius_min - roller_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "concave_radius_min",
+"expr": "min(rise_concave_radius, return_concave_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_length",
+"expr": "rise_pitch_length + return_pitch_length + top_rad*(pitch_radius + lift) + base_rad*pitch_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_area",
+"expr": "((pitch_radius + lift)^2*top_rad + pitch_radius^2*base_rad + (rise_rad + return_rad)*(pitch_radius^2 + pitch_radius*lift*2*motion_laws[motion_law].s_mean + lift^2*motion_laws[motion_law].s2_mean)) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "bore_keyway_area",
+"expr": "pi*bore_radius^2 + key_width*(bore_radius + hub_keyway_depth) - (key_width/2*sqrt(bore_radius^2 - key_width^2/4) + bore_radius^2*asin(key_width/(2*bore_radius))/(1 rad))"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_section_area",
+"expr": "pitch_area - roller_radius*pitch_length + pi*roller_radius^2 - bore_keyway_area"
+}
+],
+[
+"variable.set",
+{
+"name": "drive_mod",
+"expr": "mod(drive_angle, 360 deg)"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_x",
+"expr": "clamp(drive_mod/rise_angle, 0, 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "return_x",
+"expr": "clamp((drive_mod - rise_angle - top_dwell_angle)/return_angle, 0, 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "on_rise",
+"expr": "drive_mod < rise_angle"
+}
+],
+[
+"variable.set",
+{
+"name": "on_top",
+"expr": "drive_mod >= rise_angle && drive_mod < rise_angle + top_dwell_angle"
+}
+],
+[
+"variable.set",
+{
+"name": "on_return",
+"expr": "drive_mod >= rise_angle + top_dwell_angle && drive_mod < rise_angle + top_dwell_angle + return_angle"
+}
+],
+[
+"variable.set",
+{
+"name": "follower_lift_now",
+"expr": "if(on_rise, lift*(law_p1*rise_x + law_p3*rise_x^3 + law_p4*rise_x^4 + law_p5*rise_x^5 + law_q1*sin(2*pi*rise_x) + law_q2*(1 - cos(pi*rise_x))), if(on_top, lift, if(on_return, lift*(1 - (law_p1*return_x + law_p3*return_x^3 + law_p4*return_x^4 + law_p5*return_x^5 + law_q1*sin(2*pi*return_x) + law_q2*(1 - cos(pi*return_x)))), 0 mm)))"
+}
+],
+[
+"variable.set",
+{
+"name": "follower_slope_now",
+"expr": "if(on_rise, lift/rise_rad*(law_p1 + 3*law_p3*rise_x^2 + 4*law_p4*rise_x^3 + 5*law_p5*rise_x^4 + 2*pi*law_q1*cos(2*pi*rise_x) + pi*law_q2*sin(pi*rise_x)), if(on_return, -lift/return_rad*(law_p1 + 3*law_p3*return_x^2 + 4*law_p4*return_x^3 + 5*law_p5*return_x^4 + 2*pi*law_q1*cos(2*pi*return_x) + pi*law_q2*sin(pi*return_x)), 0 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "follower_center_height",
+"expr": "pitch_radius + follower_lift_now"
+}
+],
+[
+"variable.set",
+{
+"name": "pressure_angle_now",
+"expr": "atan(follower_slope_now / follower_center_height)"
+}
+],
+[
+"variable.set",
+{
+"name": "omega",
+"expr": "2*pi*cam_speed/60"
+}
+],
+[
+"variable.set",
+{
+"name": "peak_velocity",
+"expr": "motion_laws[motion_law].cv*lift*omega/min(rise_rad, return_rad) / 1 s"
+}
+],
+[
+"variable.set",
+{
+"name": "peak_acceleration",
+"expr": "motion_laws[motion_law].ca*lift*omega^2/min(rise_rad, return_rad)^2 / (1 s)^2"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_speed_max",
+"expr": "cam_speed*(base_circle_radius + lift)/roller_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_diameter",
+"expr": "1.75*bore_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_length",
+"expr": "bore_diameter*0.9 + 4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tool_overrun",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cut_length",
+"expr": "cam_width + hub_length + 2*tool_overrun"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_fillet",
+"expr": "clamp(min(0.12*hub_diameter, base_circle_radius - hub_diameter/2 - 0.8 mm), 0.5 mm, 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_chamfer",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bore_chamfer",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_chamfer",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stem_chamfer",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "head_chamfer",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_corner",
+"expr": "clamp(0.2*stem_diameter, 2 mm, 8 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_bolt_diameter",
+"expr": "track_rollers[roller].guide_bolt_hole"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_bolt_inset",
+"expr": "guide_bolt_diameter*1.1"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_center_y",
+"expr": "cam_width/2"
+}
+],
+[
+"variable.set",
+{
+"name": "cheek_gap",
+"expr": "1.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cheek_start",
+"expr": "cam_width + cheek_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_face_end",
+"expr": "(cam_width + roller_width)/2"
+}
+],
+[
+"variable.set",
+{
+"name": "nut_height",
+"expr": "0.8*stud_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "stud_end_margin",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cheek_thickness",
+"expr": "stud_length - (cheek_start - roller_face_end) - nut_height - stud_end_margin"
+}
+],
+[
+"variable.set",
+{
+"name": "cheek_end",
+"expr": "cheek_start + cheek_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "head_width",
+"expr": "max(2.4*stud_diameter, 1.8*stem_diameter)"
+}
+],
+[
+"variable.set",
+{
+"name": "cheek_bottom",
+"expr": "follower_center_height - 1.2*stud_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "bar_thickness",
+"expr": "clamp(0.7*stud_diameter, 7 mm, 20 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_clearance",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bar_bottom",
+"expr": "follower_center_height + roller_radius + roller_clearance"
+}
+],
+[
+"variable.set",
+{
+"name": "head_top",
+"expr": "bar_bottom + bar_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "stem_y",
+"expr": "cam_center_y"
+}
+],
+[
+"variable.set",
+{
+"name": "bar_start",
+"expr": "stem_y - stem_diameter/2 - 3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_clearance",
+"expr": "8 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_length",
+"expr": "2.5*stem_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_bottom",
+"expr": "pitch_radius + lift + roller_radius + roller_clearance + bar_thickness + guide_clearance"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_top",
+"expr": "guide_bottom + guide_length"
+}
+],
+[
+"variable.set",
+{
+"name": "stem_overrun",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stem_length",
+"expr": "lift + guide_length + guide_clearance + stem_overrun"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_depth",
+"expr": "2*stem_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "bush_wall",
+"expr": "max(2.5 mm, 0.18*stem_diameter)"
+}
+],
+[
+"variable.set",
+{
+"name": "bush_outer",
+"expr": "stem_diameter + 2*bush_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_wall_min",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "guide_width",
+"expr": "max(2.8*stem_diameter, bush_outer + 2*(guide_wall_min + guide_bolt_diameter/2 + guide_bolt_inset))"
+}
+],
+[
+"variable.set",
+{
+"name": "nut_flats",
+"expr": "1.7*stud_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "flat_depth",
+"expr": "max(0.6 mm, 0.12*stem_diameter)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_diameter",
+"expr": "track_rollers[roller].guide_screw"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_height",
+"expr": "guide_bottom + guide_length/2"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_tip_clearance",
+"expr": "0.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_recess",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flat_margin",
+"expr": "screw_diameter/2 + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flat_low",
+"expr": "screw_height - lift - flat_margin + follower_lift_now"
+}
+],
+[
+"variable.set",
+{
+"name": "flat_high",
+"expr": "screw_height + flat_margin + follower_lift_now"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_tip_y",
+"expr": "stem_y + stem_diameter/2 - flat_depth + screw_tip_clearance"
+}
+],
+[
+"sketch.create",
+{
+"name": "Cam profile",
+"plane": "zx"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Cam profile",
+"x": "if(t < rise_rad, (pitch_radius + lift*(law_p1*(t/rise_rad) + law_p3*(t/rise_rad)^3 + law_p4*(t/rise_rad)^4 + law_p5*(t/rise_rad)^5 + law_q1*sin(2*pi*(t/rise_rad)) + law_q2*(1 - cos(pi*(t/rise_rad)))))*cos(t) - roller_radius*cos(t - atan2((lift/rise_rad*(law_p1 + 3*law_p3*(t/rise_rad)^2 + 4*law_p4*(t/rise_rad)^3 + 5*law_p5*(t/rise_rad)^4 + 2*pi*law_q1*cos(2*pi*(t/rise_rad)) + pi*law_q2*sin(pi*(t/rise_rad)))), (pitch_radius + lift*(law_p1*(t/rise_rad) + law_p3*(t/rise_rad)^3 + law_p4*(t/rise_rad)^4 + law_p5*(t/rise_rad)^5 + law_q1*sin(2*pi*(t/rise_rad)) + law_q2*(1 - cos(pi*(t/rise_rad))))))/(1 rad)), if(t < rise_rad + top_rad, ((pitch_radius - roller_radius) + lift)*cos(t), if(t < rise_rad + top_rad + return_rad, (pitch_radius + lift*(1 - (law_p1*((t - rise_rad - top_rad)/return_rad) + law_p3*((t - rise_rad - top_rad)/return_rad)^3 + law_p4*((t - rise_rad - top_rad)/return_rad)^4 + law_p5*((t - rise_rad - top_rad)/return_rad)^5 + law_q1*sin(2*pi*((t - rise_rad - top_rad)/return_rad)) + law_q2*(1 - cos(pi*((t - rise_rad - top_rad)/return_rad))))))*cos(t) - roller_radius*cos(t - atan2((-lift/return_rad*(law_p1 + 3*law_p3*((t - rise_rad - top_rad)/return_rad)^2 + 4*law_p4*((t - rise_rad - top_rad)/return_rad)^3 + 5*law_p5*((t - rise_rad - top_rad)/return_rad)^4 + 2*pi*law_q1*cos(2*pi*((t - rise_rad - top_rad)/return_rad)) + pi*law_q2*sin(pi*((t - rise_rad - top_rad)/return_rad)))), (pitch_radius + lift*(1 - (law_p1*((t - rise_rad - top_rad)/return_rad) + law_p3*((t - rise_rad - top_rad)/return_rad)^3 + law_p4*((t - rise_rad - top_rad)/return_rad)^4 + law_p5*((t - rise_rad - top_rad)/return_rad)^5 + law_q1*sin(2*pi*((t - rise_rad - top_rad)/return_rad)) + law_q2*(1 - cos(pi*((t - rise_rad - top_rad)/return_rad)))))))/(1 rad)), (pitch_radius - roller_radius)*cos(t))))",
+"y": "if(t < rise_rad, (pitch_radius + lift*(law_p1*(t/rise_rad) + law_p3*(t/rise_rad)^3 + law_p4*(t/rise_rad)^4 + law_p5*(t/rise_rad)^5 + law_q1*sin(2*pi*(t/rise_rad)) + law_q2*(1 - cos(pi*(t/rise_rad)))))*sin(t) - roller_radius*sin(t - atan2((lift/rise_rad*(law_p1 + 3*law_p3*(t/rise_rad)^2 + 4*law_p4*(t/rise_rad)^3 + 5*law_p5*(t/rise_rad)^4 + 2*pi*law_q1*cos(2*pi*(t/rise_rad)) + pi*law_q2*sin(pi*(t/rise_rad)))), (pitch_radius + lift*(law_p1*(t/rise_rad) + law_p3*(t/rise_rad)^3 + law_p4*(t/rise_rad)^4 + law_p5*(t/rise_rad)^5 + law_q1*sin(2*pi*(t/rise_rad)) + law_q2*(1 - cos(pi*(t/rise_rad))))))/(1 rad)), if(t < rise_rad + top_rad, ((pitch_radius - roller_radius) + lift)*sin(t), if(t < rise_rad + top_rad + return_rad, (pitch_radius + lift*(1 - (law_p1*((t - rise_rad - top_rad)/return_rad) + law_p3*((t - rise_rad - top_rad)/return_rad)^3 + law_p4*((t - rise_rad - top_rad)/return_rad)^4 + law_p5*((t - rise_rad - top_rad)/return_rad)^5 + law_q1*sin(2*pi*((t - rise_rad - top_rad)/return_rad)) + law_q2*(1 - cos(pi*((t - rise_rad - top_rad)/return_rad))))))*sin(t) - roller_radius*sin(t - atan2((-lift/return_rad*(law_p1 + 3*law_p3*((t - rise_rad - top_rad)/return_rad)^2 + 4*law_p4*((t - rise_rad - top_rad)/return_rad)^3 + 5*law_p5*((t - rise_rad - top_rad)/return_rad)^4 + 2*pi*law_q1*cos(2*pi*((t - rise_rad - top_rad)/return_rad)) + pi*law_q2*sin(pi*((t - rise_rad - top_rad)/return_rad)))), (pitch_radius + lift*(1 - (law_p1*((t - rise_rad - top_rad)/return_rad) + law_p3*((t - rise_rad - top_rad)/return_rad)^3 + law_p4*((t - rise_rad - top_rad)/return_rad)^4 + law_p5*((t - rise_rad - top_rad)/return_rad)^5 + law_q1*sin(2*pi*((t - rise_rad - top_rad)/return_rad)) + law_q2*(1 - cos(pi*((t - rise_rad - top_rad)/return_rad)))))))/(1 rad)), (pitch_radius - roller_radius)*sin(t))))",
+"t": [
+0,
+"2*pi"
+],
+"closed": true
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cam profile",
+"distance": "cam_width",
+"name": "Cam disc"
+}
+],
+[
+"sketch.create",
+{
+"name": "Hub circle",
+"plane": "zx"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Hub circle",
+"center": [
+0,
+0
+],
+"radius": "hub_diameter/2"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Hub circle",
+"distance": "-hub_length",
+"name": "Hub",
+"when": "hub"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Cam disc",
+"tool": "Hub",
+"name": "Cam blank"
+}
+],
+[
+"datum.plane",
+{
+"from": "zx",
+"distance": "-hub_length - tool_overrun",
+"name": "Bore start"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bore and keyway",
+"plane": "Bore start"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Bore and keyway",
+"at": [
+"sqrt(bore_radius^2 - (key_width/2)^2)",
+"key_width/2"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Bore and keyway",
+"at": [
+"sqrt(bore_radius^2 - (key_width/2)^2)",
+"-(key_width/2)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Bore and keyway",
+"at": [
+"bore_radius + hub_keyway_depth",
+"-(key_width/2)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Bore and keyway",
+"at": [
+"bore_radius + hub_keyway_depth",
+"key_width/2"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Bore and keyway",
+"at": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Bore and keyway",
+"center": "e5",
+"start": "e1",
+"end": "e2"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Bore and keyway",
+"points": [
+"e2",
+"e3",
+"e4",
+"e1"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bore and keyway",
+"distance": "cut_length",
+"name": "Bore tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Cam blank",
+"tool": "Bore tool",
+"name": "Bored cam"
+}
+],
+[
+"feature.fillet",
+{
+"edges": [
+[
+"F4:side(e2)",
+"F2:startCap(e2)"
+]
+],
+"radius": "hub_fillet",
+"name": "Hub root fillet",
+"when": "hub"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F4:side(e2)",
+"F4:endCap(e2)"
+]
+],
+"distance": "hub_chamfer",
+"name": "Hub chamfer",
+"when": "hub"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F8:side(e6)",
+"F2:endCap(e2)"
+]
+],
+"distance": "bore_chamfer",
+"name": "Bore lead-in, far side"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F8:side(e6)",
+"F4:endCap(e2)"
+]
+],
+"distance": "bore_chamfer",
+"name": "Bore lead-in, hub end",
+"when": "hub"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F8:side(e6)",
+"F2:startCap(e2)"
+]
+],
+"distance": "bore_chamfer",
+"name": "Bore lead-in, near side",
+"when": "!hub"
+}
+],
+[
+"feature.transform",
+{
+"source": "Bore lead-in, near side",
+"angle": "-drive_angle",
+"axis": [
+0,
+1,
+0
+],
+"pivot": [
+0,
+0,
+0
+],
+"name": "Cam"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "roller_radius",
+"height": "roller_width",
+"position": [
+0,
+"(cam_width - roller_width)/2",
+"follower_center_height"
+],
+"axis": [
+0,
+1,
+0
+],
+"name": "Roller tyre"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "stud_diameter/2",
+"height": "stud_length",
+"position": [
+0,
+"roller_face_end",
+"follower_center_height"
+],
+"axis": [
+0,
+1,
+0
+],
+"name": "Roller stud"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Roller tyre",
+"tool": "Roller stud",
+"name": "Roller blank"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F16:face(0)",
+"F16:face(1)"
+],
+[
+"F16:face(0)",
+"F16:face(2)"
+],
+[
+"F17:face(0)",
+"F17:face(2)"
+]
+],
+"distance": "roller_chamfer",
+"name": "Track roller"
+}
+],
+[
+"sketch.create",
+{
+"name": "Follower head section",
+"plane": "yz"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Follower head section",
+"at": [
+"cheek_start",
+"cheek_bottom"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Follower head section",
+"at": [
+"cheek_end",
+"cheek_bottom"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Follower head section",
+"at": [
+"cheek_end",
+"head_top"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Follower head section",
+"at": [
+"bar_start",
+"head_top"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Follower head section",
+"at": [
+"bar_start",
+"bar_bottom"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Follower head section",
+"at": [
+"cheek_start",
+"bar_bottom"
+]
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Follower head section",
+"points": [
+"e1",
+"e2",
+"e3",
+"e4",
+"e5",
+"e6"
+],
+"closed": true
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Follower head section",
+"distance": "head_width",
+"symmetric": true,
+"name": "Follower head"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "stem_diameter/2",
+"height": "stem_length",
+"position": [
+0,
+"stem_y",
+"head_top"
+],
+"axis": [
+0,
+0,
+1
+],
+"name": "Stem"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Follower head",
+"tool": "Stem",
+"name": "Follower blank"
+}
+],
+[
+"datum.plane",
+{
+"from": "zx",
+"distance": "cheek_start",
+"name": "Cheek face"
+}
+],
+[
+"sketch.create",
+{
+"name": "Stud hole",
+"plane": "Cheek face"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Stud hole",
+"at": [
+"follower_center_height",
+"0 mm"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Stud hole",
+"center": "e1",
+"radius": "stud_diameter/2"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Stud hole",
+"distance": "cheek_thickness",
+"name": "Stud hole tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Follower blank",
+"tool": "Stud hole tool",
+"name": "Head bored"
+}
+],
+[
+"feature.block",
+{
+"size": [
+"stem_diameter + 2*tool_overrun",
+"flat_depth + tool_overrun",
+"flat_high - flat_low"
+],
+"position": [
+"-stem_diameter/2 - tool_overrun",
+"stem_y + stem_diameter/2 - flat_depth",
+"flat_low"
+],
+"name": "Stem flat tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Head bored",
+"tool": "Stem flat tool",
+"name": "Stem flat"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F22:face(0)",
+"F22:face(2)"
+]
+],
+"distance": "stem_chamfer",
+"name": "Stem end chamfer"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F21:side(e7)",
+"F21:side(e8)"
+],
+[
+"F21:side(e8)",
+"F21:side(e9)"
+],
+[
+"F21:side(e9)",
+"F21:side(e10)"
+],
+[
+"F21:side(e10)",
+"F21:side(e11)"
+],
+[
+"F21:side(e12)",
+"F21:side(e7)"
+]
+],
+"distance": "head_chamfer",
+"name": "Follower"
+}
+],
+[
+"datum.plane",
+{
+"from": "zx",
+"distance": "cheek_end",
+"name": "Nut seat"
+}
+],
+[
+"sketch.create",
+{
+"name": "Nut hexagon",
+"plane": "Nut seat"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut hexagon",
+"at": [
+"follower_center_height + nut_flats/2/cos(30 deg)*cos(0 deg)",
+"nut_flats/2/cos(30 deg)*sin(0 deg)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut hexagon",
+"at": [
+"follower_center_height + nut_flats/2/cos(30 deg)*cos(60 deg)",
+"nut_flats/2/cos(30 deg)*sin(60 deg)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut hexagon",
+"at": [
+"follower_center_height + nut_flats/2/cos(30 deg)*cos(120 deg)",
+"nut_flats/2/cos(30 deg)*sin(120 deg)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut hexagon",
+"at": [
+"follower_center_height + nut_flats/2/cos(30 deg)*cos(180 deg)",
+"nut_flats/2/cos(30 deg)*sin(180 deg)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut hexagon",
+"at": [
+"follower_center_height + nut_flats/2/cos(30 deg)*cos(240 deg)",
+"nut_flats/2/cos(30 deg)*sin(240 deg)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut hexagon",
+"at": [
+"follower_center_height + nut_flats/2/cos(30 deg)*cos(300 deg)",
+"nut_flats/2/cos(30 deg)*sin(300 deg)"
+]
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Nut hexagon",
+"points": [
+"e1",
+"e2",
+"e3",
+"e4",
+"e5",
+"e6"
+],
+"closed": true
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Nut hexagon",
+"distance": "nut_height",
+"name": "Nut blank"
+}
+],
+[
+"sketch.create",
+{
+"name": "Nut bore",
+"plane": "Nut seat"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Nut bore",
+"at": [
+"follower_center_height",
+"0 mm"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Nut bore",
+"center": "e1",
+"radius": "stud_diameter/2"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Nut bore",
+"distance": "nut_height",
+"name": "Nut bore tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Nut blank",
+"tool": "Nut bore tool",
+"name": "Nut"
+}
+],
+[
+"feature.block",
+{
+"size": [
+"guide_width",
+"guide_depth",
+"guide_length"
+],
+"position": [
+"-guide_width/2",
+"stem_y - guide_depth/2",
+"guide_bottom"
+],
+"name": "Guide blank"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "bush_outer/2",
+"height": "guide_length + 2*tool_overrun",
+"position": [
+0,
+"stem_y",
+"guide_bottom - tool_overrun"
+],
+"axis": [
+0,
+0,
+1
+],
+"name": "Bush seat"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Guide blank",
+"tool": "Bush seat",
+"name": "Guide bored"
+}
+],
+[
+"datum.plane",
+{
+"from": "zx",
+"distance": "stem_y - guide_depth/2",
+"name": "Guide back"
+}
+],
+[
+"sketch.create",
+{
+"name": "Guide mounting holes",
+"plane": "Guide back"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Guide mounting holes",
+"at": [
+"guide_bottom + guide_length/2",
+"1*(guide_width/2 - guide_bolt_inset)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Guide mounting holes",
+"at": [
+"guide_bottom + guide_length/2",
+"-1*(guide_width/2 - guide_bolt_inset)"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Guide mounting holes",
+"center": "e1",
+"radius": "guide_bolt_diameter/2"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Guide mounting holes",
+"center": "e2",
+"radius": "guide_bolt_diameter/2"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Guide mounting holes",
+"distance": "guide_depth",
+"name": "Guide bolt tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Guide bored",
+"tool": "Guide bolt tool",
+"name": "Guide holed"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "screw_diameter/2",
+"height": "guide_depth/2 + tool_overrun",
+"position": [
+0,
+"stem_y",
+"screw_height"
+],
+"axis": [
+0,
+1,
+0
+],
+"name": "Screw hole tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Guide holed",
+"tool": "Screw hole tool",
+"keepTool": true,
+"name": "Guide screw hole"
+}
+],
+[
+"feature.fillet",
+{
+"edges": [
+[
+"F38:face(2)",
+"F38:face(4)"
+],
+[
+"F38:face(2)",
+"F38:face(5)"
+],
+[
+"F38:face(3)",
+"F38:face(4)"
+],
+[
+"F38:face(3)",
+"F38:face(5)"
+]
+],
+"radius": "guide_corner",
+"name": "Guide block"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "bush_outer/2",
+"height": "guide_length",
+"position": [
+0,
+"stem_y",
+"guide_bottom"
+],
+"axis": [
+0,
+0,
+1
+],
+"name": "Bush blank"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "stem_diameter/2",
+"height": "guide_length + 2*tool_overrun",
+"position": [
+0,
+"stem_y",
+"guide_bottom - tool_overrun"
+],
+"axis": [
+0,
+0,
+1
+],
+"name": "Bush bore"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bush blank",
+"tool": "Bush bore",
+"name": "Bush bored"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bush bored",
+"tool": "Screw hole tool",
+"name": "Bronze bush"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "screw_diameter/2",
+"height": "stem_y + guide_depth/2 - screw_recess - screw_tip_y",
+"position": [
+0,
+"screw_tip_y",
+"screw_height"
+],
+"axis": [
+0,
+1,
+0
+],
+"name": "Anti-rotation screw"
+}
+],
+[
+"material.preset",
+{
+"body": "Cam",
+"preset": "steel",
+"color": "#b5bbc1",
+"roughness": 0.26
+}
+],
+[
+"material.preset",
+{
+"body": "Track roller",
+"preset": "steel",
+"color": "#c9ccd0",
+"roughness": 0.2
+}
+],
+[
+"material.preset",
+{
+"body": "Follower",
+"preset": "steel",
+"color": "#1f4fa0",
+"metallic": 0,
+"roughness": 0.38
+}
+],
+[
+"material.preset",
+{
+"body": "Nut",
+"preset": "steel",
+"color": "#1c1c1f",
+"metallic": 0,
+"roughness": 0.45
+}
+],
+[
+"material.preset",
+{
+"body": "Anti-rotation screw",
+"preset": "steel",
+"color": "#1c1c1f",
+"metallic": 0,
+"roughness": 0.45
+}
+],
+[
+"body.material",
+{
+"body": "Guide block",
+"name": "Grey cast iron",
+"density": "7.2 g/cm3"
+}
+],
+[
+"body.appearance",
+{
+"body": "Guide block",
+"color": "#4d5358",
+"metallic": 0.15,
+"roughness": 0.65
+}
+],
+[
+"body.material",
+{
+"body": "Bronze bush",
+"name": "Bearing bronze",
+"density": "8.8 g/cm3"
+}
+],
+[
+"body.appearance",
+{
+"body": "Bronze bush",
+"color": "#c49a5a",
+"metallic": 1,
+"roughness": 0.32
+}
+],
+[
+"variable.output",
+{
+"name": "peak_pressure_angle_out",
+"expr": "peak_pressure_angle",
+"label": "Peak pressure angle",
+"unit": "deg"
+}
+],
+[
+"variable.output",
+{
+"name": "pressure_angle_now_out",
+"expr": "pressure_angle_now",
+"label": "Pressure angle at this drive angle",
+"unit": "deg"
+}
+],
+[
+"variable.output",
+{
+"name": "smallest_base_circle",
+"expr": "base_circle_min",
+"label": "Smallest base circle radius this motion allows",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "base_circle_needed_for_pressure",
+"expr": "max(base_circle_for_pressure, 0 mm)",
+"label": "Base circle radius for the pressure limit alone",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "base_circle_needed_for_curvature",
+"expr": "base_circle_for_curvature",
+"label": "Base circle radius for the pressure limit and the roller curvature together",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "base_circle_needed_for_shaft",
+"expr": "base_circle_for_bore",
+"label": "Base circle radius the shaft and keyway ask for",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "smallest_pitch_radius_of_curvature",
+"expr": "pitch_curvature_radius_min",
+"label": "Smallest radius of curvature of the roller path",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "smallest_concave_radius",
+"expr": "if(concave_radius_min < 100000 mm, concave_radius_min, 0 mm)",
+"label": "Smallest concave radius of the roller path (0 = never concave)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "smallest_cam_radius",
+"expr": "cam_curvature_radius_min",
+"label": "Smallest radius on the cam surface (convex)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "curvature_margin",
+"expr": "pitch_curvature_radius_min/roller_radius",
+"label": "Roller path radius of curvature / roller radius, sampled (kept above 2.03)"
+}
+],
+[
+"variable.output",
+{
+"name": "cam_outside_diameter",
+"expr": "2*(base_circle_radius + lift)",
+"label": "Cam outside diameter",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "base_dwell",
+"expr": "base_dwell_angle",
+"label": "Dwell on the base circle",
+"unit": "deg"
+}
+],
+[
+"variable.output",
+{
+"name": "peak_velocity_out",
+"expr": "peak_velocity",
+"label": "Peak follower velocity",
+"unit": "m/s"
+}
+],
+[
+"variable.output",
+{
+"name": "peak_acceleration_out",
+"expr": "peak_acceleration",
+"label": "Peak follower acceleration",
+"unit": "m/s^2"
+}
+],
+[
+"variable.output",
+{
+"name": "peak_acceleration_g",
+"expr": "peak_acceleration/(9.80665 m/(1 s)^2)",
+"label": "Peak follower acceleration in g"
+}
+],
+[
+"variable.output",
+{
+"name": "follower_lift_now_out",
+"expr": "follower_lift_now",
+"label": "Follower lift at this drive angle",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "roller_speed",
+"expr": "roller_speed_max",
+"label": "Roller speed at the largest cam radius (rev/min)"
+}
+],
+[
+"variable.output",
+{
+"name": "roller_speed_rating",
+"expr": "track_rollers[roller].speed_rating",
+"label": "Roller speed rating, grease (rev/min)"
+}
+],
+[
+"variable.output",
+{
+"name": "law_acceleration_jump",
+"expr": "motion_laws[motion_law].accel_jump",
+"label": "Acceleration jumps at the dwell ends (1 = yes: simple harmonic only)"
+}
+],
+[
+"variable.measure",
+{
+"name": "moving_mass",
+"measure": "mass",
+"of": [
+"Follower",
+"Track roller",
+"Nut"
+],
+"label": "Moving mass of the follower",
+"unit": "kg"
+}
+],
+[
+"variable.output",
+{
+"name": "peak_inertia_force",
+"expr": "moving_mass*peak_acceleration",
+"label": "Inertia force of the follower at peak acceleration",
+"unit": "N"
+}
+],
+[
+"variable.measure",
+{
+"name": "cam_mass",
+"measure": "mass",
+"of": "Cam",
+"label": "Mass of the cam",
+"unit": "kg"
+}
+],
+[
+"assert.add",
+{
+"name": "Peak pressure angle is within the limit",
+"measure": "value",
+"expr": "peak_pressure_angle",
+"max": "pressure_limit"
+}
+],
+[
+"assert.add",
+{
+"name": "Roller path radius of curvature, sampled, keeps twice the roller radius with the sampling allowance (no undercut)",
+"measure": "value",
+"expr": "pitch_curvature_radius_min",
+"min": "curvature_sampled_ratio*roller_radius"
+}
+],
+[
+"assert.add",
+{
+"name": "Concave stretches of the roller path, sampled, keep twice the roller radius",
+"measure": "value",
+"expr": "concave_radius_min",
+"min": "curvature_ratio_min*roller_radius"
+}
+],
+[
+"assert.add",
+{
+"name": "Cam section area matches the law (Steiner parallel curve, Simpson over the law)",
+"measure": "sectionArea",
+"of": "Cam",
+"plane": "zx",
+"offset": "cam_width/2",
+"eq": "cam_section_area",
+"tol": "cam_section_area*0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "The roller centre sits one roller radius from the cam at this drive angle",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"name": "*F17:face(0)"
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"name": "*F2:*side(e2)"
+}
+},
+"eq": "roller_radius - stud_diameter/2",
+"tol": "0.05 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "At the top dwell the cam reaches base circle plus lift",
+"measure": "boxMax",
+"of": "Cam",
+"axis": "z",
+"eq": "base_circle_radius + lift",
+"tol": "0.05 mm",
+"when": "drive_mod > rise_angle && drive_mod < rise_angle + top_dwell_angle"
+}
+],
+[
+"assert.add",
+{
+"name": "The table's peak velocity factor agrees with the law's formula",
+"measure": "value",
+"expr": "max(law_v00, law_v01, law_v02, law_v03, law_v04, law_v05, law_v06, law_v07, law_v08, law_v09, law_v10, law_v11, law_v12, law_v13, law_v14, law_v15, law_v16, law_v17, law_v18, law_v19, law_v20)",
+"eq": "motion_laws[motion_law].cv",
+"tol": "0.005"
+}
+],
+[
+"assert.add",
+{
+"name": "The table's peak acceleration factor agrees with the law's formula",
+"measure": "value",
+"expr": "max(abs(law_a10), abs(law_a11), abs(law_a12), abs(law_a13), abs(law_a14), abs(law_a15), abs(law_a16), abs(law_a17), abs(law_a18), abs(law_a19), abs(law_a20))",
+"eq": "motion_laws[motion_law].ca",
+"tol": "0.02"
+}
+],
+[
+"assert.add",
+{
+"name": "The cam clears the follower head, the stud nut and the guide",
+"measure": "overlap",
+"of": "Cam",
+"to": [
+"Follower",
+"Nut",
+"Guide block"
+],
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "The follower head clears the guide",
+"measure": "overlap",
+"of": [
+"Follower",
+"Nut"
+],
+"to": "Guide block",
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "The stem stays in the guide at its lowest position",
+"measure": "boxMax",
+"of": "Follower",
+"axis": "z",
+"min": "guide_top + 2 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Rim left under the keyway",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"name": "*F8:side(e8)"
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"name": "*F2:*side(e2)"
+}
+},
+"min": "rim_wall - 0.05 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Guide wall between the bush seat and the bolt holes",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"name": "*F39:face(0)"
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"name": "*F43:side(e*"
+}
+},
+"min": "guide_wall_min - 0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "The bore runs right through the cam",
+"measure": "through",
+"of": {
+"kind": "face",
+"where": {
+"name": "*F8:side(e6)"
+}
+}
+}
+],
+[
+"assert.add",
+{
+"name": "The anti-rotation screw rides in the stem flat over the whole stroke",
+"measure": "overlap",
+"of": "Anti-rotation screw",
+"to": "Follower",
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "All seven parts exist",
+"measure": "count",
+"of": {
+"kind": "body"
+},
+"eq": "7"
+}
+],
+[
+"variable.publish",
+{
+"name": "lift",
+"label": "Follower lift",
+"description": "How far the follower must rise.",
+"group": "The motion",
+"order": 1,
+"min": "3 mm",
+"max": "lift_max",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "rise_angle",
+"label": "Rise angle",
+"description": "Cam rotation during which the follower rises.",
+"group": "The motion",
+"order": 2,
+"min": "30 deg",
+"max": "rise_angle_max",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "top_dwell_angle",
+"label": "Dwell at the top",
+"description": "Cam rotation during which the follower stays up.",
+"group": "The motion",
+"order": 3,
+"min": "10 deg",
+"max": "top_dwell_max",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "return_angle",
+"label": "Return angle",
+"description": "Cam rotation during which the follower comes back. What is left of the turn is the dwell at the bottom.",
+"group": "The motion",
+"order": 4,
+"min": "30 deg",
+"max": "return_angle_max",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "motion_law",
+"label": "Motion law",
+"description": "Cycloidal is the smoothest. 3-4-5 polynomial has lower peak acceleration. Simple harmonic has the lowest peaks but a step in acceleration at the dwell ends: slow cams only.",
+"group": "The motion",
+"order": 5,
+"kind": "choice",
+"choicesFrom": "motion_laws"
+}
+],
+[
+"variable.publish",
+{
+"name": "cam_speed",
+"label": "Cam speed (rev/min)",
+"description": "Cam revolutions per minute. Limited by the roller's speed rating.",
+"group": "The motion",
+"order": 6,
+"min": "5",
+"max": "min(3000, floor(track_rollers[roller].speed_rating*roller_radius/(base_circle_radius + lift)))",
+"step": "5"
+}
+],
+[
+"variable.publish",
+{
+"name": "base_circle_radius",
+"label": "Base circle radius",
+"description": "Radius of the cam where the follower rests. The form will not go below what the pressure angle, the roller and the shaft allow; the outputs say what each one asks for.",
+"group": "The cam",
+"order": 7,
+"min": "base_circle_min",
+"max": "base_circle_max",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "roller",
+"label": "Track roller",
+"description": "Stud-type track roller from the catalogue table.",
+"group": "The cam",
+"order": 8,
+"kind": "choice",
+"choicesFrom": "track_rollers"
+}
+],
+[
+"variable.publish",
+{
+"name": "pressure_limit",
+"label": "Pressure angle limit",
+"description": "30 degrees for a translating roller follower (Norton), 35 at most with a low-friction guide.",
+"group": "The cam",
+"order": 9,
+"min": "20 deg",
+"max": "35 deg",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "shaft",
+"label": "Shaft diameter",
+"description": "Bore with DIN 6885-1 keyway.",
+"group": "The shaft",
+"order": 10,
+"kind": "choice",
+"choicesFrom": "shafts"
+}
+],
+[
+"variable.publish",
+{
+"name": "hub",
+"label": "Hub on the cam",
+"description": "A hub on one side for a longer key engagement.",
+"group": "The shaft",
+"order": 11,
+"kind": "boolean"
+}
+],
+[
+"variable.publish",
+{
+"name": "drive_angle",
+"label": "Drive angle",
+"description": "Turns the cam by hand: the follower moves with it.",
+"group": "Run it",
+"order": 12,
+"min": "0 deg",
+"max": "360 deg",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"document.info",
+{
+"title": "Cam disc",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"description": "A disc cam with a translating roller follower, laid out by formula from a motion law you choose (cycloidal, simple harmonic, 3-4-5 polynomial). Give the rise, dwell and return angles, the lift, and the speed; the form refuses a cam whose pressure angle or radius of curvature is impossible, and says which base circle would work. Peak velocity and acceleration are outputs. Export the sketch Cam profile as DXF for wire EDM or CNC, and the bodies as STEP.",
+"tags": [
+"machine building",
+"cam",
+"mechanism",
+"motion law"
+]
+}
+],
+[
+"document.check",
+{}
+]
+]
