@@ -465,8 +465,11 @@ def cmd_check(ids, quick):
                         tier = meta.get("tier") if meta.get("tier") in TIERS else "complex"
                         budget = WORST_POINT_FACTOR * BUDGET_LOAD_S[tier]
                         if range_stats["range_worst_s"] > budget and not meta.get("budget_exception"):
-                            problems.append(f"slowest point of the range takes {range_stats['range_worst_s']} s, "
-                                            f"budget {budget} s for {tier}")
+                            # As for the load time: a busy machine only warns (AGENTS.md section 4.5).
+                            busy = os.getloadavg()[0] > (os.cpu_count() or 1) / 2
+                            (notes if busy else problems).append(
+                                f"slowest point of the range takes {range_stats['range_worst_s']} s, budget {budget} s "
+                                f"for {tier}" + (" (busy machine: re-measure at a quiet moment)" if busy else ""))
                         if range_stats != meta.get("stats", {}) and range_stats:
                             meta.setdefault("stats", {}).update(range_stats)
                             write_meta(jig, meta)
