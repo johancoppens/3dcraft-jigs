@@ -1,230 +1,255 @@
 # Miura-ori fold panel
 
-A Miura-ori panel: a sheet of parallelograms, 3 to 14 rows by 3 to 16 columns, that folds in and out in one
-motion, of paper or of **thick panels** (card or plywood on a fabric hinge). The Jig shows the panel at any
-angle from flat to folded flat (paper) or to where the panels meet (thick), and exports the crease pattern to
-print and score, or to laser-score. Licence: CC-BY-4.0.
+Drag one slider and a sheet folds: this is the Miura-ori, the pleat a whole sheet makes in one motion. Choose your
+sheet, how many rows and columns of parallelograms and how steep they are, and the pattern fills the sheet. Print it,
+score it, or cut it on a plotter or laser with the mountains and the valleys on separate layers. Switch on thick panels
+and the same pattern becomes card or plywood on a fabric hinge, and the slider then folds exactly as far as the panels
+really allow.
 
-| Parameter | Group | Default | Range |
+![A Miura-ori sheet half folded, cream card, the zigzag creases at right angles](preview.png)
+
+## What it shows
+
+- **One slider, every crease.** `feature.fold` is driven by a single angle on one family of creases and 3DCraft solves
+  the rest (`e33[*]` carries the angle, all others are solved). *Fold* runs from 0 (flat) to 100 (folded flat, or as far
+  as the panels go) and is linear in the facets' tilt. On paper 50 is the zigzag creases at exactly a right angle. With
+  thick panels 100 is the panels' stop and 50 is half that tilt, so the creases stand at less than a right angle (50.8 degrees at
+  the defaults). The form says so and the outputs give the real crease angles.
+- **Folding flat, for real.** At 100 the paper is folded flat by 3DCraft's layer solver (taco-taco, taco-tortilla, the
+  order of up to 224 facets stacked on one another), not by a formula.
+- **The Miura-ori as sketch patterns.** Eight seed lines (four zigzag pieces and four straight pieces, each a mountain or a
+  valley) are repeated by `sketch.pattern` with counts that are formulas of *Rows* and *Columns*, so a change of the grid
+  changes the topology. Each seed is named with its copies (`e33[*]`) so the fold follows them.
+- **The sheet decides the cells.** A table of sheets (`table.set`, `choicesFrom`) and `Margin` give the area to fill; rows
+  and columns then give the cell width and row height by formula, and `variable.publish` ranges that are formulas stop
+  rows and columns where a cell would fall below 10 mm.
+- **Kinematics held to closed forms.** A folded Miura-ori has known overall dimensions. The Jig measures the solved fold
+  (`extent`, `boxMax`) and compares its depth, length and width to the closed forms to 0.001 mm.
+- **Level and square at every position.** Two `feature.transform` steps turn the folded sheet back so it lies level and
+  its creases stay along the axes, so the slider folds it in place. They are switched off at 100, where 3DCraft will not
+  build on a flat-folded body: from Fold 99 to 100 the pack, standing on edge, lies down on the sketch plane and turns. The
+  form says so too.
+- **Thick panels from the same pattern** (`panels` of `feature.fold`): one six-sided prism per cell set back from every
+  crease, on a fabric sheet that is the same fold, recoloured by `body.appearance` with colour expressions.
+
+A static model is one sheet at one angle. This is every sheet up to A1, any grid to 14 x 16, any angle from 45 to 80
+degrees, at any fold, in paper or panels, and always ready to send to the cutter.
+
+## The real thing
+
+**The pattern.** The Miura-ori is a tessellation of parallelograms: straight creases run across, zigzag creases up the
+sheet, and at each interior vertex three creases are one kind and one the other. It has one degree of freedom, which is
+why it unfolds in one motion: pull two opposite corners and it opens. It is named after Koryo Miura (his 1985 ISAS report,
+known here only by its citation in the literature; not read). Its kinematics are worked out by Schenk and Guest (*PNAS*
+110(9), 2013, read in the PubMed Central text): a, b the parallelogram's sides, γ its acute angle and θ the facets' tilt
+out of the plane, 0 to 90 degrees. The equations of that paper are images in the web text and could not be read, so the
+Jig's formulas are derived here: straight creases fold by `2 atan(tan θ cos γ)` and zigzag ones by `2 θ`; the facets' tilt θ
+is what the slider moves. Depth `a sin γ sin θ`, length and width in closed form follow from the facets staying rigid. The
+Jig does not take them on trust: it measures the fold and holds them to 0.001 mm over the range.
+
+**Sheet sizes.** ISO 216 A series and US Letter and Tabloid (checked against published size tables; A-series values are
+the standard's). *Art board 500 x 700* and *Laser bed 400 x 600* are common workshop sizes chosen by this Jig, not
+standards.
+
+**The pack.** Paper folds to 180 degrees in the crease pattern, and a real pack has thickness. At Fold 100 the form gives the
+pack's length `C a cos γ + l`, its width `a sin γ` and its thickness: the most layers stacked at one spot times the thickness of a
+sheet, with the sheet taken at a bulk of 1.25 cm³/g (typical uncoated paper, this Jig's assumption), so 160 g/m² is 0.2 mm a
+layer. The length and width are the limit at 90 degrees of the closed forms the assertions hold at every other fold. The stack is
+`rows × min(columns, 2 ceil(l / (2 a cos γ)))`, with `a` the cell width and `l` the zigzag edge: every row stacks whole, and a
+facet covers only the columns within a zigzag edge. It is not the facet count (`fold.inspect` `count`, 80 at the defaults);
+worked out here, and matched against a separate count of overlapping facets on 40 grids. A flat-folded pack cannot be measured
+as a solid, so this is not an assertion. Folding by hand, your pack will be a little thicker than this, as creases never close
+fully.
+
+**Making it, by hand on paper or card.** (Practice, not proven by the model.)
+
+1. Export the crease pattern as SVG with a line width (see Export). Print it at 100 % (no "fit to page"), centred,
+   on the sheet you chose. Measure one cell: it must be the *Cell width* and *Row height* the form shows.
+2. Score each line against a steel rule with an empty ballpoint or a bone folder, on the side where the fold will be
+   a valley: valleys (blue) on the printed side, mountains (red) from the back. Prick their ends through to find them,
+   or score everything on the printed side and fold the mountains back. Paper up to 120 g/m² folds without scoring; 160
+   g/m² folds well if scored; 200 g/m² and up needs scoring on both sides. This is workshop practice, not from a source.
+3. Cut the outline (black), pre-fold every crease one way and then the other, then fold: pinch the zigzag creases row by
+   row and push the straight ones in alternately. Once a few rows are in, the whole sheet collapses together.
+
+**Plotter or laser.** The DXF and SVG have the outline on the layer `boundary`, mountains on `mountain` and valleys on
+`valley`, each at true size, so the machine can score them on different passes or tools, or cut the outline only. A
+half-cut belongs on the outside of its fold, so the uncut skin is the hinge: mountains from the front, valleys from the
+back (flip the sheet about its long edge against a stop and mirror the job in your software). On thin stock one pass
+from the front for all creases will do, the valleys then with the score on the inside, which thin paper forgives. Test
+the power on a strip first; a laser leaves a brown line, so start low. This too is practice, not proof.
+
+**Thick panels.** Card, grey board or plywood panels glued on a fabric or tape hinge: one panel per cell, the hinge the
+sheet they are glued to (the membrane model of thick origami; see Zirbel et al., *J. Mech. Design* 135(11), 2013, whose
+abstract was read). Each panel stands back from every crease by half the *Gap between panels*, not from the outline. They
+fold with the paper's motion. A valley, where the panels lie on the inside of the fold, is the crease that closes: the
+panels' inner edges meet when the zigzag crease has folded by `2 atan(half gap / thickness)`, and a mountain opens freely.
+The Jig stops 5 % of the gap short of touching (this Jig's own margin), so at Fold 100 the panels still clear each other by 5 % of
+the gap you set (the output gives what is left, and an assertion measures it). Thick panels on a one-sided hinge cannot fold flat: the panels would pass through
+each other, as 3DCraft refuses; 3DCraft's guide names the methods that do fold them flat (offset and tapered panels), not
+built here or there (F-015 in the examples' feedback). So a thick Miura folds part way. How far depends on the panels: the facets' tilt
+at the stop follows only the thickness and the gap, the same on every grid and at every parallelogram angle, and a steeper
+parallelogram then reaches a smaller angle at the straight creases.
+The fold of the panels is shown in the form as *Furthest fold*. To cut them, export the set *Panels cut sheet* (below): it holds the
+panels as the laser should draw them, half a *Laser kerf* larger than the finished panel next to every crease, so a cut panel comes
+out at the gap you asked for. Along the sheet's outline there is no compensation (the fold sets panels back only from creases), so
+an outer panel ends half a kerf short of the fabric's edge, which does no harm. Set the kerf to 0 if you saw or cut the panels another
+way. For paper the outline is cut and the creases scored, and the kerf is of no account. Glue
+them onto the fabric, using the printed crease pattern under it to place each one: the panels are mirrored pairs, so
+sort them by leaning direction first, and glue the outer row and column last (they are the larger ones: no set-back at the outline). The order of work is this Jig's advice.
+
+**Not modelled:** real paper bending at a crease (zero width here), the fabric's stretch, friction, and the score depth
+and tool on your machine. The model is a rigid fold with zero paper thickness apart from the thick-panel option.
+
+## Parameters
+
+| Group | Parameter | Range | What it changes |
 |---|---|---|---|
-| Rows | Pattern | 6 | 3 to 14, and no more than leave cells of 10 mm on the paper |
-| Columns | Pattern | 8 | 3 to 16, and no more than leave cells of 10 mm on the paper (allowing for a zigzag offset of one cell height) |
-| Cell width | Pattern | 30 mm | 10 mm to what fits the paper inside the margin, step 0.5 mm |
-| Cell height | Pattern | 28 mm | 10 mm to what fits the paper inside the margin, step 0.5 mm |
-| Parallelogram angle | Pattern | 70 deg | 45 to 80 deg up to 12 x 12 cells, to 65 deg on a larger grid, step 1 deg |
-| Fold | Fold | 90 deg | 0 (flat) to 180 deg (folded flat); with thick panels to the last whole degree below where they meet, step 1 deg |
-| Thick panels | Panels | off | on: card or plywood panels on a fabric hinge instead of paper |
-| Panel thickness | Panels | 1.5 mm | 0.3 to 6 mm, step 0.1 mm |
-| Hinge clearance | Panels | 1.5 mm | 0.3 mm to a quarter of the cell's narrower width (at most 10 mm), step 0.1 mm |
-| Panels on the front | Panels | off | on: the panels on the printed side |
-| Paper | Paper | A4 | A4, A3, Letter (table `sheets`) |
-| Landscape | Paper | on | on / off |
-| Margin | Paper | 10 mm | 0 to 30 mm, step 1 mm |
+| Fold | Fold | 0 to 100, step 1 | Everything: the sheet's fold, its footprint and depth; on paper 50 is the zigzag creases at 90 degrees, with panels 100 is their stop and 50 is half that tilt |
+| Pattern | Rows | 3 to 14, or what leaves cells at least 10 mm high | Creases and facets across the sheet |
+| Pattern | Columns | 3 to 16, or what leaves cells at least 10 mm wide | Creases and facets along the sheet |
+| Pattern | Parallelogram angle | 45 to 80 deg (to 70 deg above 144 cells) | The cells' lean; steeper packs flatter |
+| Sheet | Sheet | A5 to A1, US Letter, US Tabloid, art board 500 x 700, laser bed 400 x 600 | The pattern's size (it fills the sheet) |
+| Sheet | Landscape | on or off | Long side along the columns |
+| Sheet | Margin | 0 to 30 mm | Free paper round the pattern |
+| Sheet | Paper weight | 80 to 400 g/m² | Mass and pack thickness |
+| Thick panels | Thick panels | on or off | Panels on fabric hinges instead of paper |
+| Thick panels | Panel thickness | 0.3 to 6 mm, at most a third of the narrowest cell | The panels' prisms; less folds further |
+| Thick panels | Gap between panels | 0.6 to 20 mm, at most half the narrowest cell | The fabric hinge; more folds further |
+| Thick panels | Laser kerf | 0 to 0.5 mm, at most half the gap | How much larger the cut sheet draws the panels |
 
-The maximum cell sizes follow the paper, the orientation, the margin, the rows and columns and the angle: the
-flat pattern is `columns x cell width + d` wide and `rows x cell height` high, with `d = cell height / tan(angle)`
-the zigzag's offset.
+A cell cannot be sized directly: rows, columns, sheet and margin set it, and the outputs show it. Rows and columns are limited
+to keep the layer search within 3DCraft's work allowance (at the angle limit below); the limit is in the *Checks*.
 
-Why these limits: the fold itself is no longer the limit. 3DCraft's sparse solve folds 27 x 38 cells (some
-2000 crease angles) in under two seconds. What limits the grid is the **order of the layers** when the panel is
-folded flat. 3DCraft searches for it within a work allowance, because flat-foldability is NP-hard, and it says
-so rather than guess. The Fold at 180 deg and the `flatFoldable` assertion both need that order. Measured at
-3DCraft 0dc5efb6, every grid up to 12 x 12 is decided at angles up to 80 deg, and every grid up to 14 rows of 16
-columns at angles up to 65 deg. Past that, tall, narrow cells at high angles run out (12 x 14 cells of 10 x 33 mm
-at 70 deg stack 144 facets in one place; 12 x 16 cells of 10 x 24.5 mm at 80 deg, 192; 27 x 38 cells even at
-50 deg). So the grid stops at 14 x 16, and the angle's range drops to 65 deg once either count passes 12. The columns' range allows for the
-largest zigzag offset (`d = b` at 45 deg) whatever the angle, so the two ranges do not depend on each other.
+Outputs: cell width, row height, zigzag edge; the crease angles (straight and zigzag); the current length, width and
+depth of the fold, and at 100 the length, thickness and width of the pack; total length of the mountain and of the valley creases
+(metres, for a plotter's or laser's time); paper mass; the most layers at one spot and the thickness of the flat-folded pack; the
+furthest fold with these panels; the gap left at the tightest crease.
 
-## How it folds
+At the defaults (8 rows, 10 columns, 70 degrees, A4 on its long side, margin 10 mm, 160 g/m²): cell 26.84 by 23.75 mm with a
+zigzag edge of 25.27 mm; Fold 50 puts the straight creases at 37.8 and the zigzag ones at 90 degrees; the fold is 212.1 by
+179.8 mm and 17.8 mm deep; 1.950 m of mountain creases and 1.748 m of valley creases; 8.2 g of paper; folded flat, 32 layers at
+the thickest spot, a pack 117.1 by 25.2 mm and 6.4 mm thick.
 
-Every point of the pattern is a sketch point held by expressions of the cell width `a`, the cell height `b`,
-`d = b / tan(angle)`, the rows and the columns: grid point `(i, j)` lies at `(i a + mod(j, 2) d, j b)`. The
-straight creases run across at every row (`y = j b`), the zigzag creases up the columns. Seen from the printed
-side:
+## Checks
 
-- **zigzag creases**: odd columns mountains, even columns valleys, each along its whole length;
-- **straight creases**: alternately mountain and valley along each line, shifted by one cell from one line to
-  the next (segment `i` of line `j` is a valley when `i + j` is odd).
+Twenty-two assertions, cheap enough to run at every change of the form. All are measured on the model unless they say
+otherwise.
 
-The grid follows Rows and Columns through sketch patterns: each kind of crease piece (a zigzag piece leaning
-right or left, in an odd or an even column; a straight piece in an odd or an even row and cell) is one seed line
-repeated every two cells and every two rows, with counts that are formulas of the rows and columns, and the
-fold takes each seed with all its copies as creases (`e33[*]`). The outline's zigzag edges are patterns too.
+Paper (and the fabric sheet of thick panels):
 
-At every inside vertex three creases are of one kind and one of the other. The panel is folded rigidly by
-3DCraft's own fold solver. The straight valleys of the odd rows' even cells (one seed and its copies) have the
-**Fold** angle; 3DCraft solves every other crease from them: the other straight creases by the same angle, the
-zigzag creases by `2 atan(tan(fold / 2) / cos(angle))`, which is faster (at the defaults, 90 deg, the zigzags are
-at 142.2 deg). A Miura-ori has one degree of freedom, so one driven crease would do in principle, and every
-straight crease folds by the same angle, so driving these together is consistent. But with one crease driven,
-3DCraft calls some long, low panels (3 rows of 8 to 12 columns) ambiguous. That is filed with 3DCraft as a
-repro.
+- **One flat facet per cell**: the fold has rows × columns facets (`count`).
+- **Area** of the folded sheet against rows × columns × cell width × row height (`area`): every cell, folded or not.
+- **Depth** (`extent` z): against `a sin γ sin θ`, to 0.001 mm: the solved fold against the kinematics.
+- **Level** (`boxMax` z): the fold's top is at half its depth, so it lies level about z = 0.
+- **Length and width** (`extent` x and y): against the closed forms, to 0.001 mm. The same solved fold, read along the
+  sheet and across it.
+- **Kawasaki and Maekawa** at every interior vertex (`kawasakiFails`, `maekawaFails`, 3DCraft's own count, eq 0). Both are
+  necessary for folding flat, and prove nothing more on their own.
+- **Flat-foldable** (`flatFoldable`): 3DCraft decides an order of the layers with every crease at 180 degrees, whatever the
+  slider says. Only this one proves folding flat.
+- **Mountain and valley crease pieces** (`count` of the fold's edges by seed, with their measured lengths): the piece counts and
+  lengths behind the total-length outputs.
+- **The zigzag creases fold by twice the facets' tilt**, from the measured depth: an independent check on the crease-angle output.
+- **The pattern fills the sheet** (`extent` of the flat sheet against the sheet less the margins, both ways).
 
-At **180 deg** the panel is folded flat: every facet lies in the sketch's plane, in an order of layers 3DCraft
-works out from the crease kinds (the picture lifts each layer a little so you can see them).
+Thick panels:
 
-The facet that stays in place is a cell near the middle: column `2 floor(columns / 4) + 1` (odd) of row
-`2 floor(rows / 4)` (even). A folded Miura-ori leans: each facet tilts by `theta = atan(tan(fold / 2) /
-cos(angle))` (half the zigzag creases' fold angle) about its zigzag edge, so below 180 deg the Jig turns the
-folded sheet back by `theta` about that edge's direction (`feature.transform`, the body `Panel`). The panel then
-lies level, its mean plane (the plane of each zigzag crease line) on `z = 0`, and it shrinks in place as it
-folds. Folded flat, the panel already lies in its plane, and 3DCraft does not build on a flat-folded body, so the
-transform is off at 180 deg (`when: fold < 180 deg`).
+- **Six-sided prism per cell** (`count`), and their **volume** against the closed form: each panel set back from the
+  creases around it, not from the outline.
+- **Top and bottom** of the panels (`boxMax`, `boxMin` z) and **width** (`extent` y), against closed forms, to 0.001 mm: they
+  place the panels on the front of the sheet and leaning with it.
+- **The gap at the closing crease** (`distance` between the two panels' sides at the first zigzag valley), against
+  `2 (c cos θ - t sin θ)`, to 0.001 mm, at every Fold: a real distance on the model.
+- **The stop** (Fold 100 only): that distance is 5 % of the gap, to 0.001 mm. A stop placed earlier or later fails it.
+- **The cut sheet** (`volume` of the hidden panels as drawn): half a kerf larger than the finished panels next to the creases.
+  The hidden fold of those panels lies flat; the set takes its faces.
 
-## Thick panels
+`tools/jigs.py check` runs `check-range`: 105 points (defaults, 64 of the 2 048 corners, every choice, 32 random), all
+passing, none unproven. Beyond the range check (`.scratch` scripts, not committed):
 
-Card, grey board or plywood does not fold like paper. Turn on **Thick panels** and every facet becomes a rigid
-panel of **Panel thickness**, set back by the **Hinge clearance** from every crease. The panels are glued on
-the back (or the front) of a fabric or tape membrane that is the hinge. This is 3DCraft's `feature.fold` with
-`panels`: the membrane model of thick origami (Zirbel et al. 2013). The panels fold exactly as the paper
-does, the hinges on the membrane's plane; only the room between the panels is new.
+- **Is the layer search enough?** `flatFoldable` searches within 3DCraft's work allowance, so its range limit is part of
+  the Jig's. Asking it for every sheet in both orientations at the extreme margins and grids of 120 to 224 cells at 60, 70 and
+  80 degrees (981 points), and a further 211 points at 80 degrees on grids to 144 cells:
+  every point within the published ranges passes. The 84 points that ran out of work were all above 144 cells at 80
+  degrees, which the *Parallelogram angle* range now excludes (70 degrees above 144 cells). This is sampling, not a
+  guarantee (the search is NP-hard and the 45-to-80 degree range holds many values); if a grid the scan missed runs out of
+  work, the form shows the assertion's refusal.
+- **Is the stop really where the panels touch?** The tilt at which 3DCraft refuses the fold was bisected to 0.001 degree in 18
+  combinations of angle, thickness and gap (45, 62 and 80 degrees), and to about 0.1 degree in 72 more with grids from 3 × 3 to
+  14 × 16: in each it is `atan(c / t)` within the bisection's resolution, whatever the angle and the grid, so no other pair of
+  panels meets first.
+  A further 73 points were set at Fold 100 across thickness, gap, grid, angle and margin extremes, all passing.
+- **The whole slider:** 126 points of Fold from 0 to 100 at the defaults, 14 × 16 at 70 degrees on A4 portrait, 12 × 12 at 80 degrees, 3 × 3 at 45
+  degrees on A1 and thick panels (including 14 × 16 on A1): all pass.
+- **Refusals, tried by hand with `param.set`:** 20 rows or 17 columns (range 3 to 14 and 16), 9 rows on A5 with a 30 mm margin
+  (range 3 to 8), an angle of 85 degrees, 75 degrees on 12 × 14 (range to 70), Fold 101, panels 6 mm thick on cells too small
+  for it (range to 3.5 mm) and a gap of 15 mm on the defaults (range to 11.9 mm), a paper weight of 500.
+- **Mutation tests** on scratch copies, 19 in all: the stop placed 20 % early, or a stop gap of near zero, fails the stop assertion;
+  a kerf ignored or of the wrong sign fails the cut sheet's volume; a wrong count of crease pieces, a wrong crease-length formula or a
+  wrong zigzag angle output fails its own assertion. And: an interior vertex moved 3 mm
+  (Kawasaki 35 fails, flat-foldable false), a crease family turned mountain to valley (Maekawa 36 fails), a row's straight
+  creases swapped (flat-foldable false), all kinds flipped, crease copies missing (facets 80 → fails), the level axis off by 2
+  degrees (depth, level, length and width fail), no in-plane turn (length and width), the margin ignored (fills-the-sheet), the
+  zigzag offset wrong (depth, length), the panel clearance off (volume, top, gap), panels on the back (top, bottom, gap), the stop tilt too large
+  (the panels collide and the fold fails), no in-plane turn of the panels (width), a shifted outline (the sketch fails).
 
-Between two panels a crease folding away from them opens. One folding towards them closes the gap and the
-panels meet when the crease reaches `2 atan(clearance / thickness)`. In a Miura-ori the zigzag creases fold
-fastest, by `2 atan(tan(fold / 2) / cos(angle))`, and half of them fold towards the panels on either side. So
-the panels meet when
+**The real limit of folding with thickness is proven in the sense the model can prove it:** the closed form for when
+the panels touch was bisected against 3DCraft's own collision check, at every Fold value the measured gap at the closing crease
+equals the closed form, and at Fold 100 it is the stop gap. It holds for rigid panels with hinges on the fabric's plane; real fabric has
+thickness and slack, so a real panel folds a little further or stops a little sooner; 5 % of the gap is kept in reserve.
 
-    fold = 2 atan(cos(angle) x clearance / thickness)
+What the checks do not cover: every combination of the ranges; real paper's stiffness and thickness at a crease; the
+sequence of folding by hand.
 
-and the Fold slider stops at the last whole degree below that. With 1.5 mm panels and 1.5 mm clearance at
-70 deg the limit is 37.8 deg. At 45 deg it is 70.5 deg. 3 mm plywood with a 3 mm clearance (6 mm of bare fabric
-between two panels) behaves the same. More clearance, thinner panels or a lower angle let it fold further. Where the limit is
-under 1 deg (6 mm panels with 0.3 mm clearance at 80 deg: 0.99 deg) the slider stays at 0, flat.
-3DCraft checks every pair of panels as solids and refuses a fold where two meet. The limit above agrees with
-it: at 45, 70 and 80 deg the fold passes 0.05 deg below the closed form and is refused 0.05 deg above it, the
-first meeting being two panels beside a zigzag crease.
+## Export
 
-Thick panels cannot fold flat with the hinges on the membrane: they would pass through each other. The
-methods that fold thick panels flat move the hinges off the sheet (offset panels, Edmondson et al. 2014) or
-taper the panels' edges (Tachi 2011). 3DCraft does not build them yet, so a thick Miura-ori folds only part of
-the way. To cut the panels, export the crease pattern (below) and cut each cell inside its creases by the
-clearance (a laser's kerf takes part of it).
+The fold exports flat whatever its angle.
 
-## Checked by assertions
+- **Crease pattern** (the file a plotter, a laser or a die maker needs). *File › Export…*, **Crease pattern of: Miura-ori**, as DXF
+  or SVG; agents: `file.export` with `"fold": "Miura-ori"`. In either format the outline is the layer `boundary`, the
+  mountains the layer `mountain` and the valleys the layer `valley`, at true size. An SVG without `"stroke"` has hairlines (0.01
+  mm, a laser's): for printing give it a line width, `"stroke": 0.3`. The layer names are fixed by 3DCraft (F-063 in the examples' feedback);
+  a die maker's CUT and CREASE layers are a rename in the CAM program.
+- **Panels** (thick panels on): *File › Export…*, **Sheet of set: Panels cut sheet**, DXF or SVG; agents: `file.export` with
+  `"set": "Panels cut sheet"`. Every panel, once, true size, in rows. Give *Sheet width* your board or bed width. The panels are
+  in document order, not numbered; see *The real thing*. The set holds the panels as the laser draws them, kerf included.
+- A shape for a laser cutter to mark is the same as the above with a low-power layer for the creases.
 
-Paper (Thick panels off):
+A whole-model STEP or 3MF also holds the hidden flat body *Panels as drawn*: export the fold's crease pattern or the set *Panels cut sheet*, not the whole model. In the export dialog give the sheet width for *Panels cut sheet* (600 mm, say), or the 108 panels lie in one long row.
 
-- `every cell is in the folded panel (area rows x cols x a x b)`: the folded panel's area is `rows x columns x a x b`
-  (each parallelogram has base `a` and height `b`), so no facet is missing or cut short.
-- `the flat sheet is rows x cols parallelograms of a x b`: the flat sheet (a hidden fill of the same outline) has
-  that area too.
-- `one facet per cell`: the folded panel has `rows x columns` facets, so the fold built every cell.
-- `folded thickness a sin(gamma) sin(theta), by the closed form`: the folded panel's height in z is
-  `a sin(angle) sin(theta)`, with `theta = atan(tan(fold / 2) / cos(angle))` the facets' lean (Schenk and Guest
-  2013): the solved fold against the Miura-ori's kinematics, to 0.001 mm (0 when folded flat).
-- `the panel lies level about z = 0`: its top is at half that height, so it lies level, mountains above and
-  valleys below.
+## Files
 
-Thick panels (on), with `c` the clearance and `t` the thickness:
+| File | What it is |
+|---|---|
+| `build.json` | The source: variables, sketch patterns, folds, transforms, sets, outputs, assertions, the form |
+| `meta.json` | Card, preview framing, exports |
+| `formtest.md` | The form test |
+| `preview.png` | The picture |
 
-- `thick panels: one six-sided prism per cell`: the panels have `6 x rows x columns` faces.
-- `thick panels: volume ...`: each panel is its parallelogram set back by `c` from the creases among its sides
-  (not from the outline). It keeps `b - k c` between its straight sides and `a sin(angle) - m c` between its
-  zigzag sides, `k` and `m` the creases among them. Summed over the grid the rows and columns separate, so the
-  volume is `t (rows b - 2 c (rows - 1)) (columns a sin(angle) - 2 c (columns - 1)) / sin(angle)`. This proves
-  the set-back.
-- `thick panels: folded height ...`: every facet leans by `theta`, so a panel reaches `t cos(theta)` past the
-  membrane on its side. A panel set back from a zigzag crease loses `c sin(theta)` there. The odd zigzag creases lie
-  on top, and the right outline is on top only for an odd number of columns. So the height is
-  `a sin(angle) sin(theta) + t cos(theta)`, less `c sin(theta)` for an even number of columns. The bottom is at
-  `-a sin(angle) sin(theta) / 2 - t cos(theta)` with the panels on the back, and at `-a sin(angle) sin(theta) / 2`
-  on the front. Both are held to 0.001 mm. They check the panels' placement against the kinematics and the side
-  they are on.
-- `thick panels: the fold is below the closed-form limit`: `fold` is below the closed form above. The slider's
-  maximum comes from the same formula, so this only guards its rounding to a whole degree and does not prove
-  the formula. That the panels do not meet is 3DCraft's own check of every pair of panels as solids, a refused
-  fold failing the point. The formula itself was checked by hand, as above (0.05 deg either side).
+`dist/miura-ori.3dcraftjig` is the published Jig (open it in 3DCraft, or with `craft3d-cli run`).
 
-Both:
-
-- `Kawasaki holds at every interior vertex`, `Maekawa holds at every interior vertex`: `kawasakiFails` and
-  `maekawaFails` are 0 (every vertex has sectors `angle, 180 - angle, 180 - angle, angle` and three creases of
-  one kind). Both are necessary for folding flat, and prove nothing more on their own.
-- `the pattern folds flat (an order of the layers exists)`: `flatFoldable` is true. 3DCraft decides it with
-  every crease at 180 deg, whatever the Fold angle is now (and, with thick panels, for the paper pattern: thick
-  panels themselves do not fold flat).
-- `the pattern fits the sheet's width inside the margin`, `... height ...`: the flat sheet's box fits the paper
-  less twice the margin.
-
-With thick panels the paper fold is off. Its pattern still gives `fold.check`, these three measures and the
-crease pattern's export. The fold itself must solve at every point of the range: `scripts/check.sh`
-regenerates the defaults, the corners of all ranges (fold 0 and its maximum, angles 45 and 80 deg, 3 and 14
-rows, 3 and 16 columns, the largest cells, thick panels on and off) and random points, and a failed fold fails
-the point. `fold.check` lists each vertex's sums:
+## Rebuild
 
 ```sh
-craft3d-cli run dist/miura-ori.3dcraftjig --cmd fold.check --params '{"fold": "Miura-ori"}'
+tools/jigs.py build miura-ori
+tools/jigs.py render miura-ori
+tools/jigs.py check miura-ori
 ```
 
-## Printing and scoring
+The picture sets the camera and the light direction (`meta.json`, `preview`); no other framing keys.
 
-Export the crease pattern (a fold exports flat, whatever the Fold angle). For printing, give the SVG's lines
-a width with `stroke`, in millimetres (0.3 mm prints well); without it they are a laser's hairline (0.01 mm),
-too thin to print:
+## Difficulty
 
-```sh
-craft3d-cli run dist/miura-ori.3dcraftjig \
-  --cmd param.set --params '{"values": {"rows": 6, "cols": 8, "cellW": "30 mm", "cellH": "28 mm"}}' \
-  --cmd file.export --params '{"path": "miura-ori.svg", "fold": "Miura-ori", "stroke": 0.3}'
-```
+Not yet scored: the reviewer gives the score.
 
-For a laser leave `stroke` out (`.dxf` for DXF).
+## Platform notes
 
-The export draws every crease, the pattern copies too (at the defaults 44 mountains and 38 valleys and the
-14 lines of the outline; 3DCraft before 0dc5efb6 drew only the seed creases). It reads the paper fold
-`Miura-ori`, which works with thick panels on too. In the window: **File › Export…**, *Crease pattern of:
-Miura-ori*, SVG or DXF (the dialog has no line width; for a printable SVG use the command above). The outline is black on
-the layer `boundary`, mountains red dash-dot on `mountain`, valleys blue dashed on `valley`; the file is at
-true size in millimetres (the pattern's own size, not the paper's).
-
-**By hand, on paper or card.**
-
-1. Print the SVG at **100 % (actual size, no "fit to page")**, centred, on the paper you chose; measure one
-   cell to check the scale. 120 to 160 g/m² paper folds crisply; thin card (200 g/m²) needs scoring on both
-   sides.
-2. Lay a steel ruler on each line and score it with an empty ballpoint pen, a bone folder or a blunt knife back,
-   pressing firmly but not cutting through. Score the **valleys (blue) on the printed side**; turn the sheet
-   over and score the **mountains (red)** from the back (prick their ends through with a pin first, so you can
-   find them), or score everything from the front and fold the mountains back.
-3. Cut the outline (black).
-4. Pre-fold every crease one way, then the other, and flatten again.
-5. Fold the panel: pinch the zigzag creases into their mountains and valleys row by row, and push the
-   straight creases in alternately. Once a few rows are in, the whole panel collapses together; pull two opposite
-   corners and it opens in one motion.
-
-**Laser-scoring.** Use the DXF or SVG; give the layers `mountain` and `valley` a low-power score (engrave line)
-setting that half-cuts the card without going through, and the layer `boundary` a cut. **A half-cut belongs on
-the outside of its fold:** the kerf opens as the card bends and the uncut skin on the inside is the hinge; a
-half-cut on the inside is squeezed shut, and the card buckles or cracks beside it. Seen from the printed side
-(the front), the outside of a mountain is the front and the outside of a valley is the back. A laser cuts from
-the top only, so:
-
-1. Front up: half-cut the **mountains** (red) only.
-2. Flip the sheet about its long edge against a corner stop or registration marks, and mirror the file
-   (left-right) in your laser software; half-cut the **valleys** (blue) only, then cut the outline.
-
-On paper and thin card (up to about 200 g/m²) a single pass from the front for all creases works too: the
-valleys then have their score on the inside, which thin stock forgives. Try your power on a test strip first.
-
-## Sources
-
-- K. Miura, "Method of packaging and deployment of large membranes in space", *The Institute of Space and
-  Astronautical Science Report* 618, 1985: the Miura-ori pattern.
-- M. Schenk and S. D. Guest, "Geometry of Miura-folded metamaterials", *PNAS* 110(9), 2013, pp. 3276-3281: the
-  cell's kinematics (one degree of freedom, the zigzag fold angle from the straight one).
-- T. Tachi, "Generalization of rigid-foldable quadrilateral-mesh origami", *Journal of the IASS* 50(3), 2009:
-  fold angles of flat-foldable degree-4 vertices.
-- T. C. Hull, *Origametry*, Cambridge University Press, 2020: Kawasaki's and Maekawa's conditions.
-- S. A. Zirbel et al., "Accommodating thickness in origami-based deployable arrays", *Journal of Mechanical
-  Design* 135(11), 2013: thick-origami methods compared, among them the membrane (hinges on one surface).
-- B. J. Edmondson et al., "An offset panel technique for thick rigidly foldable origami", *ASME IDETC* 2014;
-  T. Tachi, "Rigid-foldable thick origami", *Origami 5*, 2011: the methods that fold thick panels flat (not
-  in 3DCraft yet).
-
-## Notes
-
-- Needs a 3DCraft that reads format version 50 (creases from sketch patterns, folding flat, thick panels,
-  assertions with a condition): built and checked with `main` at 0dc5efb6 and again at 1f92b83b (the same
-  file, bit for bit); older builds cannot open or build this Jig.
-- `build.json` is written by `python3 gen.py > build.json`; gen.py only writes commands with expressions
-  (`3 * a + d`), never coordinates it computed.
+- F-063 (examples' feedback, open): a fold's DXF names its layers `boundary`, `mountain`, `valley`, and they cannot be
+  renamed to CUT and CREASE.
+- F-015 (examples' feedback): thick panels are not built when folded to 180 degrees. The Jig stops them where they meet.
+- [J-xxx](../../findings/J-xxx-flat-folded-body-cannot-be-moved/repro.json): a flat-folded body cannot be moved, so at
+  Fold 100 the pack is not levelled and squared, as it is at every other position; at 99 it stands on its edge and at
+  100 it lies in the sketch's plane.
+- [J-xxx](../../findings/J-xxx-flat-fold-search-miura/repro.json): the layer-order search of `flatFoldable` runs out of
+  work on larger Miura grids at steep angles; the Jig keeps to 14 × 16 and to 70 degrees above 144 cells to stay within its allowance.

@@ -1,0 +1,100 @@
+{
+  "id": "miura-ori",
+  "title": "Miura-ori fold panel",
+  "summary": "one slider folds the sheet, mountains and valleys apart",
+  "description": "A Miura-ori sheet that folds and unfolds with one slider: pick the sheet, rows, columns and angle, watch it fold, and export the crease pattern with mountains and valleys on separate layers to print, score or cut.",
+  "domain": "Origami, paper and laser cutting",
+  "process": "Printing or laser-scoring a crease pattern, folding by hand; thick panels cut and glued on fabric hinges",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Count-driven fold topology with coupled closed-form kinematics and thick panels; 3DCraft does the folding."
+  },
+  "standards": [
+    "ISO 216 paper sizes (A5 to A1)",
+    "ANSI US Letter and Tabloid"
+  ],
+  "materials": [
+    "Paper or card, 80 to 400 g/m2 (thickness assumed 1.25 cm3/g)",
+    "Card, grey board or plywood panels, 0.3 to 6 mm, on a fabric or tape hinge"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        505,
+        -430,
+        255
+      ],
+      "target": [
+        142,
+        96,
+        0
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 22
+    },
+    "look": {
+      "light": [
+        120,
+        28
+      ]
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/crease-pattern.svg",
+      "fold": "Miura-ori",
+      "stroke": 0.3
+    },
+    {
+      "command": "file.export",
+      "path": "exports/crease-pattern.dxf",
+      "fold": "Miura-ori"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/panels.dxf",
+      "set": "Panels cut sheet",
+      "width": "600 mm",
+      "gap": "3 mm",
+      "values": {
+        "thick_panels": 1,
+        "fold_percent": 60
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 149,
+    "variables": 56,
+    "parameters": 12,
+    "features": 9,
+    "assertions": 22,
+    "warnings": 0,
+    "build_s": 0.41,
+    "load_s": 0.08,
+    "load_cpu_s": 0.09,
+    "file_bytes": 84898,
+    "range_points": 105,
+    "range_unproven": 0,
+    "range_mean_s": 0.07,
+    "range_worst_s": 0.69
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
