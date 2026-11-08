@@ -73,7 +73,7 @@ log/ plan/              local only (gitignored): dev log, plans
   137 means the cap was hit: that is a finding, never a reason to raise the cap. When several agents work at once, the
   coordinator sets a shared slice (`systemctl --user set-property --runtime jigs.slice MemoryMax=8G
   MemorySwapMax=0`): then `export CRAFT3D_SLICE=jigs.slice` (the tool adds it) and add `--slice=jigs.slice` to every
-  `systemd-run` you type. One render or `check-range` at a time per agent. No cargo builds are needed here; never
+  `systemd-run` you type. One render or `check-range` at a time per agent. Never use `pkill` or `killall`: other agents and sessions share this machine. No cargo builds are needed here; never
   build 3DCraft from this repo. A 3DCraft window you start gets `--recovery-dir none`.
 - **Python.** Everything a Jig decides lives in the document: variables, tables, formulas, `when` conditions,
   patterns, outputs, assertions. `build.json` is the source; no `gen.py` is committed. A long, repetitive
