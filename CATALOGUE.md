@@ -167,12 +167,11 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Real thing:** a building block for machines, from CNC routers to welding tables, where standard profiles fall short: any
   rectangular box, cube or beam shape up to 3000 mm each way, welded from laser-cut plate of 3 mm and up that locates itself by
   tab and slot, so the laser's accuracy carries over into self-built machines: datum tabs without clearance, everything located
-  from the cut parts, and bolted to other boxes through a general mounting grid with locating dowels or keys.
+  from the cut parts. Holes for mounting are added afterwards through Open for editing: the Jig stays simple.
 - **Must be (the developer, 2026-11-08):** a full `build.json` from nothing; short discrete recessed tabs at every thickness,
   nothing standing proud, tab length and pitch on the form with the weld share as an output, about 20 to 30 % by default;
   rectangular, circular or triangular cutouts per pair of walls; mass, plate list and weld length for every shape, strength
-  only where the box is beam-like, section stiffness for all; a general bolt grid per wall pair with reachable fastening;
-  no rail-specific holes, no choice per edge.
+  only where the box is beam-like, section stiffness for all; no bolt holes, no choice per edge; at most 12 parameters.
 - **Look:** dark steel, bright cut edges.
 
 ## Complex
