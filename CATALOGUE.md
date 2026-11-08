@@ -165,8 +165,9 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 
 ### 20. Welded beam · `welded-beam` · welding, machine building · kept
 - **Must improve:** a full `build.json` from nothing replaces `source.3dcraft` and `edits/`; its `repro/` moves to
-  `findings/`; one fixed arrangement of the plates (top and bottom clean, their tabs in slots in the side walls), no choice
-  per edge and no rail hole patterns (the developer, 2026-11-08); a form of at most 12 parameters.
+  `findings/`; no choice per edge of which plate lies over which, no rail hole patterns, no tab standing proud (MIG adds
+  material); consider castellated corners with a recessed weld pocket between short locating pads and dog-bone reliefs (the
+  developer, 2026-11-08; `welding-table` likewise); a form of at most 12 parameters.
 - **Look:** dark steel, bright cut edges.
 
 ## Complex
