@@ -1,158 +1,201 @@
 # Gridfinity baseplate
 
-A [Gridfinity](https://gridfinity.xyz/) baseplate made to fill a drawer, for 3D printing. Give the
-drawer's inside and your print bed: the plate holds as many 42 mm cells as fit, centred, with filler
-strips out to the drawer's walls, split into pieces that fit the bed, which lock together with bowtie
-clips (or dovetail tabs). Every bin of the [`gridfinity-bin`](../gridfinity-bin/) Jig (and any other
-Gridfinity bin) seats in it. Licence: CC-BY-4.0.
+A Gridfinity baseplate made to measure for a drawer. Give the drawer's inside and your print bed: the plate holds as
+many 42 mm cells as fit, centred, with filler strips out to the walls, and splits itself into pieces that each fit the
+bed. The pieces are held together by printed bowtie clips. Any Gridfinity bin, including those of the
+[`gridfinity-bin`](../gridfinity-bin/) Jig, seats in it.
 
-The default fills a 400 × 500 mm drawer for a 256 mm bed (Bambu Lab, Prusa class): 9 × 11 cells with
-10.75 mm and 18.75 mm fillers, in 2 × 3 = 6 pieces (the largest 220.75 × 186.75 mm), joined by 29 bowtie
-clips, Light style.
+![A 400 x 500 mm drawer with its grey and green baseplate and one teal sample bin](preview.png)
 
-**Styles and heights.** Light 8.3 mm (a 3.4 mm floor with a window in every cell), Solid 8.3 mm (a full
-3.4 mm floor), Weighted 11.3 mm (a 6.4 mm bottom with a weight pocket under every cell) and Thin 4.9 mm
-(the standard frame with no floor at all, Zack Freedman's original and rebuilt's thin plate). The floor is
-what carries the magnets, the screw holes and the clips' pockets, so the Thin style has none of them: in
-the form, Magnet holes and Screw holes are off and Connector is None for it (setting them otherwise is
-refused with the reason). A Thin plate's frame is 5.7 mm wide at the bottom between two cells and ends
-in a ridge, too little for a dovetail slot with 0.8 mm round it, so its pieces just butt together; the
-drawer holds them.
+The defaults are a 400 x 500 mm drawer and a 256 mm bed: 9 x 11 = 99 cells, fillers of 10.75 mm left and right and
+18.75 mm front and back, six pieces in two columns and three rows (the largest 220.75 x 186.75 mm), 29 clips, a plate
+8.35 mm high and about 0.90 kg of PLA.
 
-| Parameter | Group | Default | Range |
+## What it shows
+
+- **A form that asks what the maker knows.** Drawer width and depth, and the print bed. Everything else follows:
+  cells, fillers, pieces, clips, the filament to buy. A few formulas per axis (`variable.set` with `floor`, `ceil`, `min`, `max`,
+  `if`) do the sharing out.
+- **Topology that follows the form.** The number of cells, of pieces and of clips all change with a number, not by
+  scaling. Each of the 16 piece slots is a chain of features with a `when`; `feature.transform`, two nested
+  `feature.pattern`s and `feature.boolean` make a piece, with its own count of cells.
+- **One cell cut, reused.** The socket (`feature.loft`, ruled, through rounded squares drawn with `sketch.path`), the
+  magnet holes (`feature.pattern`), the screw hole, the window and the weight pocket are unioned once into a single
+  cut, on or off by `when`. Every piece copies that one cut and patterns it across its own cells only: at the largest
+  plate that is 3 times less work than one 196-cell cutter applied to every piece
+  ([finding](../../findings/J-xxx-subtract-many-lump-tool/repro.json)).
+- **One pocket cutter, copied to every joint.** A ruled `feature.loft` of the bowtie, flared at its mouth, goes to the
+  joints by `feature.transform` and `feature.pattern`. The clips in place are a `sketch.pattern` with `count2` and
+  `step2`: one clip per cell along a joint, one joint per step of the middle pieces.
+- **Two states of the same parts.** With the drawer on, the clips sit in their pockets; with it off, the same count of
+  clips lies flat in rows computed from the bed, and a `feature.block` removes the unused places of the last row.
+- **Published ranges that depend on other parameters.** Screw holes exist only in the Solid style, and magnets and clips
+  need a floor; the form keeps those off where they cannot exist (`variable.publish` `min` and `max` as formulas).
+- **A closed form against the model.** The volume of the first piece is computed from the frustums of the socket, the
+  chamfer, the windows, holes and pockets, and compared to the measured body.
+
+A static baseplate is one grid for one drawer. This one is every drawer up to 600 x 600 mm and every printer from
+180 mm up.
+
+## The real thing
+
+**The system.** Gridfinity is Zack Freedman's open storage system (Voidstar Lab, 2022, MIT licence; see
+[gridfinity.xyz](https://gridfinity.xyz/specification/) for the 6 x 2 mm magnets and M3 screws). The dimensions here are
+read, as numbers, from kennetek's reference implementation
+[gridfinity-rebuilt-openscad](https://github.com/kennetek/gridfinity-rebuilt-openscad) (MIT), and checked against its
+source on 2026-11-08:
+
+| Value | Number | Name in the source |
+|---|---|---|
+| Grid pitch | 42 mm | `GRID_DIMENSIONS_MM`, `BASEPLATE_DIMENSIONS` |
+| Socket, from the bottom | 0.35 mm straight, 0.7 mm at 45 degrees, 1.8 mm straight, 2.15 mm at 45 degrees | `_BASEPLATE_PROFILE`, on `BASEPLATE_HEIGHT` 5 |
+| Opening's corner radius | 4 mm | `BASEPLATE_OUTER_DIAMETER` 8 |
+| Bin foot, from the bottom | 0.8 mm at 45 degrees, 1.8 mm straight, 2.15 mm at 45 degrees (4.75 mm) | `BASE_PROFILE` |
+| Bin's top size and radius | 41.5 mm, 3.75 mm | `BASE_TOP_DIMENSIONS`, `BASE_TOP_RADIUS` |
+| Magnet hole | 6.5 mm across, 2.4 mm deep, 8 mm in from the cell's sides | `MAGNET_HOLE_RADIUS`, `MAGNET_HOLE_DEPTH`, `d_hole_from_side` |
+| Weighted bottom | 6.4 mm, a 21.4 mm square pocket 4 mm deep | `bp_h_bot`, `bp_cut_size`, `bp_cut_depth` |
+| Screw clearance hole | 3.35 mm | `d_screw` |
+
+The screw hole's countersink is this Jig's own: 90 degrees and 6.4 mm across, for a DIN 7991 M3 flat head (6 mm) with
+0.2 mm to spare on each side.
+
+A bin's foot and the socket are made for each other: with the foot standing on the socket's floor, both 45 degree faces
+lie in the same planes as the socket's, and the 1.8 mm straight parts stand 0.25 mm apart. The Jig measures this on a
+foot of exactly the published profile in the first cell.
+
+**Where this Jig departs from those numbers, and why.**
+
+- *The top of the socket stops at 4.75 mm, not 5.* At 5 mm the published openings of two cells meet in a knife edge,
+  which a nozzle cannot lay down. A bin's foot ends at 4.75 mm and `gridfinity-rebuilt` starts the bridge between a
+  multi-unit bin's feet there (`_base_bridge_solid`, on `BASE_PROFILE_HEIGHT`), so the top 0.25 mm of the ridge can
+  only dig into that bridge. Stopping the chamfer at 4.75 mm leaves a flat ridge at the height the bin's underside
+  already has, and touches no surface a bin bears on. The ridge is 0.5 mm wide between two cells of a piece, and 0.25 mm
+  on each side of a joint between two pieces.
+- *The floor is 3.6 mm where the reference has 3.4 mm* (`h_skel` 1 plus the 2.4 mm magnet hole), so that 1.2 mm of skin
+  stays under the magnet holes.
+- *The weight pocket has 3 mm corners and no finger channels.* With the reference's square corners a pocket corner
+  touches the magnet holes at no thickness. The rounded corners keep 1.24 mm of wall there; the channels would run under
+  the clips. A square weight up to about 19.6 mm, or a disc up to 21.4 mm across, fits, 4 mm thick at most.
+- *The screw hole is in the middle of the cell, and in the Solid style only.* The middle is this Jig's own position: the
+  reference puts its baseplate screws at the cell's four corners (`hole_pattern`), which here belong to the magnets. In
+  the Light style the middle of a cell is a window; in the Weighted style a countersink there would leave 0.875 mm over
+  the weight pocket.
+
+**Layout.** Along each axis, the plate is the drawer less the clearance. Cells = floor((plate - 8 mm) / 42 mm), so each
+filler strip is at least 4 mm, and the rest is shared equally between the two fillers. An end piece carries a filler,
+so it holds at most floor((bed - filler) / 42 mm) cells; a middle piece carries none and holds floor(bed / 42 mm). Pieces
+are as few as those two limits allow, the middle ones all equal, the two end ones sharing the rest (differing by one at
+most). So the 14 cells of a 600 mm drawer fit a 180 mm bed in 3 + 4 + 4 + 3, four pieces, and the 13 cells of a 589 mm drawer
+in 3 + 4 + 4 + 2; sharing them out as if every piece carried a filler would take five. Four is the most any drawer in
+the range needs, so the plate has at most 4 x 4 pieces, all of them separate bodies named `Piece A1`
+(front left) to `Piece D4`, in two colours like a checkerboard so that the joints show.
+
+**Joints.** A bowtie clip 12 mm across the joint, 15 mm at its ends, 6 mm at its neck and 1.8 mm thick sits in a pocket
+in the underside, one per cell along every joint. The pocket is the clip's outline grown by the fit on every side (its
+corners by formula, from the flank's slope) and the fit above it, and its mouth flares out by the first-layer chamfer. The flanks' slope is 3:4, so a joint opens by at most
+fit / 0.6 per half; the drawer's clearance limits it anyway. Lay the pieces upside down, drop the clips in (a drop of
+glue if you want them to stay), turn the plate over and put it in the drawer. Thin has no floor for pockets and its
+pieces just butt together; the drawer holds them.
+
+**Printing.** FDM, each piece flat with the top up, as modelled: PLA or PETG, 0.2 mm layers, a 0.4 mm nozzle, two or three
+perimeters. The bottom's outer edge of every piece has a 0.4 mm first-layer chamfer against elephant's foot, which also
+keeps joints closed at the bed. No supports: the sockets' faces all lean away from the bed at 45 degrees or better, and
+the only ceilings are the clip pockets' (a span of at most about 16 mm) and the weight pockets' (about 21 mm), bridged.
+The clips print flat in rows, with the same 0.4 mm first-layer chamfer; together with the pockets' flared mouths this
+keeps elephant's foot from using up the fit. If they still bind, increase the fit. Press or glue the magnets in.
+
+**Why two colours?** The pieces can be printed in any colours; the picture alternates grey and green so that the
+sharing-out shows.
+
+## Parameters
+
+| Group | Parameter | Range | What it changes |
 |---|---|---|---|
-| Drawer width | Drawer | 400 mm | 60 to 600 mm, step 1 mm (the inside, left to right) |
-| Drawer depth | Drawer | 500 mm | 60 to 600 mm, step 1 mm |
-| Drawer clearance | Drawer | 0.5 mm | 0 to 3 mm in total, step 0.1 mm |
-| Print bed | Printer | 256 mm | 180 to 400 mm, step 1 mm (the bed's usable size, its smaller side) |
-| Style | Plate | Light | Light, Solid, Weighted, Thin (heights above) |
-| Magnet holes | Plate | off | on / off (off for Thin) |
-| Screw holes | Plate | off | on / off (off for Thin) |
-| Connector | Pieces | Bowtie clips | Bowtie clips, Dovetail tabs, None (None for Thin) |
-| Connector fit | Pieces | 0.15 mm | 0 to 0.4 mm, step 0.05 mm (play on every side) |
+| Drawer | Drawer width, depth | 60 to 600 mm | Cells, fillers, pieces, clips |
+| Drawer | Drawer clearance | 0 to 3 mm in total | The plate is the drawer less this |
+| Printer | Print bed | 180 to 400 mm | The usable size of the bed's smaller side: how the plate is split |
+| Plate | Style | Light, Solid, Weighted, Thin | A 3.6 mm floor with a window per cell, a full floor, a 6.4 mm bottom with a pocket for a weight per cell, or a frame with no floor |
+| Plate | Magnet holes | on, off | Four per cell; not in Thin |
+| Plate | Screw holes | on, off | One countersunk M3 hole per cell; Solid only |
+| Pieces | Joints between pieces | Bowtie clips, None | Clips and pockets; None in Thin |
+| Pieces | Clip fit | 0.05 to 0.4 mm | Play between a clip and its pocket, on every side |
+| View | Show drawer and sample bin | on, off | The drawer and a 1 x 1 bin for the picture; switch off before exporting |
 
-**Layout.** The plate fills the drawer less the clearance, W = drawer − clearance, along each axis:
-cells = floor((W − 8 mm) / 42 mm), so each filler strip is at least 4 mm; filler = (W − cells × 42 mm) / 2
-on both sides. A piece that carries a filler (the first and last of a row) holds at most
-k₀ = floor((bed − filler − tab) / 42 mm) cells (tab: 8 mm for dovetails); the cells are shared out evenly
-over ceil(cells / k₀) pieces (at least two when the whole plate is wider than the bed), the last piece
-taking what is left. So the first piece of every row and column is the largest. Joints run along cell
-boundaries. The pieces lie assembled (`Piece A1` front left, `A2` to its right, `B1` behind it, …), in
-alternating colours so the joints show.
+Outputs: cells across, deep and in all, the fillers, pieces across, deep and in all, clips, magnets, the largest piece's
+width and depth, the plate's height, its volume and the filament for it at PLA's 1.24 g/cm³ (PETG, at about 1.27, takes
+about 2 % more).
 
-**Gridfinity dimensions** (from `scripts/gridfinitylib.py`, shared with the bin Jig).
-- Grid 42 mm. The socket of every cell, from its bottom up: 0.35 mm straight at its narrowest (36.3 mm
-  square, corner radius 1.15 mm), a 0.7 mm 45° chamfer, 1.8 mm straight and a 2.15 mm 45° chamfer to the
-  42 mm opening with 4 mm corners: 5 mm in all. Neighbouring openings meet in a knife edge; here the top is
-  0.1 mm lower, leaving a 0.2 mm flat on every ridge (0.1 mm at a plate's edge), which prints cleanly and
-  keeps neighbouring openings from touching along a line. A seated bin's base ends 0.15 mm below it.
-- A bin stands on the socket's floor: its 0.8 mm bottom chamfer then lies in the plane of the socket's
-  0.7 mm one and its 2.15 mm top chamfer in the plane of the socket's, and its straight part stands
-  0.25 mm off the socket's (37.2 mm in 37.7 mm), as its 41.5 mm top does in the 42 mm opening.
-- Floor under the sockets: Light and Solid 3.4 mm (a 2.4 mm magnet hole on 1 mm), Weighted 6.4 mm,
-  Thin none (a bin then stands on the drawer's bottom, flush with the plate's). The plate is that plus
-  4.9 mm tall.
-- Light: a window through the floor of every cell, leaving a rim that holds the magnets and the connector
-  pockets with 0.8 mm round them (3.5 mm at least); with screw holes a cross of 10 mm ribs carries the
-  screw's boss. Solid: a full floor. Weighted: a 21.4 mm square pocket 4 mm deep from below in every cell
-  for a weight (steel washers, lead or a printed-in nut stack, glued), with four 8.5 mm round-ended
-  channels 2 mm deep when there is no connector (they run where the connectors sit).
-- Magnet holes: 6.5 × 2.4 mm from the top of the floor, at the four corners of every cell, 8 mm in from
-  its sides (as in the bins). In the Weighted style each one touches a corner of the weight pocket below
-  it at zero thickness (the magnet hole's circle passes 0.003 mm from the pocket's corner, its floor is the
-  pocket's ceiling plane), exactly as in rebuilt's weighted plate; the plate holds, but there is no wall
-  there.
-- Screw holes: a countersunk M3 clearance hole (3.35 mm, 90° countersink 6.4 mm across) in the middle of
-  every cell, to screw the plate to the drawer. In the Weighted style the screw goes through the weight
-  pocket: use washers (with a hole) as the weight, or leave those cells' pockets empty.
+## Checks
 
-**Connectors.**
-- **Bowtie clips** (default): a separately printed bowtie (butterfly key) 12 mm across the joint, 15 mm
-  wide at its ends and 6 mm at the neck, 1.8 mm thick, in a pocket on the underside that spans the joint,
-  one at the middle of every cell along every joint. The pocket is the clip grown by the fit on every side
-  (and the fit above it), 1.2 mm of floor or more over it. Every piece is cut the same way, so the top
-  stays flat and the pieces stay alike. The clips are in the model, in place (body `Clips across x` for
-  the joints between columns, `Clips across y` between rows; set `Print: clips`).
-- **Play.** The clip's flanks stand at 36.87° (a 3:4 slope) to the line across the joint, so with a fit c
-  a joint can open by c / sin 36.87° = c / 0.6 on each half of the clip: 0.25 mm per half at the default
-  0.15 mm, about a bin's 0.25 mm side play in its socket (a steeper, longer bowtie would let it open
-  three times as much). In the drawer the clearance limits it anyway: all the joints across together
-  cannot open further than the drawer clearance.
-- **Assembly.** Lay the pieces upside down on a flat table, drop the clips into the pockets (they fall in
-  at the fit; a drop of glue if you want them to stay), push the neighbouring piece on, turn the plate
-  over and put it in the drawer.
-- **Dovetail tabs**: the piece to the left of (or in front of) a joint carries a tab 8 mm deep, 8 mm wide
-  at the joint and 12 mm at its end (a 1:4 flare), at the middle of every cell along the joint; the next
-  piece has the slot, the tab grown by the fit, from below up to 1.2 mm under the socket's floor (so it
-  does not show), and the tab is that less the fit. No loose parts, but the pieces are no longer alike,
-  and the bed allowance includes the tab. Its play is fit / sin 14° per joint, more than the bowtie's;
-  the drawer clearance limits it the same way.
-- **None**: straight joints only.
-- Both connector shapes are steeper than a woodworker's dovetail (1:6 to 1:8): a printed clip is short and
-  its plastic does not crush, so a steeper flare locks it with less length and less play. The default fit, 0.15 mm on
-  every side, is the usual starting point for a hand-assembled FDM fit; print one joint first and adjust.
+32 assertions, all passing at the defaults (those for an option that is off are inactive):
 
-**Checks (assertions, at every regeneration).**
-- One body per piece; cells across × cells deep sockets; the pieces together are exactly drawer −
-  clearance wide and deep and start at the origin; each filler is the computed one (measured from the
-  plate's edge to the first socket) and at least 4 mm.
-- The largest piece (the first) fits the bed both ways, the others hold no more cells, and there are at
-  most 5 × 5 pieces.
-- The plate's height.
-- Fit: a bin's foot (the same profile as `gridfinity-bin`, hidden in the view) seated in the first cell
-  overlaps nothing and touches the socket's chamfers (clearance 0), and its straight sides stand 0.25 mm
-  off the socket's; no two parts overlap (pieces, clips and the foot).
-- Bowtie clips: one per cell along every joint, two half pockets per clip, the flanks at 36.87° (a
-  face of that normal on every clip), and the play per half, fit / 0.6, 0.25 mm at the default fit (a
-  formula check, from the measured angle).
-- Bowtie gap, by volume: a box round the first clip's pocket, less the two pieces and the clips (the real
-  bodies), leaves exactly the pocket's volume (the clip's outline grown by the fit, times its height,
-  a closed form in the fit) less the clip's; with no overlap this proves the pocket is the clip grown by
-  the fit all round. And the least distance from the clips to the pockets is the fit: at least the fit on
-  every side, exactly the fit on the closest.
-- Dovetails: one tab per cell along every joint; the same gap-volume check round the first tab (slot
-  volume less tab volume, closed form) and the same distance check.
-- The pockets and slots keep 0.8 mm (two perimeters) from the magnet and screw holes, the windows, the
-  weight pocket, the sockets and the top of the floor. Measured on a hidden check body: a box 1.2 mm
-  larger than the first pocket (or slot) all round and up into the socket, less the two pieces, which
-  holds the pocket's void and every other void that comes near it; a small body, so the distance is
-  proven. Every joint is made the same way.
+- Layout, measured on the bodies: one body for each piece; the count of sockets across the plate and in the first piece;
+  the plate's extents; that it is centred in the drawer; its height; the two fillers, from the outer face of the first piece to its first
+  socket; the first and second columns and rows of pieces no larger than the bed (the last piece of a row has no more
+  cells than the first and the same filler, and the middle ones are all the same).
+- Fit: a bin's foot of the published profile, in the first cell, overlaps nothing, touches the socket's chamfers
+  (clearance 0), its straight sides stand 0.25 mm off the socket's, and its top is level with the plate's.
+- Printing: at least 1.2 mm of floor everywhere under the magnet holes and clip pockets (Thin apart: its ridges are the
+  system's own profile, 0.5 mm at the top); the leanest face of a cell no flatter than 45 degrees from the vertical.
+- Closed form: the volume of the first piece from its block, chamfer, cells and flared half pockets, within 0.01 %.
+- Clips: their count; two half pockets per clip; the first clip stands exactly the fit off its pocket; clips overlap no
+  piece; at least 1.2 mm of wall between a Light cell's window and the clip pocket, between a magnet hole and a clip pocket,
+  and between a magnet hole and a weight pocket.
+- Clips to print: as many as the joints need, in rows that fit the bed both ways, of the volume of that many chamfered clips
+  (within 0.01 %).
 
-- Without joints, the distance checks measure the hidden foot against the plate's edge instead (a measure
-  needs something to measure), a distance the assertion knows, and the gap boxes stay whole.
+The foot check, the centring and the clips in place run with *Show drawer* on, the clips to print with it off. What is measured on the first piece holds for the
+others because they are made by the same pattern of the same cut.
 
-**Printing.** Each piece flat, top up, no supports (the sockets' 45° chamfers and the windows print
-without). PLA or PETG, 0.2 mm layers, a 0.4 mm nozzle, two or three perimeters, 15 % infill. The clips
-flat; PETG clips are a little more forgiving. Glue or press the magnets in. Export each piece by its body name (`Piece A1`, …) and the
-clips (`Clips across x`, `Clips across y`) as STL or 3MF, for instance
-`file.export {"path": "A1.3mf", "bodies": ["Piece A1"]}`. The named sets `Print: pieces` and
-`Print: clips` list them. The hidden `Fit check foot` and the hidden cut bodies (`Cuts`, `Tabs`) are part
-of the checks, not parts to print, as are the hidden `Clip gap`, `Tab gap`, `Pocket check` and `Slot check`.
+`tools/jigs.py check` runs `check-range`: 101 points (the defaults, 64 corners, every other choice, 32 random points,
+seed 1), all passing, none with unproven assertions. Beyond that, these were set by hand and pass: the smallest
+drawer (one cell); 600 x 600 on a 180 mm bed in every style; a drawer 1 mm wider than the bed (just split); a bed equal to the
+plate (just not split); a 589 mm drawer (the 13-cell row with the widest filler, the most cramped end pieces); clip fit at
+both ends; Thin with no connector; a one-piece-wide, four-piece-deep plate; and, with the drawer off, the 84 clips of a
+600 x 600 drawer on a 180 mm bed (seven full rows, 177 x 123 mm), and small counts that leave a part-filled last row.
 
-**Checked.** With 3DCraft `main` 5c9153e2: `check-range` passes at the default, 64 corners, the five
-choices and 16 random points (seed 1), also `--deep`: 86 of 86, none with unproven assertions;
-regeneration median about 130 ms, at most about 5 s (a 600 × 600 mm drawer on a 180 mm bed: 14 × 14
-cells in 25 pieces). STL export of a piece and the clips closed. For a fine STL export, export one piece
-at a time (the mesh tolerance follows the size of what is exported).
+Not checked: real prints, the strength of the clips, the magnets' pull, and that every piece prints without warping. The
+clips and pockets are verified at the joints named above, and the rest by the pattern.
 
-**Sources.**
-- Gridfinity by Zack Freedman (Voidstar Lab), 2022, MIT licence; the unofficial specification at
-  [gridfinity.xyz](https://gridfinity.xyz/specification/) and
-  [github.com/gridfinity-unofficial/specification](https://github.com/gridfinity-unofficial/specification).
-- The socket profile, plate height, corner radius, magnet and screw holes and the weighted pocket as
-  kennetek's [gridfinity-rebuilt-openscad](https://github.com/kennetek/gridfinity-rebuilt-openscad) (MIT)
-  writes them down (`src/core/gridfinity-baseplate.scad`: `_BASEPLATE_PROFILE`, `BASEPLATE_HEIGHT`,
-  `BASEPLATE_OUTER_RADIUS`; `src/core/standard.scad`: `bp_h_bot`, `bp_cut_size`, `bp_cut_depth`,
-  `bp_rcut_*`, `MAGNET_HOLE_*`, `d_hole_from_side`; `d_screw` 3.35 in `gridfinity-rebuilt-baseplate.scad`);
-  its fit-to-drawer option (cells that fit, the rest as padding) is the same idea as the layout here. No
-  code was taken from it.
-- Joined baseplates with separate clips are a common Gridfinity remix, e.g.
-  [CLICKbase](https://www.printables.com/model/982173-clickbase-a-no-magnet-latching-gridfinity-baseplat).
-  The bowtie is the woodworker's [butterfly joint](https://en.wikipedia.org/wiki/Butterfly_joint), two
-  dovetails joined at their narrow ends; see [dovetail joint](https://en.wikipedia.org/wiki/Dovetail_joint)
-  for the 1:6 to 1:8 slopes used in wood.
-- Fit for FDM prints: 0.1 mm per side tight, 0.15 mm a safe general fit, 0.2 mm easy
-  ([CCI Digital Fabrication Lab, *Design the clearance and tolerance*](https://wiki.cci.arts.ac.uk/books/digital-fabrication-lab/page/design-the-clearance-and-tolerance)).
+## Export
 
-`build.json` was written by `python3 gen.py > build.json`; edit `gen.py` (or `scripts/gridfinitylib.py`)
-and run it again to change the model.
+Switch **Show drawer and sample bin** off, then **File > Export**, **The model**, as 3MF: one object per piece
+(`Piece A1`, ...), each of which fits the bed, and one object `Clips to print`, the clips in rows that fit the bed, all
+flat on z = 0 in the print orientation. Arrange the pieces on as many plates as the slicer needs. The clips are not in
+their pockets in this file: those exist only with the drawer on, for the picture and the fit checks. To print one piece at a time, select it first (**The selection**), or name it: `file.export {"path":
+"A1.3mf", "bodies": ["Piece A1"]}`. See the platform
+note below for why an export cannot simply take a named set.
+
+## Files
+
+`build.json` (the source), `meta.json`, `formtest.md`, `preview.png`, and from the tool `dist/gridfinity-baseplate.3dcraftjig`
+and `dist/thumbs/gridfinity-baseplate.png`.
+
+## Rebuild
+
+```sh
+tools/jigs.py build gridfinity-baseplate
+tools/jigs.py render gridfinity-baseplate
+tools/jigs.py check gridfinity-baseplate
+```
+
+## Difficulty
+
+6 out of 10: topology-driven partitioning with coupled ranges, per-piece patterns and fit checks.
+
+## Platform notes
+
+Proposed entries for `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
+
+- A mesh export (3MF, STL) takes a list of body names or every body, never a named set
+  ([repro](../../findings/J-xxx-mesh-export-named-set/repro.json)). A list cannot follow a layout whose number of bodies
+  changes, and a name that is switched off is refused; so the Jig has a *Show drawer* parameter, which a maker switches off
+  to export every body. With a set this switch would not exist. Related: F-045.
+- `feature.chamfer` refuses the first-layer chamfer round a bowtie, at the concave corners of its neck: already
+  [F-033](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-033). The clip to print and the
+  pocket's flared mouth are lofts instead.
+- Subtracting a many-lump tool from each of many small targets is 3 times slower than giving each target its own cutter
+  of only the lumps that reach it ([repro](../../findings/J-xxx-subtract-many-lump-tool/repro.json),
+  [the fast form](../../findings/J-xxx-subtract-many-lump-tool/repro-small-tools.json)): 1.9 s against 0.66 s, 4.6 s of CPU
+  against 2.0 s, for 196 cells in 16 pieces. So this Jig cuts every piece with its own pattern, at a cost of three more
+  features per piece.
