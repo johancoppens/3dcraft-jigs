@@ -1,0 +1,104 @@
+{
+  "id": "loudspeaker-box",
+  "title": "Loudspeaker box",
+  "summary": "your driver's data sheet, sealed or vented",
+  "description": "A cabinet for one loudspeaker driver from its data sheet: the volume from Thiele and Small's alignments, measured on the model, a flared port tuned by Helmholtz, and finger-jointed or rebated panels for the router or the saw.",
+  "domain": "Woodwork, acoustics",
+  "process": "CNC routing or table-saw joinery of MDF or birch plywood, veneered",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Coupled Thiele-Small physics, ranges by formula, a measured cavity gauge and two joint topologies."
+  },
+  "standards": [
+    "R. H. Small, Closed-Box Loudspeaker Systems, JAES 20 and 21 (1972-73): alpha, fc, Qtc, f3",
+    "R. H. Small, Vented-Box Loudspeaker Systems, JAES 21 (1973): a1, a2, a3 with QL",
+    "A. N. Thiele, Loudspeakers in Vented Boxes, JAES 19 (1971): QB3 alignment",
+    "Futtrup and Candy, Quasi-Alignment Families, Voice Coil, January 2025 (recursion, BL4Q and LR4Q targets)",
+    "Scan-Speak Technical Note 07 (2020): QB3 and closed-box values reproduced by this Jig",
+    "Levine and Schwinger 1948, Rayleigh: end corrections 0.613 r and 0.85 r",
+    "Salvatti, Devantier, Button, Maximizing Performance from Loudspeaker Ports, JAES 50 (2002): port air speed"
+  ],
+  "materials": [
+    "MDF, 12 to 25 mm (or birch plywood)",
+    "Walnut veneer",
+    "Round port tube with a flared mouth",
+    "Stainless screws"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -380,
+        -1200,
+        120
+      ],
+      "target": [
+        150,
+        60,
+        205
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 26
+    },
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet.svg",
+      "set": "Cut sheet",
+      "gap": "10 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/pockets.svg",
+      "set": "Rebate and mouth pockets",
+      "gap": "10 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet-rebated-sealed.dxf",
+      "set": "Cut sheet",
+      "gap": "10 mm",
+      "values": {
+        "joint": 3,
+        "alignment": 2
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 534,
+    "variables": 207,
+    "parameters": 12,
+    "features": 107,
+    "assertions": 27,
+    "warnings": 0,
+    "build_s": 5.35,
+    "load_s": 0.99,
+    "load_cpu_s": 1.82,
+    "file_bytes": 348218,
+    "range_points": 107,
+    "range_unproven": 0,
+    "range_mean_s": 0.51,
+    "range_worst_s": 2.95
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

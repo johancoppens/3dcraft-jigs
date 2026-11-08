@@ -1,0 +1,5925 @@
+[
+[
+"variable.set",
+{
+"name": "driver_fs",
+"expr": "38"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_qts",
+"expr": "0.35"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_vas",
+"expr": "28 L"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_sd",
+"expr": "130"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_xmax",
+"expr": "5.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_cutout",
+"expr": "144 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_flange",
+"expr": "168 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_depth",
+"expr": "86 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "alignment",
+"expr": "4"
+}
+],
+[
+"variable.set",
+{
+"name": "board_thickness",
+"expr": "18 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "proportion",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "joint",
+"expr": "1"
+}
+],
+[
+"table.set",
+{
+"name": "alignments",
+"columns": [
+"name",
+"vented",
+"qtc",
+"a_one",
+"a_two",
+"qts_low",
+"qts_high"
+],
+"rows": [
+[
+"Sealed, Bessel (Qtc 0.577)",
+0,
+0.577,
+0,
+0,
+0.2,
+0.52
+],
+[
+"Sealed, Butterworth (Qtc 0.707)",
+0,
+0.707,
+0,
+0,
+0.2,
+0.64
+],
+[
+"Sealed, Chebyshev (Qtc 1.0)",
+0,
+1.0,
+0,
+0,
+0.2,
+0.9
+],
+[
+"Vented, QB3 quasi-Butterworth",
+1,
+0,
+0,
+0,
+0.2,
+0.4
+],
+[
+"Vented, BL4Q quasi-Bessel",
+1,
+0,
+1.464,
+1.286,
+0.2,
+0.38
+],
+[
+"Vented, LR4Q Linkwitz-Riley",
+1,
+0,
+0,
+2.0,
+0.2,
+0.42
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "box_shapes",
+"columns": [
+"name",
+"height_share",
+"width_share",
+"depth_share"
+],
+"rows": [
+[
+"Golden slim (1.618 : 1 : 0.618)",
+1.618,
+1.0,
+0.618
+],
+[
+"Bookshelf (1.4 : 1 : 1.1)",
+1.4,
+1.0,
+1.1
+],
+[
+"Tower (2.4 : 1 : 1.1)",
+2.4,
+1.0,
+1.1
+],
+[
+"Compact (1.26 : 1 : 1.12)",
+1.26,
+1.0,
+1.12
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "joints",
+"columns": [
+"name",
+"finger",
+{
+"name": "fit",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"Finger joints, CNC, snug: 0.2 mm gap at each joint face",
+1,
+0.1
+],
+[
+"Finger joints, CNC, easy: 0.4 mm gap at each joint face",
+1,
+0.2
+],
+[
+"Rebated, table saw or router",
+0,
+0
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "speed_of_sound",
+"expr": "343 m/1 s"
+}
+],
+[
+"variable.set",
+{
+"name": "per_second",
+"expr": "1/(1 s)"
+}
+],
+[
+"variable.set",
+{
+"name": "box_leakage_q",
+"expr": "7"
+}
+],
+[
+"variable.set",
+{
+"name": "port_velocity_limit",
+"expr": "17 m/1 s"
+}
+],
+[
+"variable.set",
+{
+"name": "end_correction_free",
+"expr": "0.6133"
+}
+],
+[
+"variable.set",
+{
+"name": "end_correction_flanged",
+"expr": "0.85"
+}
+],
+[
+"variable.set",
+{
+"name": "port_wall",
+"expr": "3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_port_gap",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "baffle_margin",
+"expr": "12 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_thickness",
+"expr": "5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "recess_clearance",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "recess_chamfer",
+"expr": "2.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "back_clearance",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_diameter",
+"expr": "32 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_height",
+"expr": "16 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_inset",
+"expr": "42 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_head_radius",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "port_tube_minimum",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "board_density",
+"expr": "720"
+}
+],
+[
+"variable.set",
+{
+"name": "is_vented",
+"expr": "alignments[alignment].vented"
+}
+],
+[
+"variable.set",
+{
+"name": "target_qtc",
+"expr": "alignments[alignment].qtc"
+}
+],
+[
+"variable.set",
+{
+"name": "compliance_sealed",
+"expr": "if(is_vented, 1, (target_qtc/driver_qts)^2 - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "volume_sealed",
+"expr": "driver_vas / compliance_sealed"
+}
+],
+[
+"variable.set",
+{
+"name": "sealed_resonance",
+"expr": "driver_fs * if(is_vented, 1, target_qtc/driver_qts)"
+}
+],
+[
+"variable.set",
+{
+"name": "sealed_term",
+"expr": "1/(2*if(is_vented,1,target_qtc)^2) - 1"
+}
+],
+[
+"variable.set",
+{
+"name": "sealed_f3",
+"expr": "sealed_resonance * sqrt(sealed_term + sqrt(sealed_term^2 + 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "loss_ratio",
+"expr": "driver_qts / box_leakage_q"
+}
+],
+[
+"variable.set",
+{
+"name": "q_inverse",
+"expr": "1 / driver_qts"
+}
+],
+[
+"variable.set",
+{
+"name": "shape_a_one",
+"expr": "alignments[alignment].a_one"
+}
+],
+[
+"variable.set",
+{
+"name": "shape_a_two",
+"expr": "alignments[alignment].a_two"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_s_zero",
+"expr": "sqrt(shape_a_two - 2 + 2*q_inverse^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_h_zero",
+"expr": "q_inverse^2 / (2*iter_s_zero + shape_a_one)"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_s_one",
+"expr": "-loss_ratio*q_inverse^2 + sqrt(shape_a_two - 2 + 2*q_inverse^2*(1 + loss_ratio^2 + loss_ratio*(iter_h_zero + 1/iter_h_zero)))"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_h_one",
+"expr": "q_inverse^2 / (2*iter_s_one + shape_a_one - loss_ratio^2*q_inverse^2*iter_h_zero)"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_s_two",
+"expr": "-loss_ratio*q_inverse^2 + sqrt(shape_a_two - 2 + 2*q_inverse^2*(1 + loss_ratio^2 + loss_ratio*(iter_h_one + 1/iter_h_one)))"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_h_two",
+"expr": "q_inverse^2 / (2*iter_s_two + shape_a_one - loss_ratio^2*q_inverse^2*iter_h_one)"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_s_three",
+"expr": "-loss_ratio*q_inverse^2 + sqrt(shape_a_two - 2 + 2*q_inverse^2*(1 + loss_ratio^2 + loss_ratio*(iter_h_two + 1/iter_h_two)))"
+}
+],
+[
+"variable.set",
+{
+"name": "iter_h_three",
+"expr": "q_inverse^2 / (2*iter_s_three + shape_a_one - loss_ratio^2*q_inverse^2*iter_h_two)"
+}
+],
+[
+"variable.set",
+{
+"name": "tuning_ratio",
+"expr": "iter_h_three"
+}
+],
+[
+"variable.set",
+{
+"name": "compliance_vented",
+"expr": "iter_s_three*tuning_ratio - (1 + tuning_ratio^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "volume_vented",
+"expr": "if(is_vented, driver_vas / compliance_vented, driver_vas)"
+}
+],
+[
+"variable.set",
+{
+"name": "vented_fb",
+"expr": "driver_fs * tuning_ratio"
+}
+],
+[
+"variable.set",
+{
+"name": "root_h",
+"expr": "sqrt(tuning_ratio)"
+}
+],
+[
+"variable.set",
+{
+"name": "poly_one",
+"expr": "(box_leakage_q + tuning_ratio*driver_qts) / (root_h*box_leakage_q*driver_qts)"
+}
+],
+[
+"variable.set",
+{
+"name": "poly_two",
+"expr": "(tuning_ratio + (compliance_vented + 1 + tuning_ratio^2)*box_leakage_q*driver_qts) / (tuning_ratio*box_leakage_q*driver_qts)"
+}
+],
+[
+"variable.set",
+{
+"name": "poly_three",
+"expr": "(tuning_ratio*box_leakage_q + driver_qts) / (root_h*box_leakage_q*driver_qts)"
+}
+],
+[
+"variable.set",
+{
+"name": "resp_one",
+"expr": "poly_one^2 - 2*poly_two"
+}
+],
+[
+"variable.set",
+{
+"name": "resp_two",
+"expr": "poly_two^2 + 2 - 2*poly_one*poly_three"
+}
+],
+[
+"variable.set",
+{
+"name": "resp_three",
+"expr": "poly_three^2 - 2*poly_two"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_start",
+"expr": "if(is_vented, 2*max(abs(resp_one), max(sqrt(abs(resp_two)), max(pow(abs(resp_three), 1/3), 1))), 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_a",
+"expr": "newton_start - (newton_start^4 - resp_one*newton_start^3 - resp_two*newton_start^2 - resp_three*newton_start - 1) / (4*newton_start^3 - 3*resp_one*newton_start^2 - 2*resp_two*newton_start - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_b",
+"expr": "newton_a - (newton_a^4 - resp_one*newton_a^3 - resp_two*newton_a^2 - resp_three*newton_a - 1) / (4*newton_a^3 - 3*resp_one*newton_a^2 - 2*resp_two*newton_a - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_c",
+"expr": "newton_b - (newton_b^4 - resp_one*newton_b^3 - resp_two*newton_b^2 - resp_three*newton_b - 1) / (4*newton_b^3 - 3*resp_one*newton_b^2 - 2*resp_two*newton_b - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_d",
+"expr": "newton_c - (newton_c^4 - resp_one*newton_c^3 - resp_two*newton_c^2 - resp_three*newton_c - 1) / (4*newton_c^3 - 3*resp_one*newton_c^2 - 2*resp_two*newton_c - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_e",
+"expr": "newton_d - (newton_d^4 - resp_one*newton_d^3 - resp_two*newton_d^2 - resp_three*newton_d - 1) / (4*newton_d^3 - 3*resp_one*newton_d^2 - 2*resp_two*newton_d - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_f",
+"expr": "newton_e - (newton_e^4 - resp_one*newton_e^3 - resp_two*newton_e^2 - resp_three*newton_e - 1) / (4*newton_e^3 - 3*resp_one*newton_e^2 - 2*resp_two*newton_e - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_g",
+"expr": "newton_f - (newton_f^4 - resp_one*newton_f^3 - resp_two*newton_f^2 - resp_three*newton_f - 1) / (4*newton_f^3 - 3*resp_one*newton_f^2 - 2*resp_two*newton_f - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "newton_h",
+"expr": "newton_g - (newton_g^4 - resp_one*newton_g^3 - resp_two*newton_g^2 - resp_three*newton_g - 1) / (4*newton_g^3 - 3*resp_one*newton_g^2 - 2*resp_two*newton_g - resp_three)"
+}
+],
+[
+"variable.set",
+{
+"name": "system_f0",
+"expr": "sqrt(driver_fs * vented_fb)"
+}
+],
+[
+"variable.set",
+{
+"name": "vented_f3",
+"expr": "system_f0 * sqrt(abs(newton_h))"
+}
+],
+[
+"variable.set",
+{
+"name": "net_volume_target",
+"expr": "if(is_vented, volume_vented, volume_sealed)"
+}
+],
+[
+"variable.set",
+{
+"name": "low_cut_f3",
+"expr": "if(is_vented, vented_f3, sealed_f3)"
+}
+],
+[
+"variable.set",
+{
+"name": "port_tuning",
+"expr": "if(is_vented, vented_fb, driver_fs)"
+}
+],
+[
+"variable.set",
+{
+"name": "cone_area",
+"expr": "driver_sd * (1 cm)^2"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_radius",
+"expr": "driver_flange / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "cutout_radius",
+"expr": "driver_cutout / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "frame_opening_radius",
+"expr": "cutout_radius - 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cone_outer_radius",
+"expr": "min(sqrt(cone_area/pi), frame_opening_radius - 7 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "surround_width",
+"expr": "min(frame_opening_radius - cone_outer_radius, 0.22*cone_outer_radius + 3 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "surround_outer_radius",
+"expr": "cone_outer_radius + surround_width"
+}
+],
+[
+"variable.set",
+{
+"name": "dust_cap_radius",
+"expr": "0.34 * cone_outer_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "surround_crest_depth",
+"expr": "surround_width/2 + 1.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "motor_radius",
+"expr": "0.44*flange_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "motor_length",
+"expr": "min(0.48*driver_depth, 0.9*motor_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "motor_front_depth",
+"expr": "driver_depth - motor_length"
+}
+],
+[
+"variable.set",
+{
+"name": "cone_shell",
+"expr": "2.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cone_depth",
+"expr": "max(3 mm, min(0.32*cone_outer_radius, motor_front_depth - surround_crest_depth - cone_shell - 8 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "dust_cap_height",
+"expr": "min(0.45*dust_cap_radius, surround_crest_depth + cone_depth - 0.5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "dust_cap_sphere",
+"expr": "(dust_cap_radius^2 + dust_cap_height^2)/(2*dust_cap_height)"
+}
+],
+[
+"variable.set",
+{
+"name": "arm_width",
+"expr": "6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "arm_thickness",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_rim_y",
+"expr": "surround_crest_depth + cone_shell"
+}
+],
+[
+"variable.set",
+{
+"name": "frame_ring_y",
+"expr": "rear_rim_y + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "frame_outer_radius",
+"expr": "cutout_radius - 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "frame_ring_radius",
+"expr": "cutout_radius - 7 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "arm_length",
+"expr": "hypot(frame_ring_radius - motor_radius, motor_front_depth - frame_ring_y)"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_air_volume",
+"expr": "pi*motor_length*(0.7*motor_radius^2 + 0.3*(0.92*motor_radius)^2) + 4*arm_width*arm_thickness*arm_length"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_dish_y",
+"expr": "surround_crest_depth + cone_depth + cone_shell"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_disk_volume",
+"expr": "pi*dust_cap_radius^2*rear_dish_y"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_cone_volume",
+"expr": "2*pi*(rear_dish_y*(cone_outer_radius^2 - dust_cap_radius^2)/2 + (rear_rim_y - rear_dish_y)/(cone_outer_radius - dust_cap_radius)*((cone_outer_radius^3 - dust_cap_radius^3)/3 - dust_cap_radius*(cone_outer_radius^2 - dust_cap_radius^2)/2))"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_chord_volume",
+"expr": "2*pi*(rear_rim_y*(frame_ring_radius^2 - cone_outer_radius^2)/2 + (frame_ring_y - rear_rim_y)/(frame_ring_radius - cone_outer_radius)*((frame_ring_radius^3 - cone_outer_radius^3)/3 - cone_outer_radius*(frame_ring_radius^2 - cone_outer_radius^2)/2))"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_ring_volume",
+"expr": "pi*(frame_outer_radius^2 - frame_ring_radius^2)*frame_ring_y"
+}
+],
+[
+"variable.set",
+{
+"name": "rear_gap_volume",
+"expr": "pi*(cutout_radius^2 - frame_outer_radius^2)*flange_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_air_volume",
+"expr": "pi*cutout_radius^2*board_thickness - rear_disk_volume - rear_cone_volume - rear_chord_volume - rear_ring_volume - rear_gap_volume"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_displacement",
+"expr": "cone_area * driver_xmax"
+}
+],
+[
+"variable.set",
+{
+"name": "port_area_for_velocity",
+"expr": "2*pi*port_tuning*per_second*driver_displacement/port_velocity_limit"
+}
+],
+[
+"variable.set",
+{
+"name": "helmholtz_factor",
+"expr": "speed_of_sound^2 / (16*pi*(port_tuning*per_second)^2*net_volume_target)"
+}
+],
+[
+"variable.set",
+{
+"name": "port_length_min",
+"expr": "board_thickness + 20 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "port_dia_for_velocity",
+"expr": "2*sqrt(port_area_for_velocity/pi)"
+}
+],
+[
+"variable.set",
+{
+"name": "port_dia_for_length",
+"expr": "(0.732 + sqrt(0.732^2 + 4*helmholtz_factor*port_length_min))/(2*helmholtz_factor)"
+}
+],
+[
+"variable.set",
+{
+"name": "port_diameter_raw",
+"expr": "max(max(port_dia_for_velocity, port_dia_for_length), port_tube_minimum)"
+}
+],
+[
+"variable.set",
+{
+"name": "port_diameter",
+"expr": "ceil(port_diameter_raw/1 mm)*1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "port_outer_diameter",
+"expr": "port_diameter + 2*port_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "port_flare_radius",
+"expr": "min(0.33*port_diameter, board_thickness - 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "port_throat_radius",
+"expr": "port_diameter/2"
+}
+],
+[
+"variable.set",
+{
+"name": "port_mouth_radius",
+"expr": "port_throat_radius + port_flare_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "port_acoustic_length",
+"expr": "speed_of_sound^2*(pi*port_throat_radius^2)/(4*pi^2*(port_tuning*per_second)^2*net_volume_target)"
+}
+],
+[
+"variable.set",
+{
+"name": "flare_r_0",
+"expr": "port_mouth_radius - sqrt(port_flare_radius^2 - ((1-0)*port_flare_radius)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "flare_r_1",
+"expr": "port_mouth_radius - sqrt(port_flare_radius^2 - ((1-0.25)*port_flare_radius)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "flare_r_2",
+"expr": "port_mouth_radius - sqrt(port_flare_radius^2 - ((1-0.5)*port_flare_radius)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "flare_r_3",
+"expr": "port_mouth_radius - sqrt(port_flare_radius^2 - ((1-0.75)*port_flare_radius)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "flare_r_4",
+"expr": "port_mouth_radius - sqrt(port_flare_radius^2 - ((1-1)*port_flare_radius)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "flare_equivalent",
+"expr": "port_throat_radius^2*(port_flare_radius/12)*(1/flare_r_0^2 + 4/flare_r_1^2 + 2/flare_r_2^2 + 4/flare_r_3^2 + 1/flare_r_4^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "end_correction_total",
+"expr": "end_correction_free*port_throat_radius + end_correction_flanged*port_throat_radius^2/port_mouth_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "port_straight",
+"expr": "port_acoustic_length - flare_equivalent - end_correction_total"
+}
+],
+[
+"variable.set",
+{
+"name": "port_length",
+"expr": "port_flare_radius + port_straight"
+}
+],
+[
+"variable.set",
+{
+"name": "port_air_volume",
+"expr": "if(is_vented, pi*(port_outer_diameter/2)^2*(port_length - board_thickness), 0*(1 mm)^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "share_height",
+"expr": "box_shapes[proportion].height_share"
+}
+],
+[
+"variable.set",
+{
+"name": "share_width",
+"expr": "box_shapes[proportion].width_share"
+}
+],
+[
+"variable.set",
+{
+"name": "share_depth",
+"expr": "box_shapes[proportion].depth_share"
+}
+],
+[
+"variable.set",
+{
+"name": "share_product",
+"expr": "share_height*share_width*share_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "brace_width",
+"expr": "max(32 mm, 2*board_thickness)"
+}
+],
+[
+"variable.set",
+{
+"name": "stack_height",
+"expr": "driver_flange + if(is_vented, driver_port_gap + 2*port_mouth_radius, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "gross_before_brace",
+"expr": "net_volume_target - hole_air_volume + driver_air_volume + port_air_volume"
+}
+],
+[
+"variable.set",
+{
+"name": "scale_before_brace",
+"expr": "pow(gross_before_brace/(1 L)/share_product, 1/3)*100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "width_before_brace",
+"expr": "max(scale_before_brace*share_width, driver_flange + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "height_before_brace",
+"expr": "max(scale_before_brace*share_height*sqrt(scale_before_brace*share_width/width_before_brace), stack_height + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_before_brace",
+"expr": "gross_before_brace/(width_before_brace*height_before_brace)"
+}
+],
+[
+"variable.set",
+{
+"name": "wants_brace",
+"expr": "height_before_brace >= 300 mm && (height_before_brace/2 - stack_height/2) >= board_thickness + 34 mm && depth_before_brace > 2*brace_width + 40 mm && width_before_brace > 2*brace_width + 40 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "brace_first",
+"expr": "if(wants_brace, board_thickness*(width_before_brace*depth_before_brace - (width_before_brace-2*brace_width)*(depth_before_brace-2*brace_width)), 0*(1 mm)^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "gross_pass_two",
+"expr": "gross_before_brace + brace_first"
+}
+],
+[
+"variable.set",
+{
+"name": "scale_pass_two",
+"expr": "pow(gross_pass_two/(1 L)/share_product, 1/3)*100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "width_pass_two",
+"expr": "max(scale_pass_two*share_width, driver_flange + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "height_pass_two",
+"expr": "max(scale_pass_two*share_height*sqrt(scale_pass_two*share_width/width_pass_two), stack_height + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_pass_two",
+"expr": "gross_pass_two/(width_pass_two*height_pass_two)"
+}
+],
+[
+"variable.set",
+{
+"name": "brace_volume",
+"expr": "if(wants_brace, board_thickness*(width_pass_two*depth_pass_two - (width_pass_two-2*brace_width)*(depth_pass_two-2*brace_width)), 0*(1 mm)^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "gross_volume",
+"expr": "gross_before_brace + brace_volume"
+}
+],
+[
+"variable.set",
+{
+"name": "scale_final",
+"expr": "pow(gross_volume/(1 L)/share_product, 1/3)*100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "inner_width",
+"expr": "max(scale_final*share_width, driver_flange + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "inner_height",
+"expr": "max(scale_final*share_height*sqrt(scale_final*share_width/inner_width), stack_height + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "inner_depth",
+"expr": "gross_volume/(inner_width*inner_height)"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_width",
+"expr": "inner_width + 2*board_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_height",
+"expr": "inner_height + 2*board_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_depth",
+"expr": "inner_depth + 2*board_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "is_finger",
+"expr": "joints[joint].finger"
+}
+],
+[
+"variable.set",
+{
+"name": "is_rebate",
+"expr": "1 - is_finger"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_fit",
+"expr": "joints[joint].fit"
+}
+],
+[
+"variable.set",
+{
+"name": "rebate_inset",
+"expr": "if(is_rebate, board_thickness/2, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_target",
+"expr": "3*board_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_count_wide",
+"expr": "max(3, 2*round((outer_width/finger_target - 1)/2) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_count_high",
+"expr": "max(3, 2*round((outer_height/finger_target - 1)/2) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_count_deep",
+"expr": "max(3, 2*round((inner_depth/finger_target - 1)/2) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_pitch_wide",
+"expr": "outer_width/finger_count_wide"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_pitch_high",
+"expr": "outer_height/finger_count_high"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_pitch_deep",
+"expr": "inner_depth/finger_count_deep"
+}
+],
+[
+"variable.set",
+{
+"name": "cutter_radius",
+"expr": "if(board_thickness <= 24 mm, 3 mm, 4 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "bone_offset",
+"expr": "cutter_radius/sqrt(2)"
+}
+],
+[
+"variable.set",
+{
+"name": "overcut",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "center_x",
+"expr": "outer_width/2"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_center_z",
+"expr": "outer_height/2 + stack_height/2 - flange_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "port_center_z",
+"expr": "driver_center_z - flange_radius - driver_port_gap - port_mouth_radius"
+}
+],
+[
+"sketch.create",
+{
+"name": "Baffle blank sketch",
+"plane": "zx"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle blank sketch",
+"from": [
+"0 mm",
+"rebate_inset"
+],
+"to": [
+"outer_height",
+"outer_width - rebate_inset"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Baffle blank sketch",
+"distance": "board_thickness",
+"name": "Baffle blank"
+}
+],
+[
+"body.appearance",
+{
+"body": "Baffle blank",
+"color": "#0d0e10",
+"metallic": 0,
+"roughness": 0.4,
+"clearcoat": 0.55,
+"clearcoatRoughness": 0.25,
+"pattern": null
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F2:side(e5)",
+"F2:side(e7)"
+],
+"body": "Baffle blank",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+0,
+1
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F2:side(e6)",
+"F2:side(e8)"
+],
+"body": "Baffle blank",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+1,
+0
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"sketch.create",
+{
+"name": "Baffle finger notches",
+"plane": "zx"
+}
+],
+[
+"feature.when",
+{
+"feature": "Baffle finger notches",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle finger notches",
+"from": [
+"finger_pitch_high",
+"0 mm - overcut"
+],
+"to": [
+"2*finger_pitch_high",
+"board_thickness"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle finger notches",
+"from": [
+"finger_pitch_high",
+"outer_width - board_thickness"
+],
+"to": [
+"2*finger_pitch_high",
+"outer_width + overcut"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Baffle finger notches",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_high - 1)/2",
+"step": [
+"2*finger_pitch_high",
+"0 mm"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle finger notches",
+"from": [
+"0 mm - overcut",
+"finger_pitch_wide"
+],
+"to": [
+"board_thickness",
+"2*finger_pitch_wide"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle finger notches",
+"from": [
+"outer_height - board_thickness",
+"finger_pitch_wide"
+],
+"to": [
+"outer_height + overcut",
+"2*finger_pitch_wide"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Baffle finger notches",
+"entities": [
+"e21",
+"e22",
+"e23",
+"e24",
+"e29",
+"e30",
+"e31",
+"e32"
+],
+"count": "(finger_count_wide - 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_wide"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Baffle finger notches",
+"distance": "board_thickness",
+"name": "Baffle notch tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Baffle blank",
+"tool": "Baffle notch tool",
+"name": "Baffle with fingers",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Baffle rebate strips",
+"plane": "zx",
+"offset": "board_thickness"
+}
+],
+[
+"feature.when",
+{
+"feature": "Baffle rebate strips",
+"expr": "is_rebate"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle rebate strips",
+"from": [
+"0 mm - overcut",
+"0 mm - overcut"
+],
+"to": [
+"board_thickness",
+"outer_width + overcut"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Baffle rebate strips",
+"from": [
+"outer_height - board_thickness",
+"0 mm - overcut"
+],
+"to": [
+"outer_height + overcut",
+"outer_width + overcut"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Baffle rebate strips",
+"distance": "-board_thickness/2",
+"name": "Baffle rebate tool",
+"when": "is_rebate"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Baffle with fingers",
+"tool": "Baffle rebate tool",
+"name": "Baffle formed",
+"when": "is_rebate"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Baffle formed",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"outer_depth/2",
+"0 mm"
+],
+"keep": true,
+"name": "Back board formed"
+}
+],
+[
+"sketch.create",
+{
+"name": "Side blank sketch",
+"plane": "yz"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side blank sketch",
+"from": [
+"0 mm",
+"0 mm"
+],
+"to": [
+"outer_depth",
+"outer_height"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Side blank sketch",
+"distance": "board_thickness",
+"name": "Side blank"
+}
+],
+[
+"body.appearance",
+{
+"body": "Side blank",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+0,
+1
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F11:side(e8)"
+],
+"body": "Side blank",
+"color": "#0d0e10",
+"metallic": 0,
+"roughness": 0.4,
+"clearcoat": 0.55,
+"clearcoatRoughness": 0.25
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F11:side(e5)",
+"F11:side(e7)"
+],
+"body": "Side blank",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+1,
+0
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"sketch.create",
+{
+"name": "Side finger notches",
+"plane": "yz"
+}
+],
+[
+"feature.when",
+{
+"feature": "Side finger notches",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side finger notches",
+"from": [
+"0 mm - overcut",
+"0 mm"
+],
+"to": [
+"board_thickness",
+"finger_pitch_high"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side finger notches",
+"from": [
+"outer_depth - board_thickness",
+"0 mm"
+],
+"to": [
+"outer_depth + overcut",
+"finger_pitch_high"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side finger notches",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_high + 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_high"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side finger notches",
+"from": [
+"board_thickness + finger_pitch_deep",
+"0 mm - overcut"
+],
+"to": [
+"board_thickness + 2*finger_pitch_deep",
+"board_thickness"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side finger notches",
+"from": [
+"board_thickness + finger_pitch_deep",
+"outer_height - board_thickness"
+],
+"to": [
+"board_thickness + 2*finger_pitch_deep",
+"outer_height + overcut"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side finger notches",
+"entities": [
+"e21",
+"e22",
+"e23",
+"e24",
+"e29",
+"e30",
+"e31",
+"e32"
+],
+"count": "(finger_count_deep - 1)/2",
+"step": [
+"2*finger_pitch_deep",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Side finger notches",
+"distance": "board_thickness",
+"name": "Side notch tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Side blank",
+"tool": "Side notch tool",
+"name": "Side with fingers",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Side rebate ring",
+"plane": "yz",
+"offset": "board_thickness"
+}
+],
+[
+"feature.when",
+{
+"feature": "Side rebate ring",
+"expr": "is_rebate"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side rebate ring",
+"from": [
+"0 mm - overcut",
+"0 mm - overcut"
+],
+"to": [
+"outer_depth + overcut",
+"outer_height + overcut"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side rebate ring",
+"from": [
+"board_thickness",
+"board_thickness"
+],
+"to": [
+"outer_depth - board_thickness",
+"outer_height - board_thickness"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Side rebate ring",
+"distance": "-board_thickness/2",
+"name": "Side rebate tool",
+"when": "is_rebate"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Side with fingers",
+"tool": "Side rebate tool",
+"name": "Left side",
+"when": "is_rebate"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left side",
+"normal": [
+1,
+0,
+0
+],
+"point": [
+"outer_width/2",
+"0 mm",
+"0 mm"
+],
+"keep": true,
+"name": "Right side"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom blank sketch",
+"plane": "xy"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom blank sketch",
+"from": [
+"rebate_inset",
+"rebate_inset"
+],
+"to": [
+"outer_width - rebate_inset",
+"outer_depth - rebate_inset"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom blank sketch",
+"distance": "board_thickness",
+"name": "Bottom blank"
+}
+],
+[
+"body.appearance",
+{
+"body": "Bottom blank",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+1,
+0
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F20:side(e5)"
+],
+"body": "Bottom blank",
+"color": "#0d0e10",
+"metallic": 0,
+"roughness": 0.4,
+"clearcoat": 0.55,
+"clearcoatRoughness": 0.25
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F20:side(e6)",
+"F20:side(e8)"
+],
+"body": "Bottom blank",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+0,
+1
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom notches front back",
+"plane": "xy"
+}
+],
+[
+"feature.when",
+{
+"feature": "Bottom notches front back",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom notches front back",
+"from": [
+"0 mm",
+"0 mm - overcut"
+],
+"to": [
+"finger_pitch_wide",
+"board_thickness"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom notches front back",
+"from": [
+"0 mm",
+"outer_depth - board_thickness"
+],
+"to": [
+"finger_pitch_wide",
+"outer_depth + overcut"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Bottom notches front back",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_wide + 1)/2",
+"step": [
+"2*finger_pitch_wide",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom notches front back",
+"distance": "board_thickness",
+"name": "Bottom front back notches",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bottom blank",
+"tool": "Bottom front back notches",
+"name": "Bottom notched once",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom notches sides",
+"plane": "xy"
+}
+],
+[
+"feature.when",
+{
+"feature": "Bottom notches sides",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom notches sides",
+"from": [
+"0 mm - overcut",
+"board_thickness"
+],
+"to": [
+"board_thickness",
+"board_thickness + finger_pitch_deep"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom notches sides",
+"from": [
+"outer_width - board_thickness",
+"board_thickness"
+],
+"to": [
+"outer_width + overcut",
+"board_thickness + finger_pitch_deep"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Bottom notches sides",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_deep + 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_deep"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom notches sides",
+"distance": "board_thickness",
+"name": "Bottom side notches",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bottom notched once",
+"tool": "Bottom side notches",
+"name": "Bottom board",
+"when": "is_finger"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Bottom board",
+"normal": [
+0,
+0,
+1
+],
+"point": [
+"0 mm",
+"0 mm",
+"outer_height/2"
+],
+"keep": true,
+"name": "Top board"
+}
+],
+[
+"feature.transform",
+{
+"source": "Baffle formed",
+"keep": true,
+"name": "Front plate copy"
+}
+],
+[
+"feature.transform",
+{
+"source": "Left side",
+"keep": true,
+"name": "Left plate copy"
+}
+],
+[
+"feature.transform",
+{
+"source": "Bottom board",
+"keep": true,
+"name": "Bottom plate copy"
+}
+],
+[
+"sketch.create",
+{
+"name": "Driver seat profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Driver seat profile",
+"from": [
+"-40 mm",
+"driver_center_z"
+],
+"to": [
+"board_thickness + 40 mm",
+"driver_center_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Driver seat profile",
+"start": [
+"0 mm - overcut",
+"driver_center_z"
+],
+"segments": [
+{
+"line": [
+"0 mm - overcut",
+"driver_center_z + flange_radius + recess_clearance + recess_chamfer"
+]
+},
+{
+"line": [
+"0 mm",
+"driver_center_z + flange_radius + recess_clearance + recess_chamfer"
+]
+},
+{
+"line": [
+"recess_chamfer",
+"driver_center_z + flange_radius + recess_clearance"
+]
+},
+{
+"line": [
+"flange_thickness",
+"driver_center_z + flange_radius + recess_clearance"
+]
+},
+{
+"line": [
+"flange_thickness",
+"driver_center_z + cutout_radius"
+]
+},
+{
+"line": [
+"board_thickness + overcut",
+"driver_center_z + cutout_radius"
+]
+},
+{
+"line": [
+"board_thickness + overcut",
+"driver_center_z"
+]
+},
+{
+"line": [
+"0 mm - overcut",
+"driver_center_z"
+]
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Driver seat profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Driver seat tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Baffle formed",
+"tool": "Driver seat tool",
+"name": "Baffle seated"
+}
+],
+[
+"sketch.create",
+{
+"name": "Port seat profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"feature.when",
+{
+"feature": "Port seat profile",
+"expr": "is_vented"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Port seat profile",
+"from": [
+"-40 mm",
+"port_center_z"
+],
+"to": [
+"board_thickness + 40 mm",
+"port_center_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Port seat profile",
+"start": [
+"0 mm - overcut",
+"port_center_z"
+],
+"segments": [
+{
+"line": [
+"0 mm - overcut",
+"port_center_z + port_mouth_radius"
+]
+},
+{
+"line": [
+"port_flare_radius",
+"port_center_z + port_mouth_radius"
+]
+},
+{
+"line": [
+"port_flare_radius",
+"port_center_z + port_outer_diameter/2"
+]
+},
+{
+"line": [
+"board_thickness + overcut",
+"port_center_z + port_outer_diameter/2"
+]
+},
+{
+"line": [
+"board_thickness + overcut",
+"port_center_z"
+]
+},
+{
+"line": [
+"0 mm - overcut",
+"port_center_z"
+]
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Port seat profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Port seat tool",
+"when": "is_vented"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Baffle seated",
+"tool": "Port seat tool",
+"name": "Baffle",
+"when": "is_vented"
+}
+],
+[
+"sketch.create",
+{
+"name": "Driver cone profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Driver cone profile",
+"from": [
+"0 mm - 40 mm",
+"driver_center_z"
+],
+"to": [
+"driver_depth + 20 mm",
+"driver_center_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Driver cone profile",
+"start": [
+"surround_crest_depth + cone_depth - dust_cap_height",
+"driver_center_z"
+],
+"segments": [
+{
+"arc": [
+"surround_crest_depth + cone_depth",
+"driver_center_z + dust_cap_radius"
+],
+"center": [
+"surround_crest_depth + cone_depth - dust_cap_height + dust_cap_sphere",
+"driver_center_z"
+],
+"clockwise": true
+},
+{
+"line": [
+"surround_crest_depth",
+"driver_center_z + cone_outer_radius"
+]
+},
+{
+"arc": [
+"surround_crest_depth",
+"driver_center_z + surround_outer_radius"
+],
+"center": [
+"surround_crest_depth",
+"driver_center_z + cone_outer_radius + surround_width/2"
+],
+"clockwise": true
+},
+{
+"line": [
+"0 mm",
+"driver_center_z + frame_opening_radius"
+]
+},
+{
+"line": [
+"0 mm",
+"driver_center_z + flange_radius"
+]
+},
+{
+"line": [
+"flange_thickness",
+"driver_center_z + flange_radius"
+]
+},
+{
+"line": [
+"flange_thickness",
+"driver_center_z + frame_outer_radius"
+]
+},
+{
+"line": [
+"frame_ring_y",
+"driver_center_z + frame_outer_radius"
+]
+},
+{
+"line": [
+"frame_ring_y",
+"driver_center_z + frame_ring_radius"
+]
+},
+{
+"line": [
+"rear_rim_y",
+"driver_center_z + cone_outer_radius"
+]
+},
+{
+"line": [
+"rear_dish_y",
+"driver_center_z + dust_cap_radius"
+]
+},
+{
+"line": [
+"rear_dish_y",
+"driver_center_z"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Driver cone profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Driver cone"
+}
+],
+[
+"body.appearance",
+{
+"body": "Driver cone",
+"color": "#26282c",
+"metallic": 0.9,
+"roughness": 0.5
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F38:side(e7)"
+],
+"body": "Driver cone",
+"color": "#1e1f23",
+"metallic": 0,
+"roughness": 0.72
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F38:side(e9)"
+],
+"body": "Driver cone",
+"color": "#2a2b2e",
+"metallic": 0,
+"roughness": 0.85
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F38:side(e12)"
+],
+"body": "Driver cone",
+"color": "#0d0d0f",
+"metallic": 0,
+"roughness": 0.92
+}
+],
+[
+"face.appearance",
+{
+"faces": [
+"F38:side(e14)",
+"F38:side(e16)",
+"F38:side(e18)"
+],
+"body": "Driver cone",
+"color": "#1d1e21",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.2
+}
+],
+[
+"sketch.create",
+{
+"name": "Driver motor profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Driver motor profile",
+"from": [
+"0 mm - 40 mm",
+"driver_center_z"
+],
+"to": [
+"driver_depth + 20 mm",
+"driver_center_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Driver motor profile",
+"start": [
+"motor_front_depth",
+"driver_center_z"
+],
+"segments": [
+{
+"line": [
+"motor_front_depth",
+"driver_center_z + motor_radius"
+]
+},
+{
+"line": [
+"driver_depth - 0.3*motor_length",
+"driver_center_z + motor_radius"
+]
+},
+{
+"line": [
+"driver_depth - 0.3*motor_length",
+"driver_center_z + 0.92*motor_radius"
+]
+},
+{
+"line": [
+"driver_depth",
+"driver_center_z + 0.92*motor_radius"
+]
+},
+{
+"line": [
+"driver_depth",
+"driver_center_z"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Driver motor profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Driver motor"
+}
+],
+[
+"sketch.create",
+{
+"name": "Driver arm profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Driver arm profile",
+"points": [
+[
+"frame_ring_y - 1 mm",
+"driver_center_z + frame_outer_radius - 1 mm"
+],
+[
+"motor_front_depth + 1 mm",
+"driver_center_z + motor_radius - 2 mm"
+],
+[
+"motor_front_depth + 1 mm",
+"driver_center_z + motor_radius - 2 mm - arm_thickness"
+],
+[
+"frame_ring_y - 1 mm",
+"driver_center_z + frame_outer_radius - 1 mm - arm_thickness"
+]
+],
+"closed": true
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Driver arm profile",
+"distance": "arm_width",
+"symmetric": true,
+"name": "Driver arm"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Driver arm",
+"count": "4",
+"angle": "90 deg",
+"axis": [
+0,
+1,
+0
+],
+"point": [
+"center_x",
+"0 mm",
+"driver_center_z"
+],
+"name": "Driver arms"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Driver motor",
+"tool": "Driver arms",
+"name": "Driver back"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Driver cone",
+"tool": "Driver back",
+"name": "Driver"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_count",
+"expr": "if(driver_flange < 130 mm, 4, if(driver_flange < 220 mm, 6, 8))"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_ring_radius",
+"expr": "(flange_radius + frame_opening_radius)/2"
+}
+],
+[
+"sketch.create",
+{
+"name": "Screw head",
+"plane": "zx",
+"offset": "-1.8 mm"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Screw head",
+"center": [
+"driver_center_z + screw_ring_radius",
+"center_x"
+],
+"radius": "screw_head_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Screw head",
+"distance": "1.8 mm",
+"name": "Screw"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Screw",
+"count": "screw_count",
+"angle": "360 deg / screw_count",
+"axis": [
+0,
+1,
+0
+],
+"point": [
+"center_x",
+"0 mm",
+"driver_center_z"
+],
+"name": "Screws"
+}
+],
+[
+"sketch.create",
+{
+"name": "Port profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"feature.when",
+{
+"feature": "Port profile",
+"expr": "is_vented"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Port profile",
+"from": [
+"0 mm - 40 mm",
+"port_center_z"
+],
+"to": [
+"port_length + 20 mm",
+"port_center_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Port profile",
+"start": [
+"port_length",
+"port_center_z + port_throat_radius"
+],
+"segments": [
+{
+"line": [
+"port_length",
+"port_center_z + port_throat_radius + port_wall"
+]
+},
+{
+"line": [
+"port_flare_radius",
+"port_center_z + port_throat_radius + port_wall"
+]
+},
+{
+"line": [
+"port_flare_radius",
+"port_center_z + port_mouth_radius"
+]
+},
+{
+"line": [
+"0 mm",
+"port_center_z + port_mouth_radius"
+]
+},
+{
+"arc": [
+"port_flare_radius",
+"port_center_z + port_throat_radius"
+],
+"center": [
+"port_flare_radius",
+"port_center_z + port_mouth_radius"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Port profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Port",
+"when": "is_vented"
+}
+],
+[
+"sketch.create",
+{
+"name": "Port plug profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"feature.when",
+{
+"feature": "Port plug profile",
+"expr": "is_vented"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Port plug profile",
+"from": [
+"0 mm - 40 mm",
+"port_center_z"
+],
+"to": [
+"port_length + 20 mm",
+"port_center_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Port plug profile",
+"start": [
+"port_length - 3 mm",
+"port_center_z"
+],
+"segments": [
+{
+"line": [
+"port_length - 3 mm",
+"port_center_z + port_throat_radius + 1 mm"
+]
+},
+{
+"line": [
+"port_length",
+"port_center_z + port_throat_radius + 1 mm"
+]
+},
+{
+"line": [
+"port_length",
+"port_center_z"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Port plug profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Port plug",
+"when": "is_vented"
+}
+],
+[
+"variable.set",
+{
+"name": "brace_z",
+"expr": "if(is_vented, port_center_z - port_mouth_radius - 12 mm - board_thickness, driver_center_z - flange_radius - 12 mm - board_thickness)"
+}
+],
+[
+"variable.set",
+{
+"name": "brace_corner",
+"expr": "min(18 mm, brace_width*0.8)"
+}
+],
+[
+"sketch.create",
+{
+"name": "Brace outline",
+"plane": "xy",
+"offset": "brace_z"
+}
+],
+[
+"feature.when",
+{
+"feature": "Brace outline",
+"expr": "wants_brace"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Brace outline",
+"from": [
+"board_thickness",
+"board_thickness"
+],
+"to": [
+"outer_width - board_thickness",
+"outer_depth - board_thickness"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Brace outline",
+"start": [
+"(board_thickness + brace_width) + brace_corner",
+"(board_thickness + brace_width)"
+],
+"segments": [
+{
+"line": [
+"outer_width - (board_thickness + brace_width) - brace_corner",
+"(board_thickness + brace_width)"
+]
+},
+{
+"arc": [
+"outer_width - (board_thickness + brace_width)",
+"(board_thickness + brace_width) + brace_corner"
+],
+"center": [
+"outer_width - (board_thickness + brace_width) - brace_corner",
+"(board_thickness + brace_width) + brace_corner"
+]
+},
+{
+"line": [
+"outer_width - (board_thickness + brace_width)",
+"outer_depth - (board_thickness + brace_width) - brace_corner"
+]
+},
+{
+"arc": [
+"outer_width - (board_thickness + brace_width) - brace_corner",
+"outer_depth - (board_thickness + brace_width)"
+],
+"center": [
+"outer_width - (board_thickness + brace_width) - brace_corner",
+"outer_depth - (board_thickness + brace_width) - brace_corner"
+]
+},
+{
+"line": [
+"(board_thickness + brace_width) + brace_corner",
+"outer_depth - (board_thickness + brace_width)"
+]
+},
+{
+"arc": [
+"(board_thickness + brace_width)",
+"outer_depth - (board_thickness + brace_width) - brace_corner"
+],
+"center": [
+"(board_thickness + brace_width) + brace_corner",
+"outer_depth - (board_thickness + brace_width) - brace_corner"
+]
+},
+{
+"line": [
+"(board_thickness + brace_width)",
+"(board_thickness + brace_width) + brace_corner"
+]
+},
+{
+"arc": "start",
+"center": [
+"(board_thickness + brace_width) + brace_corner",
+"(board_thickness + brace_width) + brace_corner"
+]
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Brace outline",
+"distance": "board_thickness",
+"name": "Brace",
+"when": "wants_brace"
+}
+],
+[
+"feature.transform",
+{
+"source": "Baffle",
+"keep": true,
+"name": "Air gauge base"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge base",
+"tool": "Back board formed",
+"name": "Air gauge back",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge back",
+"tool": "Left side",
+"name": "Air gauge left",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge left",
+"tool": "Right side",
+"name": "Air gauge right",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge right",
+"tool": "Bottom board",
+"name": "Air gauge bottom",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge bottom",
+"tool": "Top board",
+"name": "Air gauge top",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge top",
+"tool": "Driver",
+"name": "Air gauge driver",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge driver",
+"tool": "Port",
+"name": "Air gauge port",
+"keepTool": true,
+"when": "is_vented"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge port",
+"tool": "Port plug",
+"name": "Air gauge plugged",
+"when": "is_vented"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Air gauge plugged",
+"tool": "Brace",
+"name": "Air gauge",
+"keepTool": true,
+"when": "wants_brace"
+}
+],
+[
+"feature.visible",
+{
+"feature": "Air gauge",
+"visible": false
+}
+],
+[
+"sketch.create",
+{
+"name": "Front fit notches",
+"plane": "zx"
+}
+],
+[
+"feature.when",
+{
+"feature": "Front fit notches",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Front fit notches",
+"from": [
+"finger_pitch_high - finger_fit",
+"0 mm - overcut"
+],
+"to": [
+"2*finger_pitch_high + finger_fit",
+"board_thickness"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Front fit notches",
+"from": [
+"finger_pitch_high - finger_fit",
+"outer_width - board_thickness"
+],
+"to": [
+"2*finger_pitch_high + finger_fit",
+"outer_width + overcut"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front fit notches",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_high - 1)/2",
+"step": [
+"2*finger_pitch_high",
+"0 mm"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Front fit notches",
+"from": [
+"0 mm - overcut",
+"finger_pitch_wide - finger_fit"
+],
+"to": [
+"board_thickness",
+"2*finger_pitch_wide + finger_fit"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Front fit notches",
+"from": [
+"outer_height - board_thickness",
+"finger_pitch_wide - finger_fit"
+],
+"to": [
+"outer_height + overcut",
+"2*finger_pitch_wide + finger_fit"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front fit notches",
+"entities": [
+"e21",
+"e22",
+"e23",
+"e24",
+"e29",
+"e30",
+"e31",
+"e32"
+],
+"count": "(finger_count_wide - 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_wide"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Front fit notches",
+"distance": "board_thickness",
+"name": "Front fit tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Front plate copy",
+"tool": "Front fit tool",
+"name": "Front plate fitted",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Front dog-bones",
+"plane": "zx"
+}
+],
+[
+"feature.when",
+{
+"feature": "Front dog-bones",
+"expr": "is_finger"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"finger_pitch_high - finger_fit + bone_offset",
+"board_thickness - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"2*finger_pitch_high + finger_fit - bone_offset",
+"board_thickness - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"finger_pitch_high - finger_fit + bone_offset",
+"outer_width - board_thickness + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"2*finger_pitch_high + finger_fit - bone_offset",
+"outer_width - board_thickness + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front dog-bones",
+"entities": [
+"e2",
+"e4",
+"e6",
+"e8"
+],
+"count": "(finger_count_high - 1)/2",
+"step": [
+"2*finger_pitch_high",
+"0 mm"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"board_thickness - bone_offset",
+"finger_pitch_wide - finger_fit + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"board_thickness - bone_offset",
+"2*finger_pitch_wide + finger_fit - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"outer_height - board_thickness + bone_offset",
+"finger_pitch_wide - finger_fit + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front dog-bones",
+"center": [
+"outer_height - board_thickness + bone_offset",
+"2*finger_pitch_wide + finger_fit - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front dog-bones",
+"entities": [
+"e10",
+"e12",
+"e14",
+"e16"
+],
+"count": "(finger_count_wide - 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_wide"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Front dog-bones",
+"distance": "board_thickness",
+"name": "Front bone tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Front plate fitted",
+"tool": "Front bone tool",
+"name": "Front plate boned",
+"when": "is_finger"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Front plate boned",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"outer_depth/2",
+"0 mm"
+],
+"keep": true,
+"name": "Back plate blank"
+}
+],
+[
+"sketch.create",
+{
+"name": "Plate driver hole",
+"plane": "zx"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Plate driver hole",
+"center": [
+"driver_center_z",
+"center_x"
+],
+"radius": "cutout_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Plate driver hole",
+"distance": "board_thickness",
+"name": "Plate driver hole tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Front plate boned",
+"tool": "Plate driver hole tool",
+"name": "Baffle plate drilled"
+}
+],
+[
+"sketch.create",
+{
+"name": "Plate port hole",
+"plane": "zx"
+}
+],
+[
+"feature.when",
+{
+"feature": "Plate port hole",
+"expr": "is_vented"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Plate port hole",
+"center": [
+"port_center_z",
+"center_x"
+],
+"radius": "port_outer_diameter/2"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Plate port hole",
+"distance": "board_thickness",
+"name": "Plate port hole tool",
+"when": "is_vented"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Baffle plate drilled",
+"tool": "Plate port hole tool",
+"name": "Baffle plate",
+"when": "is_vented"
+}
+],
+[
+"variable.set",
+{
+"name": "terminal_radius",
+"expr": "min(30 mm, inner_width/4)"
+}
+],
+[
+"variable.set",
+{
+"name": "terminal_z",
+"expr": "min(outer_height - board_thickness - terminal_radius - 12 mm, max(0.3*outer_height, if(wants_brace, brace_z + board_thickness + terminal_radius + 12 mm, 0 mm)))"
+}
+],
+[
+"sketch.create",
+{
+"name": "Terminal hole",
+"plane": "zx",
+"offset": "outer_depth - board_thickness"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Terminal hole",
+"center": [
+"terminal_z",
+"center_x"
+],
+"radius": "terminal_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Terminal hole",
+"distance": "board_thickness",
+"name": "Terminal hole tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Back plate blank",
+"tool": "Terminal hole tool",
+"name": "Back plate",
+"keepTool": true
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Back board formed",
+"tool": "Terminal hole tool",
+"name": "Back board"
+}
+],
+[
+"sketch.create",
+{
+"name": "Terminal cup profile",
+"plane": "yz",
+"offset": "center_x"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Terminal cup profile",
+"from": [
+"outer_depth - board_thickness - 5 mm",
+"terminal_z"
+],
+"to": [
+"outer_depth + 20 mm",
+"terminal_z"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Terminal cup profile",
+"start": [
+"outer_depth - board_thickness",
+"terminal_z"
+],
+"segments": [
+{
+"line": [
+"outer_depth - board_thickness",
+"terminal_z + terminal_radius"
+]
+},
+{
+"line": [
+"outer_depth",
+"terminal_z + terminal_radius"
+]
+},
+{
+"line": [
+"outer_depth",
+"terminal_z + terminal_radius + 8 mm"
+]
+},
+{
+"line": [
+"outer_depth + 5 mm",
+"terminal_z + terminal_radius + 8 mm"
+]
+},
+{
+"line": [
+"outer_depth + 5 mm",
+"terminal_z"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Terminal cup profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Terminal cup"
+}
+],
+[
+"variable.set",
+{
+"name": "terminal_post_offset",
+"expr": "0.4*terminal_radius"
+}
+],
+[
+"sketch.create",
+{
+"name": "Terminal post",
+"plane": "zx",
+"offset": "outer_depth + 5 mm"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Terminal post",
+"center": [
+"terminal_z",
+"center_x - terminal_post_offset"
+],
+"radius": "5 mm"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Terminal post",
+"distance": "14 mm",
+"name": "Terminal post one"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Terminal post one",
+"count": "2",
+"step": [
+"2*terminal_post_offset",
+"0 mm",
+"0 mm"
+],
+"name": "Terminal posts"
+}
+],
+[
+"sketch.create",
+{
+"name": "Side fit notches",
+"plane": "yz"
+}
+],
+[
+"feature.when",
+{
+"feature": "Side fit notches",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side fit notches",
+"from": [
+"0 mm - overcut",
+"0 mm - finger_fit"
+],
+"to": [
+"board_thickness",
+"finger_pitch_high + finger_fit"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side fit notches",
+"from": [
+"outer_depth - board_thickness",
+"0 mm - finger_fit"
+],
+"to": [
+"outer_depth + overcut",
+"finger_pitch_high + finger_fit"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side fit notches",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_high + 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_high"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side fit notches",
+"from": [
+"board_thickness + finger_pitch_deep - finger_fit",
+"0 mm - overcut"
+],
+"to": [
+"board_thickness + 2*finger_pitch_deep + finger_fit",
+"board_thickness"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Side fit notches",
+"from": [
+"board_thickness + finger_pitch_deep - finger_fit",
+"outer_height - board_thickness"
+],
+"to": [
+"board_thickness + 2*finger_pitch_deep + finger_fit",
+"outer_height + overcut"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side fit notches",
+"entities": [
+"e21",
+"e22",
+"e23",
+"e24",
+"e29",
+"e30",
+"e31",
+"e32"
+],
+"count": "(finger_count_deep - 1)/2",
+"step": [
+"2*finger_pitch_deep",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Side fit notches",
+"distance": "board_thickness",
+"name": "Side fit tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Left plate copy",
+"tool": "Side fit tool",
+"name": "Left plate fitted",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Side dog-bones",
+"plane": "yz"
+}
+],
+[
+"feature.when",
+{
+"feature": "Side dog-bones",
+"expr": "is_finger"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"board_thickness - bone_offset",
+"finger_pitch_high + finger_fit - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"board_thickness - bone_offset",
+"2*finger_pitch_high - finger_fit + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"outer_depth - board_thickness + bone_offset",
+"finger_pitch_high + finger_fit - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"outer_depth - board_thickness + bone_offset",
+"2*finger_pitch_high - finger_fit + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side dog-bones",
+"entities": [
+"e2",
+"e4",
+"e6",
+"e8"
+],
+"count": "(finger_count_high - 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_high"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"board_thickness + finger_pitch_deep - finger_fit + bone_offset",
+"board_thickness - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"board_thickness + 2*finger_pitch_deep + finger_fit - bone_offset",
+"board_thickness - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"board_thickness + finger_pitch_deep - finger_fit + bone_offset",
+"outer_height - board_thickness + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Side dog-bones",
+"center": [
+"board_thickness + 2*finger_pitch_deep + finger_fit - bone_offset",
+"outer_height - board_thickness + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side dog-bones",
+"entities": [
+"e10",
+"e12",
+"e14",
+"e16"
+],
+"count": "(finger_count_deep - 1)/2",
+"step": [
+"2*finger_pitch_deep",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Side dog-bones",
+"distance": "board_thickness",
+"name": "Side bone tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Left plate fitted",
+"tool": "Side bone tool",
+"name": "Left plate",
+"when": "is_finger"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left plate",
+"normal": [
+1,
+0,
+0
+],
+"point": [
+"outer_width/2",
+"0 mm",
+"0 mm"
+],
+"keep": true,
+"name": "Right plate"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom fit notches front back",
+"plane": "xy"
+}
+],
+[
+"feature.when",
+{
+"feature": "Bottom fit notches front back",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom fit notches front back",
+"from": [
+"0 mm - finger_fit",
+"0 mm - overcut"
+],
+"to": [
+"finger_pitch_wide + finger_fit",
+"board_thickness"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom fit notches front back",
+"from": [
+"0 mm - finger_fit",
+"outer_depth - board_thickness"
+],
+"to": [
+"finger_pitch_wide + finger_fit",
+"outer_depth + overcut"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Bottom fit notches front back",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_wide + 1)/2",
+"step": [
+"2*finger_pitch_wide",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom fit notches front back",
+"distance": "board_thickness",
+"name": "Bottom fit tool front back",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bottom plate copy",
+"tool": "Bottom fit tool front back",
+"name": "Bottom plate fitted once",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom fit notches sides",
+"plane": "xy"
+}
+],
+[
+"feature.when",
+{
+"feature": "Bottom fit notches sides",
+"expr": "is_finger"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom fit notches sides",
+"from": [
+"0 mm - overcut",
+"board_thickness - finger_fit"
+],
+"to": [
+"board_thickness",
+"board_thickness + finger_pitch_deep + finger_fit"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom fit notches sides",
+"from": [
+"outer_width - board_thickness",
+"board_thickness - finger_fit"
+],
+"to": [
+"outer_width + overcut",
+"board_thickness + finger_pitch_deep + finger_fit"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Bottom fit notches sides",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8",
+"e13",
+"e14",
+"e15",
+"e16"
+],
+"count": "(finger_count_deep + 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_deep"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom fit notches sides",
+"distance": "board_thickness",
+"name": "Bottom fit tool sides",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bottom plate fitted once",
+"tool": "Bottom fit tool sides",
+"name": "Bottom plate fitted",
+"when": "is_finger"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom dog-bones",
+"plane": "xy"
+}
+],
+[
+"feature.when",
+{
+"feature": "Bottom dog-bones",
+"expr": "is_finger"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"finger_pitch_wide + finger_fit - bone_offset",
+"board_thickness - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"2*finger_pitch_wide - finger_fit + bone_offset",
+"board_thickness - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"finger_pitch_wide + finger_fit - bone_offset",
+"outer_depth - board_thickness + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"2*finger_pitch_wide - finger_fit + bone_offset",
+"outer_depth - board_thickness + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Bottom dog-bones",
+"entities": [
+"e2",
+"e4",
+"e6",
+"e8"
+],
+"count": "(finger_count_wide - 1)/2",
+"step": [
+"2*finger_pitch_wide",
+"0 mm"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"board_thickness - bone_offset",
+"board_thickness + finger_pitch_deep + finger_fit - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"board_thickness - bone_offset",
+"board_thickness + 2*finger_pitch_deep - finger_fit + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"outer_width - board_thickness + bone_offset",
+"board_thickness + finger_pitch_deep + finger_fit - bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bottom dog-bones",
+"center": [
+"outer_width - board_thickness + bone_offset",
+"board_thickness + 2*finger_pitch_deep - finger_fit + bone_offset"
+],
+"radius": "cutter_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Bottom dog-bones",
+"entities": [
+"e10",
+"e12",
+"e14",
+"e16"
+],
+"count": "(finger_count_deep - 1)/2",
+"step": [
+"0 mm",
+"2*finger_pitch_deep"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom dog-bones",
+"distance": "board_thickness",
+"name": "Bottom bone tool",
+"when": "is_finger"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Bottom plate fitted",
+"tool": "Bottom bone tool",
+"name": "Bottom plate",
+"when": "is_finger"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Bottom plate",
+"normal": [
+0,
+0,
+1
+],
+"point": [
+"0 mm",
+"0 mm",
+"outer_height/2"
+],
+"keep": true,
+"name": "Top plate"
+}
+],
+[
+"feature.visible",
+{
+"feature": [
+"Baffle plate",
+"Back plate",
+"Left plate",
+"Right plate",
+"Bottom plate",
+"Top plate"
+],
+"visible": false
+}
+],
+[
+"variable.set",
+{
+"name": "foot_radius",
+"expr": "foot_diameter/2"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_edge",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_x",
+"expr": "min(foot_inset, outer_width/4)"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_y",
+"expr": "min(foot_inset, outer_depth/4)"
+}
+],
+[
+"sketch.create",
+{
+"name": "Foot profile",
+"plane": "yz",
+"offset": "foot_x"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Foot profile",
+"from": [
+"foot_y",
+"0 mm - foot_height - 5 mm"
+],
+"to": [
+"foot_y",
+"5 mm"
+],
+"construction": true
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Foot profile",
+"start": [
+"foot_y",
+"0 mm - foot_height"
+],
+"segments": [
+{
+"line": [
+"foot_y + foot_radius - foot_edge",
+"0 mm - foot_height"
+]
+},
+{
+"arc": [
+"foot_y + foot_radius",
+"0 mm - foot_height + foot_edge"
+],
+"center": [
+"foot_y + foot_radius - foot_edge",
+"0 mm - foot_height + foot_edge"
+]
+},
+{
+"line": [
+"foot_y + foot_radius",
+"0 mm"
+]
+},
+{
+"line": [
+"foot_y",
+"0 mm"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Foot profile",
+"axis": "e3",
+"angle": "360 deg",
+"name": "Foot"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Foot",
+"count": "2",
+"step": [
+"outer_width - 2*foot_x",
+"0 mm",
+"0 mm"
+],
+"name": "Feet row"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Feet row",
+"count": "2",
+"step": [
+"0 mm",
+"outer_depth - 2*foot_y",
+"0 mm"
+],
+"name": "Feet"
+}
+],
+[
+"body.appearance",
+{
+"body": "Back board formed",
+"color": "#3b2415",
+"metallic": 0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.5,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#4a2d1b",
+"#3b2415",
+"#2e1c10"
+],
+"scale": 6.5,
+"axis": [
+0,
+0,
+1
+],
+"origin": [
+-250,
+-420,
+-60
+],
+"distortion": 0.55,
+"grain": 0.6,
+"rays": 0.05,
+"detail": 5,
+"seed": 7
+}
+}
+],
+[
+"body.appearance",
+{
+"body": "Brace",
+"color": "#8c6a42",
+"metallic": 0,
+"roughness": 0.7
+}
+],
+[
+"body.material",
+{
+"body": "Baffle",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.material",
+{
+"body": "Back board",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.material",
+{
+"body": "Left side",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.material",
+{
+"body": "Right side",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.material",
+{
+"body": "Top board",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.material",
+{
+"body": "Bottom board",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.material",
+{
+"body": "Brace",
+"name": "MDF, veneered",
+"density": "board_density"
+}
+],
+[
+"body.appearance",
+{
+"body": "Port",
+"color": "#0f1012",
+"metallic": 0,
+"roughness": 0.75
+}
+],
+[
+"body.appearance",
+{
+"body": "Terminal cup",
+"color": "#1a1b1e",
+"metallic": 0,
+"roughness": 0.5
+}
+],
+[
+"body.appearance",
+{
+"body": "Terminal posts",
+"color": "#b08a3c",
+"metallic": 1,
+"roughness": 0.3
+}
+],
+[
+"body.appearance",
+{
+"body": "Feet",
+"color": "#1c1c1e",
+"metallic": 0,
+"roughness": 0.8
+}
+],
+[
+"body.appearance",
+{
+"body": "Screws",
+"color": "#bfc4c9",
+"metallic": 1,
+"roughness": 0.32
+}
+],
+[
+"variable.set",
+{
+"name": "board_count",
+"expr": "6 + wants_brace"
+}
+],
+[
+"variable.measure",
+{
+"name": "measured_net_air",
+"measure": "cavity",
+"of": "Air gauge",
+"label": "Net air volume, measured",
+"unit": "L"
+}
+],
+[
+"variable.output",
+{
+"name": "deviation_percent",
+"expr": "100*(measured_net_air/net_volume_target - 1)",
+"label": "Measured net air vs target (%)"
+}
+],
+[
+"variable.output",
+{
+"name": "port_velocity_at_xmax",
+"expr": "if(is_vented, 2*pi*vented_fb*per_second*driver_displacement/(pi*port_throat_radius^2), 0 m/1 s)",
+"label": "Port air speed at Xmax (m/s, 0 when sealed)",
+"unit": "m/s"
+}
+],
+[
+"variable.output",
+{
+"name": "tuned_frequency_measured",
+"expr": "if(is_vented, (speed_of_sound/(2*pi))*sqrt(pi*port_throat_radius^2/(measured_net_air*(port_length - port_flare_radius + flare_equivalent + end_correction_total)))/per_second, 0)",
+"label": "Tuning from the measured air (Hz, 0 when sealed)"
+}
+],
+[
+"variable.output",
+{
+"name": "sealed_qtc_measured",
+"expr": "if(is_vented, 0, driver_qts*sqrt(1 + driver_vas/measured_net_air))",
+"label": "Sealed Qtc from the measured air (0 when vented)"
+}
+],
+[
+"variable.output",
+{
+"name": "vented_level_at_f3",
+"expr": "if(is_vented, 10*log10(newton_h^4/(newton_h^4 + resp_one*newton_h^3 + resp_two*newton_h^2 + resp_three*newton_h + 1)), -3.01)",
+"label": "Vented level at the f3 (dB)"
+}
+],
+[
+"variable.output",
+{
+"name": "out_net_target",
+"expr": "net_volume_target",
+"label": "Target net air volume",
+"unit": "L"
+}
+],
+[
+"variable.output",
+{
+"name": "out_f3",
+"expr": "low_cut_f3*1",
+"label": "Low-frequency cut-off, f3 (Hz)"
+}
+],
+[
+"variable.output",
+{
+"name": "out_fb",
+"expr": "if(is_vented, vented_fb, 0)",
+"label": "Box tuning, fb (Hz, 0 when sealed)"
+}
+],
+[
+"variable.output",
+{
+"name": "out_fc",
+"expr": "if(is_vented, 0, sealed_resonance)",
+"label": "Sealed resonance, fc (Hz, 0 when vented)"
+}
+],
+[
+"variable.output",
+{
+"name": "out_qtc",
+"expr": "if(is_vented, 0, target_qtc)",
+"label": "Target Qtc (0 when vented)"
+}
+],
+[
+"variable.output",
+{
+"name": "out_port_diameter",
+"expr": "if(is_vented, port_diameter, 0 mm)",
+"label": "Port tube bore (0 when sealed)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_port_length",
+"expr": "if(is_vented, port_length, 0 mm)",
+"label": "Port length, mouth to inner end (0 when sealed)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_outer_width",
+"expr": "outer_width",
+"label": "Cabinet width outside",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_outer_height",
+"expr": "outer_height",
+"label": "Cabinet height outside",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_outer_depth",
+"expr": "outer_depth",
+"label": "Cabinet depth outside",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_boards",
+"expr": "board_count",
+"label": "Boards to cut"
+}
+],
+[
+"variable.output",
+{
+"name": "out_blank_front_w",
+"expr": "outer_width - 2*rebate_inset",
+"label": "Baffle and back blank: width",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_blank_front_h",
+"expr": "outer_height",
+"label": "Baffle and back blank: height",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_blank_side_d",
+"expr": "outer_depth",
+"label": "Side blank: depth",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_blank_side_h",
+"expr": "outer_height",
+"label": "Side blank: height",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_blank_top_w",
+"expr": "outer_width - 2*rebate_inset",
+"label": "Top and bottom blank: width",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_blank_top_d",
+"expr": "outer_depth - 2*rebate_inset",
+"label": "Top and bottom blank: depth",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_rebate_w",
+"expr": "if(is_rebate, board_thickness, 0 mm)",
+"label": "Rebate width, one board (0 when finger jointed)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_rebate_d",
+"expr": "if(is_rebate, board_thickness/2, 0 mm)",
+"label": "Rebate depth, half a board (0 when finger jointed)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_finger_min",
+"expr": "min(finger_pitch_wide, min(finger_pitch_high, finger_pitch_deep))",
+"label": "Narrowest finger",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_cutter",
+"expr": "2*cutter_radius",
+"label": "Router cutter for the dog-bones",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "out_pipe_resonance",
+"expr": "if(is_vented, speed_of_sound/(2*(port_length + end_correction_total))/per_second, 0)",
+"label": "First port pipe resonance (Hz, cross over well below it; 0 when sealed)"
+}
+],
+[
+"variable.measure",
+{
+"name": "board_mass",
+"measure": "mass",
+"of": [
+"Baffle",
+"Back board",
+"Left side",
+"Right side",
+"Top board",
+"Bottom board"
+],
+"label": "Mass of the six boards",
+"unit": "kg"
+}
+],
+[
+"assert.add",
+{
+"name": "Net air volume within 0.25 % of the target (measured on the sealed model)",
+"measure": "cavity",
+"of": "Air gauge",
+"min": "0.9975*net_volume_target",
+"max": "1.0025*net_volume_target"
+}
+],
+[
+"assert.add",
+{
+"name": "Vented: transfer function is 3 dB down at the reported f3",
+"measure": "value",
+"expr": "vented_level_at_f3",
+"min": "-3.06",
+"max": "-2.96",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Port tube outside diameter on the model equals the design",
+"measure": "sectionExtent",
+"of": "Port",
+"plane": "zx",
+"offset": "(board_thickness + port_length)/2",
+"axis": "z",
+"eq": "port_outer_diameter",
+"tol": "0.02 mm",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Port length on the model equals the design",
+"measure": "extent",
+"of": "Port",
+"axis": "y",
+"eq": "port_length",
+"tol": "0.02 mm",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Port wall section leaves the bore 17 m/s needs at Xmax (measured)",
+"measure": "sectionArea",
+"of": "Port",
+"plane": "zx",
+"offset": "(board_thickness + port_length)/2",
+"max": "pi*(port_outer_diameter/2)^2 - port_area_for_velocity",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Motor clears the back wall",
+"measure": "distance",
+"from": "Driver",
+"to": "Back board",
+"min": "back_clearance"
+}
+],
+[
+"assert.add",
+{
+"name": "Port end stays one diameter from the back wall",
+"measure": "distance",
+"from": "Port",
+"to": "Back board",
+"min": "port_diameter",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Port clears the driver",
+"measure": "distance",
+"from": "Port",
+"to": "Driver",
+"min": "5 mm",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Flange clears the side boards",
+"measure": "distance",
+"from": "Driver",
+"to": "Left side",
+"min": "baffle_margin - 0.5 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Flange clears the top board",
+"measure": "distance",
+"from": "Driver",
+"to": "Top board",
+"min": "baffle_margin - 0.5 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Port mouth clears the bottom board",
+"measure": "distance",
+"from": "Port",
+"to": "Bottom board",
+"min": "baffle_margin - 0.5 mm",
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Brace clears the driver",
+"measure": "distance",
+"from": "Brace",
+"to": "Driver",
+"min": "5 mm",
+"when": "wants_brace"
+}
+],
+[
+"assert.add",
+{
+"name": "Brace clears the port",
+"measure": "distance",
+"from": "Brace",
+"to": "Port",
+"min": "5 mm",
+"when": "wants_brace && is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "No two boards overlap",
+"measure": "overlap",
+"of": [
+"Baffle",
+"Back board",
+"Left side",
+"Right side",
+"Top board",
+"Bottom board"
+],
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "Brace stays clear of the bottom board",
+"measure": "distance",
+"from": "Brace",
+"to": "Bottom board",
+"min": "8 mm",
+"when": "wants_brace"
+}
+],
+[
+"assert.add",
+{
+"name": "Brace does not overlap a board",
+"measure": "overlap",
+"of": "Brace",
+"to": [
+"Baffle",
+"Back board",
+"Left side",
+"Right side",
+"Top board",
+"Bottom board"
+],
+"is": false,
+"when": "wants_brace"
+}
+],
+[
+"variable.set",
+{
+"name": "bone_area",
+"expr": "cutter_radius^2*(pi/2 - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_front_area",
+"expr": "if(is_finger, outer_width*outer_height - board_thickness*((finger_count_high - 1)*(finger_pitch_high + 2*finger_fit) + (finger_count_wide - 1)*(finger_pitch_wide + 2*finger_fit)) - 2*(finger_count_high + finger_count_wide - 2)*bone_area, (outer_width - board_thickness)*outer_height)"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_side_area",
+"expr": "if(is_finger, outer_depth*outer_height - 2*board_thickness*((finger_count_high + 1)/2*finger_pitch_high + finger_fit*(finger_count_high - 1)) - board_thickness*(finger_count_deep - 1)*(finger_pitch_deep + 2*finger_fit) - 2*(finger_count_high + finger_count_deep - 2)*bone_area, outer_depth*outer_height)"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_bottom_area",
+"expr": "if(is_finger, outer_width*outer_depth - 2*board_thickness*((finger_count_wide + 1)/2*finger_pitch_wide + finger_fit*(finger_count_wide - 1)) - 2*board_thickness*((finger_count_deep + 1)/2*finger_pitch_deep + finger_fit*(finger_count_deep - 1)) - 2*(finger_count_wide + finger_count_deep - 2)*bone_area, (outer_width - board_thickness)*(outer_depth - board_thickness))"
+}
+],
+[
+"assert.add",
+{
+"name": "Cut plates fit together without overlap",
+"measure": "overlap",
+"of": [
+"Baffle plate",
+"Back plate",
+"Left plate",
+"Right plate",
+"Bottom plate",
+"Top plate"
+],
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "Plate cutout is concentric with the driver's frame, 1 mm clear",
+"measure": "distance",
+"eq": "1 mm",
+"tol": "0.02 mm",
+"from": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Plate driver hole tool"
+},
+{
+"in": "Baffle plate"
+}
+]
+},
+"to": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Driver cone"
+},
+{
+"name": "*side(e22)*"
+},
+{
+"in": "Driver"
+}
+]
+}
+}
+],
+[
+"assert.add",
+{
+"name": "Plate port hole is concentric with the port bore, one wall clear",
+"measure": "distance",
+"eq": "port_wall",
+"tol": "0.02 mm",
+"from": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Plate port hole tool"
+},
+{
+"in": "Baffle plate"
+}
+]
+},
+"to": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Port"
+},
+{
+"name": "*side(e16)*"
+},
+{
+"in": "Port"
+}
+]
+},
+"when": "is_vented"
+}
+],
+[
+"assert.add",
+{
+"name": "Terminal cup fits the back plate's hole",
+"measure": "overlap",
+"of": "Terminal cup",
+"to": "Back plate",
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "Baffle plate: section equals its closed form",
+"measure": "sectionArea",
+"of": "Baffle plate",
+"plane": "zx",
+"offset": "board_thickness/4",
+"eq": "plate_front_area - pi*cutout_radius^2 - if(is_vented, pi*(port_outer_diameter/2)^2, 0*(1 mm)^2)",
+"tol": "0.5"
+}
+],
+[
+"assert.add",
+{
+"name": "Back plate: section equals its closed form",
+"measure": "sectionArea",
+"of": "Back plate",
+"plane": "zx",
+"offset": "outer_depth - board_thickness/4",
+"eq": "plate_front_area - pi*terminal_radius^2",
+"tol": "0.5"
+}
+],
+[
+"assert.add",
+{
+"name": "Side plate: section equals its closed form",
+"measure": "sectionArea",
+"of": "Left plate",
+"plane": "yz",
+"offset": "board_thickness/4",
+"eq": "plate_side_area",
+"tol": "0.5"
+}
+],
+[
+"assert.add",
+{
+"name": "Bottom plate: section equals its closed form",
+"measure": "sectionArea",
+"of": "Bottom plate",
+"plane": "xy",
+"offset": "board_thickness/4",
+"eq": "plate_bottom_area",
+"tol": "0.5"
+}
+],
+[
+"assert.add",
+{
+"name": "Boards counted: six panels, plus the brace when there is one",
+"measure": "count",
+"of": {
+"kind": "body",
+"where": [
+{
+"material": "MDF*"
+},
+{
+"not": {
+"name": "* plate"
+}
+},
+{
+"not": {
+"name": "Air gauge*"
+}
+}
+]
+},
+"eq": "board_count"
+}
+],
+[
+"assert.add",
+{
+"name": "Finger joints: no finger under three quarters of a board wide",
+"measure": "value",
+"expr": "min(finger_pitch_wide, min(finger_pitch_high, finger_pitch_deep))/board_thickness",
+"min": "0.75",
+"when": "is_finger"
+}
+],
+[
+"assert.add",
+{
+"name": "Terminal cup clears the brace",
+"measure": "distance",
+"from": "Terminal cup",
+"to": "Brace",
+"min": "3 mm",
+"when": "wants_brace"
+}
+],
+[
+"set.define",
+{
+"name": "Cut sheet",
+"kind": "face",
+"where": {
+"any": [
+{
+"all": [
+{
+"name": "*F2:startCap*"
+},
+{
+"in": "Baffle plate"
+}
+]
+},
+{
+"all": [
+{
+"name": "*F2:startCap*"
+},
+{
+"in": "Back plate"
+}
+]
+},
+{
+"all": [
+{
+"name": "*F11:startCap*"
+},
+{
+"in": "Left plate"
+}
+]
+},
+{
+"all": [
+{
+"name": "*F11:startCap*"
+},
+{
+"in": "Right plate"
+}
+]
+},
+{
+"all": [
+{
+"name": "*F20:startCap*"
+},
+{
+"in": "Bottom plate"
+}
+]
+},
+{
+"all": [
+{
+"name": "*F20:startCap*"
+},
+{
+"in": "Top plate"
+}
+]
+},
+{
+"all": [
+{
+"name": "*startCap*"
+},
+{
+"in": "Brace"
+}
+]
+}
+]
+}
+}
+],
+[
+"set.define",
+{
+"name": "Rebate and mouth pockets",
+"kind": "face",
+"where": {
+"any": [
+{
+"all": [
+{
+"madeBy": "Driver seat tool"
+},
+{
+"name": "*side(e14)*"
+},
+{
+"in": "Baffle"
+}
+]
+},
+{
+"all": [
+{
+"madeBy": "Port seat tool"
+},
+{
+"name": "*side(e10)*"
+},
+{
+"in": "Baffle"
+}
+]
+}
+]
+}
+}
+],
+[
+"variable.set",
+{
+"name": "compliance_used",
+"expr": "if(is_vented, compliance_vented, compliance_sealed)"
+}
+],
+[
+"variable.set",
+{
+"name": "estimate_scale",
+"expr": "pow(net_volume_target/(1 L)/share_product, 1/3)*100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "estimate_width",
+"expr": "estimate_scale*share_width"
+}
+],
+[
+"variable.set",
+{
+"name": "estimate_height",
+"expr": "estimate_scale*share_height"
+}
+],
+[
+"variable.set",
+{
+"name": "forced_width",
+"expr": "max(estimate_width, driver_flange + 2*baffle_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_with_small_port",
+"expr": "(net_volume_target - hole_air_volume)/(forced_width*max(estimate_height, driver_flange + driver_port_gap + 2*(0.83*port_tube_minimum) + 2*baffle_margin))"
+}
+],
+[
+"variable.set",
+{
+"name": "port_room",
+"expr": "0.92*depth_with_small_port + board_thickness - 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_with_large_port",
+"expr": "(net_volume_target - hole_air_volume)/(forced_width*max(estimate_height, driver_flange + driver_port_gap + 2*0.83*0.33*estimate_width + 2*baffle_margin))"
+}
+],
+[
+"variable.set",
+{
+"name": "port_limit_diameter",
+"expr": "max(30 mm, min(150 mm, min(0.33*estimate_width, 0.92*depth_with_large_port + board_thickness - 5 mm - port_length_min)))"
+}
+],
+[
+"variable.set",
+{
+"name": "end_length_ratio",
+"expr": "0.68"
+}
+],
+[
+"variable.set",
+{
+"name": "largest_helmholtz_factor",
+"expr": "(port_room - (1 - end_length_ratio)*port_tube_minimum)/port_tube_minimum^2"
+}
+],
+[
+"variable.set",
+{
+"name": "fs_lower_for_port",
+"expr": "if(is_vented, speed_of_sound/sqrt(16*pi*net_volume_target*largest_helmholtz_factor)/(tuning_ratio*per_second), 0)"
+}
+],
+[
+"variable.set",
+{
+"name": "fs_upper_for_port",
+"expr": "if(is_vented, (speed_of_sound/tuning_ratio)*port_limit_diameter*sqrt(1/(16*pi*net_volume_target*(end_length_ratio*port_limit_diameter + port_length_min)))/per_second, 1000)"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_after_stack",
+"expr": "(net_volume_target - hole_air_volume)/(forced_width*max(estimate_height, driver_flange + driver_port_gap + 2*0.83*port_limit_diameter + 2*baffle_margin))"
+}
+],
+[
+"variable.set",
+{
+"name": "port_room_real",
+"expr": "0.92*depth_after_stack + board_thickness - 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "largest_fit_diameter",
+"expr": "(sqrt((1 - end_length_ratio)^2 + 4*helmholtz_factor*port_room_real) - (1 - end_length_ratio))/(2*helmholtz_factor)"
+}
+],
+[
+"variable.set",
+{
+"name": "xmax_ceiling",
+"expr": "if(is_vented, max(5 mm, min(largest_fit_diameter, port_limit_diameter) - 1 mm)^2*port_velocity_limit/(8*port_tuning*per_second*cone_area), 15 mm)"
+}
+],
+[
+"variable.publish",
+{
+"name": "alignment",
+"label": "Box alignment",
+"description": "Sealed or vented; the alignment sets the box volume and, vented, the tuning. QB3 is the flat Thiele vented alignment, sealed Butterworth the usual sealed box",
+"group": "Box",
+"order": 1,
+"kind": "choice",
+"choicesFrom": "alignments"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_fs",
+"label": "Fs, free-air resonance (Hz)",
+"description": "From the data sheet. The form limits Fs so the port tube stays short enough for the cabinet and long enough to work",
+"group": "Driver data sheet",
+"order": 2,
+"min": "min(max(18, fs_lower_for_port), min(150, fs_upper_for_port))",
+"max": "min(150, fs_upper_for_port)",
+"step": "0.5"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_qts",
+"label": "Qts, total Q",
+"description": "From the data sheet; the range is what each alignment can use",
+"group": "Driver data sheet",
+"order": 3,
+"min": "alignments[alignment].qts_low",
+"max": "alignments[alignment].qts_high",
+"step": "0.01"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_vas",
+"label": "Vas, equivalent volume",
+"description": "From the data sheet. The range keeps the net volume between 5 and 120 litres",
+"group": "Driver data sheet",
+"order": 4,
+"min": "max(3 L, 5 L*compliance_used)",
+"max": "min(500 L, 120 L*compliance_used)",
+"step": "0.5 L",
+"unit": "L"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_sd",
+"label": "Sd, cone area (cm2)",
+"description": "From the data sheet; it limits the air the port must carry and sizes the cone in the model",
+"group": "Driver data sheet",
+"order": 5,
+"min": "ceil(0.3*pi*cutout_radius^2/(1 cm)^2)",
+"max": "floor(pi*(cutout_radius - 6 mm)^2/(1 cm)^2)",
+"step": "1"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_xmax",
+"label": "Xmax, one-way linear excursion",
+"description": "From the data sheet. Sets the port diameter from the air speed limit",
+"group": "Driver data sheet",
+"order": 6,
+"min": "1 mm",
+"max": "max(1 mm, min(15 mm, xmax_ceiling))",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_cutout",
+"label": "Baffle cutout diameter",
+"description": "The hole the driver's basket drops into",
+"group": "Driver data sheet",
+"order": 7,
+"min": "60 mm",
+"max": "max(60 mm, min(400 mm, sqrt(net_volume_target/(100 mm)) - 2*baffle_margin - 30 mm))",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_flange",
+"label": "Frame outer diameter",
+"description": "The driver's overall diameter; the baffle gets a rebate this size so the driver sits flush",
+"group": "Driver data sheet",
+"order": 8,
+"min": "driver_cutout + 8 mm",
+"max": "max(driver_cutout + 8 mm, min(1.45*driver_cutout, sqrt(net_volume_target/(100 mm)) - 2*baffle_margin))",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.set",
+{
+"name": "driver_depth_floor",
+"expr": "ceil(max(30 mm, 1.95*(surround_crest_depth + 15 mm))/(1 mm))*1 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "driver_depth",
+"label": "Mounting depth",
+"description": "From the baffle's front face to the back of the magnet",
+"group": "Driver data sheet",
+"order": 9,
+"min": "driver_depth_floor",
+"max": "max(driver_depth_floor, min(350 mm, 0.92*depth_after_stack + board_thickness - back_clearance - 8 mm))",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "board_thickness",
+"label": "Board thickness, measured",
+"description": "Your sheet's real thickness: every joint and the inner sizes follow it",
+"group": "Box",
+"order": 10,
+"min": "12 mm",
+"max": "25 mm",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "proportion",
+"label": "Cabinet proportions",
+"description": "Height to width to depth; unequal sides spread the standing waves out",
+"group": "Box",
+"order": 11,
+"kind": "choice",
+"choicesFrom": "box_shapes"
+}
+],
+[
+"variable.publish",
+{
+"name": "joint",
+"label": "Joint and machine",
+"description": "Finger joints with dog-bone corners for a CNC router, snug or easy fit; or rebated edges for a table saw or router (the outputs give the blanks and the rebates)",
+"group": "Box",
+"order": 12,
+"kind": "choice",
+"choicesFrom": "joints"
+}
+],
+[
+"document.info",
+{
+"title": "Loudspeaker box",
+"description": "A cabinet for one driver, from its data sheet: Fs, Qts, Vas, Sd, Xmax, baffle cutout, frame diameter and depth. Choose sealed or vented; the volume is computed from Thiele and Small's alignments, the net air is measured on the sealed model, and a vented box gets a flared port tuned by Helmholtz with end correction. To cut it: File > Export..., format DXF or SVG, Sheet of set: Cut sheet (one through-cut outline per board, the finger joints with their fit and dog-bones already in it); the set Rebate and mouth pockets holds the driver rebate and port mouth circles to pocket. For rebated joints the outputs give each blank and the rebate.",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"tags": [
+"loudspeaker",
+"woodwork",
+"acoustics",
+"Thiele-Small",
+"CNC"
+]
+}
+],
+[
+"document.check",
+{}
+]
+]
