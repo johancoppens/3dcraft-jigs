@@ -1,0 +1,4746 @@
+[
+[
+"variable.set",
+{
+"name": "floor_to_floor",
+"expr": "2800 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "available_run",
+"expr": "3400 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stair_width",
+"expr": "900 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "floor_thickness",
+"expr": "220 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "opening_length",
+"expr": "3250 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "building_rule",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_thickness",
+"expr": "45 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "closed_risers",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "handrail_style",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_thickness",
+"expr": "40 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "router_diameter",
+"expr": "12 mm"
+}
+],
+[
+"table.set",
+{
+"name": "stair_rules",
+"key": "rule",
+"columns": [
+"rule",
+{
+"name": "rise_max",
+"unit": "mm"
+},
+{
+"name": "going_min",
+"unit": "mm"
+},
+{
+"name": "blondel_min",
+"unit": "mm"
+},
+{
+"name": "blondel_max",
+"unit": "mm"
+},
+{
+"name": "width_min",
+"unit": "mm"
+},
+{
+"name": "headroom_min",
+"unit": "mm"
+},
+"rails_required",
+{
+"name": "height_max",
+"unit": "mm"
+},
+"treads_max",
+"rail_style_max",
+{
+"name": "tread_surface_min",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"Netherlands: new dwelling (Bbl art. 4.26)",
+188,
+220,
+570,
+630,
+800,
+2300,
+1,
+4000,
+99,
+3,
+230
+],
+[
+"Flanders: accessible building (art. 20)",
+180,
+230,
+570,
+630,
+1250,
+2300,
+2,
+3240,
+17,
+2,
+0
+],
+[
+"Comfort stair, no rule of law",
+180,
+250,
+600,
+630,
+800,
+2300,
+1,
+4000,
+99,
+3,
+0
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "rule_rise_max",
+"expr": "stair_rules[building_rule].rise_max"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_going_min",
+"expr": "stair_rules[building_rule].going_min"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_blondel_min",
+"expr": "stair_rules[building_rule].blondel_min"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_blondel_max",
+"expr": "stair_rules[building_rule].blondel_max"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_width_min",
+"expr": "stair_rules[building_rule].width_min"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_headroom",
+"expr": "stair_rules[building_rule].headroom_min"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_rails",
+"expr": "stair_rules[building_rule].rails_required"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_height_max",
+"expr": "stair_rules[building_rule].height_max"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_treads_max",
+"expr": "stair_rules[building_rule].treads_max"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_rail_style_max",
+"expr": "stair_rules[building_rule].rail_style_max"
+}
+],
+[
+"variable.set",
+{
+"name": "rule_tread_surface_min",
+"expr": "stair_rules[building_rule].tread_surface_min"
+}
+],
+[
+"variable.set",
+{
+"name": "blondel_target",
+"expr": "620 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_comfort_floor",
+"expr": "150 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "nosing_length",
+"expr": "30 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_radius",
+"expr": "tread_thickness / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "riser_thickness",
+"expr": "20 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "riser_tongue",
+"expr": "10 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_depth",
+"expr": "12 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_end_clearance",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "wedge_taper",
+"expr": "8 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "toe_margin",
+"expr": "30 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "string_margin_min",
+"expr": "45 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "router_radius",
+"expr": "router_diameter / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_size",
+"expr": "90 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_extra",
+"expr": "if(handrail_style == 3, newel_size, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_length",
+"expr": "toe_margin + nosing_length + foot_extra"
+}
+],
+[
+"variable.set",
+{
+"name": "usable_run",
+"expr": "available_run - foot_length - riser_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "blondel_term",
+"expr": "blondel_target + 2 * floor_to_floor + usable_run"
+}
+],
+[
+"variable.set",
+{
+"name": "steps_ideal",
+"expr": "(blondel_term + sqrt(blondel_term ^ 2 - 8 * blondel_target * floor_to_floor)) / (2 * blondel_target)"
+}
+],
+[
+"variable.set",
+{
+"name": "steps_lawful_min",
+"expr": "ceil(floor_to_floor / rule_rise_max)"
+}
+],
+[
+"variable.set",
+{
+"name": "steps_comfort_max",
+"expr": "min(floor(floor_to_floor / rise_comfort_floor), rule_treads_max + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "riser_count",
+"expr": "clamp(floor(steps_ideal), steps_lawful_min, steps_comfort_max)"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_count",
+"expr": "riser_count - 1"
+}
+],
+[
+"variable.set",
+{
+"name": "rise_height",
+"expr": "floor_to_floor / riser_count"
+}
+],
+[
+"variable.set",
+{
+"name": "going_depth",
+"expr": "min(blondel_target - 2 * rise_height, usable_run / tread_count)"
+}
+],
+[
+"variable.set",
+{
+"name": "blondel_value",
+"expr": "2 * rise_height + going_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_slope",
+"expr": "rise_height / going_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_angle",
+"expr": "atan2(rise_height, going_depth)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_cos",
+"expr": "cos(pitch_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "pitch_sin",
+"expr": "sin(pitch_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "run_used",
+"expr": "tread_count * going_depth + foot_length + riser_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "lawful_rise",
+"expr": "floor_to_floor / steps_lawful_min"
+}
+],
+[
+"variable.set",
+{
+"name": "lawful_going",
+"expr": "max(rule_going_min, rule_blondel_min - 2 * lawful_rise)"
+}
+],
+[
+"variable.set",
+{
+"name": "run_min",
+"expr": "(steps_lawful_min - 1) * lawful_going + foot_length + riser_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "run_max",
+"expr": "run_min + 1500 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "top_riser_x",
+"expr": "tread_count * going_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "trimmer_x",
+"expr": "top_riser_x + riser_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "opening_edge_x",
+"expr": "trimmer_x - opening_length"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_height_at_edge",
+"expr": "pitch_slope * (opening_edge_x + nosing_length) + rise_height"
+}
+],
+[
+"variable.set",
+{
+"name": "headroom_at_edge",
+"expr": "floor_to_floor - floor_thickness - nose_height_at_edge"
+}
+],
+[
+"variable.set",
+{
+"name": "headroom_edge_limit_x",
+"expr": "going_depth * (floor_to_floor - floor_thickness - rule_headroom - rise_height) / rise_height - nosing_length"
+}
+],
+[
+"variable.set",
+{
+"name": "opening_min",
+"expr": "trimmer_x - max(headroom_edge_limit_x, -nosing_length)"
+}
+],
+[
+"variable.set",
+{
+"name": "opening_max",
+"expr": "opening_min + 1200 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stair_point_load",
+"expr": "3 kN"
+}
+],
+[
+"variable.set",
+{
+"name": "stair_imposed_load",
+"expr": "3 kN / 1 m^2"
+}
+],
+[
+"variable.set",
+{
+"name": "timber_e_modulus",
+"expr": "11000 MPa"
+}
+],
+[
+"variable.set",
+{
+"name": "timber_bending_strength",
+"expr": "24 MPa"
+}
+],
+[
+"variable.set",
+{
+"name": "timber_kmod",
+"expr": "0.8"
+}
+],
+[
+"variable.set",
+{
+"name": "timber_gamma_m",
+"expr": "1.3"
+}
+],
+[
+"variable.set",
+{
+"name": "load_factor",
+"expr": "1.5"
+}
+],
+[
+"variable.set",
+{
+"name": "inner_width",
+"expr": "stair_width - 2 * stringer_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "stair_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_stress_limit",
+"expr": "timber_kmod * timber_bending_strength / timber_gamma_m"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_stress",
+"expr": "1.5 * stair_point_load * load_factor * inner_width / (going_depth * tread_thickness ^ 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_deflection",
+"expr": "stair_point_load * inner_width ^ 3 / (4 * timber_e_modulus * going_depth * tread_thickness ^ 3)"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_deflection_limit",
+"expr": "inner_width / 300"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_min_for_stress",
+"expr": "sqrt(1.5 * stair_point_load * load_factor * inner_width / (going_depth * 0.97 * tread_stress_limit))"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_min_for_deflection",
+"expr": "pow(stair_point_load * inner_width ^ 2 * 300 / (4 * 0.97 * timber_e_modulus * going_depth) / 1 mm^3, 1 / 3) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_thickness_min",
+"expr": "max(30 mm, max(tread_min_for_stress, tread_min_for_deflection))"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_net_thickness",
+"expr": "stringer_thickness - housing_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_line_load",
+"expr": "stair_imposed_load * half_width"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_design_span",
+"expr": "trimmer_x"
+}
+],
+[
+"variable.set",
+{
+"name": "string_depth_required",
+"expr": "pow(5 * stringer_line_load * stringer_design_span ^ 3 * 300 * 12 / (384 * timber_e_modulus * stringer_net_thickness * pitch_cos ^ 2) / 1 mm^3, 1 / 3) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_board_cap",
+"expr": "480 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_thickness_min",
+"expr": "max(30 mm, housing_depth + 5 * stringer_line_load * stringer_design_span ^ 3 * 300 * 12 / (384 * timber_e_modulus * pitch_cos ^ 2 * stringer_board_cap ^ 3))"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_drop",
+"expr": "tread_thickness + wedge_taper + router_radius + pitch_slope * (riser_thickness + wedge_taper)"
+}
+],
+[
+"variable.set",
+{
+"name": "string_depth_geometry",
+"expr": "(rise_height + nosing_length * pitch_slope + housing_drop) * pitch_cos"
+}
+],
+[
+"variable.set",
+{
+"name": "string_margin",
+"expr": "max(string_margin_min, (string_depth_required - string_depth_geometry) / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "string_top_offset",
+"expr": "string_margin / pitch_cos"
+}
+],
+[
+"variable.set",
+{
+"name": "string_bottom_offset",
+"expr": "housing_drop + string_margin / pitch_cos"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_toe_x",
+"expr": "-(nosing_length + toe_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_heel_x",
+"expr": "string_bottom_offset / pitch_slope"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_toe_top_z",
+"expr": "pitch_slope * (stringer_toe_x + nosing_length) + rise_height + string_top_offset"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_low_z_at_top",
+"expr": "pitch_slope * trimmer_x - string_bottom_offset"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_flat_x",
+"expr": "(floor_to_floor - rise_height - string_top_offset) / pitch_slope - nosing_length"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_board_width",
+"expr": "(rise_height + nosing_length * pitch_slope + string_top_offset + string_bottom_offset) * pitch_cos"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_y0",
+"expr": "stringer_thickness - housing_depth + housing_end_clearance"
+}
+],
+[
+"variable.set",
+{
+"name": "tread_length",
+"expr": "stair_width - 2 * tread_y0"
+}
+],
+[
+"sketch.create",
+{
+"name": "Stringer outline",
+"plane": "zx"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Stringer outline",
+"closed": true,
+"points": [
+[
+"0 mm",
+"stringer_toe_x"
+],
+[
+"0 mm",
+"stringer_heel_x"
+],
+[
+"stringer_low_z_at_top",
+"trimmer_x"
+],
+[
+"floor_to_floor",
+"trimmer_x"
+],
+[
+"floor_to_floor",
+"stringer_flat_x"
+],
+[
+"stringer_toe_top_z",
+"stringer_toe_x"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Stringer outline",
+"distance": "stringer_thickness",
+"name": "Stringer blank"
+}
+],
+[
+"variable.set",
+{
+"name": "arris_chamfer",
+"expr": "2 mm"
+}
+],
+[
+"feature.chamfer",
+{
+"name": "Stringer eased",
+"distance": "arris_chamfer",
+"edges": [
+[
+"F2:side(e8)",
+"F2:startCap(e7,e8,e9,e10,e11,e12)"
+],
+[
+"F2:side(e8)",
+"F2:endCap(e7,e8,e9,e10,e11,e12)"
+],
+[
+"F2:side(e11)",
+"F2:startCap(e7,e8,e9,e10,e11,e12)"
+],
+[
+"F2:side(e11)",
+"F2:endCap(e7,e8,e9,e10,e11,e12)"
+],
+[
+"F2:side(e12)",
+"F2:startCap(e7,e8,e9,e10,e11,e12)"
+],
+[
+"F2:side(e12)",
+"F2:endCap(e7,e8,e9,e10,e11,e12)"
+]
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tread housing",
+"plane": "zx",
+"offset": "stringer_thickness"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Tread housing",
+"start": [
+"rise_height",
+"(nose_radius - nosing_length)"
+],
+"segments": [
+{
+"arc": [
+"(rise_height - tread_thickness)",
+"(nose_radius - nosing_length)"
+],
+"center": [
+"rise_height - nose_radius",
+"(nose_radius - nosing_length)"
+],
+"clockwise": true
+},
+{
+"line": [
+"((rise_height - tread_thickness) - wedge_taper)",
+"going_depth"
+]
+},
+{
+"arc": [
+"((rise_height - tread_thickness) - wedge_taper) + router_radius",
+"going_depth + router_radius"
+],
+"center": [
+"((rise_height - tread_thickness) - wedge_taper) + router_radius",
+"going_depth"
+],
+"clockwise": true
+},
+{
+"line": [
+"rise_height - router_radius",
+"going_depth + router_radius"
+]
+},
+{
+"arc": [
+"rise_height",
+"going_depth"
+],
+"center": [
+"rise_height - router_radius",
+"going_depth"
+],
+"clockwise": true
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Tread housing",
+"entities": [
+"e4",
+"e6",
+"e9",
+"e11",
+"e14",
+"e15"
+],
+"count": "tread_count",
+"step": [
+"rise_height",
+"going_depth"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Tread housing",
+"distance": "housing_depth",
+"reversed": true,
+"cut": "Stringer eased",
+"name": "Stringer with tread housings"
+}
+],
+[
+"sketch.create",
+{
+"name": "Riser housing",
+"plane": "zx",
+"offset": "stringer_thickness"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Riser housing",
+"start": [
+"(2 * rise_height - tread_thickness + riser_tongue)",
+"going_depth"
+],
+"segments": [
+{
+"line": [
+"(rise_height - tread_thickness)",
+"going_depth"
+]
+},
+{
+"arc": [
+"((rise_height - tread_thickness) - router_radius)",
+"going_depth + router_radius"
+],
+"center": [
+"(rise_height - tread_thickness)",
+"going_depth + router_radius"
+],
+"clockwise": true
+},
+{
+"line": [
+"((rise_height - tread_thickness) - router_radius)",
+"(going_depth + riser_thickness + wedge_taper) - router_radius"
+]
+},
+{
+"arc": [
+"(rise_height - tread_thickness)",
+"(going_depth + riser_thickness + wedge_taper)"
+],
+"center": [
+"(rise_height - tread_thickness)",
+"(going_depth + riser_thickness + wedge_taper) - router_radius"
+],
+"clockwise": true
+},
+{
+"line": [
+"(2 * rise_height - tread_thickness + riser_tongue)",
+"going_depth + riser_thickness"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Riser housing",
+"entities": [
+"e3",
+"e6",
+"e8",
+"e11",
+"e13",
+"e14"
+],
+"count": "tread_count - 1",
+"step": [
+"rise_height",
+"going_depth"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Riser housing",
+"from": [
+"-1 mm",
+"0 mm"
+],
+"to": [
+"(rise_height - tread_thickness + riser_tongue)",
+"riser_thickness"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Riser housing",
+"start": [
+"(floor_to_floor - tread_thickness + riser_tongue)",
+"top_riser_x"
+],
+"segments": [
+{
+"line": [
+"(floor_to_floor - rise_height - tread_thickness)",
+"top_riser_x"
+]
+},
+{
+"arc": [
+"((floor_to_floor - rise_height - tread_thickness) - router_radius)",
+"top_riser_x + router_radius"
+],
+"center": [
+"(floor_to_floor - rise_height - tread_thickness)",
+"top_riser_x + router_radius"
+],
+"clockwise": true
+},
+{
+"line": [
+"((floor_to_floor - rise_height - tread_thickness) - router_radius)",
+"trimmer_x + 1 mm"
+]
+},
+{
+"line": [
+"(floor_to_floor - tread_thickness + riser_tongue)",
+"trimmer_x + 1 mm"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Riser housing",
+"distance": "housing_depth",
+"reversed": true,
+"cut": "Stringer with tread housings",
+"name": "Stringer left",
+"when": "closed_risers"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_second_moment",
+"expr": "stringer_net_thickness * stringer_board_width ^ 3 / 12"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_span",
+"expr": "trimmer_x - stringer_heel_x"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_deflection",
+"expr": "5 * stringer_line_load * stringer_span ^ 4 / (384 * timber_e_modulus * stringer_second_moment * pitch_cos ^ 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "stringer_deflection_limit",
+"expr": "stringer_span / 300"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Stringer left",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Stringer right"
+}
+],
+[
+"sketch.create",
+{
+"name": "Tread profile",
+"plane": "zx",
+"offset": "tread_y0"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Tread profile",
+"start": [
+"rise_height",
+"(nose_radius - nosing_length)"
+],
+"segments": [
+{
+"arc": [
+"(rise_height - tread_thickness)",
+"(nose_radius - nosing_length)"
+],
+"center": [
+"rise_height - nose_radius",
+"(nose_radius - nosing_length)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rise_height - tread_thickness)",
+"going_depth"
+]
+},
+{
+"line": [
+"rise_height",
+"going_depth"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Tread profile",
+"distance": "tread_length",
+"name": "Tread board"
+}
+],
+[
+"sketch.create",
+{
+"name": "Riser groove",
+"plane": "zx",
+"offset": "tread_y0 - 1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Riser groove",
+"from": [
+"(rise_height - tread_thickness) - 1 mm",
+"0 mm"
+],
+"to": [
+"(rise_height - tread_thickness) + riser_tongue",
+"riser_thickness"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Riser groove",
+"distance": "tread_length + 2 mm",
+"cut": "Tread board",
+"name": "Tread",
+"when": "closed_risers"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Tread",
+"count": "tread_count",
+"step": [
+"going_depth",
+"0 mm",
+"rise_height"
+],
+"name": "Treads"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bottom riser profile",
+"plane": "zx",
+"offset": "tread_y0"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom riser profile",
+"from": [
+"0 mm",
+"0 mm"
+],
+"to": [
+"(rise_height - tread_thickness) + riser_tongue",
+"riser_thickness"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bottom riser profile",
+"distance": "tread_length",
+"name": "Bottom riser",
+"when": "closed_risers"
+}
+],
+[
+"sketch.create",
+{
+"name": "Riser profile",
+"plane": "zx",
+"offset": "tread_y0"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Riser profile",
+"from": [
+"(rise_height - tread_thickness)",
+"going_depth"
+],
+"to": [
+"(rise_height - tread_thickness) + rise_height + riser_tongue",
+"going_depth + riser_thickness"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Riser profile",
+"distance": "tread_length",
+"name": "Riser seed",
+"when": "closed_risers"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Riser seed",
+"count": "tread_count",
+"step": [
+"going_depth",
+"0 mm",
+"rise_height"
+],
+"name": "Risers",
+"when": "closed_risers"
+}
+],
+[
+"sketch.create",
+{
+"name": "Tread wedge profile",
+"plane": "zx",
+"offset": "stringer_thickness - housing_depth"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Tread wedge profile",
+"closed": true,
+"points": [
+[
+"(rise_height - tread_thickness)",
+"(nose_radius - nosing_length)"
+],
+[
+"((rise_height - tread_thickness) - wedge_taper)",
+"going_depth"
+],
+[
+"(rise_height - tread_thickness)",
+"going_depth"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Tread wedge profile",
+"distance": "housing_depth",
+"name": "Tread wedge seed"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Tread wedge seed",
+"count": "tread_count",
+"step": [
+"going_depth",
+"0 mm",
+"rise_height"
+],
+"name": "Tread wedges left"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Tread wedges left",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Tread wedges right"
+}
+],
+[
+"sketch.create",
+{
+"name": "Riser wedge profile",
+"plane": "zx",
+"offset": "stringer_thickness - housing_depth"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Riser wedge profile",
+"closed": true,
+"points": [
+[
+"2 * rise_height - tread_thickness + riser_tongue",
+"going_depth + riser_thickness"
+],
+[
+"rise_height - tread_thickness",
+"going_depth + riser_thickness"
+],
+[
+"rise_height - tread_thickness",
+"going_depth + riser_thickness + wedge_taper"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Riser wedge profile",
+"distance": "housing_depth",
+"name": "Riser wedge seed",
+"when": "closed_risers"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Riser wedge seed",
+"count": "tread_count - 1",
+"step": [
+"going_depth",
+"0 mm",
+"rise_height"
+],
+"name": "Riser wedges left",
+"when": "closed_risers"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Riser wedges left",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Riser wedges right",
+"when": "closed_risers"
+}
+],
+[
+"sketch.create",
+{
+"name": "Landing nosing profile",
+"plane": "zx",
+"offset": "stringer_thickness"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Landing nosing profile",
+"start": [
+"floor_to_floor",
+"top_riser_x + (nose_radius - nosing_length)"
+],
+"segments": [
+{
+"arc": [
+"floor_to_floor - tread_thickness",
+"top_riser_x + (nose_radius - nosing_length)"
+],
+"center": [
+"floor_to_floor - nose_radius",
+"top_riser_x + (nose_radius - nosing_length)"
+],
+"clockwise": true
+},
+{
+"line": [
+"floor_to_floor - tread_thickness",
+"trimmer_x"
+]
+},
+{
+"line": [
+"floor_to_floor",
+"trimmer_x"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Landing nosing profile",
+"distance": "inner_width",
+"name": "Landing nosing board"
+}
+],
+[
+"sketch.create",
+{
+"name": "Landing groove",
+"plane": "zx",
+"offset": "stringer_thickness - 1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Landing groove",
+"from": [
+"floor_to_floor - tread_thickness - 1 mm",
+"top_riser_x"
+],
+"to": [
+"floor_to_floor - tread_thickness + riser_tongue",
+"trimmer_x"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Landing groove",
+"distance": "inner_width + 2 mm",
+"cut": "Landing nosing board",
+"name": "Landing nosing",
+"when": "closed_risers"
+}
+],
+[
+"variable.set",
+{
+"name": "handrail_height",
+"expr": "900 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_base_half",
+"expr": "18 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_half_width",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_shoulder",
+"expr": "18 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_section_height",
+"expr": "45 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_path_drop",
+"expr": "rail_section_height / pitch_cos"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_rail_offset",
+"expr": "80 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_extension",
+"expr": "if(building_rule == 2, 400 mm, 300 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_bend_radius",
+"expr": "120 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_bend_tangent",
+"expr": "rail_bend_radius * tan(pitch_angle / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_line_at_rail_start",
+"expr": "rise_height + handrail_height - rail_path_drop"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_rail_x0",
+"expr": "-nosing_length"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_rail_x1",
+"expr": "trimmer_x"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_rail_z0",
+"expr": "nose_line_at_rail_start"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_rail_z1",
+"expr": "nose_line_at_rail_start + pitch_slope * (wall_rail_x1 - wall_rail_x0)"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_return_radius",
+"expr": "50 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_x_start",
+"expr": "wall_rail_x0 - rail_bend_tangent - rail_extension"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_x_end",
+"expr": "wall_rail_x1 + rail_bend_tangent + rail_extension"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_top_z",
+"expr": "wall_rail_z1 + rail_section_height + 250 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "slab_side",
+"expr": "150 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_thickness",
+"expr": "120 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "slab_foot_x",
+"expr": "min(opening_edge_x, -nosing_length) - 300 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "context_foot_x",
+"expr": "min(slab_foot_x, rail_x_start - rail_return_radius - 150 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "slab_back_x",
+"expr": "trimmer_x + 700 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "lower_floor_thickness",
+"expr": "60 mm"
+}
+],
+[
+"sketch.create",
+{
+"name": "Upper floor plan",
+"plane": "xy",
+"offset": "floor_to_floor - floor_thickness"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Upper floor plan",
+"from": [
+"slab_foot_x",
+"0 mm"
+],
+"to": [
+"slab_back_x",
+"stair_width"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Upper floor plan",
+"distance": "floor_thickness",
+"name": "Upper floor slab"
+}
+],
+[
+"sketch.create",
+{
+"name": "Stairwell opening plan",
+"plane": "xy",
+"offset": "floor_to_floor - floor_thickness - 1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Stairwell opening plan",
+"from": [
+"trimmer_x - opening_length",
+"-1 mm"
+],
+"to": [
+"trimmer_x",
+"stair_width + 1 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Stairwell opening plan",
+"distance": "floor_thickness + 2 mm",
+"cut": "Upper floor slab",
+"name": "Upper floor"
+}
+],
+[
+"sketch.create",
+{
+"name": "Lower floor plan",
+"plane": "xy",
+"offset": "-lower_floor_thickness"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Lower floor plan",
+"from": [
+"context_foot_x",
+"-wall_thickness"
+],
+"to": [
+"slab_back_x",
+"stair_width + slab_side"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Lower floor plan",
+"distance": "lower_floor_thickness",
+"name": "Lower floor"
+}
+],
+[
+"sketch.create",
+{
+"name": "Wall rail path",
+"plane": "zx",
+"offset": "wall_rail_offset"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wall rail path",
+"start": [
+"wall_rail_z0",
+"rail_x_start"
+],
+"segments": [
+{
+"line": [
+"wall_rail_z0",
+"wall_rail_x0 - rail_bend_tangent"
+]
+},
+{
+"arc": [
+"wall_rail_z0 + rail_bend_tangent * pitch_sin",
+"wall_rail_x0 + rail_bend_tangent * pitch_cos"
+],
+"tangent": true
+},
+{
+"line": [
+"wall_rail_z1 - rail_bend_tangent * pitch_sin",
+"wall_rail_x1 - rail_bend_tangent * pitch_cos"
+],
+"tangent": true
+},
+{
+"arc": [
+"wall_rail_z1",
+"wall_rail_x1 + rail_bend_tangent"
+],
+"tangent": true
+},
+{
+"line": [
+"wall_rail_z1",
+"rail_x_end"
+],
+"tangent": true
+}
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Wall rail section",
+"plane": "yz",
+"offset": "rail_x_start"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wall rail section",
+"start": [
+"wall_rail_offset - rail_base_half",
+"wall_rail_z0"
+],
+"segments": [
+{
+"line": [
+"wall_rail_offset + rail_base_half",
+"wall_rail_z0"
+]
+},
+{
+"line": [
+"wall_rail_offset + rail_half_width",
+"wall_rail_z0 + rail_shoulder"
+]
+},
+{
+"arc": [
+"wall_rail_offset - rail_half_width",
+"wall_rail_z0 + rail_shoulder"
+],
+"through": [
+"wall_rail_offset",
+"wall_rail_z0 + rail_section_height"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.sweep",
+{
+"sketch": "Wall rail section",
+"path": "Wall rail path",
+"name": "Left wall rail"
+}
+],
+[
+"sketch.create",
+{
+"name": "Wall rail foot return path",
+"plane": "xy",
+"offset": "wall_rail_z0"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wall rail foot return path",
+"start": [
+"rail_x_start",
+"wall_rail_offset"
+],
+"segments": [
+{
+"arc": [
+"rail_x_start - rail_return_radius",
+"wall_rail_offset - rail_return_radius"
+],
+"center": [
+"rail_x_start",
+"wall_rail_offset - rail_return_radius"
+]
+},
+{
+"line": [
+"rail_x_start - rail_return_radius",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"feature.sweep",
+{
+"sketch": "Wall rail section",
+"path": "Wall rail foot return path",
+"name": "Left rail foot return"
+}
+],
+[
+"sketch.create",
+{
+"name": "Wall rail top section",
+"plane": "yz",
+"offset": "rail_x_end"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wall rail top section",
+"start": [
+"wall_rail_offset - rail_base_half",
+"wall_rail_z1"
+],
+"segments": [
+{
+"line": [
+"wall_rail_offset + rail_base_half",
+"wall_rail_z1"
+]
+},
+{
+"line": [
+"wall_rail_offset + rail_half_width",
+"wall_rail_z1 + rail_shoulder"
+]
+},
+{
+"arc": [
+"wall_rail_offset - rail_half_width",
+"wall_rail_z1 + rail_shoulder"
+],
+"through": [
+"wall_rail_offset",
+"wall_rail_z1 + rail_section_height"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Wall rail top return path",
+"plane": "xy",
+"offset": "wall_rail_z1"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wall rail top return path",
+"start": [
+"rail_x_end",
+"wall_rail_offset"
+],
+"segments": [
+{
+"arc": [
+"rail_x_end + rail_return_radius",
+"wall_rail_offset - rail_return_radius"
+],
+"center": [
+"rail_x_end",
+"wall_rail_offset - rail_return_radius"
+],
+"clockwise": true
+},
+{
+"line": [
+"rail_x_end + rail_return_radius",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"feature.sweep",
+{
+"sketch": "Wall rail top section",
+"path": "Wall rail top return path",
+"name": "Left rail top return"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left wall rail",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Right wall rail",
+"when": "handrail_style == 2"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left rail foot return",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Right rail foot return",
+"when": "handrail_style == 2"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left rail top return",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Right rail top return",
+"when": "handrail_style == 2"
+}
+],
+[
+"variable.set",
+{
+"name": "bracket_count",
+"expr": "ceil((wall_rail_x1 - wall_rail_x0) / 900 mm) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "bracket_inset",
+"expr": "60 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bracket_step_x",
+"expr": "(wall_rail_x1 - wall_rail_x0 - 2 * bracket_inset) / (bracket_count - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "bracket_x",
+"expr": "wall_rail_x0 + bracket_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "bracket_bar_radius",
+"expr": "6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bracket_z",
+"expr": "wall_rail_z0 + pitch_slope * bracket_inset - bracket_bar_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "rosette_radius",
+"expr": "28 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rosette_thickness",
+"expr": "6 mm"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bracket rosette",
+"plane": "zx",
+"offset": "0 mm"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bracket rosette",
+"center": [
+"bracket_z",
+"bracket_x"
+],
+"radius": "rosette_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bracket rosette",
+"distance": "rosette_thickness",
+"name": "Rosette seed"
+}
+],
+[
+"sketch.create",
+{
+"name": "Bracket bar",
+"plane": "zx",
+"offset": "rosette_thickness"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Bracket bar",
+"center": [
+"bracket_z",
+"bracket_x"
+],
+"radius": "bracket_bar_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Bracket bar",
+"distance": "wall_rail_offset + rail_base_half - rosette_thickness",
+"join": "Rosette seed",
+"name": "Bracket seed"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Bracket seed",
+"count": "bracket_count",
+"step": [
+"bracket_step_x",
+"0 mm",
+"bracket_step_x * pitch_slope"
+],
+"name": "Left rail brackets"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left rail brackets",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"half_width",
+"0 mm"
+],
+"keep": true,
+"name": "Right rail brackets",
+"when": "handrail_style == 2"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_chamfer",
+"expr": "12 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_arris",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "balustrade_y",
+"expr": "stair_width - stringer_thickness / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_foot_x",
+"expr": "stringer_toe_x - newel_size / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_top_x",
+"expr": "trimmer_x + newel_size / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_over_rail",
+"expr": "120 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_line_z_foot_newel",
+"expr": "pitch_slope * (newel_foot_x + nosing_length) + rise_height"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_line_z_top_newel",
+"expr": "pitch_slope * (newel_top_x + nosing_length) + rise_height"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_foot_height",
+"expr": "nose_line_z_foot_newel + handrail_height + newel_over_rail"
+}
+],
+[
+"variable.set",
+{
+"name": "newel_top_height",
+"expr": "nose_line_z_top_newel + handrail_height + newel_over_rail - floor_to_floor"
+}
+],
+[
+"sketch.create",
+{
+"name": "Foot newel plan",
+"plane": "xy"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Foot newel plan",
+"from": [
+"newel_foot_x - newel_size / 2",
+"balustrade_y - newel_size / 2"
+],
+"to": [
+"newel_foot_x + newel_size / 2",
+"balustrade_y + newel_size / 2"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Foot newel plan",
+"distance": "newel_foot_height",
+"name": "Foot newel post",
+"when": "handrail_style == 3"
+}
+],
+[
+"feature.chamfer",
+{
+"name": "Foot newel post capped",
+"distance": "newel_chamfer",
+"when": "handrail_style == 3",
+"edges": [
+[
+"F61:side(e5)",
+"F61:endCap(e5,e6,e7,e8)"
+],
+[
+"F61:side(e6)",
+"F61:endCap(e5,e6,e7,e8)"
+],
+[
+"F61:side(e7)",
+"F61:endCap(e5,e6,e7,e8)"
+],
+[
+"F61:side(e8)",
+"F61:endCap(e5,e6,e7,e8)"
+]
+]
+}
+],
+[
+"feature.chamfer",
+{
+"name": "Foot newel",
+"distance": "newel_arris",
+"when": "handrail_style == 3",
+"edges": [
+[
+"F61:side(e5)",
+"F61:side(e6)"
+],
+[
+"F61:side(e6)",
+"F61:side(e7)"
+],
+[
+"F61:side(e7)",
+"F61:side(e8)"
+],
+[
+"F61:side(e8)",
+"F61:side(e5)"
+]
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Top newel plan",
+"plane": "xy",
+"offset": "floor_to_floor"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top newel plan",
+"from": [
+"newel_top_x - newel_size / 2",
+"balustrade_y - newel_size / 2"
+],
+"to": [
+"newel_top_x + newel_size / 2",
+"balustrade_y + newel_size / 2"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Top newel plan",
+"distance": "newel_top_height",
+"name": "Top newel post",
+"when": "handrail_style == 3"
+}
+],
+[
+"feature.chamfer",
+{
+"name": "Top newel post capped",
+"distance": "newel_chamfer",
+"when": "handrail_style == 3",
+"edges": [
+[
+"F65:side(e5)",
+"F65:endCap(e5,e6,e7,e8)"
+],
+[
+"F65:side(e6)",
+"F65:endCap(e5,e6,e7,e8)"
+],
+[
+"F65:side(e7)",
+"F65:endCap(e5,e6,e7,e8)"
+],
+[
+"F65:side(e8)",
+"F65:endCap(e5,e6,e7,e8)"
+]
+]
+}
+],
+[
+"feature.chamfer",
+{
+"name": "Top newel",
+"distance": "newel_arris",
+"when": "handrail_style == 3",
+"edges": [
+[
+"F65:side(e5)",
+"F65:side(e6)"
+],
+[
+"F65:side(e6)",
+"F65:side(e7)"
+],
+[
+"F65:side(e7)",
+"F65:side(e8)"
+],
+[
+"F65:side(e8)",
+"F65:side(e5)"
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "rail_start_x",
+"expr": "newel_foot_x"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_end_x",
+"expr": "newel_top_x"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_start_z",
+"expr": "pitch_slope * (rail_start_x + nosing_length) + rise_height + handrail_height - rail_path_drop"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_end_z",
+"expr": "pitch_slope * (rail_end_x + nosing_length) + rise_height + handrail_height - rail_path_drop"
+}
+],
+[
+"datum.plane",
+{
+"name": "Balustrade rail section plane",
+"through": [
+[
+"rail_start_x",
+"balustrade_y",
+"rail_start_z"
+],
+[
+"rail_start_x",
+"balustrade_y + 1 mm",
+"rail_start_z"
+],
+[
+"rail_start_x - pitch_sin * 1 mm",
+"balustrade_y",
+"rail_start_z + pitch_cos * 1 mm"
+]
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Balustrade rail section",
+"plane": "Balustrade rail section plane"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Balustrade rail section",
+"start": [
+"-rail_base_half",
+"0 mm"
+],
+"segments": [
+{
+"line": [
+"rail_base_half",
+"0 mm"
+]
+},
+{
+"line": [
+"rail_half_width",
+"rail_shoulder"
+]
+},
+{
+"arc": [
+"-rail_half_width",
+"rail_shoulder"
+],
+"through": [
+"0 mm",
+"rail_section_height"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Balustrade rail path",
+"plane": "zx",
+"offset": "balustrade_y"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Balustrade rail path",
+"points": [
+[
+"rail_start_z",
+"rail_start_x"
+],
+[
+"rail_end_z",
+"rail_end_x"
+]
+]
+}
+],
+[
+"feature.sweep",
+{
+"sketch": "Balustrade rail section",
+"path": "Balustrade rail path",
+"name": "Balustrade rail",
+"when": "handrail_style == 3"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_size",
+"expr": "30 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_gap_max",
+"expr": "100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_first_x",
+"expr": "stringer_toe_x + 90 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_last_x",
+"expr": "trimmer_x - 60 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_count",
+"expr": "ceil((baluster_last_x - baluster_first_x) / (baluster_size + baluster_gap_max)) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_step_x",
+"expr": "(baluster_last_x - baluster_first_x) / (baluster_count - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_tenon",
+"expr": "8 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "baluster_arris",
+"expr": "3 mm"
+}
+],
+[
+"sketch.create",
+{
+"name": "Baluster profile",
+"plane": "zx",
+"offset": "balustrade_y"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Baluster profile",
+"closed": true,
+"points": [
+[
+"pitch_slope * (baluster_first_x - baluster_size / 2 + nosing_length) + rise_height + string_top_offset",
+"baluster_first_x - baluster_size / 2"
+],
+[
+"pitch_slope * (baluster_first_x + baluster_size / 2 + nosing_length) + rise_height + string_top_offset",
+"baluster_first_x + baluster_size / 2"
+],
+[
+"pitch_slope * (baluster_first_x + baluster_size / 2 + nosing_length) + rise_height + handrail_height - rail_path_drop + baluster_tenon",
+"baluster_first_x + baluster_size / 2"
+],
+[
+"pitch_slope * (baluster_first_x - baluster_size / 2 + nosing_length) + rise_height + handrail_height - rail_path_drop + baluster_tenon",
+"baluster_first_x - baluster_size / 2"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Baluster profile",
+"distance": "baluster_size",
+"symmetric": true,
+"name": "Baluster seed",
+"when": "handrail_style == 3"
+}
+],
+[
+"feature.chamfer",
+{
+"name": "Baluster",
+"distance": "baluster_arris",
+"when": "handrail_style == 3",
+"edges": [
+[
+"F73:side(e6)",
+"F73:startCap(e5,e6,e7,e8)"
+],
+[
+"F73:side(e6)",
+"F73:endCap(e5,e6,e7,e8)"
+],
+[
+"F73:side(e8)",
+"F73:startCap(e5,e6,e7,e8)"
+],
+[
+"F73:side(e8)",
+"F73:endCap(e5,e6,e7,e8)"
+]
+]
+}
+],
+[
+"feature.pattern",
+{
+"source": "Baluster",
+"count": "baluster_count",
+"step": [
+"baluster_step_x",
+"0 mm",
+"baluster_step_x * pitch_slope"
+],
+"name": "Balusters",
+"when": "handrail_style == 3"
+}
+],
+[
+"datum.plane",
+{
+"name": "CNC layout plane",
+"through": [
+[
+"0 mm",
+"0 mm",
+"0 mm"
+],
+[
+"1 mm * pitch_cos",
+"0 mm",
+"1 mm * pitch_sin"
+],
+[
+"-1 mm * pitch_sin",
+"0 mm",
+"1 mm * pitch_cos"
+]
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "CNC stringer layout",
+"plane": "CNC layout plane"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "CNC stringer layout",
+"closed": true,
+"points": [
+[
+"(stringer_toe_x) * pitch_cos + (0 mm) * pitch_sin",
+"(0 mm) * pitch_cos - (stringer_toe_x) * pitch_sin"
+],
+[
+"(stringer_heel_x) * pitch_cos + (0 mm) * pitch_sin",
+"(0 mm) * pitch_cos - (stringer_heel_x) * pitch_sin"
+],
+[
+"(trimmer_x) * pitch_cos + (stringer_low_z_at_top) * pitch_sin",
+"(stringer_low_z_at_top) * pitch_cos - (trimmer_x) * pitch_sin"
+],
+[
+"(trimmer_x) * pitch_cos + (floor_to_floor) * pitch_sin",
+"(floor_to_floor) * pitch_cos - (trimmer_x) * pitch_sin"
+],
+[
+"(stringer_flat_x) * pitch_cos + (floor_to_floor) * pitch_sin",
+"(floor_to_floor) * pitch_cos - (stringer_flat_x) * pitch_sin"
+],
+[
+"(stringer_toe_x) * pitch_cos + (stringer_toe_top_z) * pitch_sin",
+"(stringer_toe_top_z) * pitch_cos - (stringer_toe_x) * pitch_sin"
+]
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "CNC stringer layout",
+"start": [
+"((nose_radius - nosing_length)) * pitch_cos + (rise_height) * pitch_sin",
+"(rise_height) * pitch_cos - ((nose_radius - nosing_length)) * pitch_sin"
+],
+"segments": [
+{
+"arc": [
+"((nose_radius - nosing_length)) * pitch_cos + ((rise_height - tread_thickness)) * pitch_sin",
+"((rise_height - tread_thickness)) * pitch_cos - ((nose_radius - nosing_length)) * pitch_sin"
+],
+"center": [
+"((nose_radius - nosing_length)) * pitch_cos + (rise_height - nose_radius) * pitch_sin",
+"(rise_height - nose_radius) * pitch_cos - ((nose_radius - nosing_length)) * pitch_sin"
+]
+},
+{
+"line": [
+"(going_depth) * pitch_cos + (((rise_height - tread_thickness) - wedge_taper)) * pitch_sin",
+"(((rise_height - tread_thickness) - wedge_taper)) * pitch_cos - (going_depth) * pitch_sin"
+]
+},
+{
+"arc": [
+"(going_depth + router_radius) * pitch_cos + (((rise_height - tread_thickness) - wedge_taper) + router_radius) * pitch_sin",
+"(((rise_height - tread_thickness) - wedge_taper) + router_radius) * pitch_cos - (going_depth + router_radius) * pitch_sin"
+],
+"center": [
+"(going_depth) * pitch_cos + (((rise_height - tread_thickness) - wedge_taper) + router_radius) * pitch_sin",
+"(((rise_height - tread_thickness) - wedge_taper) + router_radius) * pitch_cos - (going_depth) * pitch_sin"
+]
+},
+{
+"line": [
+"(going_depth + router_radius) * pitch_cos + (rise_height - router_radius) * pitch_sin",
+"(rise_height - router_radius) * pitch_cos - (going_depth + router_radius) * pitch_sin"
+]
+},
+{
+"arc": [
+"(going_depth) * pitch_cos + (rise_height) * pitch_sin",
+"(rise_height) * pitch_cos - (going_depth) * pitch_sin"
+],
+"center": [
+"(going_depth) * pitch_cos + (rise_height - router_radius) * pitch_sin",
+"(rise_height - router_radius) * pitch_cos - (going_depth) * pitch_sin"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "CNC stringer layout",
+"entities": [
+"e16",
+"e18",
+"e21",
+"e23",
+"e26",
+"e27"
+],
+"count": "tread_count",
+"step": [
+"going_depth * pitch_cos + rise_height * pitch_sin",
+"rise_height * pitch_cos - going_depth * pitch_sin"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "CNC stringer layout",
+"start": [
+"(going_depth) * pitch_cos + ((2 * rise_height - tread_thickness + riser_tongue)) * pitch_sin",
+"((2 * rise_height - tread_thickness + riser_tongue)) * pitch_cos - (going_depth) * pitch_sin"
+],
+"segments": [
+{
+"line": [
+"(going_depth) * pitch_cos + ((rise_height - tread_thickness)) * pitch_sin",
+"((rise_height - tread_thickness)) * pitch_cos - (going_depth) * pitch_sin"
+]
+},
+{
+"arc": [
+"(going_depth + router_radius) * pitch_cos + (((rise_height - tread_thickness) - router_radius)) * pitch_sin",
+"(((rise_height - tread_thickness) - router_radius)) * pitch_cos - (going_depth + router_radius) * pitch_sin"
+],
+"center": [
+"(going_depth + router_radius) * pitch_cos + ((rise_height - tread_thickness)) * pitch_sin",
+"((rise_height - tread_thickness)) * pitch_cos - (going_depth + router_radius) * pitch_sin"
+]
+},
+{
+"line": [
+"((going_depth + riser_thickness + wedge_taper) - router_radius) * pitch_cos + (((rise_height - tread_thickness) - router_radius)) * pitch_sin",
+"(((rise_height - tread_thickness) - router_radius)) * pitch_cos - ((going_depth + riser_thickness + wedge_taper) - router_radius) * pitch_sin"
+]
+},
+{
+"arc": [
+"((going_depth + riser_thickness + wedge_taper)) * pitch_cos + ((rise_height - tread_thickness)) * pitch_sin",
+"((rise_height - tread_thickness)) * pitch_cos - ((going_depth + riser_thickness + wedge_taper)) * pitch_sin"
+],
+"center": [
+"((going_depth + riser_thickness + wedge_taper) - router_radius) * pitch_cos + ((rise_height - tread_thickness)) * pitch_sin",
+"((rise_height - tread_thickness)) * pitch_cos - ((going_depth + riser_thickness + wedge_taper) - router_radius) * pitch_sin"
+]
+},
+{
+"line": [
+"(going_depth + riser_thickness) * pitch_cos + ((2 * rise_height - tread_thickness + riser_tongue)) * pitch_sin",
+"((2 * rise_height - tread_thickness + riser_tongue)) * pitch_cos - (going_depth + riser_thickness) * pitch_sin"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "CNC stringer layout",
+"entities": [
+"e30",
+"e33",
+"e35",
+"e38",
+"e40",
+"e41"
+],
+"count": "tread_count - 1",
+"step": [
+"going_depth * pitch_cos + rise_height * pitch_sin",
+"rise_height * pitch_cos - going_depth * pitch_sin"
+]
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "CNC stringer layout",
+"closed": true,
+"points": [
+[
+"(0 mm) * pitch_cos + (0 mm) * pitch_sin",
+"(0 mm) * pitch_cos - (0 mm) * pitch_sin"
+],
+[
+"(riser_thickness) * pitch_cos + (0 mm) * pitch_sin",
+"(0 mm) * pitch_cos - (riser_thickness) * pitch_sin"
+],
+[
+"(riser_thickness) * pitch_cos + ((rise_height - tread_thickness + riser_tongue)) * pitch_sin",
+"((rise_height - tread_thickness + riser_tongue)) * pitch_cos - (riser_thickness) * pitch_sin"
+],
+[
+"(0 mm) * pitch_cos + ((rise_height - tread_thickness + riser_tongue)) * pitch_sin",
+"((rise_height - tread_thickness + riser_tongue)) * pitch_cos - (0 mm) * pitch_sin"
+]
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "CNC stringer layout",
+"start": [
+"(top_riser_x) * pitch_cos + ((floor_to_floor - tread_thickness + riser_tongue)) * pitch_sin",
+"((floor_to_floor - tread_thickness + riser_tongue)) * pitch_cos - (top_riser_x) * pitch_sin"
+],
+"segments": [
+{
+"line": [
+"(top_riser_x) * pitch_cos + ((floor_to_floor - rise_height - tread_thickness)) * pitch_sin",
+"((floor_to_floor - rise_height - tread_thickness)) * pitch_cos - (top_riser_x) * pitch_sin"
+]
+},
+{
+"arc": [
+"(top_riser_x + router_radius) * pitch_cos + (((floor_to_floor - rise_height - tread_thickness) - router_radius)) * pitch_sin",
+"(((floor_to_floor - rise_height - tread_thickness) - router_radius)) * pitch_cos - (top_riser_x + router_radius) * pitch_sin"
+],
+"center": [
+"(top_riser_x + router_radius) * pitch_cos + ((floor_to_floor - rise_height - tread_thickness)) * pitch_sin",
+"((floor_to_floor - rise_height - tread_thickness)) * pitch_cos - (top_riser_x + router_radius) * pitch_sin"
+]
+},
+{
+"line": [
+"(trimmer_x) * pitch_cos + (((floor_to_floor - rise_height - tread_thickness) - router_radius)) * pitch_sin",
+"(((floor_to_floor - rise_height - tread_thickness) - router_radius)) * pitch_cos - (trimmer_x) * pitch_sin"
+]
+},
+{
+"line": [
+"(trimmer_x) * pitch_cos + ((floor_to_floor - tread_thickness + riser_tongue)) * pitch_sin",
+"((floor_to_floor - tread_thickness + riser_tongue)) * pitch_cos - (trimmer_x) * pitch_sin"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Wall elevation",
+"plane": "zx",
+"offset": "-wall_thickness"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Wall elevation",
+"from": [
+"0 mm",
+"context_foot_x"
+],
+"to": [
+"wall_top_z",
+"slab_back_x"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Wall elevation",
+"distance": "wall_thickness",
+"name": "Left wall"
+}
+],
+[
+"body.appearance",
+{
+"body": "Stringer left",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.appearance",
+{
+"body": "Stringer right",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.appearance",
+{
+"body": "Riser wedges left",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.appearance",
+{
+"body": "Riser wedges right",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.material",
+{
+"body": "Stringer left",
+"name": "Painted pine C24",
+"density": 420
+}
+],
+[
+"body.material",
+{
+"body": "Stringer right",
+"name": "Painted pine C24",
+"density": 420
+}
+],
+[
+"body.appearance",
+{
+"body": "Treads",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 11,
+"axis": [
+0.05,
+1,
+0.02
+],
+"origin": [
+0,
+-1500,
+900
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Treads",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Landing nosing",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 11,
+"axis": [
+0.05,
+1,
+0.02
+],
+"origin": [
+0,
+-1500,
+900
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Landing nosing",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Left wall rail",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+-400,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Left wall rail",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Right rail top return",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+-400,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Right rail top return",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Right rail foot return",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+-400,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Right rail foot return",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Left rail top return",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+-400,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Left rail top return",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Left rail foot return",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+-400,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Left rail foot return",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Balustrade rail",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+1500,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Balustrade rail",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Foot newel",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 9,
+"axis": [
+0.02,
+0.04,
+1
+],
+"origin": [
+-600,
+900,
+0
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Foot newel",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Top newel",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 9,
+"axis": [
+0.02,
+0.04,
+1
+],
+"origin": [
+4300,
+900,
+0
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Top newel",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Right wall rail",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 8,
+"axis": [
+0.8,
+0,
+0.6
+],
+"origin": [
+0,
+2200,
+2000
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Right wall rail",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Tread wedges left",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 4,
+"axis": [
+1,
+0,
+0
+],
+"origin": [
+0,
+0,
+0
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Tread wedges left",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Tread wedges right",
+"color": "#c0a07a",
+"metallic": 0.0,
+"roughness": 0.55,
+"clearcoat": 0.12,
+"clearcoatRoughness": 0.45,
+"pattern": {
+"kind": "wood",
+"colors": [
+"#cbab83",
+"#b8966e",
+"#a07e58"
+],
+"grain": 0.55,
+"rays": 0.12,
+"distortion": 0.35,
+"scale": 4,
+"axis": [
+1,
+0,
+0
+],
+"origin": [
+0,
+0,
+0
+]
+}
+}
+],
+[
+"body.material",
+{
+"body": "Tread wedges right",
+"name": "European oak",
+"density": 700
+}
+],
+[
+"body.appearance",
+{
+"body": "Bottom riser",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.appearance",
+{
+"body": "Risers",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.material",
+{
+"body": "Bottom riser",
+"name": "Painted plywood",
+"density": 600
+}
+],
+[
+"body.material",
+{
+"body": "Risers",
+"name": "Painted plywood",
+"density": 600
+}
+],
+[
+"body.appearance",
+{
+"body": "Balusters",
+"color": "#ece8df",
+"metallic": 0.0,
+"roughness": 0.38,
+"clearcoat": 0.0
+}
+],
+[
+"body.material",
+{
+"body": "Balusters",
+"name": "Painted beech",
+"density": 650
+}
+],
+[
+"body.appearance",
+{
+"body": "Left rail brackets",
+"color": "#6f7276",
+"metallic": 0.8,
+"roughness": 0.45
+}
+],
+[
+"body.material",
+{
+"body": "Left rail brackets",
+"name": "Steel",
+"density": 7850
+}
+],
+[
+"body.appearance",
+{
+"body": "Right rail brackets",
+"color": "#6f7276",
+"metallic": 0.8,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Upper floor",
+"color": "#c6c0b3",
+"roughness": 0.85
+}
+],
+[
+"body.appearance",
+{
+"body": "Lower floor",
+"color": "#b9b2a4",
+"roughness": 0.9
+}
+],
+[
+"body.appearance",
+{
+"body": "Left wall",
+"color": "#d2ccbf",
+"roughness": 0.92
+}
+],
+[
+"set.define",
+{
+"name": "CNC stringers",
+"kind": "face",
+"where": {
+"any": [
+{
+"in": "Stringer left",
+"normal": {
+"along": "y"
+},
+"surface": "plane",
+"area": {
+"min": 200000
+}
+},
+{
+"in": "Stringer right",
+"normal": {
+"along": "-y"
+},
+"surface": "plane",
+"area": {
+"min": 200000
+}
+}
+]
+}
+}
+],
+[
+"set.define",
+{
+"name": "CNC tread sections",
+"kind": "face",
+"where": {
+"any": [
+{
+"copyOf": "Treads",
+"instance": 0,
+"normal": {
+"along": "-y"
+},
+"surface": "plane"
+},
+{
+"in": "Landing nosing",
+"normal": {
+"along": "-y"
+},
+"surface": "plane"
+}
+]
+}
+}
+],
+[
+"set.define",
+{
+"name": "Stair timber",
+"kind": "body",
+"where": {
+"any": [
+{
+"name": "Stringer left"
+},
+{
+"name": "Stringer right"
+},
+{
+"name": "Treads"
+},
+{
+"name": "Risers"
+},
+{
+"name": "Bottom riser"
+},
+{
+"name": "Landing nosing"
+}
+]
+}
+}
+],
+[
+"set.define",
+{
+"name": "Stair footprint",
+"kind": "body",
+"where": {
+"any": [
+{
+"name": "Stringer left"
+},
+{
+"name": "Foot newel"
+}
+]
+}
+}
+],
+[
+"variable.measure",
+{
+"name": "treads_top_z",
+"measure": "boxMax",
+"of": "Treads",
+"axis": "z",
+"label": "Top of the highest tread",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "treads_extent_x",
+"measure": "extent",
+"of": "Treads",
+"axis": "x",
+"label": "Length of the tread pattern along the stair",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "slab_soffit_z",
+"measure": "boxMin",
+"of": "Upper floor",
+"axis": "z",
+"label": "Underside of the upper floor",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "stair_timber_mass",
+"measure": "mass",
+"of": {
+"kind": "body",
+"where": {
+"set": "Stair timber"
+}
+},
+"label": "Mass of stringers, treads and risers",
+"unit": "kg"
+}
+],
+[
+"variable.measure",
+{
+"name": "stair_footprint_x",
+"measure": "extent",
+"of": {
+"kind": "body",
+"where": {
+"set": "Stair footprint"
+}
+},
+"axis": "x",
+"label": "Length of the stair on the floor, measured",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "stringer_end_x",
+"measure": "boxMax",
+"of": "Stringer left",
+"axis": "x",
+"label": "End of the stringer at the trimmer",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "slab_volume",
+"measure": "volume",
+"of": "Upper floor",
+"label": "Volume of the upper floor"
+}
+],
+[
+"variable.measure",
+{
+"name": "rail_top_z",
+"measure": "boxMax",
+"of": "Left wall rail",
+"axis": "z",
+"label": "Top of the wall rail",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "rail_level_centroid",
+"measure": "sectionCentroid",
+"of": "Left wall rail",
+"plane": "yz",
+"offset": "wall_rail_x1 + rail_bend_tangent + rail_extension / 2",
+"axis": "z",
+"label": "Centroid of the wall rail in its level part",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "rail_pitched_centroid",
+"measure": "sectionCentroid",
+"of": "Left wall rail",
+"plane": "yz",
+"offset": "(wall_rail_x0 + wall_rail_x1) / 2",
+"axis": "z",
+"label": "Centroid of the wall rail at mid-flight",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_rise",
+"expr": "treads_top_z / tread_count",
+"label": "Rise measured on the model",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_going",
+"expr": "(treads_extent_x - nosing_length) / tread_count",
+"label": "Going measured on the model",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_opening",
+"expr": "(slab_back_x - slab_foot_x) - slab_volume / (floor_thickness * stair_width)",
+"label": "Opening length, from the measured floor",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_edge_x",
+"expr": "stringer_end_x - measured_opening",
+"label": "Edge of the opening, measured",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_nose_at_edge",
+"expr": "measured_rise * (measured_edge_x + nosing_length) / measured_going + measured_rise",
+"label": "Nose line under the edge of the opening",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_headroom",
+"expr": "if(measured_edge_x <= -nosing_length + 0.1 mm, rule_headroom, slab_soffit_z - measured_nose_at_edge)",
+"label": "Head height at the edge of the opening (the rule value when no floor hangs over the stair)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "measured_pitch_cos",
+"expr": "measured_going / sqrt(measured_rise ^ 2 + measured_going ^ 2)",
+"label": "Cosine of the pitch, measured"
+}
+],
+[
+"variable.output",
+{
+"name": "rail_level_v",
+"expr": "rail_level_centroid - (rail_top_z - rail_section_height)",
+"label": "Height of the rail section centroid",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "rail_height_pitched",
+"expr": "rail_pitched_centroid - rail_level_v / measured_pitch_cos + rail_section_height / measured_pitch_cos - (measured_rise * ((wall_rail_x0 + wall_rail_x1) / 2 + nosing_length) / measured_going + measured_rise)",
+"label": "Top of the rail above the noses, mid-flight",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_risers",
+"expr": "riser_count",
+"label": "Risers"
+}
+],
+[
+"variable.output",
+{
+"name": "output_treads",
+"expr": "tread_count",
+"label": "Treads"
+}
+],
+[
+"variable.output",
+{
+"name": "output_blondel",
+"expr": "2 * measured_rise + measured_going",
+"label": "Step rule: 2 x rise + going",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_pitch",
+"expr": "pitch_angle",
+"label": "Pitch",
+"unit": "deg"
+}
+],
+[
+"variable.output",
+{
+"name": "output_run",
+"expr": "stair_footprint_x",
+"label": "Length of the stair on the floor (of the run you have)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_board",
+"expr": "stringer_board_width",
+"label": "Stringer board width needed",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_stringer_length",
+"expr": "(trimmer_x - stringer_toe_x) / pitch_cos + stringer_board_width",
+"label": "Stringer board length needed",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_tread_length",
+"expr": "tread_length",
+"label": "Tread length (with both housings)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_tread_depth",
+"expr": "going_depth + nosing_length",
+"label": "Tread depth (going + nosing)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_headroom",
+"expr": "measured_headroom",
+"label": "Head height at the edge of the opening (the rule's value when no floor hangs over the stair)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_opening_needed",
+"expr": "opening_min",
+"label": "Smallest opening for the head height",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_tread_stress",
+"expr": "tread_stress",
+"label": "Tread bending stress, 3 kN point load (orientation only)",
+"unit": "MPa"
+}
+],
+[
+"variable.output",
+{
+"name": "output_tread_deflection",
+"expr": "tread_deflection",
+"label": "Tread deflection, 3 kN point load (orientation only)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_stringer_deflection",
+"expr": "stringer_deflection",
+"label": "Stringer deflection, full imposed load (orientation only)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_open_gap",
+"expr": "rise_height - tread_thickness",
+"label": "Gap between treads if risers are left out",
+"unit": "mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Tread count: one for every rise but the last",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Treads",
+"normal": {
+"along": "z"
+},
+"surface": "plane",
+"area": {
+"min": 10000
+}
+}
+},
+"eq": "tread_count"
+}
+],
+[
+"assert.add",
+{
+"name": "Equal rises: top tread plus one rise meets the upper floor",
+"measure": "value",
+"expr": "treads_top_z + floor_to_floor / riser_count",
+"eq": "floor_to_floor",
+"tol": 0.05
+}
+],
+[
+"assert.add",
+{
+"name": "Rise within the rule",
+"measure": "value",
+"expr": "measured_rise",
+"max": "rule_rise_max",
+"min": "rise_comfort_floor"
+}
+],
+[
+"assert.add",
+{
+"name": "Going within the rule",
+"measure": "value",
+"expr": "measured_going",
+"min": "rule_going_min"
+}
+],
+[
+"assert.add",
+{
+"name": "Step rule: 2 x rise + going within the range",
+"measure": "value",
+"expr": "2 * measured_rise + measured_going",
+"min": "rule_blondel_min",
+"max": "rule_blondel_max"
+}
+],
+[
+"assert.add",
+{
+"name": "Stair fits the run you have, measured on the floor",
+"measure": "extent",
+"of": {
+"kind": "body",
+"where": {
+"set": "Stair footprint"
+}
+},
+"axis": "x",
+"max": "available_run + 0.05 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Stair width at the rule's minimum",
+"measure": "boxMax",
+"of": "Stringer right",
+"axis": "y",
+"min": "rule_width_min"
+}
+],
+[
+"assert.add",
+{
+"name": "Head height above the stair at the edge of the opening",
+"measure": "value",
+"expr": "measured_headroom",
+"min": "rule_headroom - 0.1 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Landing nosing flush with the upper floor",
+"measure": "boxMax",
+"of": "Landing nosing",
+"axis": "z",
+"eq": "floor_to_floor",
+"tol": 0.05
+}
+],
+[
+"assert.add",
+{
+"name": "Tread volume matches the closed form",
+"measure": "volume",
+"of": "Treads",
+"eq": "tread_count * tread_length * ((going_depth + nosing_length) * tread_thickness - nose_radius ^ 2 * (2 - pi / 2) - closed_risers * riser_thickness * riser_tongue)",
+"tol": 2000
+}
+],
+[
+"assert.add",
+{
+"name": "Stringer left stands on the floor and meets the top",
+"measure": "extent",
+"of": "Stringer left",
+"axis": "z",
+"eq": "floor_to_floor",
+"tol": 0.05
+}
+],
+[
+"assert.add",
+{
+"name": "Treads sit in the housings without overlapping the stringers",
+"measure": "overlap",
+"of": [
+"Stringer left",
+"Stringer right"
+],
+"to": [
+"Treads"
+],
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "Risers and wedges sit in the housings, clear of the stringers and the upper floor",
+"measure": "overlap",
+"of": [
+"Stringer left",
+"Stringer right",
+"Upper floor"
+],
+"to": [
+"Bottom riser",
+"Risers",
+"Riser wedges left",
+"Riser wedges right"
+],
+"when": "closed_risers",
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "Housing corners are at least the router radius",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Stringer left",
+"surface": "cylinder",
+"radius": {
+"max": "router_radius - 0.01 mm"
+}
+}
+},
+"eq": "0"
+}
+],
+[
+"assert.add",
+{
+"name": "Treads reach into the housings, leaving the stringer web",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Stringer left",
+"normal": {
+"along": "-y"
+},
+"surface": "plane"
+}
+},
+"to": "Treads",
+"eq": "tread_y0",
+"tol": 0.05
+}
+],
+[
+"assert.add",
+{
+"name": "Tread stress under a 3 kN point load within the limit (orientation only)",
+"measure": "value",
+"expr": "tread_stress",
+"max": "tread_stress_limit"
+}
+],
+[
+"assert.add",
+{
+"name": "Stringer deflection under full imposed load within span / 300 (orientation only)",
+"measure": "value",
+"expr": "stringer_deflection",
+"max": "stringer_deflection_limit"
+}
+],
+[
+"assert.add",
+{
+"name": "Stringer board stays under the width that can be bought",
+"measure": "value",
+"expr": "stringer_board_width",
+"max": "stringer_board_cap + 1 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Wall rail top 0.8 to 1 m above the noses at mid-flight",
+"measure": "value",
+"expr": "rail_height_pitched",
+"min": "800 mm",
+"max": "1000 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Wall rail foot end returns to the wall",
+"measure": "distance",
+"from": "Left rail foot return",
+"to": "Left wall",
+"eq": "0",
+"tol": 0.05
+}
+],
+[
+"assert.add",
+{
+"name": "Wall rail top end returns to the wall",
+"measure": "distance",
+"from": "Left rail top return",
+"to": "Left wall",
+"eq": "0",
+"tol": 0.05
+}
+],
+[
+"assert.add",
+{
+"name": "Wall rail runs on past the first nose by the extension",
+"measure": "boxMin",
+"of": "Left wall rail",
+"axis": "x",
+"max": "-nosing_length - rail_extension"
+}
+],
+[
+"assert.add",
+{
+"name": "Wall rail runs on past the top of the flight by the extension",
+"measure": "boxMax",
+"of": "Left wall rail",
+"axis": "x",
+"min": "trimmer_x + rail_extension"
+}
+],
+[
+"assert.add",
+{
+"name": "Balustrade rail top 0.8 to 1 m above the noses",
+"measure": "boxMax",
+"of": "Balustrade rail",
+"axis": "z",
+"min": "800 mm + measured_rise * (rail_end_x - rail_section_height * pitch_sin + nosing_length) / measured_going + measured_rise",
+"max": "1000 mm + measured_rise * (rail_end_x - rail_section_height * pitch_sin + nosing_length) / measured_going + measured_rise",
+"when": "handrail_style == 3"
+}
+],
+[
+"assert.add",
+{
+"name": "At least 1 m free between the handrails (Flemish art. 20)",
+"measure": "distance",
+"from": "Left wall rail",
+"to": "Right wall rail",
+"min": "1000 mm",
+"when": "building_rule == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Treads within the longest flight of the rule",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Treads",
+"normal": {
+"along": "z"
+},
+"surface": "plane",
+"area": {
+"min": 10000
+}
+}
+},
+"max": "rule_treads_max"
+}
+],
+[
+"assert.add",
+{
+"name": "Tread surface at the climbing line (Bbl table 4.26)",
+"measure": "value",
+"expr": "treads_extent_x - (tread_count - 1) * measured_going",
+"min": "rule_tread_surface_min",
+"when": "rule_tread_surface_min > 0 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "The opening in the floor is the one asked for",
+"measure": "value",
+"expr": "measured_opening",
+"eq": "opening_length",
+"tol": 0.1
+}
+],
+[
+"assert.add",
+{
+"name": "Stringers and treads clear of the upper floor",
+"measure": "overlap",
+"of": [
+"Stringer left",
+"Stringer right",
+"Treads",
+"Landing nosing"
+],
+"to": [
+"Upper floor"
+],
+"is": false
+}
+],
+[
+"variable.publish",
+{
+"name": "floor_to_floor",
+"label": "Floor to floor height",
+"description": "From the finished lower floor to the finished upper floor, measured in the stairwell. One flight bridges at most 4 m (Bbl); the Flemish rule allows at most 17 treads without a landing, so at most 3.24 m here.",
+"group": "Your stairwell",
+"order": 1,
+"unit": "mm",
+"min": "rule_headroom + 120 mm",
+"max": "rule_height_max",
+"step": "1 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "available_run",
+"label": "Run you have",
+"description": "Horizontal length on the floor, from the face of the upper floor at the top of the stairs back to the wall or door at the foot. The stair, with its newel, takes what it needs up to this. The wall rail runs on at hand height 300 mm past the first nose (400 mm under the Flemish rule).",
+"group": "Your stairwell",
+"order": 2,
+"unit": "mm",
+"min": "run_min",
+"max": "run_max",
+"step": "5 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "stair_width",
+"label": "Stair width",
+"description": "Overall width across both stringers: wall to wall, or the stair's outside width. Bbl counts the stringers in the width.",
+"group": "Your stairwell",
+"order": 3,
+"unit": "mm",
+"min": "rule_width_min",
+"max": "1400 mm",
+"step": "10 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "floor_thickness",
+"label": "Upper floor thickness",
+"description": "Floor build-up plus ceiling: from the underside of the ceiling to the finished upper floor. The room below must keep the head height of the rule.",
+"group": "Your stairwell",
+"order": 4,
+"unit": "mm",
+"min": "120 mm",
+"max": "min(450 mm, floor_to_floor - rule_headroom)",
+"step": "5 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "opening_length",
+"label": "Opening in the upper floor",
+"description": "Length of the stairwell opening, measured from the face at the top of the stairs. The smallest opening that keeps the head height is the minimum.",
+"group": "Your stairwell",
+"order": 5,
+"unit": "mm",
+"min": "opening_min",
+"max": "opening_max",
+"step": "5 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "building_rule",
+"label": "Building rule",
+"description": "Which rule the stair must meet: rise, going, step rule, width and handrails follow from it.",
+"group": "Stair",
+"order": 6,
+"kind": "choice",
+"choicesFrom": "stair_rules"
+}
+],
+[
+"variable.publish",
+{
+"name": "tread_thickness",
+"label": "Tread thickness",
+"description": "Oak board thickness of the treads and the landing nosing. The minimum is an orientation only: a 3 kN point load at mid-span on C24 values. A structural engineer must verify the strength.",
+"group": "Stair",
+"order": 7,
+"unit": "mm",
+"min": "tread_thickness_min",
+"max": "60 mm",
+"step": "1 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "closed_risers",
+"label": "Closed risers",
+"description": "Risers housed and wedged into the stringers. Off gives an open stair of treads only, with gaps between the treads (see the output): check that this suits the users, children especially.",
+"group": "Stair",
+"order": 8,
+"kind": "boolean"
+}
+],
+[
+"variable.publish",
+{
+"name": "stringer_thickness",
+"label": "Stringer thickness",
+"description": "Board thickness of the two stringers; at least 18 mm stays behind the 12 mm housings. The minimum keeps a long, wide flight in a board under 480 mm wide on an orientation check; a structural engineer must verify the strength.",
+"group": "Stair",
+"order": 9,
+"unit": "mm",
+"min": "stringer_thickness_min",
+"max": "60 mm",
+"step": "1 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "handrail_style",
+"label": "Handrail",
+"description": "A wall rail assumes a solid wall behind it, and on a side without a rail a wall or your own barrier: Bbl art. 4.20 requires a fixed barrier where the side drops more than 1 m. The balustrade closes the right side. The Flemish rule allows only wall rails on both sides, because its rails must run on 40 cm past both ends and return to the wall.",
+"group": "Handrail and machining",
+"order": 10,
+"kind": "choice",
+"choices": [
+"Wall rail on the left, wall or barrier on the right",
+"Wall rails on both walls",
+"Balustrade on the right, wall rail on the left"
+],
+"min": "rule_rails",
+"max": "rule_rail_style_max"
+}
+],
+[
+"variable.publish",
+{
+"name": "router_diameter",
+"label": "Router bit diameter",
+"description": "The CNC bit for the housings: inside corners of the housings are cut to its radius.",
+"group": "Handrail and machining",
+"order": 11,
+"unit": "mm",
+"min": "6 mm",
+"max": "16 mm",
+"step": "1 mm"
+}
+],
+[
+"document.info",
+{
+"title": "Wooden stair",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"tags": [
+"stair",
+"joinery",
+"woodwork",
+"CNC",
+"building"
+],
+"description": "A straight closed-string wooden stair for your stairwell. Enter the floor-to-floor height, the run you have, the width and the opening in the upper floor: the Jig chooses the number of steps, the rise and the going by the step rule 2 x rise + going, and keeps them within the dimensions of the rule you pick (rise, going, width, head height and handrail of the Dutch Bbl art. 4.26 and 4.28, the Flemish accessibility code art. 20, or a comfort stair of its own). It checks those dimensions only: fire safety, barriers and fixings are not checked, and the strength figures are an orientation that a structural engineer must verify. Treads and risers are housed in two stringers and held with wedges; wall rails or a balustrade with newel posts follow your choice. How to export for the CNC: select the sketch CNC stringer layout in the Features tab and use File > Export as DXF: the stringer lying along x, its outline and every housing in one drawing, housing depth 12 mm. File > Export, Sheet of set: CNC stringers gives the stringer faces, CNC tread sections the true section of a tread; a STEP of Stringer left, Stringer right and Treads goes to CAM."
+}
+],
+[
+"document.check",
+{}
+]
+]

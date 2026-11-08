@@ -1,0 +1,104 @@
+{
+  "id": "wooden-stair",
+  "title": "Wooden stair",
+  "summary": "measure the stairwell, cut the stair",
+  "description": "A straight closed-string wooden stair for your stairwell: floor to floor, the run you have, the width and the opening. The form chooses the steps, rise and going by the step rule, keeps them within the dimensions of the rule you pick (Bbl, Flemish code or a comfort stair), and exports the housed stringers and treads for a CNC. Dimensions only: strength figures are an orientation for a structural engineer to verify.",
+  "domain": "Joinery, building",
+  "process": "CNC-routed housings, sawn boards, wedged and glued joinery",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Formula-driven topology, coupled housings and a rule table, sweeps, no freeform."
+  },
+  "standards": [
+    "Bbl (Besluit bouwwerken leefomgeving) art. 4.26 and table 4.26: dwelling stair, rise <= 188 mm, going >= 220 mm at the climbing line, tread surface >= 230 mm, width >= 800 mm, head height >= 2.3 m, flight <= 4 m; art. 4.28: handrail on at least one side, 0.8 to 1 m above the tread front; art. 4.20: barrier where the side drops more than 1 m",
+    "Flemish accessibility code (Besluit Vlaamse Regering 5 June 2009, amended 18 February 2011), art. 20: rise <= 18 cm, going >= 23 cm, 2 x rise + going 57 to 63 cm, at most 17 treads per flight, width >= 1.25 m between walls and 1.00 m between handrails, handrails on both sides running on 40 cm and returned to the wall",
+    "Orientation only, for a structural engineer to verify: NBN EN 1991-1-1 + ANB as summarised by Buildwise (dwelling stairs q_k = 3 kN/m2; a 3 kN point load is used, above the 2 kN of that sheet), C24 values from EN 338:2016, k_mod and gamma_M of EN 1995-1-1 (recommended values)",
+    "Blondel's step rule 2 x rise + going (Cours d'architecture, 1675), known from secondary sources"
+  ],
+  "materials": [
+    "European oak treads, landing nosing, handrails and newels, 30 to 60 mm",
+    "Painted pine (C24) stringers, 30 to 60 mm thick",
+    "Painted plywood or MDF risers, 20 mm",
+    "Beech or oak wedges",
+    "Steel handrail brackets"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -3600,
+        6400,
+        2400
+      ],
+      "target": [
+        1400,
+        300,
+        1800
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 28
+    },
+    "look": {
+      "rotation": 0
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cnc-stringer-layout.dxf",
+      "sketch": "CNC stringer layout"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/stringer-faces.dxf",
+      "set": "CNC stringers"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/tread-sections.svg",
+      "set": "CNC tread sections"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/stringers-and-treads.step",
+      "bodies": [
+        "Stringer left",
+        "Stringer right",
+        "Treads"
+      ]
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 395,
+    "variables": 159,
+    "parameters": 11,
+    "features": 79,
+    "assertions": 29,
+    "warnings": 0,
+    "build_s": 7.39,
+    "load_s": 1.18,
+    "load_cpu_s": 2.36,
+    "file_bytes": 258370,
+    "range_points": 101,
+    "range_unproven": 0,
+    "range_mean_s": 0.17,
+    "range_worst_s": 0.76
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
