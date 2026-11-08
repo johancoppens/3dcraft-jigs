@@ -1,0 +1,11 @@
+[
+  ["sketch.create", {"name": "Board sketch"}],
+  ["sketch.rect", {"sketch": "Board sketch", "from": [0, 0], "to": [200, 120]}],
+  ["feature.extrude", {"sketch": "Board sketch", "distance": 18, "name": "Board"}],
+  ["sketch.create", {"name": "Strip sketch", "plane": "yz", "offset": 300}],
+  ["sketch.polyline", {"sketch": "Strip sketch", "closed": true, "points": [[0, 0], [50, 0], [50, 20], [49.2, 20], [49.2, 0.8], [0, 0.8]]}],
+  ["feature.extrude", {"sketch": "Strip sketch", "distance": 160, "name": "Bent strip"}],
+  ["cut.list", {"format": "csv"}],
+  ["feature.chamfer", {"edges": [["F2:endCap(e5,e6,e7,e8)", "F2:side(e5)"]], "distance": "2 mm", "name": "Eased arris"}],
+  ["cut.list", {"format": "csv"}]
+]

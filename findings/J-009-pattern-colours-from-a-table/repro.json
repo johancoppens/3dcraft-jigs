@@ -1,0 +1,7 @@
+[
+["table.set",{"name":"woods","columns":["wood","light"],"rows":[["Birch",230],["Walnut",90]]}],
+["variable.set",{"name":"wood_choice","expr":"1"}],
+["feature.block",{"name":"Panel","size":["10 mm","10 mm","10 mm"]}],
+["body.appearance",{"body":"Panel","color":["woods[wood_choice].light",200,100]}],
+["body.appearance",{"body":"Panel","pattern":{"kind":"wood","colors":["woods[wood_choice].light","#dfd0b4"]}}]
+]

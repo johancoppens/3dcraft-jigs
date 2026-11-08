@@ -1,0 +1,6 @@
+[
+["sketch.create",{"name":"S","plane":"xy"}],
+["sketch.path",{"sketch":"S","start":[0,0],"segments":[{"line":[0,5]},{"line":[5,5]},{"line":[5,0]},{"line":[10,0]}]}],
+["sketch.pattern",{"sketch":"S","entities":["e3","e5","e7","e9"],"chain":["e1","e8"],"count":2}],
+["sketch.path",{"sketch":"S","start":"e8[last]","segments":[{"line":[20,-5]}]}]
+]

@@ -1,0 +1,112 @@
+[
+[
+"sketch.create",
+{
+"name": "Plate sketch",
+"plane": "zx"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Plate sketch",
+"from": [
+0,
+0
+],
+"to": [
+250,
+117
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Plate sketch",
+"distance": 18,
+"name": "Plate"
+}
+],
+[
+"sketch.create",
+{
+"name": "Hole sketch",
+"plane": "zx"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Hole sketch",
+"center": [
+"217 mm",
+"78 mm"
+],
+"radius": "16 mm"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Hole sketch",
+"distance": 18,
+"cut": "Plate",
+"name": "Plate with hole"
+}
+],
+[
+"sketch.create",
+{
+"name": "Ring sketch",
+"plane": "zx",
+"offset": "-0.8 mm"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Ring sketch",
+"center": [
+"217 mm",
+"78 mm"
+],
+"radius": "30 mm"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Ring sketch",
+"x": "217 mm + 16 mm * sin(t)",
+"y": "78 mm + 16 mm * cos(t)",
+"t": [
+"0",
+"2 * pi"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Ring sketch",
+"distance": "0.8 mm",
+"name": "Ring"
+}
+],
+[
+"assert.add",
+{
+"name": "plate and ring do not overlap",
+"measure": "overlap",
+"of": {
+"kind": "body"
+},
+"is": false
+}
+],
+[
+"document.check",
+{}
+]
+]

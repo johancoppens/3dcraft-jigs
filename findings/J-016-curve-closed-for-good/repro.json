@@ -1,0 +1,5 @@
+[["variable.set",{"name":"half","expr":"180 deg"}],
+ ["sketch.create",{"plane":"xy","name":"S"}],
+ ["sketch.curve",{"sketch":"S","x":"10*sin(t)","y":"10-10*cos(t)","t":["-half","half"]}],
+ ["variable.set",{"name":"half","expr":"120 deg"}],
+ ["document.check",{}]]

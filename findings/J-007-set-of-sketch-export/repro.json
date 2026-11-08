@@ -1,0 +1,6 @@
+[
+  ["sketch.create", {"name": "Plan"}],
+  ["sketch.rect", {"sketch": "Plan", "from": ["0 mm", "0 mm"], "to": ["400 mm", "50 mm"]}],
+  ["set.define", {"name": "Plan set", "kind": "sketch", "where": {"name": "Plan"}}],
+  ["file.export", {"path": "plan.svg", "set": "Plan set"}]
+]

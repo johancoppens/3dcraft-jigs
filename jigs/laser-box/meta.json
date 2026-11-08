@@ -1,0 +1,85 @@
+{
+  "id": "laser-box",
+  "title": "Laser-cut box",
+  "summary": "finger joints, compartments, kerf in the cut sheet",
+  "description": "A finger-jointed plywood box sized from what goes in it or where it must fit, with compartments tabbed through the floor and a lid held by a frame, ready to laser cut with your sheet's real thickness and your laser's kerf.",
+  "domain": "Laser cutting",
+  "process": "Laser cutting of plywood sheet, glued or press-fitted finger joints",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Chained finger outlines, kerf offsets, tab-and-mortise grids and ranges coupled across lid style and sheet."
+  },
+  "standards": [
+    "Handbook of Finnish Plywood (2002), Table 3-1: birch plywood density 680 kg/m3"
+  ],
+  "materials": [
+    "Birch plywood sheet, 1.5 to 6 mm, about 680 kg/m3"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "view": "iso",
+    "zoom": 1.05,
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet.svg",
+      "set": "Cut sheet",
+      "width": "600 mm",
+      "gap": "5 mm"
+    },
+    {
+      "command": "cut.export",
+      "path": "exports/parts.dxf",
+      "copies": true,
+      "width": "600 mm",
+      "gap": "5 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/other.svg",
+      "set": "Cut sheet",
+      "values": {
+        "size_basis": 2,
+        "width": "300 mm",
+        "depth": "200 mm",
+        "height": "90 mm",
+        "compartments_wide": 1,
+        "compartments_deep": 1,
+        "lid_style": 1
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 242,
+    "variables": 69,
+    "parameters": 12,
+    "features": 50,
+    "assertions": 24,
+    "warnings": 0,
+    "build_s": 1.64,
+    "load_s": 0.2,
+    "load_cpu_s": 0.3,
+    "file_bytes": 219979,
+    "range_points": 103,
+    "range_unproven": 0,
+    "range_mean_s": 0.06,
+    "range_worst_s": 0.54
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

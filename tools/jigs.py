@@ -49,7 +49,7 @@ BUDGET_BYTES = 1_000_000
 STEP_GUIDE = {"simple": 100, "difficult": 250, "complex": 600}
 PARAMETERS_MIN, PARAMETERS_MAX = 3, 12
 ASSERTIONS_MIN = 3
-RANGE_SAMPLES, RANGE_MAX_CORNERS = 16, 16
+RANGE_SAMPLES, RANGE_MAX_CORNERS = 32, 64
 REQUIRED_META = ("id", "title", "summary", "description", "domain", "process", "tier",
                  "difficulty", "standards", "materials", "licence", "exports")
 REQUIRED_FILES = ("build.json", "meta.json", "README.md", "formtest.md", "preview.png")
@@ -64,7 +64,7 @@ NOT_MODELLING = ("variable.delete", "variable.rename", "variable.unpublish", "fe
                  "sketch.textEdit", "material.presets", "datum.references", "fold.edit", "fold.inspect",
                  "assert.edit", "assert.delete", "assert.list", "output.list", "set.edit", "set.remove",
                  "set.list", "table.delete", "table.rename", "table.list")
-EXPORT_COMMANDS = ("file.export", "cut.export")
+EXPORT_COMMANDS = ("file.export", "cut.export", "cut.list")
 DEFAULT_NAME = re.compile(r"^[A-Za-z]+[0-9]+$")
 VARIABLE_NAME = re.compile(r"^[a-z][a-z0-9]*(_[a-z0-9]+)*$")
 TABLE_START = "<!-- jigs:start -->"
@@ -235,7 +235,7 @@ def lint_parameters(body, errors, warnings):
         kind = form.get("kind", "number")
         if kind in ("number", "integer") and not (form.get("min") and form.get("max") and form.get("step")):
             errors.append(f"parameter {name}: a {kind} needs min, max and step")
-        if kind == "choice" and not (form.get("choices") or form.get("choicesFrom")):
+        if kind == "choice" and not (form.get("choices") or form.get("choices_from")):
             errors.append(f"parameter {name}: a choice needs choices or choicesFrom")
 
 
@@ -301,8 +301,9 @@ def lint(jig, meta, doc, stats, script):
                       f"budget {cpu_budget} s for {tier}{busy_note}")
     if stats["file_bytes"] > BUDGET_BYTES and not excepted:
         errors.append(f"{stats['file_bytes']} bytes, budget {BUDGET_BYTES}")
-    if stats["steps"] > STEP_GUIDE[tier]:
-        warnings.append(f"{stats['steps']} steps, guide {STEP_GUIDE[tier]} for {tier}")
+    modelling = stats["steps"] - stats["variables"] - stats["parameters"]
+    if modelling > STEP_GUIDE[tier]:
+        warnings.append(f"{modelling} steps besides variables and parameters, guide {STEP_GUIDE[tier]} for {tier}")
     if stats["warnings"]:
         warnings.append(f"{stats['warnings']} assertion(s) not proven: explain in the README")
     return errors, warnings
@@ -320,9 +321,10 @@ def prove_exports(jig, scratch, meta):
         if command not in EXPORT_COMMANDS:
             raise CheckError(f"export command {command!r} must be one of {EXPORT_COMMANDS}")
         path = params.get("path", "")
-        if not path.startswith("exports/"):
-            raise CheckError(f"export path {path!r} must start with exports/")
-        (scratch / path).parent.mkdir(parents=True, exist_ok=True)
+        if command != "cut.list":  # a cut list is answered, not written
+            if not path.startswith("exports/"):
+                raise CheckError(f"export path {path!r} must start with exports/")
+            (scratch / path).parent.mkdir(parents=True, exist_ok=True)
         step = ["--cmd", command, "--params", json.dumps(params)]
         if export.get("values"):
             runs.append(["run", final, "--cmd", "param.set",
@@ -336,6 +338,8 @@ def prove_exports(jig, scratch, meta):
         if result.returncode != 0:
             raise CheckError(explain_failure(result, "exports failed"))
     for export in exports:
+        if export.get("command") == "cut.list":
+            continue
         path = scratch / export.get("path", "")
         if not path.is_file() or path.stat().st_size == 0:
             raise CheckError(f"export {export.get('path')} was not written")

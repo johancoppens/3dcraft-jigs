@@ -1,0 +1,6 @@
+[["variable.set",{"name":"sk","expr":"2"}],
+["sketch.create",{"plane":"xy","name":"S"}],
+["sketch.circle",{"sketch":"S","center":[0,0],"radius":"1 mm"}],
+["sketch.pattern",{"sketch":"S","entities":["e2"],"count":"4","step":["5 mm","0 mm"],"skip":"sk"}],
+["feature.extrude",{"sketch":"S","distance":"1 mm"}],
+["document.check",{}]]

@@ -1,0 +1,5 @@
+[
+  ["variable.set", {"name": "has_batten", "expr": "0"}],
+  ["sketch.create", {"name": "Plan"}],
+  ["sketch.rect", {"sketch": "Plan", "from": ["0 mm", "0 mm"], "to": ["if(has_batten, 400 mm, 0 mm)", "if(has_batten, 50 mm, 0 mm)"]}]
+]

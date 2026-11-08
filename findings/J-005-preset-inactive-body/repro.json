@@ -1,0 +1,4 @@
+[
+  ["feature.block", {"name": "Optional board", "size": [100, 50, 18], "when": "0"}],
+  ["material.preset", {"body": "Optional board", "preset": "oak", "pattern": {"grain": 0.6}}]
+]

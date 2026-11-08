@@ -1,0 +1,1 @@
+[["feature.cylinder", {"radius": "20 mm", "height": "60 mm", "name": "Drum"}], ["sketch.create", {"plane": "xy", "name": "S"}], ["sketch.circle", {"sketch": "S", "center": ["25 mm", "8 mm"], "radius": "0.8 mm"}], ["feature.extrude", {"sketch": "S", "distance": "2 mm", "wrap": "F1:face(0)", "join": "Drum", "name": "P"}], ["document.check", {}]]

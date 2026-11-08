@@ -24,7 +24,7 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
   floor; drainage and ventilation present.
 - **Output:** cut list and a board layout (DXF or SVG).
 
-### 2. Laser-cut box · `laser-box` · laser cutting · kept
+### 2. Laser-cut box · `laser-box` · laser cutting · kept (rebuilt with compartments: tier difficult, coordinator 2026-11-08)
 - **Real thing:** a finger-jointed box with a loose lid. Named in 3DCraft's guide chapter 5: the id stays.
 - **Form:** outside or inside size, sheet thickness, finger width, kerf, divider, lid.
 - **Must improve:** 0 assertions today (finger counts odd, fit of the lid, smallest finger ≥ the sheet, inner volume in
@@ -66,8 +66,15 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Form:** solid (choice), edge length, paper thickness, tabs, fold amount.
 - **Shows:** `feature.fold` driven by one parameter; a table of dihedral angles; the crease pattern to print.
 - **Look:** coloured card, one colour per face family.
-- **Proves:** V − E + F = 2; the closed volume against the closed form; fold fully closes at 100 %.
-- **Risks:** a fold that closes a loop may be refused: feasibility probe first; fall back on a tree fold.
+- **Proves:** V − E + F = 2 from the table; the enclosed volume (`cavity` on the sheet) against the closed form, within
+  0.1 % near closure.
+- **Probe (2026-11-08, `.scratch/probes/polyhedron-net/`):** feasible for all five solids, 0.03 s per regeneration. One
+  sketch per solid (polyline outline, construction creases), one `feature.fold` per solid with `when`, the angle
+  `min(fold_pct, 99.99) / 100 * solids[solid].fold`, table with `choicesFrom`. Exactly 100 % is refused (free edges
+  that meet: report it), so the form's 100 % is capped at 99.99 % and the README says so. Tabs that fold with the faces
+  are refused near closure: show the net without them in 3D and export a separate tabbed pattern (untested: the builder
+  proves it). The net coordinates must be in `build.json`, by table or formula, without a committed generator. `panels`
+  thickness reaches 99.9 % on most solids, 98 % on the icosahedron: narrow the range by solid.
 
 ### 8. Keyboard plate · `keyboard-plate` · laser cutting, electronics · new
 - **Real thing:** a column-staggered ergonomic keyboard plate with bottom plate and spacers, for standard mechanical
@@ -192,7 +199,14 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Look:** polished brass, deep engraving.
 - **Proves:** projected radius of the equator and the tropics against the closed form; horizon position against the
   latitude; the rete's stars inside the rim; smallest engraved gap ≥ the tool.
-- **Risks:** load budget with many curves and letters: feasibility probe first.
+- **Probe (2026-11-08, `.scratch/probes/astrolabe/`):** feasible. Real grooves in one plate take 22 s, over budget; with
+  the numerals and ticks on a separate limb body they take 3.9 s (slowest point 4.5 s, 716 KB, 485 steps): use that, so
+  the instrument looks engraved, with grooves wide enough to read (0.4 mm barely shows at 900 px). Clipping is closed
+  form: `acos(clamp(...))` end angles, almucantars as two half-arcs from the bottom point, azimuths ending at
+  min(horizon, rim), with a zenith gap of at least w / (2 sin(step / 2)): 53 arcs at every degree from 25 to 60. The
+  laser's file comes from sketches (exact arcs, 12 KB), but a named set cannot export a sketch: the builder must make the
+  export work from the form (a separate flat engraving face set, or report it), and measure CPU time against the web
+  budget. Stars come from a public-domain catalogue, cited, not from memory; southern stars beyond the rete are filtered.
 
 ### 26. Solar cooker · `solar-cooker` · sheet metal, energy · kept
 - **Must improve:** load 3.4 s for 37 features: why; the preview must show the dish, focused, not the petals laid out;
@@ -206,7 +220,13 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
   for the cut sheet; aerodynamic outputs: wing area, aspect ratio, wing loading, stall speed.
 - **Look:** balsa skeleton, blue film on half of the wing (an option).
 - **Proves:** area and MAC in closed form; rib count; spar slot fits the stock; airfoil thickness against the NACA formula.
-- **Risks:** ribs are slices of a tapered loft (side walls not square, `cut.list` may not see them): probe first.
+- **Probe (2026-11-08, `.scratch/probes/rc-wing/`):** feasible. One closed `sketch.curve` (t from -1 to 1, x/c = t²,
+  coefficient -0.1036 closes the trailing edge), a ruled `feature.loft`, `document.setTolerance` 0.01 mm (at 1e-6 the
+  spline takes 29 s to load). Use the 40-step route: a `feature.pattern` of plates intersected with the loft, 1.6 s at
+  12 ribs, 5.2 s at 30: default about 12 ribs, range to about 20 unless the worst point stays in budget. The cut sheet is
+  a named face set through `file.export`, since `cut.list` refuses one multi-lump body. The 290-step per-rib copy that
+  `cut.export` accepts is exactly what AGENTS.md §3 rules out; report the gap (per-instance formulas in a pattern; a
+  pattern of separate plates in `cut.list`) with the probe's reproducer.
 
 ### 28. Music box · `music-box` · 3D printing, mechanisms · new
 - **Real thing:** a printable cylinder music box: pinned drum, tuned comb, crank.
@@ -214,7 +234,14 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Shows:** data in a table drives pins; the comb's teeth tuned by the cantilever formula; a slider turns the drum.
 - **Look:** cherry case, brass drum, spring-steel comb.
 - **Proves:** every pin on a note the comb has, timing per beat, no pin clash, teeth lengths against the formula.
-- **Risks:** many conditional pins: feasibility probe first; if the probe fails, the coordinator decides.
+- **Probe (2026-11-08, `.scratch/probes/music-box/`):** feasible: 3 tunes, 175 notes, 18 tracks, 64 beats, comb and crank
+  in 221 steps, 731 KB, 0.15 s to open, slowest range point 0.1 s. Tables `tunes` and `notes` (tune, beat, track); per
+  tune one sketch of one `sketch.rect` per note, corners read from the table, x within ±πR; `feature.extrude` with
+  `wrap` on the drum and `when: tune == k`, joined with the same `when`; `feature.transform` by the crank. Comb: one
+  polyline of formula points. The file budget binds first: about 3.8 KB per pin, so about 250 notes over all tunes. Pins
+  are rectangular, since a wrapped circle can fail `document.check` (bug, reproducer in the probe's folder). A `make.py`
+  may write the tune tables and the per-note steps from committed public-domain tunes. Assert the tooth lengths against
+  the formula and the pin positions, which the probe did not.
 
 ### 29. Planetary gearbox · `planetary-gearbox` · mechanisms · kept
 - **Must improve:** the form asks ratio and size where it can; a drive angle that turns the gears; more than 2

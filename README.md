@@ -13,6 +13,10 @@ range check); this repository holds Jigs. How they are made and held to one qual
 what each must be is in [`CATALOGUE.md`](CATALOGUE.md).
 
 <!-- jigs:start -->
+| | Jig | Workshop | Difficulty | Licence |
+|---|---|---|---|---|
+| <img src="dist/thumbs/nest-box.png" width="240" alt="Nest box from one plank"> | **[Nest box from one plank](jigs/nest-box/)**<br>A nest box for a garden bird of the Low Countries, sawn from one plank and screwed: pick the species and the entrance, floor, height and even the shape of the box follow Vogelbescherming Nederland's table. | Woodwork, garden birds | 5/10 | CC-BY-4.0 |
+| <img src="dist/thumbs/laser-box.png" width="240" alt="Laser-cut box"> | **[Laser-cut box](jigs/laser-box/)**<br>A finger-jointed plywood box sized from what goes in it or where it must fit, with compartments tabbed through the floor and a lid held by a frame, ready to laser cut with your sheet's real thickness and your laser's kerf. | Laser cutting | 6/10 | CC-BY-4.0 |
 <!-- jigs:end -->
 
 ## Using a Jig

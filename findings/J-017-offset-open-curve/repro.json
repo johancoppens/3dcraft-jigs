@@ -1,0 +1,4 @@
+[["sketch.create",{"plane":"xy","name":"S"}],
+ ["sketch.arc",{"sketch":"S","center":["0 mm","0 mm"],"start":["10 mm","0 mm"],"end":["0 mm","10 mm"]}],
+ ["feature.offsetProfile",{"sketch":"S","distance":"0.2 mm","name":"Stroke"}],
+ ["document.check",{}]]

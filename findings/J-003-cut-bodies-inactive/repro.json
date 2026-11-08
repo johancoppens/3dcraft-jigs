@@ -1,0 +1,5 @@
+[
+  ["feature.block", {"name": "Board", "size": [100, 50, 18]}],
+  ["feature.block", {"name": "Optional shelf", "size": [100, 50, 18], "position": [0, 0, 40], "when": "0"}],
+  ["cut.list", {"bodies": ["Board", "Optional shelf"], "format": "csv"}]
+]

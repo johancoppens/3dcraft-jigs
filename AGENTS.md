@@ -102,6 +102,10 @@ log/ plan/              local only (gitignored): dev log, plans
   - Under the Workshop environment at rotation 0 the warm key light makes polished steel read as brass: render at
     `look.rotation` 0, 90, 180 and 270 and keep the one where neutral metals read neutral (often 180).
   - The body is named after its last feature: name that feature for the part ("Stand", "Bowl").
+  - In a sketch a circle is entity `e2` (its centre is `e1`): `sketch.pattern` wants the `e2`.
+  - `face.appearance` must follow its extrude: later on, source names are refused.
+  - A sketch on the zx plane takes points as `[z, x]`.
+  - A distance to a notched body can come back unproven: measure between plane faces.
   - Real use, not only the drawing: will it be gripped, driven, hung, will it tip, does it fit the tool that makes it
     (jaws, a slicer's walls, a press brake)?
 - **Prefer 3DCraft's own means**: variables and formulas, tables with `choicesFrom`, ranges that are formulas of other
@@ -171,8 +175,8 @@ an exception (`meta.json` `budget_exception` with the reason).
   and a range and step (`variable.publish`). The first group holds what most people change. Defaults make a good,
   typical object. More than 12 means the Jig is doing two jobs.
 - **A minimal history.** Every step contributes to the final model: no dead, suppressed, trial or undone steps; one
-  feature where one suffices. Guide: simple ≤ 100 steps, difficult ≤ 250, complex ≤ 600 (variables, tables and
-  assertions included). Order: variables and tables, then per part its sketches and features, materials, named sets,
+  feature where one suffices. Guide: simple ≤ 100 steps, difficult ≤ 250, complex ≤ 600 (tables and assertions
+  included; `variable.set` and `variable.publish` not counted). Order: variables and tables, then per part its sketches and features, materials, named sets,
   outputs and assertions, `variable.publish`, `document.info` (title, description with how to export, author
   `3DCraft Jigs`, licence, tags), `document.check`.
 
@@ -180,8 +184,12 @@ an exception (`meta.json` `budget_exception` with the reason).
 End with assertions that make the Jig prove itself, at every point: at least one closed-form or independently computed
 measure (volume, area, capacity, mass, a section property), the counts that matter, and the process checks of §4.3;
 never fewer than three. Outputs carry the numbers a maker wants. `tools/jigs.py check` runs `check-range` (the
-defaults, 16 corners, every choice, 16 random points from seed 1): every point passes, and any unproven assertion is
-explained in the README. A claim about the range must be one those points support. Keep assertions cheap: they run at
+defaults, at most 64 corners of the box of the ranges, every choice, 32 random points from seed 1): every point passes, and any unproven assertion is
+explained in the README. A claim about the range must be one those points support. **A passing range check is not the proof:** with many
+parameters it sees a sliver of the box. For every assertion that can fail, work out which combination breaks it, make
+the published ranges exclude it by formula (or let the assertion be the refusal the form shows), and try that combination
+by hand with `param.set`. An assertion that compares a formula with itself proves nothing: remove it. An assertion measured on the
+model is worth keeping even when the ranges should exclude a failure: it guards the modelling. Keep assertions cheap: they run at
 every change of the form.
 
 ## 5. The preview
@@ -225,7 +233,7 @@ notes* (links to `3DCRAFT-FEEDBACK.md` entries, if any). Every claim must be tru
 ```
 
 `summary` is the card's line (a few words). `exports` are proven by `check` in a scratch folder and are not committed:
-paths start with `exports/`, `command` is `file.export` or `cut.export`, `values` runs the export at other parameter
+paths start with `exports/`, `command` is `file.export`, `cut.export` or `cut.list` (a saw list: no path), `values` runs the export at other parameter
 values. `new` is optional (`file.new`'s params). `stats` and `craft3d` are written by the tool.
 
 **`formtest.md`**: a real job in a maker's words ("I have a 150 mm f/6 mirror and want a telescope I can carry"; "our

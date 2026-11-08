@@ -1,0 +1,99 @@
+{
+  "id": "nest-box",
+  "title": "Nest box from one plank",
+  "summary": "pick the bird, saw the plank",
+  "description": "A nest box for a garden bird of the Low Countries, sawn from one plank and screwed: pick the species and the entrance, floor, height and even the shape of the box follow Vogelbescherming Nederland's table.",
+  "domain": "Woodwork, garden birds",
+  "process": "Sawing and screwing (one plank), hand-cut zinc",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 5,
+    "rationale": "Table-driven topology: terrace with end-wall entrances, fixed or pivoted front, formula-driven plank plan."
+  },
+  "standards": [
+    "Vogelbescherming Nederland: Nestkasten in soorten en maten (inside sizes per species, 2018)",
+    "Avon Wildlife Trust, Basically Boxes part 1: hole at least 125 mm above the floor, wood at least 15 mm, no perch, liftable lid or panel, vertical grain"
+  ],
+  "materials": [
+    "Untreated European larch plank, 15 to 25 mm thick",
+    "Zinc sheet, 0.8 mm (roof strip and predator guard)",
+    "Stainless screws"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        360,
+        -1060,
+        500
+      ],
+      "target": [
+        78,
+        70,
+        195
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/plank-plan.svg",
+      "sketch": "Plank plan"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/boards.svg",
+      "set": "Board layout",
+      "gap": "saw_kerf"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/sparrow-plank-plan.dxf",
+      "sketch": "Plank plan",
+      "values": {
+        "species": 5
+      }
+    },
+    {
+      "command": "cut.list",
+      "format": "csv"
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 227,
+    "variables": 85,
+    "parameters": 7,
+    "features": 49,
+    "assertions": 13,
+    "warnings": 0,
+    "build_s": 1.33,
+    "load_s": 0.2,
+    "load_cpu_s": 0.37,
+    "file_bytes": 169173,
+    "range_points": 106,
+    "range_unproven": 0,
+    "range_mean_s": 0.12,
+    "range_worst_s": 0.48
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
