@@ -165,8 +165,8 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 
 ### 20. Welded beam · `welded-beam` · welding, machine building · kept
 - **Must improve:** a full `build.json` from nothing replaces `source.3dcraft` and `edits/`; its `repro/` moves to
-  `findings/`; **mounting patterns on a wall** (linear rail hole rows, the maker's wish from 2026-10-30); a form of at
-  most 12 parameters.
+  `findings/`; one fixed arrangement of the plates (top and bottom clean, their tabs in slots in the side walls), no choice
+  per edge and no rail hole patterns (the developer, 2026-11-08); a form of at most 12 parameters.
 - **Look:** dark steel, bright cut edges.
 
 ## Complex
