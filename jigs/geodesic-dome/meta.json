@@ -1,0 +1,119 @@
+{
+  "id": "geodesic-dome",
+  "title": "Geodesic timber dome",
+  "summary": "chord factors, strut schedule, laser-cut hubs",
+  "description": "A timber-strut geodesic dome (1V, 2V or 3V) with laser-cut steel hubs: give a radius or a floor area and get the strut schedule, the timber to buy, the hub count and the plates to send to the laser.",
+  "domain": "Building, laser cutting",
+  "process": "Sawn timber struts with bolted steel-in-timber connections; laser-cut, welded and galvanised steel hubs",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Frequency-dependent topology with hand-derived 3D placements and coupled limits over many bodies."
+  },
+  "standards": [
+    "Domerama, chord factor charts (1V, 2V, 3V chord factors, strut and face counts)",
+    "Desert Domes, 2V and 3V dome calculators (strut and connector counts for 2V, 3V 3/8 and 3V 5/8)",
+    "EN 1995-1-1:2004+A1:2008, table 8.4 (bolt spacing and edge and end distances) and clause 10.4.3 (hole sizes, washers)",
+    "EN 338 strength class C24, mean density 420 kg/m3 (via Taylor Maxwell strength data)",
+    "EN 10219-2 cold-formed circular hollow sections 60.3 x 4 and 76.1 x 4 mm for the hub tube",
+    "ISO 4017 bolt head height and ISO 4032 nut height (values listed by Würth and Kramp for the nuts)",
+    "BS 5268-2:2002 (withdrawn) maximum slenderness 180 for compression members (via RoyMech Timber Axial)"
+  ],
+  "materials": [
+    "Sawn spruce C24, 38 x 89 to 63 x 175 mm",
+    "Steel plate 3 to 10 mm, laser cut, hot-dip galvanised",
+    "Steel tube CHS 60.3 or 76.1 x 4 mm, round bar seat posts",
+    "Bolts M10 or M12 with 3d washers"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        9400,
+        -10600,
+        3400
+      ],
+      "target": [
+        200,
+        0,
+        1420
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 29
+    },
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/hub-plates.svg",
+      "set": "Hub plates to laser cut",
+      "gap": "10 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/hub-plates.dxf",
+      "set": "Hub plates to laser cut",
+      "gap": "10 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/strut-templates.dxf",
+      "set": "Strut templates",
+      "gap": "40 mm"
+    },
+    {
+      "command": "cut.list",
+      "format": "csv",
+      "bodies": [
+        "Fin A",
+        "Fin B",
+        "Fin C",
+        "Hub cap plate"
+      ]
+    },
+    {
+      "command": "file.export",
+      "path": "exports/two-v-plates.svg",
+      "set": "Hub plates to laser cut",
+      "values": {
+        "dome_type": 2,
+        "radius_input": "2.5 m"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 1300,
+    "variables": 766,
+    "parameters": 9,
+    "features": 313,
+    "assertions": 77,
+    "warnings": 0,
+    "build_s": 52.49,
+    "load_s": 3.17,
+    "load_cpu_s": 11.62,
+    "file_bytes": 484649,
+    "range_points": 106,
+    "range_unproven": 0,
+    "range_mean_s": 0.28,
+    "range_worst_s": 0.78
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
