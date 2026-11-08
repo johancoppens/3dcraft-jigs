@@ -1,0 +1,126 @@
+{
+  "id": "polyhedron-net",
+  "title": "Platonic net to fold and glue",
+  "summary": "pick a solid, drag the slider, print and glue",
+  "description": "The five Platonic solids from one sheet of paper: pick a solid, set its size to your sheet, drag the slider to watch the classic net fold shut, and export the pattern with glue tabs to print, cut and glue.",
+  "domain": "Paper, education",
+  "process": "Printing or plotting a crease pattern, cutting, folding and gluing paper",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 5,
+    "rationale": "Folds driven by a parameter, a per-solid net table with hand-derived coordinates and tab hinges, topology by when, and cavity closure."
+  },
+  "standards": [
+    "ISO 216 paper sizes (A5, A4, A3), ANSI US Letter",
+    "ISO 536: grammage of paper, g/m2",
+    "Schlafli symbols and closed forms of the regular solids (H.S.M. Coxeter, Regular Polytopes)"
+  ],
+  "materials": [
+    "Paper or thin card, 80 to 300 g/m2 (thickness assumed 1.25 cm3/g)",
+    "Paper glue or glue stick"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        330,
+        -320,
+        225
+      ],
+      "target": [
+        -8,
+        -3,
+        26
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "light": [
+        320,
+        50
+      ]
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/icosahedron-pattern.svg",
+      "fold": "Icosahedron print pattern",
+      "stroke": 0.3
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cube-pattern.svg",
+      "fold": "Cube print pattern",
+      "stroke": 0.3,
+      "values": {
+        "solid": 2,
+        "edge_length": "50 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/tetrahedron-pattern.svg",
+      "fold": "Tetrahedron print pattern",
+      "stroke": 0.3,
+      "values": {
+        "solid": 1,
+        "edge_length": "60 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/octahedron-pattern.dxf",
+      "fold": "Octahedron print pattern",
+      "values": {
+        "solid": 3,
+        "edge_length": "50 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/dodecahedron-pattern.dxf",
+      "fold": "Dodecahedron print pattern",
+      "values": {
+        "solid": 4,
+        "sheet": 3,
+        "edge_length": "40 mm",
+        "tab_depth": "8 mm",
+        "paper_weight": 200
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 253,
+    "variables": 25,
+    "parameters": 6,
+    "features": 20,
+    "assertions": 9,
+    "warnings": 0,
+    "build_s": 0.57,
+    "load_s": 0.05,
+    "load_cpu_s": 0.04,
+    "file_bytes": 404157,
+    "range_points": 104,
+    "range_unproven": 0,
+    "range_mean_s": 0.01,
+    "range_worst_s": 0.02
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
