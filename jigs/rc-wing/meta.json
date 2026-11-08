@@ -1,0 +1,117 @@
+{
+  "id": "rc-wing",
+  "title": "Built-up RC wing",
+  "summary": "NACA ribs, spar slots, stall speed",
+  "description": "A built-up balsa wing for a radio-controlled model from its span, chords, NACA digits, sweep, washout and flying weight: every rib cut from a lofted wing with its spar slots, leading and trailing edge stock, a ply joiner and film, and the numbers an aeromodeller wants.",
+  "domain": "Aeromodelling, laser cutting",
+  "process": "Laser cutting of ribs from balsa sheet; stick-built on a board; film or sheet covering",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Formula airfoil, ruled lofts, rib pattern booleans and coupled range formulas over one wing."
+  },
+  "standards": [
+    "NACA Report No. 824, Summary of Airfoil Data (Abbott, von Doenhoff, Stivers, 1945), Appendix I p. 100: NACA 2412, 1412, 0009 ordinates (read, scanned page)",
+    "NASA TM-4741, Ladson et al., NACA 4-digit thickness polynomial coefficients",
+    "Airfield Models, mean aerodynamic chord of a tapered wing",
+    "NASA Glenn, the lift equation; International Standard Atmosphere, sea-level density and viscosity",
+    "Selig et al., Summary of Low-Speed Airfoil Data Vol. 2, Appendix B: NACA 2414 section lift at low Reynolds number (basis of the stated CLmax of 1.0)"
+  ],
+  "materials": [
+    "Balsa sheet, ribs (150 kg/m3)",
+    "Spruce spars (450 kg/m3)",
+    "Balsa leading and trailing edge stock",
+    "Birch plywood spar joiners (680 kg/m3)",
+    "Iron-on film, blue"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.01
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -640,
+        -930,
+        600
+      ],
+      "target": [
+        125,
+        -55,
+        0
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 37
+    },
+    "look": {
+      "rotation": 180,
+      "light": [
+        200,
+        60
+      ]
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet.svg",
+      "set": "Cut sheet",
+      "gap": "3 mm",
+      "width": "600 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet.dxf",
+      "set": "Cut sheet",
+      "gap": "3 mm",
+      "width": "600 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/joiner.dxf",
+      "sketch": "Joiner flat pattern"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/thin-tip-ribs.dxf",
+      "set": "Cut sheet",
+      "gap": "3 mm",
+      "width": "600 mm",
+      "values": {
+        "camber_choice": 1,
+        "thickness_digits": 12,
+        "tip_chord": "160 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 253,
+    "variables": 91,
+    "parameters": 12,
+    "features": 57,
+    "assertions": 23,
+    "warnings": 0,
+    "build_s": 13.76,
+    "load_s": 5.71,
+    "load_cpu_s": 9.99,
+    "file_bytes": 191767,
+    "range_points": 133,
+    "range_unproven": 0,
+    "range_mean_s": 2.77,
+    "range_worst_s": 7.86
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

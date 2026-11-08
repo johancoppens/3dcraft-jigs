@@ -1,0 +1,2960 @@
+[
+[
+"variable.set",
+{
+"name": "wing_span",
+"expr": "1200 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "root_chord",
+"expr": "200 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tip_chord",
+"expr": "130 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "sweep_angle",
+"expr": "6 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "washout",
+"expr": "2 deg"
+}
+],
+[
+"table.set",
+{
+"name": "camber_codes",
+"columns": [
+"code",
+"digit_m",
+"digit_p"
+],
+"rows": [
+[
+"00xx symmetric",
+0,
+4
+],
+[
+"12xx",
+1,
+2
+],
+[
+"13xx",
+1,
+3
+],
+[
+"14xx",
+1,
+4
+],
+[
+"15xx",
+1,
+5
+],
+[
+"16xx",
+1,
+6
+],
+[
+"22xx",
+2,
+2
+],
+[
+"23xx",
+2,
+3
+],
+[
+"24xx",
+2,
+4
+],
+[
+"25xx",
+2,
+5
+],
+[
+"26xx",
+2,
+6
+],
+[
+"32xx",
+3,
+2
+],
+[
+"33xx",
+3,
+3
+],
+[
+"34xx",
+3,
+4
+],
+[
+"35xx",
+3,
+5
+],
+[
+"36xx",
+3,
+6
+],
+[
+"42xx",
+4,
+2
+],
+[
+"43xx",
+4,
+3
+],
+[
+"44xx",
+4,
+4
+],
+[
+"45xx",
+4,
+5
+],
+[
+"46xx",
+4,
+6
+],
+[
+"52xx",
+5,
+2
+],
+[
+"53xx",
+5,
+3
+],
+[
+"54xx",
+5,
+4
+],
+[
+"55xx",
+5,
+5
+],
+[
+"56xx",
+5,
+6
+],
+[
+"62xx",
+6,
+2
+],
+[
+"63xx",
+6,
+3
+],
+[
+"64xx",
+6,
+4
+],
+[
+"65xx",
+6,
+5
+],
+[
+"66xx",
+6,
+6
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "camber_choice",
+"expr": "9"
+}
+],
+[
+"variable.set",
+{
+"name": "thickness_digits",
+"expr": "12"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_count",
+"expr": "12"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_sheet",
+"expr": "3 mm"
+}
+],
+[
+"table.set",
+{
+"name": "spar_stocks",
+"columns": [
+"stock",
+{
+"name": "width",
+"unit": "mm"
+},
+{
+"name": "depth",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"3 x 6",
+3,
+6
+],
+[
+"3 x 10",
+3,
+10
+],
+[
+"5 x 5",
+5,
+5
+],
+[
+"6 x 6",
+6,
+6
+],
+[
+"6 x 3 flat",
+6,
+3
+],
+[
+"10 x 3 flat",
+10,
+3
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "spar_choice",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "flying_weight",
+"expr": "950 g"
+}
+],
+[
+"variable.set",
+{
+"name": "covering",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "semi_span",
+"expr": "wing_span/2"
+}
+],
+[
+"variable.set",
+{
+"name": "camber_max",
+"expr": "camber_codes[camber_choice].digit_m/100"
+}
+],
+[
+"variable.set",
+{
+"name": "camber_pos",
+"expr": "camber_codes[camber_choice].digit_p/10"
+}
+],
+[
+"variable.set",
+{
+"name": "thickness_ratio",
+"expr": "thickness_digits/100"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_width",
+"expr": "spar_stocks[spar_choice].width"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_depth",
+"expr": "spar_stocks[spar_choice].depth"
+}
+],
+[
+"variable.set",
+{
+"name": "tip_le_x",
+"expr": "semi_span*tan(sweep_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_bay",
+"expr": "(semi_span-rib_sheet)/(rib_count-1)"
+}
+],
+[
+"variable.set",
+{
+"name": "tool_overrun",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "overrun_fraction",
+"expr": "tool_overrun/semi_span"
+}
+],
+[
+"variable.set",
+{
+"name": "laser_kerf",
+"expr": "0.15 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "slot_fit_clearance",
+"expr": "0.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "min_rib_web",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_station",
+"expr": "0.3"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_param",
+"expr": "sqrt(spar_station)"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_top_xf",
+"expr": "(((spar_param)*(spar_param))-(5*thickness_ratio*(0.2969*(spar_param)-0.1260*(spar_param)*abs(spar_param)-0.3516*(spar_param)*abs(spar_param)^3+0.2843*(spar_param)*abs(spar_param)^5-0.1036*(spar_param)*abs(spar_param)^7))*((if(((spar_param)*(spar_param))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((spar_param)*(spar_param))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((spar_param)*(spar_param)))))*(1/sqrt(1+(if(((spar_param)*(spar_param))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((spar_param)*(spar_param))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((spar_param)*(spar_param)))))^2)))-0.25)+0.25"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_top_yf",
+"expr": "((if(((spar_param)*(spar_param))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((spar_param)*(spar_param))-((spar_param)*(spar_param))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((spar_param)*(spar_param))-((spar_param)*(spar_param))^2)))+(5*thickness_ratio*(0.2969*(spar_param)-0.1260*(spar_param)*abs(spar_param)-0.3516*(spar_param)*abs(spar_param)^3+0.2843*(spar_param)*abs(spar_param)^5-0.1036*(spar_param)*abs(spar_param)^7))*(1/sqrt(1+(if(((spar_param)*(spar_param))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((spar_param)*(spar_param))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((spar_param)*(spar_param)))))^2)))"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_xf",
+"expr": "((((-spar_param))*((-spar_param)))-(5*thickness_ratio*(0.2969*((-spar_param))-0.1260*((-spar_param))*abs((-spar_param))-0.3516*((-spar_param))*abs((-spar_param))^3+0.2843*((-spar_param))*abs((-spar_param))^5-0.1036*((-spar_param))*abs((-spar_param))^7))*((if((((-spar_param))*((-spar_param)))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-(((-spar_param))*((-spar_param)))), 2*camber_max/(1-camber_pos)^2*(camber_pos-(((-spar_param))*((-spar_param))))))*(1/sqrt(1+(if((((-spar_param))*((-spar_param)))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-(((-spar_param))*((-spar_param)))), 2*camber_max/(1-camber_pos)^2*(camber_pos-(((-spar_param))*((-spar_param))))))^2)))-0.25)+0.25"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_yf",
+"expr": "((if((((-spar_param))*((-spar_param)))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*(((-spar_param))*((-spar_param)))-(((-spar_param))*((-spar_param)))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*(((-spar_param))*((-spar_param)))-(((-spar_param))*((-spar_param)))^2)))+(5*thickness_ratio*(0.2969*((-spar_param))-0.1260*((-spar_param))*abs((-spar_param))-0.3516*((-spar_param))*abs((-spar_param))^3+0.2843*((-spar_param))*abs((-spar_param))^5-0.1036*((-spar_param))*abs((-spar_param))^7))*(1/sqrt(1+(if((((-spar_param))*((-spar_param)))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-(((-spar_param))*((-spar_param)))), 2*camber_max/(1-camber_pos)^2*(camber_pos-(((-spar_param))*((-spar_param))))))^2)))"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_thickness_ratio",
+"expr": "spar_top_yf-spar_bottom_yf"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_top_root_x",
+"expr": "spar_top_xf*root_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_top_root_y",
+"expr": "spar_top_yf*root_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_top_tip_x",
+"expr": "tip_le_x+0.25*tip_chord+((spar_top_xf)-0.25)*tip_chord*cos(washout)-(spar_top_yf)*tip_chord*sin(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_top_tip_y",
+"expr": "((spar_top_xf)-0.25)*tip_chord*sin(washout)+(spar_top_yf)*tip_chord*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_root_x",
+"expr": "spar_bottom_xf*root_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_root_y",
+"expr": "spar_bottom_yf*root_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_tip_x",
+"expr": "tip_le_x+0.25*tip_chord+((spar_bottom_xf)-0.25)*tip_chord*cos(washout)-(spar_bottom_yf)*tip_chord*sin(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_tip_y",
+"expr": "((spar_bottom_xf)-0.25)*tip_chord*sin(washout)+(spar_bottom_yf)*tip_chord*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_sweep_tan",
+"expr": "(spar_top_tip_x-spar_top_root_x)/semi_span"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_sweep_cos",
+"expr": "1/sqrt(1+spar_sweep_tan^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_x_width",
+"expr": "spar_width/spar_sweep_cos"
+}
+],
+[
+"variable.set",
+{
+"name": "slot_x_width",
+"expr": "spar_x_width+rib_sheet*abs(spar_sweep_tan)+slot_fit_clearance-laser_kerf"
+}
+],
+[
+"variable.set",
+{
+"name": "slot_floor_gap",
+"expr": "0.05 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "le_depth",
+"expr": "max(6 mm, 0.04*root_chord)"
+}
+],
+[
+"variable.set",
+{
+"name": "te_depth",
+"expr": "max(14 mm, 0.12*tip_chord)"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_tip_x",
+"expr": "tip_le_x+0.25*tip_chord+((0)-0.25)*tip_chord*cos(washout)-(0)*tip_chord*sin(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "nose_tip_y",
+"expr": "((0)-0.25)*tip_chord*sin(washout)+(0)*tip_chord*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "tail_tip_x",
+"expr": "tip_le_x+0.25*tip_chord+((1)-0.25)*tip_chord*cos(washout)-(0)*tip_chord*sin(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "tail_tip_y",
+"expr": "((1)-0.25)*tip_chord*sin(washout)+(0)*tip_chord*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_blank_y_size",
+"expr": "root_chord+tip_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_half_length",
+"expr": "1.5*rib_bay"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_fraction",
+"expr": "joiner_half_length/semi_span"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_thickness",
+"expr": "max(1.5 mm, min(3 mm, round(spar_depth/(1 mm))/2*1 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_bottom_sweep_tan",
+"expr": "(spar_bottom_tip_x-spar_bottom_root_x)/semi_span"
+}
+],
+[
+"variable.set",
+{
+"name": "pocket_x_width",
+"expr": "slot_x_width-0.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_x_width",
+"expr": "pocket_x_width-rib_sheet*max(abs(spar_sweep_tan),abs(spar_bottom_sweep_tan))-0.1 mm"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "0 mm",
+"name": "Root section"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Root section",
+"x": "(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*root_chord*sin(0 deg)+((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*root_chord*cos(0 deg)",
+"y": "0 mm+0.25*root_chord+(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*root_chord*cos(0 deg)-((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*root_chord*sin(0 deg)",
+"t": [
+-1,
+1
+],
+"closed": true
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span",
+"name": "Tip section"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tip section",
+"x": "(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*tip_chord*sin(washout)+((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*tip_chord*cos(washout)",
+"y": "tip_le_x+0.25*tip_chord+(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*tip_chord*cos(washout)-((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*tip_chord*sin(washout)",
+"t": [
+-1,
+1
+],
+"closed": true
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Root section",
+"Tip section"
+],
+"ruled": true,
+"name": "Wing loft"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "0 mm",
+"name": "Top spar root end"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top spar root end",
+"from": [
+"spar_top_root_y-spar_depth",
+"spar_top_root_x-spar_x_width/2"
+],
+"to": [
+"spar_top_root_y",
+"spar_top_root_x+spar_x_width/2"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span",
+"name": "Top spar tip end"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top spar tip end",
+"from": [
+"spar_top_tip_y-spar_depth",
+"spar_top_tip_x-spar_x_width/2"
+],
+"to": [
+"spar_top_tip_y",
+"spar_top_tip_x+spar_x_width/2"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Top spar root end",
+"Top spar tip end"
+],
+"ruled": true,
+"name": "Top spar"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "0 mm",
+"name": "Bottom spar root end"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom spar root end",
+"from": [
+"spar_bottom_root_y",
+"spar_bottom_root_x-spar_x_width/2"
+],
+"to": [
+"spar_bottom_root_y+spar_depth",
+"spar_bottom_root_x+spar_x_width/2"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span",
+"name": "Bottom spar tip end"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom spar tip end",
+"from": [
+"spar_bottom_tip_y",
+"spar_bottom_tip_x-spar_x_width/2"
+],
+"to": [
+"spar_bottom_tip_y+spar_depth",
+"spar_bottom_tip_x+spar_x_width/2"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Bottom spar root end",
+"Bottom spar tip end"
+],
+"ruled": true,
+"name": "Bottom spar"
+}
+],
+[
+"variable.set",
+{
+"name": "prism_y_half",
+"expr": "root_chord"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "LE prism root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "LE prism root",
+"from": [
+"((-prism_y_half)+((nose_tip_y-prism_y_half)-(-prism_y_half))*((-overrun_fraction)))",
+"((-10 mm)+((nose_tip_x-10 mm)-(-10 mm))*((-overrun_fraction)))"
+],
+"to": [
+"((prism_y_half)+((nose_tip_y+prism_y_half)-(prism_y_half))*((-overrun_fraction)))",
+"((le_depth)+((nose_tip_x+le_depth)-(le_depth))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span+tool_overrun",
+"name": "LE prism tip"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "LE prism tip",
+"from": [
+"((-prism_y_half)+((nose_tip_y-prism_y_half)-(-prism_y_half))*((1+overrun_fraction)))",
+"((-10 mm)+((nose_tip_x-10 mm)-(-10 mm))*((1+overrun_fraction)))"
+],
+"to": [
+"((prism_y_half)+((nose_tip_y+prism_y_half)-(prism_y_half))*((1+overrun_fraction)))",
+"((le_depth)+((nose_tip_x+le_depth)-(le_depth))*((1+overrun_fraction)))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"LE prism root",
+"LE prism tip"
+],
+"ruled": true,
+"name": "LE prism body"
+}
+],
+[
+"feature.boolean",
+{
+"op": "intersect",
+"target": "LE prism body",
+"tool": "Wing loft",
+"keepTool": true,
+"name": "Leading edge"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "Rib zone root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib zone root",
+"from": [
+"((-prism_y_half)+((nose_tip_y-prism_y_half)-(-prism_y_half))*((-overrun_fraction)))",
+"((le_depth)+((nose_tip_x+le_depth)-(le_depth))*((-overrun_fraction)))"
+],
+"to": [
+"((prism_y_half)+((tail_tip_y+prism_y_half)-(prism_y_half))*((-overrun_fraction)))",
+"((root_chord-te_depth)+((tail_tip_x-te_depth)-(root_chord-te_depth))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span+tool_overrun",
+"name": "Rib zone tip"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib zone tip",
+"from": [
+"((-prism_y_half)+((nose_tip_y-prism_y_half)-(-prism_y_half))*((1+overrun_fraction)))",
+"((le_depth)+((nose_tip_x+le_depth)-(le_depth))*((1+overrun_fraction)))"
+],
+"to": [
+"((prism_y_half)+((tail_tip_y+prism_y_half)-(prism_y_half))*((1+overrun_fraction)))",
+"((root_chord-te_depth)+((tail_tip_x-te_depth)-(root_chord-te_depth))*((1+overrun_fraction)))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Rib zone root",
+"Rib zone tip"
+],
+"ruled": true,
+"name": "Rib zone body"
+}
+],
+[
+"feature.boolean",
+{
+"op": "intersect",
+"target": "Rib zone body",
+"tool": "Wing loft",
+"keepTool": true,
+"name": "Rib core"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "Top spar slot root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top spar slot root",
+"from": [
+"((spar_top_root_y-spar_depth-slot_floor_gap)+((spar_top_tip_y-spar_depth-slot_floor_gap)-(spar_top_root_y-spar_depth-slot_floor_gap))*((-overrun_fraction)))",
+"((spar_top_root_x-slot_x_width/2)+((spar_top_tip_x-slot_x_width/2)-(spar_top_root_x-slot_x_width/2))*((-overrun_fraction)))"
+],
+"to": [
+"((spar_top_root_y+20 mm)+((spar_top_tip_y+20 mm)-(spar_top_root_y+20 mm))*((-overrun_fraction)))",
+"((spar_top_root_x+slot_x_width/2)+((spar_top_tip_x+slot_x_width/2)-(spar_top_root_x+slot_x_width/2))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span+tool_overrun",
+"name": "Top spar slot tip"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top spar slot tip",
+"from": [
+"((spar_top_root_y-spar_depth-slot_floor_gap)+((spar_top_tip_y-spar_depth-slot_floor_gap)-(spar_top_root_y-spar_depth-slot_floor_gap))*((1+overrun_fraction)))",
+"((spar_top_root_x-slot_x_width/2)+((spar_top_tip_x-slot_x_width/2)-(spar_top_root_x-slot_x_width/2))*((1+overrun_fraction)))"
+],
+"to": [
+"((spar_top_root_y+20 mm)+((spar_top_tip_y+20 mm)-(spar_top_root_y+20 mm))*((1+overrun_fraction)))",
+"((spar_top_root_x+slot_x_width/2)+((spar_top_tip_x+slot_x_width/2)-(spar_top_root_x+slot_x_width/2))*((1+overrun_fraction)))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Top spar slot root",
+"Top spar slot tip"
+],
+"ruled": true,
+"name": "Core, top slot tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Rib core",
+"tool": "Core, top slot tool",
+"name": "Core, top slot"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "Bottom spar slot root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom spar slot root",
+"from": [
+"((spar_bottom_root_y-20 mm)+((spar_bottom_tip_y-20 mm)-(spar_bottom_root_y-20 mm))*((-overrun_fraction)))",
+"((spar_bottom_root_x-slot_x_width/2)+((spar_bottom_tip_x-slot_x_width/2)-(spar_bottom_root_x-slot_x_width/2))*((-overrun_fraction)))"
+],
+"to": [
+"((spar_bottom_root_y+spar_depth+slot_floor_gap)+((spar_bottom_tip_y+spar_depth+slot_floor_gap)-(spar_bottom_root_y+spar_depth+slot_floor_gap))*((-overrun_fraction)))",
+"((spar_bottom_root_x+slot_x_width/2)+((spar_bottom_tip_x+slot_x_width/2)-(spar_bottom_root_x+slot_x_width/2))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span+tool_overrun",
+"name": "Bottom spar slot tip"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom spar slot tip",
+"from": [
+"((spar_bottom_root_y-20 mm)+((spar_bottom_tip_y-20 mm)-(spar_bottom_root_y-20 mm))*((1+overrun_fraction)))",
+"((spar_bottom_root_x-slot_x_width/2)+((spar_bottom_tip_x-slot_x_width/2)-(spar_bottom_root_x-slot_x_width/2))*((1+overrun_fraction)))"
+],
+"to": [
+"((spar_bottom_root_y+spar_depth+slot_floor_gap)+((spar_bottom_tip_y+spar_depth+slot_floor_gap)-(spar_bottom_root_y+spar_depth+slot_floor_gap))*((1+overrun_fraction)))",
+"((spar_bottom_root_x+slot_x_width/2)+((spar_bottom_tip_x+slot_x_width/2)-(spar_bottom_root_x+slot_x_width/2))*((1+overrun_fraction)))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Bottom spar slot root",
+"Bottom spar slot tip"
+],
+"ruled": true,
+"name": "Core, bottom slot tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Core, top slot",
+"tool": "Core, bottom slot tool",
+"name": "Core, bottom slot"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "Top joiner pocket root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top joiner pocket root",
+"from": [
+"((spar_top_root_y-spar_depth-slot_floor_gap-joiner_thickness-slot_floor_gap)+((spar_top_tip_y-spar_depth-slot_floor_gap-joiner_thickness-slot_floor_gap)-(spar_top_root_y-spar_depth-slot_floor_gap-joiner_thickness-slot_floor_gap))*((-overrun_fraction)))",
+"((spar_top_root_x-pocket_x_width/2)+((spar_top_tip_x-pocket_x_width/2)-(spar_top_root_x-pocket_x_width/2))*((-overrun_fraction)))"
+],
+"to": [
+"((spar_top_root_y-spar_depth+1 mm)+((spar_top_tip_y-spar_depth+1 mm)-(spar_top_root_y-spar_depth+1 mm))*((-overrun_fraction)))",
+"((spar_top_root_x+pocket_x_width/2)+((spar_top_tip_x+pocket_x_width/2)-(spar_top_root_x+pocket_x_width/2))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "joiner_half_length",
+"name": "Top joiner pocket end"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top joiner pocket end",
+"from": [
+"((spar_top_root_y-spar_depth-slot_floor_gap-joiner_thickness-slot_floor_gap)+((spar_top_tip_y-spar_depth-slot_floor_gap-joiner_thickness-slot_floor_gap)-(spar_top_root_y-spar_depth-slot_floor_gap-joiner_thickness-slot_floor_gap))*(joiner_fraction))",
+"((spar_top_root_x-pocket_x_width/2)+((spar_top_tip_x-pocket_x_width/2)-(spar_top_root_x-pocket_x_width/2))*(joiner_fraction))"
+],
+"to": [
+"((spar_top_root_y-spar_depth+1 mm)+((spar_top_tip_y-spar_depth+1 mm)-(spar_top_root_y-spar_depth+1 mm))*(joiner_fraction))",
+"((spar_top_root_x+pocket_x_width/2)+((spar_top_tip_x+pocket_x_width/2)-(spar_top_root_x+pocket_x_width/2))*(joiner_fraction))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Top joiner pocket root",
+"Top joiner pocket end"
+],
+"ruled": true,
+"name": "Top joiner pocket tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Core, bottom slot",
+"tool": "Top joiner pocket tool",
+"name": "Core, top joiner pocket"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "Bottom joiner pocket root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom joiner pocket root",
+"from": [
+"((spar_bottom_root_y+spar_depth-1 mm)+((spar_bottom_tip_y+spar_depth-1 mm)-(spar_bottom_root_y+spar_depth-1 mm))*((-overrun_fraction)))",
+"((spar_bottom_root_x-pocket_x_width/2)+((spar_bottom_tip_x-pocket_x_width/2)-(spar_bottom_root_x-pocket_x_width/2))*((-overrun_fraction)))"
+],
+"to": [
+"((spar_bottom_root_y+spar_depth+slot_floor_gap+joiner_thickness+slot_floor_gap)+((spar_bottom_tip_y+spar_depth+slot_floor_gap+joiner_thickness+slot_floor_gap)-(spar_bottom_root_y+spar_depth+slot_floor_gap+joiner_thickness+slot_floor_gap))*((-overrun_fraction)))",
+"((spar_bottom_root_x+pocket_x_width/2)+((spar_bottom_tip_x+pocket_x_width/2)-(spar_bottom_root_x+pocket_x_width/2))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "joiner_half_length",
+"name": "Bottom joiner pocket end"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom joiner pocket end",
+"from": [
+"((spar_bottom_root_y+spar_depth-1 mm)+((spar_bottom_tip_y+spar_depth-1 mm)-(spar_bottom_root_y+spar_depth-1 mm))*(joiner_fraction))",
+"((spar_bottom_root_x-pocket_x_width/2)+((spar_bottom_tip_x-pocket_x_width/2)-(spar_bottom_root_x-pocket_x_width/2))*(joiner_fraction))"
+],
+"to": [
+"((spar_bottom_root_y+spar_depth+slot_floor_gap+joiner_thickness+slot_floor_gap)+((spar_bottom_tip_y+spar_depth+slot_floor_gap+joiner_thickness+slot_floor_gap)-(spar_bottom_root_y+spar_depth+slot_floor_gap+joiner_thickness+slot_floor_gap))*(joiner_fraction))",
+"((spar_bottom_root_x+pocket_x_width/2)+((spar_bottom_tip_x+pocket_x_width/2)-(spar_bottom_root_x+pocket_x_width/2))*(joiner_fraction))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Bottom joiner pocket root",
+"Bottom joiner pocket end"
+],
+"ruled": true,
+"name": "Bottom joiner pocket tool"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Core, top joiner pocket",
+"tool": "Bottom joiner pocket tool",
+"name": "Rib core with slots"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_blank_x",
+"expr": "min(0 mm, tip_le_x)-0.2*root_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_blank_y",
+"expr": "-(root_chord+tip_chord)/2"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_blank_x_size",
+"expr": "abs(tip_le_x)+1.4*root_chord+tip_chord"
+}
+],
+[
+"feature.block",
+{
+"size": [
+"rib_blank_x_size",
+"rib_sheet",
+"rib_blank_y_size"
+],
+"position": [
+"rib_blank_x",
+"0 mm",
+"rib_blank_y"
+],
+"name": "Rib blank"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Rib blank",
+"count": "rib_count",
+"step": [
+"0 mm",
+"rib_bay",
+"0 mm"
+],
+"name": "Rib blanks"
+}
+],
+[
+"feature.boolean",
+{
+"op": "intersect",
+"target": "Rib blanks",
+"tool": "Rib core with slots",
+"name": "Ribs"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-tool_overrun",
+"name": "TE prism root"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "TE prism root",
+"from": [
+"((-prism_y_half)+((tail_tip_y-prism_y_half)-(-prism_y_half))*((-overrun_fraction)))",
+"((root_chord-te_depth)+((tail_tip_x-te_depth)-(root_chord-te_depth))*((-overrun_fraction)))"
+],
+"to": [
+"((prism_y_half)+((tail_tip_y+prism_y_half)-(prism_y_half))*((-overrun_fraction)))",
+"((root_chord+10 mm)+((tail_tip_x+10 mm)-(root_chord+10 mm))*((-overrun_fraction)))"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span+tool_overrun",
+"name": "TE prism tip"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "TE prism tip",
+"from": [
+"((-prism_y_half)+((tail_tip_y-prism_y_half)-(-prism_y_half))*((1+overrun_fraction)))",
+"((root_chord-te_depth)+((tail_tip_x-te_depth)-(root_chord-te_depth))*((1+overrun_fraction)))"
+],
+"to": [
+"((prism_y_half)+((tail_tip_y+prism_y_half)-(prism_y_half))*((1+overrun_fraction)))",
+"((root_chord+10 mm)+((tail_tip_x+10 mm)-(root_chord+10 mm))*((1+overrun_fraction)))"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"TE prism root",
+"TE prism tip"
+],
+"ruled": true,
+"name": "TE prism body"
+}
+],
+[
+"feature.boolean",
+{
+"op": "intersect",
+"target": "TE prism body",
+"tool": "Wing loft",
+"name": "Trailing edge"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_top_slope",
+"expr": "(spar_top_tip_y-spar_top_root_y)/semi_span"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_bottom_slope",
+"expr": "(spar_bottom_tip_y-spar_bottom_root_y)/semi_span"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-joiner_half_length",
+"name": "Top joiner left"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top joiner left",
+"from": [
+"(((spar_top_root_y-spar_depth)+((spar_top_tip_y-spar_depth)-(spar_top_root_y-spar_depth))*(joiner_fraction)))-slot_floor_gap-joiner_thickness",
+"(((spar_top_root_x)+((spar_top_tip_x)-(spar_top_root_x))*(joiner_fraction)))-joiner_x_width/2"
+],
+"to": [
+"(((spar_top_root_y-spar_depth)+((spar_top_tip_y-spar_depth)-(spar_top_root_y-spar_depth))*(joiner_fraction)))-slot_floor_gap",
+"(((spar_top_root_x)+((spar_top_tip_x)-(spar_top_root_x))*(joiner_fraction)))+joiner_x_width/2"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "0 mm",
+"name": "Top joiner centre"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top joiner centre",
+"from": [
+"(((spar_top_root_y-spar_depth)+((spar_top_tip_y-spar_depth)-(spar_top_root_y-spar_depth))*(0)))-slot_floor_gap-joiner_thickness",
+"(((spar_top_root_x)+((spar_top_tip_x)-(spar_top_root_x))*(0)))-joiner_x_width/2"
+],
+"to": [
+"(((spar_top_root_y-spar_depth)+((spar_top_tip_y-spar_depth)-(spar_top_root_y-spar_depth))*(0)))-slot_floor_gap",
+"(((spar_top_root_x)+((spar_top_tip_x)-(spar_top_root_x))*(0)))+joiner_x_width/2"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "joiner_half_length",
+"name": "Top joiner right"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Top joiner right",
+"from": [
+"(((spar_top_root_y-spar_depth)+((spar_top_tip_y-spar_depth)-(spar_top_root_y-spar_depth))*(joiner_fraction)))-slot_floor_gap-joiner_thickness",
+"(((spar_top_root_x)+((spar_top_tip_x)-(spar_top_root_x))*(joiner_fraction)))-joiner_x_width/2"
+],
+"to": [
+"(((spar_top_root_y-spar_depth)+((spar_top_tip_y-spar_depth)-(spar_top_root_y-spar_depth))*(joiner_fraction)))-slot_floor_gap",
+"(((spar_top_root_x)+((spar_top_tip_x)-(spar_top_root_x))*(joiner_fraction)))+joiner_x_width/2"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Top joiner left",
+"Top joiner centre",
+"Top joiner right"
+],
+"ruled": true,
+"name": "Top joiner"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-joiner_half_length",
+"name": "Bottom joiner left"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom joiner left",
+"from": [
+"(((spar_bottom_root_y+spar_depth)+((spar_bottom_tip_y+spar_depth)-(spar_bottom_root_y+spar_depth))*(joiner_fraction)))+slot_floor_gap",
+"(((spar_bottom_root_x)+((spar_bottom_tip_x)-(spar_bottom_root_x))*(joiner_fraction)))-joiner_x_width/2"
+],
+"to": [
+"(((spar_bottom_root_y+spar_depth)+((spar_bottom_tip_y+spar_depth)-(spar_bottom_root_y+spar_depth))*(joiner_fraction)))+slot_floor_gap+joiner_thickness",
+"(((spar_bottom_root_x)+((spar_bottom_tip_x)-(spar_bottom_root_x))*(joiner_fraction)))+joiner_x_width/2"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "0 mm",
+"name": "Bottom joiner centre"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom joiner centre",
+"from": [
+"(((spar_bottom_root_y+spar_depth)+((spar_bottom_tip_y+spar_depth)-(spar_bottom_root_y+spar_depth))*(0)))+slot_floor_gap",
+"(((spar_bottom_root_x)+((spar_bottom_tip_x)-(spar_bottom_root_x))*(0)))-joiner_x_width/2"
+],
+"to": [
+"(((spar_bottom_root_y+spar_depth)+((spar_bottom_tip_y+spar_depth)-(spar_bottom_root_y+spar_depth))*(0)))+slot_floor_gap+joiner_thickness",
+"(((spar_bottom_root_x)+((spar_bottom_tip_x)-(spar_bottom_root_x))*(0)))+joiner_x_width/2"
+]
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "joiner_half_length",
+"name": "Bottom joiner right"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Bottom joiner right",
+"from": [
+"(((spar_bottom_root_y+spar_depth)+((spar_bottom_tip_y+spar_depth)-(spar_bottom_root_y+spar_depth))*(joiner_fraction)))+slot_floor_gap",
+"(((spar_bottom_root_x)+((spar_bottom_tip_x)-(spar_bottom_root_x))*(joiner_fraction)))-joiner_x_width/2"
+],
+"to": [
+"(((spar_bottom_root_y+spar_depth)+((spar_bottom_tip_y+spar_depth)-(spar_bottom_root_y+spar_depth))*(joiner_fraction)))+slot_floor_gap+joiner_thickness",
+"(((spar_bottom_root_x)+((spar_bottom_tip_x)-(spar_bottom_root_x))*(joiner_fraction)))+joiner_x_width/2"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Bottom joiner left",
+"Bottom joiner centre",
+"Bottom joiner right"
+],
+"ruled": true,
+"name": "Bottom joiner"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"name": "Joiner flat pattern"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_flat_length",
+"expr": "joiner_half_length*sqrt(1+max(joiner_top_slope^2,joiner_bottom_slope^2))"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_end_offset",
+"expr": "spar_sweep_tan*joiner_half_length"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_end_offset_bottom",
+"expr": "spar_bottom_sweep_tan*joiner_half_length"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Joiner flat pattern",
+"points": [
+[
+"(0 mm+joiner_end_offset-joiner_x_width/2)",
+"(-joiner_flat_length)"
+],
+[
+"(0 mm-joiner_x_width/2)",
+"(0 mm)"
+],
+[
+"(0 mm+joiner_end_offset-joiner_x_width/2)",
+"(joiner_flat_length)"
+],
+[
+"(0 mm+joiner_end_offset+joiner_x_width/2)",
+"(joiner_flat_length)"
+],
+[
+"(0 mm+joiner_x_width/2)",
+"(0 mm)"
+],
+[
+"(0 mm+joiner_end_offset+joiner_x_width/2)",
+"(-joiner_flat_length)"
+]
+],
+"closed": true
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Joiner flat pattern",
+"points": [
+[
+"((joiner_x_width+20 mm)+joiner_end_offset_bottom-joiner_x_width/2)",
+"(-joiner_flat_length)"
+],
+[
+"((joiner_x_width+20 mm)-joiner_x_width/2)",
+"(0 mm)"
+],
+[
+"((joiner_x_width+20 mm)+joiner_end_offset_bottom-joiner_x_width/2)",
+"(joiner_flat_length)"
+],
+[
+"((joiner_x_width+20 mm)+joiner_end_offset_bottom+joiner_x_width/2)",
+"(joiner_flat_length)"
+],
+[
+"((joiner_x_width+20 mm)+joiner_x_width/2)",
+"(0 mm)"
+],
+[
+"((joiner_x_width+20 mm)+joiner_end_offset_bottom+joiner_x_width/2)",
+"(-joiner_flat_length)"
+]
+],
+"closed": true
+}
+],
+[
+"material.preset",
+{
+"body": "Ribs",
+"preset": "wood",
+"color": "#e6d2a4",
+"roughness": 0.75
+}
+],
+[
+"body.material",
+{
+"body": "Ribs",
+"name": "Balsa",
+"density": "150 kg/m3"
+}
+],
+[
+"material.preset",
+{
+"body": "Leading edge",
+"preset": "wood",
+"color": "#e6d2a4",
+"roughness": 0.75
+}
+],
+[
+"body.material",
+{
+"body": "Leading edge",
+"name": "Balsa",
+"density": "150 kg/m3"
+}
+],
+[
+"material.preset",
+{
+"body": "Trailing edge",
+"preset": "wood",
+"color": "#e6d2a4",
+"roughness": 0.75
+}
+],
+[
+"body.material",
+{
+"body": "Trailing edge",
+"name": "Balsa",
+"density": "150 kg/m3"
+}
+],
+[
+"material.preset",
+{
+"body": "Top spar",
+"preset": "wood",
+"color": "#c9a26b",
+"roughness": 0.7
+}
+],
+[
+"body.material",
+{
+"body": "Top spar",
+"name": "Spruce",
+"density": "450 kg/m3"
+}
+],
+[
+"material.preset",
+{
+"body": "Bottom spar",
+"preset": "wood",
+"color": "#c9a26b",
+"roughness": 0.7
+}
+],
+[
+"body.material",
+{
+"body": "Bottom spar",
+"name": "Spruce",
+"density": "450 kg/m3"
+}
+],
+[
+"material.preset",
+{
+"body": "Top joiner",
+"preset": "wood",
+"color": "#b98a55",
+"roughness": 0.65
+}
+],
+[
+"body.material",
+{
+"body": "Top joiner",
+"name": "Birch plywood",
+"density": "680 kg/m3"
+}
+],
+[
+"material.preset",
+{
+"body": "Bottom joiner",
+"preset": "wood",
+"color": "#b98a55",
+"roughness": 0.65
+}
+],
+[
+"body.material",
+{
+"body": "Bottom joiner",
+"name": "Birch plywood",
+"density": "680 kg/m3"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Ribs",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+0,
+0,
+0
+],
+"keep": true,
+"name": "Ribs left"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Top spar",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+0,
+0,
+0
+],
+"keep": true,
+"name": "Top spar left"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Bottom spar",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+0,
+0,
+0
+],
+"keep": true,
+"name": "Bottom spar left"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Leading edge",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+0,
+0,
+0
+],
+"keep": true,
+"name": "Leading edge left"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Trailing edge",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+0,
+0,
+0
+],
+"keep": true,
+"name": "Trailing edge left"
+}
+],
+[
+"variable.set",
+{
+"name": "film_offset",
+"expr": "0.5 mm"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "-film_offset",
+"name": "Film root"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Film root",
+"x": "(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*root_chord*sin(0 deg)+((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*root_chord*cos(0 deg)+film_offset*tanh(10*t)*(1-t^8)",
+"y": "0 mm+0.25*root_chord+(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*root_chord*cos(0 deg)-((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*root_chord*sin(0 deg)-film_offset*exp(-(t*9)^2)",
+"t": [
+-1,
+1
+],
+"closed": true
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"offset": "semi_span+film_offset",
+"name": "Film tip"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Film tip",
+"x": "(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*tip_chord*sin(washout)+((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*tip_chord*cos(washout)+film_offset*tanh(10*t)*(1-t^8)",
+"y": "tip_le_x+0.25*tip_chord+(((t)*(t))-(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*((if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))-0.25)*tip_chord*cos(washout)-((if(((t)*(t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((t)*(t))-((t)*(t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((t)*(t))-((t)*(t))^2)))+(5*thickness_ratio*(0.2969*(t)-0.1260*(t)*abs(t)-0.3516*(t)*abs(t)^3+0.2843*(t)*abs(t)^5-0.1036*(t)*abs(t)^7))*(1/sqrt(1+(if(((t)*(t))<camber_pos, 2*camber_max/camber_pos^2*(camber_pos-((t)*(t))), 2*camber_max/(1-camber_pos)^2*(camber_pos-((t)*(t)))))^2)))*tip_chord*sin(washout)-film_offset*exp(-(t*9)^2)",
+"t": [
+-1,
+1
+],
+"closed": true
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Film root",
+"Film tip"
+],
+"ruled": true,
+"name": "Film",
+"when": "covering==2"
+}
+],
+[
+"body.appearance",
+{
+"body": "Film",
+"color": "#2f62d8",
+"metallic": 0,
+"roughness": 0.25,
+"transmission": 0.8,
+"thinWalled": true,
+"ior": 1.45
+}
+],
+[
+"body.material",
+{
+"body": "Film",
+"name": "Covering film",
+"density": "100 kg/m3"
+}
+],
+[
+"set.define",
+{
+"name": "Cut sheet",
+"kind": "face",
+"where": {
+"any": [
+{
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Rib blank"
+},
+{
+"name": "*face(2)"
+}
+]
+},
+{
+"all": [
+{
+"in": "Ribs left"
+},
+{
+"madeBy": "Rib blank"
+},
+{
+"name": "*face(2)"
+}
+]
+}
+]
+}
+}
+],
+[
+"variable.set",
+{
+"name": "planform_area",
+"expr": "wing_span*(root_chord+tip_chord)/2"
+}
+],
+[
+"variable.set",
+{
+"name": "taper_ratio",
+"expr": "tip_chord/root_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "aspect_ratio",
+"expr": "wing_span^2/planform_area"
+}
+],
+[
+"variable.set",
+{
+"name": "mean_aero_chord",
+"expr": "2/3*root_chord*(1+taper_ratio+taper_ratio^2)/(1+taper_ratio)"
+}
+],
+[
+"variable.set",
+{
+"name": "mac_span_pos",
+"expr": "semi_span/3*(1+2*taper_ratio)/(1+taper_ratio)"
+}
+],
+[
+"variable.set",
+{
+"name": "mac_le_x",
+"expr": "mac_span_pos*tan(sweep_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "mass_kg",
+"expr": "flying_weight/(1 kg)"
+}
+],
+[
+"variable.set",
+{
+"name": "area_m2",
+"expr": "planform_area/(1000 mm)^2"
+}
+],
+[
+"variable.set",
+{
+"name": "air_density",
+"expr": "1.225"
+}
+],
+[
+"variable.set",
+{
+"name": "cl_max",
+"expr": "1.0"
+}
+],
+[
+"variable.set",
+{
+"name": "stall_speed_ms",
+"expr": "sqrt(2*mass_kg*9.80665/(air_density*area_m2*cl_max))"
+}
+],
+[
+"variable.set",
+{
+"name": "reynolds_at_stall",
+"expr": "stall_speed_ms*(mean_aero_chord/(1000 mm))/1.4607e-5"
+}
+],
+[
+"variable.output",
+{
+"name": "wing_area_output",
+"expr": "planform_area/(100 mm)^2",
+"label": "Wing area (dm\u00b2)"
+}
+],
+[
+"variable.output",
+{
+"name": "aspect_ratio_output",
+"expr": "aspect_ratio",
+"label": "Aspect ratio"
+}
+],
+[
+"variable.output",
+{
+"name": "mac_output",
+"expr": "mean_aero_chord",
+"label": "Mean aerodynamic chord",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "mac_position_output",
+"expr": "mac_span_pos",
+"label": "MAC, distance from the root",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "mac_sweep_output",
+"expr": "mac_le_x",
+"label": "MAC leading edge behind the root leading edge",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "wing_loading_output",
+"expr": "(flying_weight/(1 g))/(planform_area/(100 mm)^2)",
+"label": "Wing loading (g/dm\u00b2)"
+}
+],
+[
+"variable.output",
+{
+"name": "stall_speed_output",
+"expr": "stall_speed_ms",
+"label": "Stall speed, CLmax 1.0, sea level (m/s)"
+}
+],
+[
+"variable.output",
+{
+"name": "stall_kmh_output",
+"expr": "stall_speed_ms*3.6",
+"label": "Stall speed (km/h)"
+}
+],
+[
+"variable.output",
+{
+"name": "reynolds_output",
+"expr": "reynolds_at_stall",
+"label": "Reynolds number at the MAC, at stall"
+}
+],
+[
+"variable.output",
+{
+"name": "rib_spacing_output",
+"expr": "rib_bay",
+"label": "Rib spacing",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "frame_mass",
+"measure": "mass",
+"of": [
+"Leading edge",
+"Ribs",
+"Trailing edge",
+"Top spar",
+"Bottom spar",
+"Top joiner",
+"Bottom joiner",
+"Leading edge left",
+"Ribs left",
+"Trailing edge left",
+"Top spar left",
+"Bottom spar left"
+],
+"label": "Frame mass, both panels, without covering or glue",
+"unit": "g"
+}
+],
+[
+"variable.output",
+{
+"name": "spar_length_output",
+"expr": "semi_span/spar_sweep_cos",
+"label": "Spar length per panel (cut 2 top and bottom)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "le_length_output",
+"expr": "sqrt(semi_span^2+nose_tip_x^2)",
+"label": "Leading edge stock per panel",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "te_length_output",
+"expr": "sqrt(semi_span^2+(tail_tip_x-root_chord)^2)",
+"label": "Trailing edge stock per panel",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "joiner_length_output",
+"expr": "2*joiner_half_length",
+"label": "Ply joiners: length of each, across the centre",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "washout_packing_output",
+"expr": "0.7*tip_chord*sin(washout)",
+"label": "Washout: pack the tip trailing edge up by (bottom spar on the board)",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "measured_mid_chord",
+"measure": "sectionExtent",
+"of": [
+"Leading edge",
+"Trailing edge"
+],
+"plane": "zx",
+"offset": "semi_span/2",
+"axis": "x",
+"label": "Mean chord, at half span, as built",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "measured_mac_chord",
+"measure": "sectionExtent",
+"of": [
+"Leading edge",
+"Trailing edge"
+],
+"plane": "zx",
+"offset": "mac_span_pos",
+"axis": "x",
+"label": "Chord at the MAC station",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "tip_web",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Core, top slot"
+},
+{
+"name": "*side(e8,e8)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Core, bottom slot"
+},
+{
+"name": "*side(e6,e6)"
+}
+]
+},
+"label": "Web between the spar slots at the thinnest rib",
+"unit": "mm"
+}
+],
+[
+"variable.set",
+{
+"name": "te_centroid_xf",
+"expr": "1-2/3*te_depth/tip_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "te_centroid_t",
+"expr": "sqrt(te_centroid_xf)"
+}
+],
+[
+"variable.set",
+{
+"name": "te_tip_z_expected",
+"expr": "(te_centroid_xf-0.25)*tip_chord*sin(washout)+(if(((te_centroid_t)*(te_centroid_t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((te_centroid_t)*(te_centroid_t))-((te_centroid_t)*(te_centroid_t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((te_centroid_t)*(te_centroid_t))-((te_centroid_t)*(te_centroid_t))^2)))*tip_chord*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "le_centroid_xf",
+"expr": "0.6*le_depth/tip_chord"
+}
+],
+[
+"variable.set",
+{
+"name": "le_centroid_t",
+"expr": "sqrt(le_centroid_xf)"
+}
+],
+[
+"variable.set",
+{
+"name": "le_tip_z_expected",
+"expr": "(le_centroid_xf-0.25)*tip_chord*sin(washout)+(if(((le_centroid_t)*(le_centroid_t))<camber_pos, camber_max/camber_pos^2*(2*camber_pos*((le_centroid_t)*(le_centroid_t))-((le_centroid_t)*(le_centroid_t))^2), camber_max/(1-camber_pos)^2*(1-2*camber_pos+2*camber_pos*((le_centroid_t)*(le_centroid_t))-((le_centroid_t)*(le_centroid_t))^2)))*tip_chord*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "chord_overshoot",
+"expr": "(5*thickness_ratio*0.2969*(2*camber_max/camber_pos)/sqrt(1+(2*camber_max/camber_pos)^2))^2/4"
+}
+],
+[
+"assert.add",
+{
+"name": "Wing area agrees with the mean chord measured on the model",
+"measure": "value",
+"expr": "wing_span*measured_mid_chord",
+"eq": "planform_area*(1+chord_overshoot)*cos((washout*(semi_span/2)/semi_span))",
+"tol": "0.008*planform_area"
+}
+],
+[
+"assert.add",
+{
+"name": "Chord at the mean aerodynamic chord station",
+"measure": "value",
+"expr": "measured_mac_chord",
+"eq": "mean_aero_chord*cos((washout*(mac_span_pos)/semi_span))*(1+chord_overshoot)",
+"tol": "0.7 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Washout: the trailing edge at the tip",
+"measure": "sectionCentroid",
+"of": [
+"Trailing edge"
+],
+"plane": "zx",
+"offset": "semi_span-1 mm",
+"axis": "z",
+"eq": "te_tip_z_expected",
+"tol": "1.2 mm+0.005*tip_chord"
+}
+],
+[
+"assert.add",
+{
+"name": "Washout: the leading edge at the tip",
+"measure": "sectionCentroid",
+"of": [
+"Leading edge"
+],
+"plane": "zx",
+"offset": "semi_span-1 mm",
+"axis": "z",
+"eq": "le_tip_z_expected",
+"tol": "1.2 mm+0.015*tip_chord"
+}
+],
+[
+"assert.add",
+{
+"name": "Airfoil section area at the tip rib against the NACA formula",
+"measure": "sectionArea",
+"of": [
+"Leading edge",
+"Ribs",
+"Trailing edge"
+],
+"plane": "zx",
+"offset": "semi_span-rib_sheet/2",
+"eq": "0.68088*thickness_ratio*(root_chord+(tip_chord-root_chord)*(semi_span-rib_sheet/2)/semi_span)^2-2*slot_x_width*(spar_depth+slot_floor_gap)",
+"tol": "0.015*0.68088*thickness_ratio*(root_chord+(tip_chord-root_chord)*(semi_span-rib_sheet/2)/semi_span)^2"
+}
+],
+[
+"assert.add",
+{
+"name": "Rib count as built",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Rib blank"
+},
+{
+"name": "*face(2)"
+}
+]
+}
+},
+"eq": "rib_count"
+}
+],
+[
+"assert.add",
+{
+"name": "The spar slots leave a web at the thinnest rib",
+"measure": "value",
+"expr": "tip_web",
+"min": "min_rib_web"
+}
+],
+[
+"assert.add",
+{
+"name": "Rib web at the tip agrees with the NACA thickness",
+"measure": "value",
+"expr": "tip_web",
+"eq": "sqrt((spar_top_tip_y-spar_bottom_tip_y-2*spar_depth-2*slot_floor_gap)^2+max(0 mm, abs(spar_top_tip_x-spar_bottom_tip_x)-slot_x_width)^2)",
+"tol": "0.05 mm+0.003*(spar_top_tip_y-spar_bottom_tip_y)"
+}
+],
+[
+"assert.add",
+{
+"name": "Spar slot fits the spar stock",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Core, top slot"
+},
+{
+"name": "*side(e7,e7)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Top spar"
+},
+{
+"name": "*side(e7,e7)"
+}
+]
+},
+"eq": "(slot_x_width-spar_x_width)/2*spar_sweep_cos",
+"tol": "0.05 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Spar sits on the slot floor",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Core, top slot"
+},
+{
+"name": "*side(e8,e8)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Top spar"
+},
+{
+"name": "*side(e8,e8)"
+}
+]
+},
+"eq": "slot_floor_gap",
+"tol": "0.02 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Top spar flush with the rib outline",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Top spar"
+},
+{
+"name": "*side(e6,e6)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Wing loft"
+}
+]
+},
+"max": "(slot_x_width-spar_x_width)/2+0.6 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Bottom spar flush with the rib outline",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Bottom spar"
+},
+{
+"name": "*side(e8,e8)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Wing loft"
+}
+]
+},
+"max": "(slot_x_width-spar_x_width)/2+0.6 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Spars clear of the ribs",
+"measure": "clearance",
+"from": [
+"Top spar",
+"Bottom spar"
+],
+"to": [
+"Ribs"
+],
+"min": "0 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Joiners clear of the ribs and spars",
+"measure": "clearance",
+"from": [
+"Top joiner",
+"Bottom joiner"
+],
+"to": [
+"Ribs",
+"Top spar",
+"Bottom spar"
+],
+"min": "0 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Top joiner glued to the top spar",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Top joiner"
+},
+{
+"name": "*side(e6,*"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Top spar"
+},
+{
+"name": "*side(e8,e8)"
+}
+]
+},
+"eq": "slot_floor_gap",
+"tol": "0.02 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Bottom joiner glued to the bottom spar",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Bottom joiner"
+},
+{
+"name": "*side(e8,*"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Bottom spar"
+},
+{
+"name": "*side(e6,e6)"
+}
+]
+},
+"eq": "slot_floor_gap",
+"tol": "0.02 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Top joiner centred on its spar",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Top joiner"
+},
+{
+"name": "*side(e5,*"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Top spar"
+},
+{
+"name": "*side(e5,e5)"
+}
+]
+},
+"eq": "sqrt(((spar_x_width-joiner_x_width)/2*spar_sweep_cos)^2+slot_floor_gap^2)",
+"tol": "0.05 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Bottom joiner centred on its spar",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Bottom joiner"
+},
+{
+"name": "*side(e5,*"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Bottom spar"
+},
+{
+"name": "*side(e5,e5)"
+}
+]
+},
+"eq": "sqrt(((spar_x_width-joiner_x_width)/2*1/sqrt(1+spar_bottom_sweep_tan^2))^2+slot_floor_gap^2)",
+"tol": "0.05 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Web left between the joiner pockets at the inner ribs",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Top joiner pocket tool"
+},
+{
+"name": "*side(e8,e8)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Bottom joiner pocket tool"
+},
+{
+"name": "*side(e6,e6)"
+}
+]
+},
+"min": "min_rib_web"
+}
+],
+[
+"assert.add",
+{
+"name": "Laser: every slot at least as wide as the sheet is thick",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Core, top slot"
+},
+{
+"name": "*side(e5,e5)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Core, top slot"
+},
+{
+"name": "*side(e7,e7)"
+}
+]
+},
+"min": "rib_sheet"
+}
+],
+[
+"assert.add",
+{
+"name": "The joiners reach past the root rib and the next",
+"measure": "boxMax",
+"of": [
+"Top joiner"
+],
+"axis": "y",
+"min": "rib_bay+rib_sheet"
+}
+],
+[
+"assert.add",
+{
+"name": "Rib spacing as built",
+"measure": "distance",
+"from": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Rib blank"
+},
+{
+"name": "*copy(1)/*face(3)"
+}
+]
+},
+"to": {
+"all": [
+{
+"in": "Ribs"
+},
+{
+"madeBy": "Rib blank"
+},
+{
+"name": "*copy(2)/*face(2)"
+}
+]
+},
+"eq": "rib_bay-rib_sheet",
+"tol": "0.02 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Frame at most 80 percent of the flying weight",
+"measure": "value",
+"expr": "frame_mass",
+"max": "0.8*flying_weight"
+}
+],
+[
+"variable.set",
+{
+"name": "spar_depth_ratio_tip",
+"expr": "(spar_top_xf-spar_bottom_xf)*sin(washout)+(spar_top_yf-spar_bottom_yf)*cos(washout)"
+}
+],
+[
+"variable.set",
+{
+"name": "web_ratio_bound",
+"expr": "(2*spar_depth+2*slot_floor_gap+min_rib_web)/spar_depth_ratio_tip"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_stack",
+"expr": "2*spar_depth+4*slot_floor_gap+2*joiner_thickness+min_rib_web"
+}
+],
+[
+"variable.set",
+{
+"name": "joiner_chord_needed",
+"expr": "joiner_stack/spar_thickness_ratio"
+}
+],
+[
+"variable.publish",
+{
+"name": "wing_span",
+"label": "Wing span",
+"group": "Wing",
+"order": 1,
+"description": "Tip to tip, both panels together",
+"min": "max(600 mm, 3.5*joiner_stack/0.17)",
+"max": "2000 mm",
+"step": "10 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "root_chord",
+"label": "Root chord",
+"group": "Wing",
+"order": 2,
+"description": "Chord at the centre of the wing",
+"min": "max(100 mm, wing_span/12, joiner_stack/0.17)",
+"max": "min(400 mm, wing_span/3.5)",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "tip_chord",
+"label": "Tip chord",
+"group": "Wing",
+"order": 3,
+"description": "Chord at the wing tip. The smallest tip the form accepts is what still leaves a web between the top and bottom spar slots",
+"min": "max(0.45*root_chord, web_ratio_bound, root_chord-(root_chord-joiner_chord_needed)*semi_span/joiner_half_length)",
+"max": "root_chord",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "sweep_angle",
+"label": "Leading edge sweep",
+"group": "Wing",
+"order": 4,
+"description": "Sweep of the leading edge, positive backwards",
+"min": "0 deg",
+"max": "30 deg",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "washout",
+"label": "Washout",
+"group": "Wing",
+"order": 5,
+"description": "How much the tip is twisted nose down, about the quarter chord",
+"min": "0 deg",
+"max": "6 deg",
+"step": "0.5 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "camber_choice",
+"label": "NACA camber digits",
+"group": "Airfoil",
+"order": 1,
+"description": "The first two digits of the NACA code: 24xx means 2 percent camber at 40 percent chord. 00xx is a symmetric section",
+"kind": "choice",
+"choicesFrom": "camber_codes"
+}
+],
+[
+"variable.publish",
+{
+"name": "thickness_digits",
+"label": "NACA thickness digits",
+"group": "Airfoil",
+"order": 2,
+"description": "The last two digits of the NACA code: 12 means 12 percent of the chord thick",
+"kind": "integer",
+"min": "max(8, ceil(100*joiner_stack/root_chord+1))",
+"max": "18",
+"step": "1"
+}
+],
+[
+"variable.publish",
+{
+"name": "rib_count",
+"label": "Ribs per panel",
+"group": "Structure",
+"order": 1,
+"description": "How many ribs in each half of the wing, tip and root ribs included",
+"kind": "integer",
+"min": "max(4, ceil(semi_span/(110 mm))+1)",
+"max": "min(24, floor((semi_span-rib_sheet)/(30 mm))+1)",
+"step": "1"
+}
+],
+[
+"variable.publish",
+{
+"name": "rib_sheet",
+"label": "Rib sheet thickness",
+"group": "Structure",
+"order": 2,
+"description": "Thickness of the balsa sheet the ribs are cut from",
+"min": "1.5 mm",
+"max": "min(4 mm, spar_width)",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "spar_choice",
+"label": "Spar stock",
+"group": "Structure",
+"order": 3,
+"description": "Width by depth of the spruce or balsa spars, a top and a bottom spar in a slot in each rib",
+"kind": "choice",
+"choicesFrom": "spar_stocks"
+}
+],
+[
+"variable.publish",
+{
+"name": "flying_weight",
+"label": "Flying weight",
+"group": "Performance",
+"order": 1,
+"description": "All-up weight you expect, to work out wing loading and stall speed",
+"min": "planform_area/(100 mm)^2*15 g",
+"max": "planform_area/(100 mm)^2*150 g",
+"step": "10 g",
+"unit": "g"
+}
+],
+[
+"variable.publish",
+{
+"name": "covering",
+"label": "Covering",
+"group": "Structure",
+"order": 4,
+"description": "Bare frame, or blue film on one panel with the other left open so the structure stays visible",
+"kind": "choice",
+"choices": [
+"Bare frame",
+"Film (shown on one panel)"
+]
+}
+],
+[
+"document.info",
+{
+"title": "RC wing",
+"description": "A built-up balsa wing from NACA digits, span, chords, sweep and washout: ribs with spar slots, leading and trailing edge stock, a plywood joiner, film on one panel. Cut sheet: export the face set \"Cut sheet\" with File > Export... to SVG or DXF, or file.export {set: \"Cut sheet\", width: \"600 mm\"}; it holds every rib of both panels, at true size. The sketch \"Joiner flat pattern\" holds the two V-shaped ply joiners, ready for the laser: select it and export DXF, or file.export {sketch: \"Joiner flat pattern\"}. Spars and edge stock are lengths in the outputs.",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"tags": [
+"aeromodelling",
+"laser cutting",
+"NACA airfoil",
+"balsa"
+]
+}
+],
+[
+"document.check",
+{}
+]
+]
