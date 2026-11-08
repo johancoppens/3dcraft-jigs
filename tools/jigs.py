@@ -420,7 +420,7 @@ def prove_range(jig, rebuilt, scratch):
     if result.returncode not in (0, 1):
         return [explain_failure(result, "check-range did not finish")], [], {}
     report = json.loads(result.stdout)
-    times = [p.get("ms", 0) / 1000 for p in report.get("points", [])]
+    times = [(p.get("ms") or 0) / 1000 for p in report.get("points", [])]  # a point that cannot be set has ms null
     stats = {"range_points": len(times), "range_unproven": report.get("unproven", 0),
              "range_mean_s": round(sum(times) / max(1, len(times)), 2), "range_worst_s": round(max(times or [0]), 2)}
     if not report.get("ok"):

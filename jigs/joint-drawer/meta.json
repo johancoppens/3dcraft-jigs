@@ -1,0 +1,127 @@
+{
+  "id": "joint-drawer",
+  "title": "Dovetail drawer",
+  "summary": "the opening in, the joinery out",
+  "description": "A dovetailed drawer sized from the hole it must fill: give the opening and running clearance, the board thickness, the joint and the timber, and the Jig lays out the tails by the old rules and refuses a gap a wet season would close.",
+  "domain": "Woodwork, joinery",
+  "process": "Hand-cut or machine-cut dovetails or box joints, plough groove, glue-up",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 5,
+    "rationale": "Multi-body booleans, sketch patterns whose count changes the topology, table-driven layout and closed-form volumes."
+  },
+  "standards": [
+    "W. Fairham, Woodwork Joints (1921, Project Gutenberg 21531): dovetail inclination 1 in 8, never steeper than 1 in 6; pins on front and back, tails on the sides; 1/4 in. lap on a drawer front; through dovetails at the back",
+    "G. D. Huey, My Take on Dovetail Angles, Popular Woodworking, 2008: 1:6 (9 deg) for softwoods, 1:8 (7 deg) for hardwoods",
+    "C. Becksvoort, Don't Fear the Hand-Cut Dovetail, Fine Woodworking 238: 50 % tails strongest but machine-looking, 70 to 80 % tails by hand",
+    "A. C. Van Draanen, An A-Z of Making and Fitting Drawers, Fine Woodworking 11 (1978): sides 8 to 12 mm, front at least 20 mm, groove at most half the side, plywood bottom 3 to 6 mm, back lower than the sides by about 6 mm",
+    "T. McLaughlin, Make and Fit a Dovetailed Drawer, Fine Woodworking 294: gap about 1/32 in, half-blind front, through back above the groove",
+    "G. Hack, How to Build Solid Drawer Bottoms, Fine Woodworking 213: back stops at the top of the grooves, bottom slides in after assembly",
+    "K. Burton, Tablesaw Dovetails, Woodcraft: full-width half pins keep a groove inside the pin",
+    "USDA FPL Wood Handbook table 13-5 (2010), as reprinted in FPL-RP-711 and a Wood Movement chart: dimensional change coefficients",
+    "The Wood Database: average dried densities"
+  ],
+  "materials": [
+    "Walnut or chosen hardwood, 20 to 32 mm (front)",
+    "Maple or chosen timber, 8 to 14 mm (sides and back)",
+    "Birch plywood, 6 mm (bottom)",
+    "Turned maple knob with wedged tenon, or brass knob on an M4 screw",
+    "PVA glue, one screw per 200 mm through the bottom into the back"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        1100,
+        -620,
+        560
+      ],
+      "target": [
+        265,
+        180,
+        62
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/marking-templates.svg",
+      "set": "Marking templates",
+      "gap": "5 mm",
+      "stroke": 0.25
+    },
+    {
+      "command": "file.export",
+      "path": "exports/boards.step",
+      "bodies": [
+        "Front",
+        "Left side",
+        "Right side",
+        "Back",
+        "Bottom"
+      ]
+    },
+    {
+      "command": "cut.list",
+      "bodies": [
+        "Front",
+        "Left side",
+        "Right side",
+        "Back",
+        "Bottom"
+      ],
+      "format": "csv"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/half-blind-templates.dxf",
+      "set": "Marking templates",
+      "gap": "5 mm",
+      "values": {
+        "joint_kind": 2,
+        "opening_width": "600 mm",
+        "opening_height": "180 mm",
+        "opening_depth": "450 mm",
+        "top_clearance": "3 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 235,
+    "variables": 84,
+    "parameters": 12,
+    "features": 44,
+    "assertions": 21,
+    "warnings": 0,
+    "build_s": 1.02,
+    "load_s": 0.12,
+    "load_cpu_s": 0.23,
+    "file_bytes": 167165,
+    "range_points": 106,
+    "range_unproven": 0,
+    "range_mean_s": 0.04,
+    "range_worst_s": 0.19
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
