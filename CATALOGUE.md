@@ -163,11 +163,13 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Must improve:** names; load 1 s fine, measure at the largest table; steel look; mass and hole counts as outputs.
 - **Look:** bare steel top, black frame.
 
-### 20. Welded beam · `welded-beam` · welding, machine building · kept
-- **Must improve:** a full `build.json` from nothing replaces `source.3dcraft` and `edits/`; its `repro/` moves to
-  `findings/`; no choice per edge of which plate lies over which, no rail hole patterns, no tab standing proud (MIG adds
-  material); consider castellated corners with a recessed weld pocket between short locating pads and dog-bone reliefs (the
-  developer, 2026-11-08; `welding-table` likewise); a form of at most 12 parameters.
+### 20. Welded plate box · `welded-box` · welding, machine building · kept (was `welded-beam`, redesigned 2026-11-08)
+- **Real thing:** any rectangular box, cube or beam shape up to 3000 mm each way, welded from laser-cut plate of 3 mm and up
+  that locates itself by tab and slot.
+- **Must be (the developer, 2026-11-08):** a full `build.json` from nothing; short discrete recessed tabs at every thickness,
+  nothing standing proud, tab length and pitch on the form with the weld share as an output, about 20 to 30 % by default;
+  rectangular, circular or triangular cutouts per pair of walls; mass, plate list and weld length for every shape, strength
+  only where the box is beam-like; no rail holes, no choice per edge.
 - **Look:** dark steel, bright cut edges.
 
 ## Complex
