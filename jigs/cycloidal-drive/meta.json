@@ -1,0 +1,165 @@
+{
+  "id": "cycloidal-drive",
+  "title": "Cycloidal drive",
+  "summary": "pick the ratio, drag the input",
+  "description": "A printable single-stage cycloidal reducer for a NEMA stepper: the true lobe profile from the pin count and eccentricity, steel pins, bearings from a table, and a slider that runs it.",
+  "domain": "3D printing, robotics",
+  "process": "3D printing (FDM), steel dowel pins and standard ball bearings",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "A formula-driven trochoid, a loft, multi-body kinematics and coupled ranges at kernel limits."
+  },
+  "standards": [
+    "Profile: equidistant of the curtate (shortened) epitrochoid; N. Petrovic, M. Matejic et al., Parametric Modeling of a Cycloid Drive Relative to Input Shaft Angle (University of Kragujevac)",
+    "Cited from their bibliographic records only: Yang and Blanche, Mechanism and Machine Theory 25(5), 1990; Sensinger, J. Mech. Design 132(2), 2010",
+    "NEMA 14, 17, 23 mounting face (hole spacing, pilot, shaft) as published in stepper motor size tables",
+    "618-series deep groove ball bearings, sizes from SKF and distributor listings; ISO 8734-type hardened dowel pins"
+  ],
+  "materials": [
+    "PETG or ABS, printed (housing, cover, cycloid disc, eccentric, output hub, output flange)",
+    "Hardened steel dowel pins, 4 to 6 mm (ISO 8734 type)",
+    "618-series deep groove ball bearings",
+    "M3 screws and M3 heat-set inserts; brass tube sleeves as an option"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.01
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        85,
+        -300,
+        190
+      ],
+      "target": [
+        0,
+        0,
+        20
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "rotation": 90,
+      "reflections": false
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/print-plate.3mf",
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/housing.3mf",
+      "bodies": [
+        "Housing"
+      ],
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cover.3mf",
+      "bodies": [
+        "Cover"
+      ],
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/disc.3mf",
+      "bodies": [
+        "Disc 1"
+      ],
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/eccentric.3mf",
+      "bodies": [
+        "Eccentric"
+      ],
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/output-hub.3mf",
+      "bodies": [
+        "Output hub"
+      ],
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/output-flange.3mf",
+      "bodies": [
+        "Output flange"
+      ],
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/two-disc-plate.3mf",
+      "values": {
+        "show": 3,
+        "disc_count": 2,
+        "reduction": 17,
+        "housing_diameter": "90 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/drive.step",
+      "values": {
+        "show": 2
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 391,
+    "variables": 144,
+    "parameters": 9,
+    "features": 111,
+    "assertions": 41,
+    "warnings": 0,
+    "build_s": 4.0,
+    "load_s": 1.06,
+    "load_cpu_s": 2.23,
+    "file_bytes": 231121,
+    "range_points": 102,
+    "range_unproven": 0,
+    "range_mean_s": 0.49,
+    "range_worst_s": 1.53
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

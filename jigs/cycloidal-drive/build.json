@@ -1,0 +1,4196 @@
+[
+[
+"table.set",
+{
+"name": "motors",
+"columns": [
+"motor",
+{
+"name": "bolt_spacing",
+"unit": "mm"
+},
+{
+"name": "pilot_diameter",
+"unit": "mm"
+},
+{
+"name": "pilot_height",
+"unit": "mm"
+},
+{
+"name": "shaft_diameter",
+"unit": "mm"
+},
+{
+"name": "frame",
+"unit": "mm"
+},
+{
+"name": "body_length",
+"unit": "mm"
+},
+{
+"name": "screw_clearance",
+"unit": "mm"
+},
+{
+"name": "screw_head",
+"unit": "mm"
+},
+{
+"name": "screw_head_height",
+"unit": "mm"
+},
+"disc_bearing_row",
+{
+"name": "smallest_drive",
+"unit": "mm"
+},
+{
+"name": "smallest_pin",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"NEMA 14 (M3 screws, 5 mm shaft)",
+26,
+22,
+2,
+5,
+35.2,
+28,
+3.4,
+5.5,
+3,
+2,
+76,
+4
+],
+[
+"NEMA 17 (M3 screws, 5 mm shaft)",
+31,
+22,
+2,
+5,
+42.3,
+40,
+3.4,
+5.5,
+3,
+2,
+78,
+4
+],
+[
+"NEMA 23 (M5 screws, 6.35 mm shaft)",
+47.14,
+38.1,
+1.6,
+6.35,
+56.4,
+56,
+5.5,
+8.5,
+5,
+3,
+112,
+5
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "bearings",
+"columns": [
+"designation",
+{
+"name": "bore",
+"unit": "mm"
+},
+{
+"name": "outside",
+"unit": "mm"
+},
+{
+"name": "width",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"61800",
+10,
+19,
+5
+],
+[
+"61803",
+17,
+26,
+5
+],
+[
+"61804",
+20,
+32,
+7
+],
+[
+"61805",
+25,
+37,
+7
+],
+[
+"61807",
+35,
+47,
+7
+],
+[
+"61808",
+40,
+52,
+7
+],
+[
+"61809",
+45,
+58,
+7
+],
+[
+"61810",
+50,
+65,
+7
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "reduction",
+"expr": "11"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_diameter",
+"expr": "80 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "motor",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "input_angle",
+"expr": "40 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_count",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "lobe_depth",
+"expr": "70"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_rollers",
+"expr": "0"
+}
+],
+[
+"variable.set",
+{
+"name": "fit_clearance",
+"expr": "0.15 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "show",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "cutaway",
+"expr": "show == 1"
+}
+],
+[
+"variable.set",
+{
+"name": "assembled",
+"expr": "show != 3"
+}
+],
+[
+"variable.set",
+{
+"name": "print_layout",
+"expr": "show == 3"
+}
+],
+[
+"variable.set",
+{
+"name": "two_discs",
+"expr": "disc_count == 2"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_wall",
+"expr": "8 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "pocket_gap",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "axial_gap",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_clearance",
+"expr": "0.15 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_gap_min",
+"expr": "1.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft_reach",
+"expr": "20 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "common_shaft_length",
+"expr": "24 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "web_min",
+"expr": "2.4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_wall_min",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "lobe_radius_limit",
+"expr": "0.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity_min",
+"expr": "0.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_floor",
+"expr": "25"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_ceiling",
+"expr": "85"
+}
+],
+[
+"variable.set",
+{
+"name": "roller_wall",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_web",
+"expr": "1.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "first_layer_chamfer",
+"expr": "0.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "edge_chamfer",
+"expr": "0.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_chamfer",
+"expr": "0.25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft_bore_radius",
+"expr": "motors[motor].shaft_diameter / 2 + 0.1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft_flat",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_diameter",
+"expr": "if(housing_diameter < 92 mm, 4 mm, if(housing_diameter < 124 mm, 5 mm, 6 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_radius",
+"expr": "pin_diameter / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "contact_radius",
+"expr": "pin_radius + if(pin_rollers, roller_wall, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_radius",
+"expr": "housing_diameter / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "pocket_radius",
+"expr": "housing_radius - housing_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_circle_radius",
+"expr": "pocket_radius - pocket_gap - contact_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_count",
+"expr": "reduction + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "lobe_count",
+"expr": "reduction"
+}
+],
+[
+"variable.set",
+{
+"name": "shortening",
+"expr": "lobe_depth / 100"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity",
+"expr": "shortening * pin_circle_radius / pin_count"
+}
+],
+[
+"variable.set",
+{
+"name": "equidistant",
+"expr": "contact_radius + fit_clearance"
+}
+],
+[
+"variable.set",
+{
+"name": "tip_radius",
+"expr": "pin_circle_radius + eccentricity - equidistant"
+}
+],
+[
+"variable.set",
+{
+"name": "valley_radius",
+"expr": "pin_circle_radius - eccentricity - equidistant"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_interior",
+"expr": "pin_circle_radius * sqrt(27 * (pin_count - 1) * (1 - shortening^2) / (pin_count + 1)^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_at_tip",
+"expr": "pin_circle_radius * (1 + shortening)^2 / (1 + pin_count * shortening)"
+}
+],
+[
+"variable.set",
+{
+"name": "u_sharpest",
+"expr": "(2 - pin_count + (2 * pin_count - 1) * shortening^2) / (shortening * (pin_count + 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "rho_min",
+"expr": "if(u_sharpest >= -1, rho_interior, rho_at_tip)"
+}
+],
+[
+"variable.set",
+{
+"name": "lobe_radius",
+"expr": "rho_min - equidistant"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_profile_area",
+"expr": "pi * (pin_circle_radius^2 + pin_count * eccentricity^2) - equidistant * 2 * pi * pin_circle_radius * (1 + shortening^2 / 4 + shortening^4 / 64 + shortening^6 / 256 + 25 * shortening^8 / 16384 + 49 * shortening^10 / 65536 + 441 * shortening^12 / 1048576) + pi * equidistant^2"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_bearing_row",
+"expr": "motors[motor].disc_bearing_row"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_bearing_bore",
+"expr": "bearings[disc_bearing_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_bearing_outside",
+"expr": "bearings[disc_bearing_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_bearing_width",
+"expr": "bearings[disc_bearing_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_bore_radius",
+"expr": "disc_bearing_outside / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "support_bore",
+"expr": "bearings[1].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "support_outside",
+"expr": "bearings[1].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "support_width",
+"expr": "bearings[1].width"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_fit",
+"expr": "0.05 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bearing_lift",
+"expr": "0.05 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bearing_pass_gap",
+"expr": "0.2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_radius",
+"expr": "disc_bearing_bore / 2 - cam_fit"
+}
+],
+[
+"variable.set",
+{
+"name": "journal_radius",
+"expr": "support_bore / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_radius",
+"expr": "pin_radius + eccentricity + hole_clearance"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_circle_radius",
+"expr": "(valley_radius + disc_bore_radius) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "output_pin_count",
+"expr": "2 * floor(clamp(180 deg / asin(clamp((hole_radius + web_min / 2) / hole_circle_radius, 0.05, 1)), 4, 8) / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "smallest_pin",
+"expr": "motors[motor].smallest_pin"
+}
+],
+[
+"variable.set",
+{
+"name": "ring_room",
+"expr": "smallest_pin / 2 + if(pin_rollers, roller_wall, 0 mm) + fit_clearance + disc_bore_radius + smallest_pin + 2 * hole_clearance + 2 * web_min"
+}
+],
+[
+"variable.set",
+{
+"name": "ring_radius_needed",
+"expr": "max(1.1034 * ring_room, ring_room + 3 * eccentricity_min)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_radius_needed",
+"expr": "motors[motor].bolt_spacing * 0.7072 + motors[motor].screw_head / 2 + 0.2 mm + smallest_pin / 2 + 1.21 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "housing_diameter_min",
+"expr": "max(motors[motor].smallest_drive, 2 * (max(ring_radius_needed, screw_radius_needed) + housing_wall + pocket_gap + smallest_pin / 2 + if(pin_rollers, roller_wall, 0 mm)))"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity_for_tips",
+"expr": "contact_radius + (pocket_gap + fit_clearance - 0.3 mm) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity_for_ring",
+"expr": "(pin_circle_radius - equidistant - disc_bore_radius - pin_diameter - 2 * hole_clearance - 2 * web_min) / 3"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity_for_cam",
+"expr": "cam_radius - shaft_bore_radius - cam_wall_min"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity_for_journal",
+"expr": "disc_bearing_bore / 2 - journal_radius - bearing_pass_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentricity_limit",
+"expr": "min(eccentricity_for_tips, eccentricity_for_ring, eccentricity_for_cam, eccentricity_for_journal)"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_limit",
+"expr": "(pin_circle_radius - eccentricity_limit - equidistant + disc_bore_radius) / 2 - pin_radius - 3.3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "output_limit",
+"expr": "pin_circle_radius - pin_radius - 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "output_row",
+"expr": "if(bearings[8].outside / 2 <= output_limit && bearings[8].bore / 2 <= hub_limit, 8, if(bearings[7].outside / 2 <= output_limit && bearings[7].bore / 2 <= hub_limit, 7, if(bearings[6].outside / 2 <= output_limit && bearings[6].bore / 2 <= hub_limit, 6, if(bearings[5].outside / 2 <= output_limit && bearings[5].bore / 2 <= hub_limit, 5, if(bearings[4].outside / 2 <= output_limit && bearings[4].bore / 2 <= hub_limit, 4, 3)))))"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bore",
+"expr": "bearings[output_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "output_outside",
+"expr": "bearings[output_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "output_width",
+"expr": "bearings[output_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_radius",
+"expr": "output_bore / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "shortening_for_undercut",
+"expr": "sqrt(max(0, 1 - ((equidistant + lobe_radius_limit) / pin_circle_radius)^2 * (pin_count + 1)^3 / (27 * (pin_count - 1))))"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_min",
+"expr": "max(depth_floor, 100 * eccentricity_min * pin_count / pin_circle_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "depth_max",
+"expr": "max(depth_min, min(depth_ceiling, 100 * shortening_for_undercut, 100 * eccentricity_limit * pin_count / pin_circle_radius))"
+}
+],
+[
+"variable.set",
+{
+"name": "pins_for_spacing",
+"expr": "floor(180 deg / asin(clamp((contact_radius + pin_gap_min / 2) / pin_circle_radius, 0.02, 1)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pins_for_profile",
+"expr": "floor(1 / sqrt((eccentricity_min / pin_circle_radius)^2 + ((equidistant + lobe_radius_limit) / pin_circle_radius)^2 / 27)) - 3"
+}
+],
+[
+"variable.set",
+{
+"name": "reduction_max",
+"expr": "2 * floor((min(pins_for_spacing, pins_for_profile, 36) - 2) / 2) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "seat_depth",
+"expr": "min(1.5 * pin_diameter, 7 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "floor_thickness",
+"expr": "max(seat_depth + 1.6 mm, motors[motor].screw_head_height + 3.4 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentric_bottom",
+"expr": "floor_thickness + axial_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "eccentric_flange",
+"expr": "1.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_thickness",
+"expr": "disc_bearing_width + 2 * eccentric_flange"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_1_z",
+"expr": "eccentric_bottom"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_1_top",
+"expr": "disc_1_z + disc_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "seat_1_top",
+"expr": "disc_1_z + eccentric_flange + disc_bearing_width + 2 * bearing_lift"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_gap",
+"expr": "max(axial_gap, 2 * eccentricity - 2.8 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_2_z",
+"expr": "disc_1_top + disc_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "seat_2_z",
+"expr": "disc_2_z + eccentric_flange"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_2_top",
+"expr": "seat_2_z + disc_bearing_width + 2 * bearing_lift"
+}
+],
+[
+"variable.set",
+{
+"name": "cam_1_top",
+"expr": "if(two_discs, seat_1_top, disc_1_top)"
+}
+],
+[
+"variable.set",
+{
+"name": "discs_top",
+"expr": "if(two_discs, disc_2_z + disc_thickness, disc_1_top)"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_bottom",
+"expr": "discs_top + axial_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_thickness",
+"expr": "max(7 mm, 1.5 * pin_diameter + 1 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_top",
+"expr": "plate_bottom + plate_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_radius",
+"expr": "min(pin_circle_radius - contact_radius - 1 mm, hole_circle_radius + pin_radius + 3 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_bottom",
+"expr": "plate_top + axial_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "hub_top",
+"expr": "cover_bottom + 2 * output_width"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_cap",
+"expr": "2.4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_top",
+"expr": "hub_top + cover_cap"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_bottom",
+"expr": "cover_top + axial_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_thickness",
+"expr": "6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_top",
+"expr": "flange_bottom + flange_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_open_radius",
+"expr": "hub_radius + 1.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_spigot_radius",
+"expr": "hub_radius + 1.3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "journal_top",
+"expr": "plate_bottom + support_width"
+}
+],
+[
+"variable.set",
+{
+"name": "top_cam_top",
+"expr": "if(two_discs, cam_2_top, disc_1_top)"
+}
+],
+[
+"variable.set",
+{
+"name": "bore_depth",
+"expr": "journal_top - eccentric_bottom + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft_longest",
+"expr": "plate_bottom + support_width + support_outside / 2 - motors[motor].shaft_diameter / 2 - 0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "ring_pin_length",
+"expr": "cover_bottom - floor_thickness + 2 * seat_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "output_pin_length",
+"expr": "plate_top - disc_1_z - 0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_count",
+"expr": "if(housing_diameter >= 100 mm, 8, 6)"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_circle_radius",
+"expr": "pocket_radius + housing_wall / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "insert_radius",
+"expr": "2.05 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "insert_depth",
+"expr": "6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_screw_radius",
+"expr": "1.7 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "head_radius",
+"expr": "2.75 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "head_height",
+"expr": "3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_radius",
+"expr": "min(bolt_circle_radius - 4.5 mm, hub_radius + 9 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "fix_circle_radius",
+"expr": "hub_radius - 3.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_hole_circle",
+"expr": "flange_radius - 4.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "output_angle",
+"expr": "-input_angle / lobe_count"
+}
+],
+[
+"variable.set",
+{
+"name": "plate_gap",
+"expr": "12 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_angle",
+"expr": "if(print_layout, 0 deg, output_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_x",
+"expr": "if(print_layout, 0 mm, eccentricity * cos(input_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "disc_y",
+"expr": "if(print_layout, housing_diameter + plate_gap, eccentricity * sin(input_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "layout_x",
+"expr": "-(housing_radius + plate_radius + plate_gap)"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Housing section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Housing section",
+"points": [
+[
+"0 mm",
+"motors[motor].pilot_diameter / 2 + 0.25 mm"
+],
+[
+"0 mm",
+"housing_radius - first_layer_chamfer"
+],
+[
+"first_layer_chamfer",
+"housing_radius"
+],
+[
+"cover_bottom - edge_chamfer",
+"housing_radius"
+],
+[
+"cover_bottom",
+"housing_radius - edge_chamfer"
+],
+[
+"cover_bottom",
+"pocket_radius"
+],
+[
+"floor_thickness",
+"pocket_radius"
+],
+[
+"floor_thickness",
+"motors[motor].pilot_diameter / 2 + 0.25 mm"
+]
+],
+"closed": true
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Housing section",
+"axis": "x",
+"name": "Housing shell"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "floor_thickness",
+"name": "Housing pin seats"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Housing pin seats",
+"center": [
+"pin_circle_radius",
+"0 mm"
+],
+"radius": "pin_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Housing pin seats",
+"entities": [
+"e2"
+],
+"count": "pin_count",
+"angle": "360 deg / pin_count",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Housing pin seats",
+"distance": "-seat_depth",
+"cut": "Housing shell",
+"name": "Pin seats in the floor"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "cover_bottom",
+"name": "Cover insert holes"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Cover insert holes",
+"center": [
+"bolt_circle_radius",
+"0 mm"
+],
+"radius": "insert_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Cover insert holes",
+"entities": [
+"e2"
+],
+"count": "bolt_count",
+"angle": "360 deg / bolt_count",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cover insert holes",
+"distance": "-insert_depth",
+"cut": "Pin seats in the floor",
+"name": "Holes for the cover screws"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "floor_thickness",
+"name": "Motor screw holes"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Motor screw holes",
+"center": [
+"motors[motor].bolt_spacing / 2",
+"motors[motor].bolt_spacing / 2"
+],
+"radius": "motors[motor].screw_clearance / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Motor screw holes",
+"entities": [
+"e2"
+],
+"count": "4",
+"angle": "90 deg",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Motor screw holes",
+"distance": "-floor_thickness",
+"cut": "Holes for the cover screws",
+"name": "Motor screw holes cut"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "floor_thickness",
+"name": "Motor screw recesses"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Motor screw recesses",
+"center": [
+"motors[motor].bolt_spacing / 2",
+"motors[motor].bolt_spacing / 2"
+],
+"radius": "motors[motor].screw_head / 2 + 0.2 mm"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Motor screw recesses",
+"entities": [
+"e2"
+],
+"count": "4",
+"angle": "90 deg",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Motor screw recesses",
+"distance": "-(motors[motor].screw_head_height + 0.2 mm)",
+"cut": "Motor screw holes cut",
+"name": "Motor screw recesses cut"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Cover section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Cover section",
+"points": [
+[
+"cover_bottom",
+"output_outside / 2"
+],
+[
+"cover_bottom",
+"housing_radius"
+],
+[
+"cover_top - edge_chamfer",
+"housing_radius"
+],
+[
+"cover_top",
+"housing_radius - edge_chamfer"
+],
+[
+"cover_top",
+"cover_open_radius"
+],
+[
+"hub_top",
+"cover_open_radius"
+],
+[
+"hub_top",
+"output_outside / 2"
+]
+],
+"closed": true
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Cover section",
+"axis": "x",
+"name": "Cover shell"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "cover_bottom",
+"name": "Cover pin seats"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Cover pin seats",
+"center": [
+"pin_circle_radius",
+"0 mm"
+],
+"radius": "pin_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Cover pin seats",
+"entities": [
+"e2"
+],
+"count": "pin_count",
+"angle": "360 deg / pin_count",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cover pin seats",
+"distance": "seat_depth",
+"cut": "Cover shell",
+"name": "Pin seats in the cover"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "cover_top",
+"name": "Cover screw holes"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Cover screw holes",
+"center": [
+"bolt_circle_radius",
+"0 mm"
+],
+"radius": "cover_screw_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Cover screw holes",
+"entities": [
+"e2"
+],
+"count": "bolt_count",
+"angle": "360 deg / bolt_count",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cover screw holes",
+"distance": "-(cover_top - cover_bottom)",
+"cut": "Pin seats in the cover",
+"name": "Cover screw holes cut"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"name": "Disc profile"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Disc profile",
+"x": "(pin_circle_radius * cos(t) - eccentricity * cos(pin_count * t)) - equidistant * (pin_circle_radius * cos(t) - eccentricity * pin_count * cos(pin_count * t)) / sqrt(pin_circle_radius^2 + (eccentricity * pin_count)^2 - 2 * pin_circle_radius * eccentricity * pin_count * cos(lobe_count * t))",
+"y": "(pin_circle_radius * sin(t) - eccentricity * sin(pin_count * t)) - equidistant * (pin_circle_radius * sin(t) - eccentricity * pin_count * sin(pin_count * t)) / sqrt(pin_circle_radius^2 + (eccentricity * pin_count)^2 - 2 * pin_circle_radius * eccentricity * pin_count * cos(lobe_count * t))",
+"t": [
+"0",
+"2 * pi / lobe_count"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Disc profile",
+"entities": [
+"e3"
+],
+"count": "lobe_count",
+"angle": "360 deg / lobe_count",
+"center": [
+"0 mm",
+"0 mm"
+],
+"chain": [
+"e1",
+"e2"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Disc profile",
+"center": [
+"0 mm",
+"0 mm"
+],
+"radius": "disc_bore_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Disc profile",
+"center": [
+"hole_circle_radius",
+"0 mm"
+],
+"radius": "hole_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Disc profile",
+"entities": [
+"e7"
+],
+"count": "output_pin_count",
+"angle": "360 deg / output_pin_count",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Disc profile",
+"distance": "disc_thickness",
+"name": "Disc blank"
+}
+],
+[
+"feature.transform",
+{
+"source": "Disc blank",
+"angle": "disc_angle",
+"translate": [
+"disc_x",
+"disc_y",
+"if(print_layout, 0 mm, disc_1_z)"
+],
+"name": "Disc 1"
+}
+],
+[
+"feature.transform",
+{
+"source": "Disc 1",
+"keep": true,
+"angle": "if(print_layout, 0 deg, 180 deg)",
+"pivot": [
+"disc_x",
+"disc_y",
+"0 mm"
+],
+"translate": [
+"if(print_layout, housing_diameter + plate_gap, -2 * disc_x)",
+"if(print_layout, 0 mm, -2 * disc_y)",
+"if(print_layout, 0 mm, disc_2_z - disc_1_z)"
+],
+"name": "Disc 2",
+"when": "two_discs"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "eccentric_bottom",
+"name": "Eccentric flange circle"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Eccentric flange circle",
+"center": [
+"eccentricity",
+"0 mm"
+],
+"radius": "if(two_discs, cam_radius, cam_radius + flange_web)"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Eccentric flange circle",
+"distance": "eccentric_flange",
+"name": "Eccentric flange"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"Eccentric flange:side(e2)",
+"Eccentric flange:startCap(e2)"
+]
+],
+"distance": "flange_chamfer",
+"name": "Eccentric base"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "eccentric_bottom + eccentric_flange",
+"name": "Cam 1 circle"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Cam 1 circle",
+"center": [
+"eccentricity",
+"0 mm"
+],
+"radius": "cam_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cam 1 circle",
+"distance": "cam_1_top - eccentric_bottom - eccentric_flange",
+"join": "Eccentric base",
+"name": "Cam 1"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "seat_1_top",
+"name": "Transition start"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Transition start",
+"center": [
+"eccentricity",
+"0 mm"
+],
+"radius": "cam_radius"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "seat_2_z",
+"name": "Transition end"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Transition end",
+"center": [
+"-eccentricity",
+"0 mm"
+],
+"radius": "cam_radius"
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Transition start",
+"Transition end"
+],
+"ruled": true,
+"join": "Cam 1",
+"name": "Cam transition",
+"when": "two_discs"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "seat_2_z",
+"name": "Cam 2 circle"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Cam 2 circle",
+"center": [
+"-eccentricity",
+"0 mm"
+],
+"radius": "cam_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cam 2 circle",
+"distance": "cam_2_top - seat_2_z",
+"join": "Cam transition",
+"name": "Cam 2",
+"when": "two_discs"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "top_cam_top",
+"name": "Journal circle"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Journal circle",
+"center": [
+"0 mm",
+"0 mm"
+],
+"radius": "journal_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Journal circle",
+"distance": "journal_top - top_cam_top",
+"join": "Cam 2",
+"name": "Journal"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "eccentric_bottom",
+"name": "Shaft bore outline"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Shaft bore outline",
+"start": [
+"shaft_bore_radius - shaft_flat",
+"sqrt(shaft_bore_radius^2 - (shaft_bore_radius - shaft_flat)^2)"
+],
+"segments": [
+{
+"arc": [
+"shaft_bore_radius - shaft_flat",
+"-sqrt(shaft_bore_radius^2 - (shaft_bore_radius - shaft_flat)^2)"
+],
+"center": [
+"0 mm",
+"0 mm"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Shaft bore outline",
+"distance": "bore_depth",
+"cut": "Journal",
+"name": "Shaft bore"
+}
+],
+[
+"feature.transform",
+{
+"source": "Shaft bore",
+"angle": "if(print_layout, 0 deg, input_angle)",
+"translate": [
+"if(print_layout, layout_x, 0 mm)",
+"0 mm",
+"if(print_layout, -eccentric_bottom, 0 mm)"
+],
+"name": "Eccentric"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Hub section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Hub section",
+"closed": true,
+"points": [
+[
+"plate_bottom + support_width + support_outside / 2",
+"0 mm"
+],
+[
+"hub_top",
+"0 mm"
+],
+[
+"hub_top",
+"hub_radius"
+],
+[
+"cover_bottom",
+"hub_radius"
+],
+[
+"cover_bottom",
+"hub_radius + 1.3 mm"
+],
+[
+"plate_top",
+"hub_radius + 1.3 mm"
+],
+[
+"plate_top",
+"plate_radius"
+],
+[
+"plate_bottom + first_layer_chamfer",
+"plate_radius"
+],
+[
+"plate_bottom",
+"plate_radius - first_layer_chamfer"
+],
+[
+"plate_bottom",
+"support_outside / 2"
+],
+[
+"plate_bottom + support_width",
+"support_outside / 2"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Hub section",
+"axis": "x",
+"name": "Hub shell"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "plate_bottom",
+"name": "Output pin seats"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Output pin seats",
+"center": [
+"hole_circle_radius",
+"0 mm"
+],
+"radius": "pin_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Output pin seats",
+"entities": [
+"e2"
+],
+"count": "output_pin_count",
+"angle": "360 deg / output_pin_count",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Output pin seats",
+"distance": "plate_thickness",
+"cut": "Hub shell",
+"name": "Output pin seats cut"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "hub_top",
+"name": "Hub screw holes"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Hub screw holes",
+"center": [
+"fix_circle_radius",
+"0 mm"
+],
+"radius": "insert_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Hub screw holes",
+"entities": [
+"e2"
+],
+"count": "3",
+"angle": "120 deg",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Hub screw holes",
+"distance": "-insert_depth",
+"cut": "Output pin seats cut",
+"name": "Hub screw holes cut"
+}
+],
+[
+"feature.transform",
+{
+"source": "Hub screw holes cut",
+"angle": "if(print_layout, 0 deg, output_angle)",
+"translate": [
+"if(print_layout, layout_x, 0 mm)",
+"if(print_layout, housing_diameter + plate_gap, 0 mm)",
+"if(print_layout, -plate_bottom, 0 mm)"
+],
+"name": "Output hub placed"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Flange section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Flange section",
+"closed": true,
+"points": [
+[
+"hub_top",
+"0 mm"
+],
+[
+"hub_top",
+"flange_spigot_radius"
+],
+[
+"flange_bottom",
+"flange_spigot_radius"
+],
+[
+"flange_bottom",
+"flange_radius"
+],
+[
+"flange_top - 0.8 mm",
+"flange_radius"
+],
+[
+"flange_top",
+"flange_radius - 0.8 mm"
+],
+[
+"flange_top",
+"0 mm"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Flange section",
+"axis": "x",
+"name": "Flange shell"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "flange_top",
+"name": "Flange fixing holes"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Flange fixing holes",
+"center": [
+"fix_circle_radius",
+"0 mm"
+],
+"radius": "cover_screw_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Flange fixing holes",
+"entities": [
+"e2"
+],
+"count": "3",
+"angle": "120 deg",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Flange fixing holes",
+"distance": "-(flange_top - hub_top)",
+"cut": "Flange shell",
+"name": "Flange fixing holes cut"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "flange_top",
+"name": "Flange screw recesses"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Flange screw recesses",
+"center": [
+"fix_circle_radius",
+"0 mm"
+],
+"radius": "head_radius + 0.2 mm"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Flange screw recesses",
+"entities": [
+"e2"
+],
+"count": "3",
+"angle": "120 deg",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Flange screw recesses",
+"distance": "-head_height",
+"cut": "Flange fixing holes cut",
+"name": "Flange screw recesses cut"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "flange_top",
+"name": "Flange mounting holes"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Flange mounting holes",
+"center": [
+"flange_hole_circle * cos(45 deg)",
+"flange_hole_circle * sin(45 deg)"
+],
+"radius": "insert_radius"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Flange mounting holes",
+"entities": [
+"e2"
+],
+"count": "4",
+"angle": "90 deg",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Flange mounting holes",
+"distance": "-insert_depth",
+"cut": "Flange screw recesses cut",
+"name": "Flange mounting holes cut"
+}
+],
+[
+"feature.transform",
+{
+"source": "Flange mounting holes cut",
+"angle": "if(print_layout, 180 deg, 0 deg)",
+"axis": [
+1,
+0,
+0
+],
+"translate": [
+"if(print_layout, layout_x, 0 mm)",
+"if(print_layout, -(housing_radius + 8 mm), 0 mm)",
+"if(print_layout, flange_top, 0 mm)"
+],
+"name": "Output flange blank"
+}
+],
+[
+"feature.transform",
+{
+"source": "Output flange blank",
+"angle": "if(print_layout, 0 deg, output_angle)",
+"name": "Output flange placed"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "pin_radius",
+"height": "ring_pin_length",
+"position": [
+"pin_circle_radius",
+"0 mm",
+"floor_thickness - seat_depth"
+],
+"name": "Ring pin",
+"when": "assembled"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Ring pin",
+"count": "pin_count",
+"angle": "360 deg / pin_count",
+"name": "Ring pins",
+"when": "assembled"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "floor_thickness + axial_gap",
+"name": "Roller section"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Roller section",
+"center": [
+"pin_circle_radius",
+"0 mm"
+],
+"radius": "contact_radius"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Roller section",
+"center": [
+"pin_circle_radius",
+"0 mm"
+],
+"radius": "pin_radius + 0.1 mm"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Roller section",
+"distance": "cover_bottom - floor_thickness - 2 * axial_gap",
+"name": "Roller",
+"when": "pin_rollers && assembled"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Roller",
+"count": "pin_count",
+"angle": "360 deg / pin_count",
+"name": "Pin rollers",
+"when": "pin_rollers && assembled"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "pin_radius",
+"height": "output_pin_length",
+"position": [
+"hole_circle_radius",
+"0 mm",
+"disc_1_z + 0.5 mm"
+],
+"name": "Output pin",
+"when": "assembled"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Output pin",
+"count": "output_pin_count",
+"angle": "360 deg / output_pin_count",
+"name": "Output pin ring",
+"when": "assembled"
+}
+],
+[
+"feature.transform",
+{
+"source": "Output pin ring",
+"angle": "output_angle",
+"name": "Output pins",
+"when": "assembled"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Disc bearing section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Disc bearing section",
+"closed": true,
+"points": [
+[
+"0 mm",
+"(disc_bearing_bore) / 2"
+],
+[
+"0 mm",
+"(disc_bearing_bore) / 2 + ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm + 0.4 mm",
+"(disc_bearing_bore) / 2 + ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm + 0.4 mm",
+"(disc_bearing_outside) / 2 - ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm",
+"(disc_bearing_outside) / 2 - ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm",
+"(disc_bearing_outside) / 2"
+],
+[
+"0 mm + disc_bearing_width",
+"(disc_bearing_outside) / 2"
+],
+[
+"0 mm + disc_bearing_width",
+"(disc_bearing_outside) / 2 - ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm + disc_bearing_width - 0.4 mm",
+"(disc_bearing_outside) / 2 - ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm + disc_bearing_width - 0.4 mm",
+"(disc_bearing_bore) / 2 + ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm + disc_bearing_width",
+"(disc_bearing_bore) / 2 + ((disc_bearing_outside) - (disc_bearing_bore)) / 6"
+],
+[
+"0 mm + disc_bearing_width",
+"(disc_bearing_bore) / 2"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Disc bearing section",
+"axis": "x",
+"name": "Disc bearing blank",
+"when": "assembled"
+}
+],
+[
+"feature.transform",
+{
+"source": "Disc bearing blank",
+"translate": [
+"disc_x",
+"disc_y",
+"disc_1_z + eccentric_flange + bearing_lift"
+],
+"name": "Disc bearing 1",
+"when": "assembled"
+}
+],
+[
+"feature.transform",
+{
+"source": "Disc bearing 1",
+"keep": true,
+"translate": [
+"-2 * disc_x",
+"-2 * disc_y",
+"disc_2_z - disc_1_z"
+],
+"name": "Disc bearing 2",
+"when": "assembled && two_discs"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Lower output bearing section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Lower output bearing section",
+"closed": true,
+"points": [
+[
+"cover_bottom",
+"(output_bore) / 2"
+],
+[
+"cover_bottom",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + 0.4 mm",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + 0.4 mm",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom",
+"(output_outside) / 2"
+],
+[
+"cover_bottom + output_width",
+"(output_outside) / 2"
+],
+[
+"cover_bottom + output_width",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width - 0.4 mm",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width - 0.4 mm",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width",
+"(output_bore) / 2"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Lower output bearing section",
+"axis": "x",
+"name": "Lower output bearing blank",
+"when": "assembled"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Upper output bearing section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Upper output bearing section",
+"closed": true,
+"points": [
+[
+"cover_bottom + output_width",
+"(output_bore) / 2"
+],
+[
+"cover_bottom + output_width",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width + 0.4 mm",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width + 0.4 mm",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width",
+"(output_outside) / 2"
+],
+[
+"cover_bottom + output_width + output_width",
+"(output_outside) / 2"
+],
+[
+"cover_bottom + output_width + output_width",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width + output_width - 0.4 mm",
+"(output_outside) / 2 - ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width + output_width - 0.4 mm",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width + output_width",
+"(output_bore) / 2 + ((output_outside) - (output_bore)) / 6"
+],
+[
+"cover_bottom + output_width + output_width",
+"(output_bore) / 2"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Upper output bearing section",
+"axis": "x",
+"name": "Upper output bearing blank",
+"when": "assembled"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Support bearing section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Support bearing section",
+"closed": true,
+"points": [
+[
+"plate_bottom",
+"(support_bore) / 2"
+],
+[
+"plate_bottom",
+"(support_bore) / 2 + ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom + 0.4 mm",
+"(support_bore) / 2 + ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom + 0.4 mm",
+"(support_outside) / 2 - ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom",
+"(support_outside) / 2 - ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom",
+"(support_outside) / 2"
+],
+[
+"plate_bottom + support_width",
+"(support_outside) / 2"
+],
+[
+"plate_bottom + support_width",
+"(support_outside) / 2 - ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom + support_width - 0.4 mm",
+"(support_outside) / 2 - ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom + support_width - 0.4 mm",
+"(support_bore) / 2 + ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom + support_width",
+"(support_bore) / 2 + ((support_outside) - (support_bore)) / 6"
+],
+[
+"plate_bottom + support_width",
+"(support_bore) / 2"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Support bearing section",
+"axis": "x",
+"name": "Support bearing blank",
+"when": "assembled"
+}
+],
+[
+"sketch.create",
+{
+"plane": "zx",
+"name": "Screw head section"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Screw head section",
+"closed": true,
+"points": [
+[
+"cover_top",
+"bolt_circle_radius"
+],
+[
+"cover_top",
+"bolt_circle_radius + head_radius"
+],
+[
+"cover_top + head_height - 0.4 mm",
+"bolt_circle_radius + head_radius"
+],
+[
+"cover_top + head_height",
+"bolt_circle_radius + head_radius - 0.4 mm"
+],
+[
+"cover_top + head_height",
+"bolt_circle_radius"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Screw head section",
+"axis": "e10",
+"name": "Cover screw head",
+"when": "assembled"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Cover screw head",
+"count": "bolt_count",
+"angle": "360 deg / bolt_count",
+"name": "Cover screw heads",
+"when": "assembled"
+}
+],
+[
+"feature.block",
+{
+"name": "Motor frame",
+"size": [
+"motors[motor].frame",
+"motors[motor].frame",
+"motors[motor].body_length"
+],
+"position": [
+"-motors[motor].frame / 2",
+"-motors[motor].frame / 2",
+"-motors[motor].body_length"
+],
+"when": "assembled"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "motors[motor].pilot_diameter / 2",
+"height": "motors[motor].pilot_height",
+"name": "Motor pilot",
+"when": "assembled"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Motor frame",
+"tool": "Motor pilot",
+"name": "Motor",
+"when": "assembled"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "motors[motor].shaft_diameter / 2",
+"height": "common_shaft_length",
+"name": "Motor shaft",
+"when": "assembled"
+}
+],
+[
+"feature.cylinder",
+{
+"radius": "1.5 mm",
+"height": "0.4 mm",
+"position": [
+"flange_radius - 3 mm",
+"0 mm",
+"flange_top"
+],
+"name": "Index mark blank",
+"when": "show == 2"
+}
+],
+[
+"feature.transform",
+{
+"source": "Index mark blank",
+"angle": "output_angle",
+"name": "Index mark",
+"when": "show == 2"
+}
+],
+[
+"variable.set",
+{
+"name": "pin_pitch",
+"expr": "360 deg / pin_count"
+}
+],
+[
+"variable.set",
+{
+"name": "cut_start",
+"expr": "(floor(-150 deg / pin_pitch) + 0.5) * pin_pitch"
+}
+],
+[
+"variable.set",
+{
+"name": "cut_end",
+"expr": "(floor(-30 deg / pin_pitch) + 0.5) * pin_pitch"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "-10 mm",
+"name": "Cutaway wedge outline"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Cutaway wedge outline",
+"closed": true,
+"points": [
+[
+"0 mm",
+"0 mm"
+],
+[
+"housing_diameter * cos(cut_start)",
+"housing_diameter * sin(cut_start)"
+],
+[
+"housing_diameter * cos(cut_end)",
+"housing_diameter * sin(cut_end)"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Cutaway wedge outline",
+"distance": "flange_top + 40 mm",
+"name": "Cutaway wedge",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Motor screw recesses cut",
+"tool": "Cutaway wedge",
+"keepTool": true,
+"name": "Housing",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Cover screw holes cut",
+"tool": "Cutaway wedge",
+"keepTool": true,
+"name": "Cover opened",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Cover screw heads",
+"tool": "Cutaway wedge",
+"keepTool": false,
+"name": "Cover screws",
+"when": "cutaway"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "discs_top + 0.1 mm",
+"name": "Upper cutaway wedge outline"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Upper cutaway wedge outline",
+"closed": true,
+"points": [
+[
+"0 mm",
+"0 mm"
+],
+[
+"housing_diameter * cos(cut_start)",
+"housing_diameter * sin(cut_start)"
+],
+[
+"housing_diameter * cos(cut_end)",
+"housing_diameter * sin(cut_end)"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Upper cutaway wedge outline",
+"distance": "flange_top + 40 mm",
+"name": "Upper cutaway wedge",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Lower output bearing blank",
+"tool": "Upper cutaway wedge",
+"keepTool": true,
+"name": "Output bearing lower",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Upper output bearing blank",
+"tool": "Upper cutaway wedge",
+"keepTool": true,
+"name": "Output bearing upper",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Support bearing blank",
+"tool": "Upper cutaway wedge",
+"keepTool": false,
+"name": "Support bearing",
+"when": "cutaway"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"offset": "discs_top + 0.1 mm",
+"name": "Output cutaway wedge outline"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Output cutaway wedge outline",
+"closed": true,
+"points": [
+[
+"0 mm",
+"0 mm"
+],
+[
+"housing_diameter * cos(-150 deg)",
+"housing_diameter * sin(-150 deg)"
+],
+[
+"housing_diameter * cos(-30 deg)",
+"housing_diameter * sin(-30 deg)"
+]
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Output cutaway wedge outline",
+"distance": "flange_top + 40 mm",
+"name": "Output cutaway wedge",
+"when": "cutaway"
+}
+],
+[
+"feature.transform",
+{
+"source": "Output cutaway wedge",
+"angle": "output_angle",
+"name": "Output cutaway wedge turned",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Output hub placed",
+"tool": "Output cutaway wedge turned",
+"keepTool": true,
+"name": "Output hub",
+"when": "cutaway"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Output flange placed",
+"tool": "Output cutaway wedge turned",
+"keepTool": false,
+"name": "Output flange",
+"when": "cutaway"
+}
+],
+[
+"feature.transform",
+{
+"source": "Cover opened",
+"angle": "if(print_layout, 180 deg, 0 deg)",
+"axis": [
+1,
+0,
+0
+],
+"translate": [
+"if(print_layout, housing_diameter + plate_gap, 0 mm)",
+"0 mm",
+"if(print_layout, cover_top, 0 mm)"
+],
+"name": "Cover"
+}
+],
+[
+"material.preset",
+{
+"body": "Housing",
+"preset": "abs",
+"color": "#6f7277"
+}
+],
+[
+"body.appearance",
+{
+"body": "Housing",
+"color": "#6f7277",
+"metallic": 0,
+"roughness": 0.62
+}
+],
+[
+"material.preset",
+{
+"body": "Cover",
+"preset": "abs",
+"color": "#6f7277"
+}
+],
+[
+"body.appearance",
+{
+"body": "Cover",
+"color": "#6f7277",
+"metallic": 0,
+"roughness": 0.62
+}
+],
+[
+"material.preset",
+{
+"body": "Disc 1",
+"preset": "abs",
+"color": "#e8590c"
+}
+],
+[
+"body.appearance",
+{
+"body": "Disc 1",
+"color": "#e8590c",
+"metallic": 0,
+"roughness": 0.5
+}
+],
+[
+"material.preset",
+{
+"body": "Eccentric",
+"preset": "abs",
+"color": "#4b6587"
+}
+],
+[
+"body.appearance",
+{
+"body": "Eccentric",
+"color": "#4b6587",
+"metallic": 0,
+"roughness": 0.5
+}
+],
+[
+"material.preset",
+{
+"body": "Output hub",
+"preset": "abs",
+"color": "#3e4145"
+}
+],
+[
+"body.appearance",
+{
+"body": "Output hub",
+"color": "#3e4145",
+"metallic": 0,
+"roughness": 0.55
+}
+],
+[
+"material.preset",
+{
+"body": "Output flange",
+"preset": "abs",
+"color": "#6f7277"
+}
+],
+[
+"body.appearance",
+{
+"body": "Output flange",
+"color": "#3e4145",
+"metallic": 0,
+"roughness": 0.55
+}
+],
+[
+"material.preset",
+{
+"body": "Ring pins",
+"preset": "steel",
+"color": "#c9ccd1"
+}
+],
+[
+"material.preset",
+{
+"body": "Output pins",
+"preset": "steel",
+"color": "#c9ccd1"
+}
+],
+[
+"material.preset",
+{
+"body": "Motor",
+"preset": "abs",
+"color": "#22252a"
+}
+],
+[
+"body.appearance",
+{
+"body": "Motor",
+"color": "#22252a",
+"metallic": 0.1,
+"roughness": 0.4
+}
+],
+[
+"material.preset",
+{
+"body": "Motor shaft",
+"preset": "steel",
+"color": "#c9ccd1"
+}
+],
+[
+"material.preset",
+{
+"body": "Disc bearing 1",
+"preset": "steel",
+"color": "#aeb4bb"
+}
+],
+[
+"material.preset",
+{
+"body": "Output bearing lower",
+"preset": "steel",
+"color": "#aeb4bb"
+}
+],
+[
+"material.preset",
+{
+"body": "Output bearing upper",
+"preset": "steel",
+"color": "#aeb4bb"
+}
+],
+[
+"material.preset",
+{
+"body": "Support bearing",
+"preset": "steel",
+"color": "#aeb4bb"
+}
+],
+[
+"material.preset",
+{
+"body": "Cover screws",
+"preset": "steel",
+"color": "#2b2d30"
+}
+],
+[
+"body.appearance",
+{
+"body": "Cover screws",
+"color": "#2b2d30",
+"metallic": 0.4,
+"roughness": 0.35
+}
+],
+[
+"material.preset",
+{
+"body": "Index mark",
+"preset": "steel",
+"color": "#e8590c"
+}
+],
+[
+"body.appearance",
+{
+"body": "Index mark",
+"color": "#e8590c",
+"metallic": 0,
+"roughness": 0.3
+}
+],
+[
+"material.preset",
+{
+"body": "Disc 2",
+"preset": "abs",
+"color": "#e8590c"
+}
+],
+[
+"body.appearance",
+{
+"body": "Disc 2",
+"color": "#e8590c",
+"metallic": 0,
+"roughness": 0.5
+}
+],
+[
+"material.preset",
+{
+"body": "Disc bearing 2",
+"preset": "steel",
+"color": "#aeb4bb"
+}
+],
+[
+"material.preset",
+{
+"body": "Pin rollers",
+"preset": "steel",
+"color": "#d8c9a4"
+}
+],
+[
+"set.define",
+{
+"name": "Printed parts",
+"kind": "body",
+"where": {
+"any": [
+{
+"name": "Housing"
+},
+{
+"name": "Cover"
+},
+{
+"name": "Disc 1"
+},
+{
+"name": "Disc 2"
+},
+{
+"name": "Eccentric"
+},
+{
+"name": "Output hub"
+},
+{
+"name": "Output flange"
+}
+]
+}
+}
+],
+[
+"variable.measure",
+{
+"name": "ring_pins_in_model",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"any": [
+{
+"all": [
+{
+"in": "Ring pins"
+},
+{
+"surface": "cylinder"
+}
+]
+},
+{
+"all": [
+{
+"in": "Housing"
+},
+{
+"surface": "cylinder"
+},
+{
+"radius": "if(print_layout, pin_radius, -1 mm)"
+}
+]
+}
+]
+}
+},
+"label": "Ring pins, or their seats in the print layout (counted on the model)"
+}
+],
+[
+"variable.measure",
+{
+"name": "lobes_in_model",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Disc 1"
+},
+{
+"name": "*side(e3*"
+}
+]
+}
+},
+"label": "Disc lobes (counted on the model)"
+}
+],
+[
+"variable.output",
+{
+"name": "reduction_from_model",
+"expr": "lobes_in_model / (ring_pins_in_model - lobes_in_model)",
+"label": "Reduction, from the counts on the model"
+}
+],
+[
+"variable.set",
+{
+"name": "mark_radius",
+"expr": "flange_radius - 3 mm"
+}
+],
+[
+"variable.output",
+{
+"name": "pin_circle_diameter",
+"expr": "2 * pin_circle_radius",
+"label": "Pin circle diameter",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "eccentricity_mm",
+"expr": "eccentricity",
+"label": "Eccentricity",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "sharpest_lobe",
+"expr": "lobe_radius",
+"label": "Sharpest lobe radius",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_turn",
+"expr": "output_angle",
+"label": "Output turn at this input",
+"unit": "deg"
+}
+],
+[
+"variable.output",
+{
+"name": "output_pins",
+"expr": "output_pin_count",
+"label": "Output pins"
+}
+],
+[
+"variable.output",
+{
+"name": "ring_pin_size",
+"expr": "pin_diameter",
+"label": "Ring and output pin diameter",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "ring_pin_cut_length",
+"expr": "ring_pin_length",
+"label": "Ring pin length",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_pin_cut_length",
+"expr": "output_pin_length",
+"label": "Output pin length",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "disc_bearing_bore_mm",
+"expr": "disc_bearing_bore",
+"label": "Disc bearing bore",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "disc_bearing_outside_mm",
+"expr": "disc_bearing_outside",
+"label": "Disc bearing outside",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_bearing_bore_mm",
+"expr": "output_bore",
+"label": "Output bearing bore",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "output_bearing_outside_mm",
+"expr": "output_outside",
+"label": "Output bearing outside",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "cover_screw_length",
+"expr": "cover_top - cover_bottom + insert_depth - 1 mm",
+"label": "Cover screw length at most (M3)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "flange_screw_length",
+"expr": "flange_top - head_height - hub_top + insert_depth - 1 mm",
+"label": "Flange screw length at most (M3)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "motor_screw_length",
+"expr": "floor_thickness - motors[motor].screw_head_height - 0.2 mm + 4 mm",
+"label": "Motor screw length at most",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "longest_motor_shaft",
+"expr": "shaft_longest",
+"label": "Longest motor shaft that fits",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "drive_height",
+"expr": "flange_top",
+"label": "Height above the motor face",
+"unit": "mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Ring pins: one more than the lobes, counted on the model",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"any": [
+{
+"all": [
+{
+"in": "Ring pins"
+},
+{
+"surface": "cylinder"
+}
+]
+},
+{
+"all": [
+{
+"in": "Housing"
+},
+{
+"surface": "cylinder"
+},
+{
+"radius": "if(print_layout, pin_radius, -1 mm)"
+}
+]
+}
+]
+}
+},
+"eq": "pin_count"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc lobes: the reduction, counted on the model",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Disc 1"
+},
+{
+"name": "*side(e3*"
+}
+]
+}
+},
+"eq": "lobe_count"
+}
+],
+[
+"assert.add",
+{
+"name": "The reduction is the one asked for, from the counts on the model",
+"measure": "value",
+"expr": "reduction_from_model",
+"eq": "reduction"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc volume is the closed form of the equidistant profile",
+"measure": "volume",
+"of": "Disc 1",
+"eq": "disc_thickness * (disc_profile_area - pi * disc_bore_radius^2 - output_pin_count * pi * hole_radius^2)",
+"tol": "0.002 * disc_thickness * disc_profile_area"
+}
+],
+[
+"assert.add",
+{
+"name": "No undercut: the sharpest lobe radius stays printable",
+"measure": "value",
+"expr": "lobe_radius",
+"min": "lobe_radius_limit"
+}
+],
+[
+"assert.add",
+{
+"name": "Lobes reach far enough to print true (eccentricity 0.6 mm or more)",
+"measure": "value",
+"expr": "eccentricity",
+"min": "eccentricity_min"
+}
+],
+[
+"assert.add",
+{
+"name": "Ring pins stand clear of each other",
+"measure": "value",
+"expr": "2 * pin_circle_radius * sin(180 deg / pin_count) - 2 * contact_radius",
+"min": "pin_gap_min"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc never touches a pin and the gap is the running clearance (pins)",
+"measure": "clearance",
+"from": "Disc 1",
+"to": "Ring pins",
+"max": "1.15 * fit_clearance",
+"when": "assembled && !pin_rollers"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc never touches a roller and the gap is the running clearance (rollers)",
+"measure": "clearance",
+"from": "Disc 1",
+"to": "Pin rollers",
+"max": "1.15 * fit_clearance",
+"when": "assembled && pin_rollers"
+}
+],
+[
+"assert.add",
+{
+"name": "Second disc never touches a pin and the gap is the running clearance (pins)",
+"measure": "clearance",
+"from": "Disc 2",
+"to": "Ring pins",
+"max": "1.15 * fit_clearance",
+"when": "assembled && two_discs && !pin_rollers"
+}
+],
+[
+"assert.add",
+{
+"name": "Second disc never touches a roller and the gap is the running clearance (rollers)",
+"measure": "clearance",
+"from": "Disc 2",
+"to": "Pin rollers",
+"max": "1.15 * fit_clearance",
+"when": "assembled && two_discs && pin_rollers"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc holes clear the output pins as the disc orbits",
+"measure": "clearance",
+"from": "Disc 1",
+"to": "Output pins",
+"max": "1.15 * hole_clearance",
+"when": "assembled"
+}
+],
+[
+"assert.add",
+{
+"name": "Second disc's holes clear the output pins",
+"measure": "clearance",
+"from": "Disc 2",
+"to": "Output pins",
+"max": "1.15 * hole_clearance",
+"when": "assembled && two_discs"
+}
+],
+[
+"assert.add",
+{
+"name": "Lobe tips clear the housing wall",
+"measure": "value",
+"expr": "pocket_radius - (pin_circle_radius + 2 * eccentricity - equidistant)",
+"min": "0.3 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Lobes do not reach the wall, measured",
+"measure": "clearance",
+"from": "Disc 1",
+"to": "Housing",
+"min": "0.25 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Cam wall round the motor shaft",
+"measure": "value",
+"expr": "cam_radius - eccentricity - shaft_bore_radius",
+"min": "cam_wall_min"
+}
+],
+[
+"assert.add",
+{
+"name": "The shortest allowed motor shaft reaches 10 mm into the eccentric",
+"measure": "value",
+"expr": "shaft_reach - eccentric_bottom",
+"min": "10 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "A common 24 mm motor shaft is no longer than the longest that fits",
+"measure": "value",
+"expr": "shaft_longest",
+"min": "common_shaft_length"
+}
+],
+[
+"assert.add",
+{
+"name": "The motor shaft clears the roof of the bearing recess in the hub",
+"measure": "clearance",
+"from": "Motor shaft",
+"to": "Output hub",
+"min": "0.5 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Motor screw heads clear the pin seats",
+"measure": "value",
+"expr": "pin_circle_radius - pin_radius - (motors[motor].bolt_spacing * 0.7072 + motors[motor].screw_head / 2 + 0.2 mm)",
+"min": "1.2 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Output turns by the input angle over the reduction, in the opposite direction (x)",
+"measure": "centerOfMass",
+"of": "Index mark",
+"axis": "x",
+"eq": "mark_radius * cos(-input_angle / reduction)",
+"tol": "0.05 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Output turns by the input angle over the reduction, in the opposite direction (y)",
+"measure": "centerOfMass",
+"of": "Index mark",
+"axis": "y",
+"eq": "mark_radius * sin(-input_angle / reduction)",
+"tol": "0.05 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Housing: every wall at least 1.2 mm",
+"measure": "thickness",
+"of": "Housing",
+"min": "1.2 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover: every wall at least 1.2 mm",
+"measure": "thickness",
+"of": "Cover",
+"min": "1.2 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Output hub: every wall at least 1.2 mm",
+"measure": "thickness",
+"of": "Output hub",
+"min": "1.2 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Output flange: every wall at least 1.2 mm",
+"measure": "thickness",
+"of": "Output flange",
+"min": "1.2 mm",
+"when": "show == 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Eccentric: every wall at least 1.2 mm",
+"measure": "thickness",
+"of": "Eccentric",
+"min": "1.2 mm",
+"when": "show == 2 && !two_discs"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc web between holes and lobes at least 2 mm",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Disc 1"
+},
+{
+"name": "*side(e7*"
+}
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Disc 1"
+},
+{
+"name": "*side(e3*"
+}
+]
+}
+},
+"min": "2 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Housing lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Housing",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Cover",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc 1 lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Disc 1",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "Disc 2 lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Disc 2",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout && two_discs"
+}
+],
+[
+"assert.add",
+{
+"name": "Eccentric lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Eccentric",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "Output hub lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Output hub",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "Output flange lies on the bed in the print layout",
+"measure": "boxMin",
+"of": "Output flange",
+"axis": "z",
+"eq": "0 mm",
+"tol": "0.02 mm",
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "The first cam sits in its bearing: the eccentric turns with the disc",
+"measure": "clearance",
+"from": "Eccentric",
+"to": "Disc bearing 1",
+"min": "0.6 * cam_fit",
+"max": "1.4 * cam_fit",
+"when": "assembled"
+}
+],
+[
+"assert.add",
+{
+"name": "The second cam sits in its bearing, half a turn from the first",
+"measure": "clearance",
+"from": "Eccentric",
+"to": "Disc bearing 2",
+"min": "0.6 * cam_fit",
+"max": "1.4 * cam_fit",
+"when": "assembled && two_discs"
+}
+],
+[
+"assert.add",
+{
+"name": "A bearing passes the journal on its way to its cam",
+"measure": "value",
+"expr": "disc_bearing_bore / 2 - eccentricity - journal_radius",
+"min": "bearing_pass_gap"
+}
+],
+[
+"assert.add",
+{
+"name": "With two discs the lower bearing can come from below: nothing under its cam is wider than its bore",
+"measure": "sectionArea",
+"of": "Eccentric",
+"plane": "xy",
+"offset": "eccentric_bottom + eccentric_flange / 2",
+"max": "1.001 * pi * (disc_bearing_bore / 2)^2",
+"when": "assembled && two_discs"
+}
+],
+[
+"assert.add",
+{
+"name": "No printed part overlaps another on the bed",
+"measure": "overlap",
+"of": {
+"kind": "body",
+"where": {
+"set": "Printed parts"
+}
+},
+"is": false,
+"when": "print_layout"
+}
+],
+[
+"assert.add",
+{
+"name": "The bearing recess roof in the output hub is a 45 degree cone",
+"measure": "draft",
+"faces": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Output hub"
+},
+{
+"surface": "cone"
+}
+]
+}
+},
+"direction": "z",
+"min": "-46 deg",
+"when": "print_layout"
+}
+],
+[
+"variable.publish",
+{
+"name": "reduction",
+"label": "Reduction ratio",
+"description": "How many input turns give one output turn (opposite direction). The disc gets this many lobes and the ring one pin more. Odd ratios only, so two identical discs fit half a lobe apart.",
+"group": "The drive",
+"order": 1,
+"kind": "integer",
+"min": "7",
+"max": "reduction_max",
+"step": "2"
+}
+],
+[
+"variable.publish",
+{
+"name": "housing_diameter",
+"label": "Housing outer diameter",
+"description": "The drive's overall diameter. The pin circle, the pins, the bearings and the lobes all follow from it; a bigger housing allows a higher ratio.",
+"group": "The drive",
+"order": 2,
+"min": "housing_diameter_min",
+"max": "160 mm",
+"step": "2 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "motor",
+"label": "Motor",
+"description": "The stepper the drive bolts to: mounting screws, pilot and shaft come from this row (NEMA ICS 16 sizes as most stepper makers build them).",
+"group": "The drive",
+"order": 3,
+"kind": "choice",
+"choicesFrom": "motors"
+}
+],
+[
+"variable.publish",
+{
+"name": "input_angle",
+"label": "Turn the input",
+"description": "Drag it: the eccentric turns, the disc orbits and rolls round the pins, and the output turns the other way by this angle divided by the reduction.",
+"group": "The drive",
+"order": 4,
+"min": "0 deg",
+"max": "360 deg * reduction",
+"step": "1 deg",
+"unit": "deg"
+}
+],
+[
+"variable.publish",
+{
+"name": "disc_count",
+"label": "Discs",
+"description": "Two identical discs half a lobe apart balance the forces of the orbiting disc; one is the simple printable start.",
+"group": "Cycloid disc",
+"order": 5,
+"kind": "choice",
+"choices": [
+"One disc",
+"Two discs, 180 degrees apart"
+]
+}
+],
+[
+"variable.publish",
+{
+"name": "lobe_depth",
+"label": "Lobe depth",
+"description": "How deep the lobes run, as a percentage of a cusped lobe (the shortening ratio K in the cycloid literature). Deeper lobes tolerate print error better but press harder on the pins and bearing; the form limits it so the lobes do not undercut and everything still fits.",
+"group": "Cycloid disc",
+"order": 6,
+"min": "depth_min",
+"max": "depth_max",
+"step": "1",
+"unit": null
+}
+],
+[
+"variable.publish",
+{
+"name": "pin_rollers",
+"label": "Rollers on the ring pins",
+"description": "Free-turning sleeves on the steel pins, which reduce the sliding between the lobes and the pins (the pin circle shrinks a little to make room).",
+"group": "Cycloid disc",
+"order": 7,
+"kind": "boolean"
+}
+],
+[
+"variable.publish",
+{
+"name": "fit_clearance",
+"label": "Running clearance",
+"description": "The gap between the disc's lobes and the pins, and the backlash you allow for: too small and printed parts bind, too large and the drive rattles. Tune it for your printer.",
+"group": "Cycloid disc",
+"order": 8,
+"min": "0.05 mm",
+"max": "0.4 mm",
+"step": "0.05 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "show",
+"label": "Show",
+"description": "The drive with part of the housing open, closed, or the parts laid out flat in their print orientation (export this for a 3MF of every part).",
+"group": "View",
+"order": 9,
+"kind": "choice",
+"choices": [
+"Cutaway",
+"Closed",
+"Print layout: all printed parts on the bed"
+]
+}
+],
+[
+"document.info",
+{
+"title": "Cycloidal drive",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"tags": [
+"3D printing",
+"robotics",
+"gearbox",
+"cycloidal",
+"reducer"
+],
+"description": "A printable single-stage cycloidal reducer for a NEMA stepper. Choose the reduction and the housing diameter: the pins, the lobes, the eccentricity and the trochoid disc profile follow, the form refuses a ratio that would undercut the lobes or crowd the pins, and dragging Turn the input orbits the disc and turns the output by the true ratio. To export: set Show to Print layout, then File > Export, The model as 3MF for every printed part in its print orientation on the bed (select a body to export one part). To buy: ring and output pins are steel dowels (diameter and lengths in the outputs); each disc rides on one ball bearing, the output on two, all with the sizes in the outputs, and the eccentric's top on one 61800 (10 x 19 x 5 mm); M3 screws and heat-set inserts close the cover and fix the flange."
+}
+],
+[
+"document.check",
+{}
+]
+]
