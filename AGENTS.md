@@ -275,6 +275,20 @@ README, not a real Jig by §4.1), **SHOULD** or **NIT**, each with its evidence 
 standard, a point of the range), and the difficulty score with one line why. Builder and reviewer loop until no MUST is
 open; the same reviewer is continued for the re-review.
 
+**What reviews keep finding** (eleven Jigs so far; look for these yourself before handing in, it saves a round):
+- An assertion that restates a formula instead of measuring the model: do a mutation test (break the geometry in a scratch
+  copy) and see that an assertion notices. A loosened fit, a moved hole, a wrong ratio must fail something.
+- A failure inside the published range that sampling missed: an unmakeable slit or a thin web, a model that does not build
+  at one depth. Scan a grid of the combinations that matter; export and look at the file.
+- Parts that cannot be assembled or made: a bearing that cannot reach its seat, a groove that ends in a flange, a shaft
+  longer than its bore. Walk the assembly and the machine's path step by step.
+- Exports: a part drawn twice, a section that is not true size, a helper body in the 3MF, a layout that does not fit the
+  bed, or something a form user cannot get without picking.
+- README claims the model does not bear out, and sources cited but not read (a value from memory that is cited is a MUST):
+  say what was read, what is from a secondary source, what is your own judgement.
+- Safety: a stair, a hanging table, a load limit. The form states only what the model proves and says who must verify the
+  rest.
+
 **Difficulty** (1 to 10, scored by the reviewer): what it takes to build this Jig from scratch in 3DCraft, by hand or
 with an agent, the form and its range included.
 
