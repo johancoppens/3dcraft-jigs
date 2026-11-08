@@ -1,0 +1,78 @@
+{
+  "id": "gt2-pulley",
+  "title": "GT2 pulley",
+  "summary": "teeth, belt, bore, hub; printed or machined",
+  "description": "A GT2 2 mm timing pulley from the belt you bought and the shaft you have: flanges and face width after the Gates design manual, a hub with grub screws in one choice, machined and black anodised or 3D printed in its print orientation.",
+  "domain": "3D printing, machining",
+  "process": "CNC turning and hobbing, or FDM printing",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Three-part build, coupled ranges and process-driven topology."
+  },
+  "standards": [],
+  "materials": [
+    "Aluminium, black anodised (2700 kg/m3)",
+    "PETG filament (1270 kg/m3)"
+  ],
+  "licence": "CC-BY-SA-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "view": "iso",
+    "zoom": 1.05,
+    "look": {
+      "rotation": 135
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/pulley.step"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/printed.3mf",
+      "values": {
+        "made_by": 2,
+        "hub_length": "9 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/printed-large.stl",
+      "values": {
+        "made_by": 2,
+        "teeth": 60,
+        "shaft_diameter": "8 mm",
+        "hub_length": "10 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 200,
+    "variables": 94,
+    "parameters": 10,
+    "features": 42,
+    "assertions": 19,
+    "warnings": 0,
+    "build_s": 2.58,
+    "load_s": 1.1,
+    "load_cpu_s": 4.61,
+    "file_bytes": 130049,
+    "range_points": 111,
+    "range_unproven": 0,
+    "range_mean_s": 0.85,
+    "range_worst_s": 4.9
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
