@@ -110,7 +110,7 @@
     "features": 20,
     "assertions": 9,
     "warnings": 0,
-    "build_s": 0.41,
+    "build_s": 0.42,
     "load_s": 0.04,
     "load_cpu_s": 0.03,
     "file_bytes": 404157,
