@@ -79,6 +79,7 @@ it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}
 | J-068 | Performance (file size) | A document with text carries the whole font (see F-037) | astrolabe, tuned-chimes, sundial | A third of the 1 MB budget. |
 | J-069 | Agent friction | Expressions are capped at different sizes in different places | rc-wing, music-box | Long formulas go through variables; one check split in three. |
 | J-070 | Agent friction | A curvature assertion's `at` takes plain numbers only (see F-094) | dobsonian-telescope | The curvature is measured on an unmoved copy. |
+| J-071 | Missing capability | `extent`, `boxMin` and `boxMax` measure bodies only, not faces | cubesat | The countersunk screw heads are drawn and their overlap with the rail is measured. |
 
 ## J-001: a Jig's thumbnail cannot be given a view or a look
 
@@ -570,3 +571,10 @@ it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}
 - **What happens, and what should:** `at` given as expressions is refused: "`at` must be [x, y, z]"; plain numbers work. Every other point in an assertion takes expressions, and a point on a moving part moves with the parameters.
 - **Reproducer:** `findings/J-070-curvature-at-no-expressions/repro.json`
 - **Workaround and impact:** The mirror's curvature is asserted on an unmoved construction copy at the origin.
+
+## J-071: `extent`, `boxMin` and `boxMax` measure bodies only, not faces
+
+- **Kind:** missing capability. **Jig:** cubesat.
+- **What happens, and what should:** `measure: "extent"` with a face query as `of` (the cone of a countersink) is refused: "extent is of bodies; the subject names faces of `Countersunk`". The size of a face's box along an axis is the natural way to read a feature's size off the model: a countersink's diameter and depth, a pocket's length, a slot's width, a flange's height. Distances between faces cover some of these, but not the size of a single face.
+- **Reproducer:** `findings/J-071-extent-of-faces/repro.json` (a plate with a Ø2.2 hole countersunk to Ø4.4; both assertions should pass with 4.4 mm and 1.1 mm, both are refused)
+- **Workaround and impact:** The rail screws' heads (a 90° cone at the theoretical Ø4.4 of ISO 7046-1) are drawn flush with the rail face, and `overlap` proves they do not cut into the rail, which proves more than two extents would; the gap matters where no part can be drawn in the hole.

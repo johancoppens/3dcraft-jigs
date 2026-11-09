@@ -1,8 +1,0 @@
-[
-  ["file.open", {"path": "jigs/cubesat/source.3dcraft"}],
-  ["body.appearance", {"body": "Cells_PY", "color": "#5B7299", "metallic": 0.5, "roughness": 0.12}],
-  ["body.appearance", {"body": "Cells_MY", "color": "#5B7299", "metallic": 0.5, "roughness": 0.12}],
-  ["body.appearance", {"body": "Cells_MX", "color": "#5B7299", "metallic": 0.5, "roughness": 0.12}],
-  ["body.appearance", {"body": "CellArray_PX", "color": "#5B7299", "metallic": 0.5, "roughness": 0.12}],
-  ["file.save", {}]
-]

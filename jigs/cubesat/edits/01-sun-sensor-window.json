@@ -1,6 +1,0 @@
-[
-  ["file.open", {"path": "jigs/cubesat/source.3dcraft"}],
-  ["feature.when", {"feature": "SS_win_PX", "expr": "ss_strip >= ss + 1 mm"}],
-  ["feature.when", {"feature": "SunSensor_PX_w", "expr": "ss_strip >= ss + 1 mm"}],
-  ["file.save", {}]
-]

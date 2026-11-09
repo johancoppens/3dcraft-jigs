@@ -1,0 +1,9 @@
+[
+  ["feature.block", {"size": ["10 mm", "10 mm", "3 mm"], "position": ["-5 mm", "-5 mm", "-3 mm"], "name": "Plate"}],
+  ["feature.cylinder", {"radius": "1.1 mm", "height": "5 mm", "position": ["0 mm", "0 mm", "-4 mm"], "axis": [0, 0, 1], "name": "Drill"}],
+  ["feature.boolean", {"op": "subtract", "target": "Plate", "tool": "Drill", "name": "Drilled"}],
+  ["feature.chamfer", {"edges": [["F3:copy(1)/F2:face(0)", "F3:copy(0)/F1:face(1)"]], "distance": "1.1 mm", "name": "Countersunk"}],
+  ["assert.add", {"name": "Countersink 4.4 mm across", "measure": "extent", "of": {"kind": "face", "where": {"in": "Countersunk", "surface": "cone"}}, "axis": "x", "eq": "4.4 mm", "tol": "0.001 mm"}],
+  ["assert.add", {"name": "Countersink 1.1 mm deep", "measure": "extent", "of": {"kind": "face", "where": {"in": "Countersunk", "surface": "cone"}}, "axis": "z", "eq": "1.1 mm", "tol": "0.001 mm"}],
+  ["assert.list", {}]
+]
