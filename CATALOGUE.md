@@ -183,8 +183,7 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Look:** satin aluminium tubes, oak top.
 
 ### 22. Sliceform · `sliceform` · laser cutting, art · kept
-- **Must improve:** 14 parameters, cut down; 245 features at load 1.8 s: fewer and larger; the lamp variant as an honest
-  option; slice count and finger width by range.
+- **Must improve:** 14 parameters, cut down; 245 features at load 1.8 s: fewer and larger; no lamp (wood temperature cannot be proven; coordinator, 2026-11-09); slice count and finger width by range.
 - **Look:** two-tone birch and walnut.
 
 ### 23. Miura-ori · `miura-ori` · origami · kept
