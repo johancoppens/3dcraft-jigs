@@ -1,0 +1,111 @@
+{
+  "id": "rack-cabinet",
+  "title": "19-inch rack cabinet",
+  "summary": "your units, depth and weight, on the wall or the floor",
+  "description": "A 19-inch rack cabinet sized from what goes in it: how many units, how deep the gear is and what it weighs, on a wall or on feet. Laser cut and folded from one sheet thickness, bolted together with clinch nuts, EIA-310 rails, a door on hinge pins with a quarter-turn lock.",
+  "domain": "Sheet metal, racks",
+  "process": "Laser cutting and press-brake bending, clinch nuts pressed in, powder coating, bolted assembly",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Seven press-brake parts, a hinged door with a cam lock driven by its angle, coupled statics limits and process checks across bodies."
+  },
+  "standards": [
+    "EIA-310 / IEC 60297 dimensions via IBM, Rack installation specifications for racks not purchased from IBM, and Digital Loggers, Rack specifications (the standards themselves not read): 465.1 mm hole centres, 450 mm opening, 15.9/15.9/12.7 mm vertical pattern, 44.45 mm unit, 9.5 mm square holes",
+    "Panel 482.6 mm, panel height 44.45 n - 0.8 mm, via Wikipedia, 19-inch rack (0.794 mm there, uncited)",
+    "247TailorSteel bending guidelines: die width, leg length and inner radius for CRS, AlMg3 EN AW 5754 H111 and AISI 304",
+    "Minimum radii and K-factor: the sheet-metal-enclosure Jig's sources (secondary, not re-read here)",
+    "Fabcon, Sheet Metal DFM Guidelines: hole-to-bend distance at least 2.5 t + r",
+    "ISO 7379 shoulder screw M6, shoulder 8 mm: Ganter data sheet",
+    "Essentra L-handle quarter-turn cam lock: cut-out, cam lengths and offsets (data sheet)",
+    "PEM self-clinching nuts CLS-M6: hole and edge distance (product pages seen through search, bulletin not read)",
+    "ISO 273 medium clearance holes via a published table (Optimas)",
+    "Load model: IBM's 20 kg per rack unit; the plate bending limit at a wall fixing is the builder's judgement, unreviewed; EN 1993-1-3 pull-through for comparison (a reproduction, not the standard)"
+  ],
+  "materials": [
+    "Cold-rolled steel DC01, 1.5 or 2 mm, powder coated",
+    "Aluminium EN AW-5754 H111, 2 mm",
+    "Stainless steel 304 (1.4301), 1.5 mm",
+    "M6 screws and self-clinching nuts (PEM CLS or SP), ISO 7379 M6 shoulder screws, quarter-turn cam lock, cage nuts, wall anchors (the buyer's), M10 levelling feet for the floor version"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "view": "iso",
+    "zoom": 1.1,
+    "look": {
+      "rotation": 0
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/flat-patterns.dxf",
+      "sheetMetal": [
+        "Lid",
+        "Pan",
+        "Side right",
+        "Back",
+        "Rail right",
+        "Door",
+        "Panel"
+      ]
+    },
+    {
+      "command": "file.export",
+      "path": "exports/lid.dxf",
+      "sheetMetal": "Lid"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/door.svg",
+      "sheetMetal": "Door"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/floor-16u.dxf",
+      "sheetMetal": [
+        "Pan",
+        "Side right",
+        "Back"
+      ],
+      "values": {
+        "mounting": 2,
+        "rack_units": 16,
+        "gear_depth": "500 mm",
+        "gear_mass": "120 kg",
+        "sheet_choice": 3,
+        "door_style": 2,
+        "rear_rails": 0,
+        "panel_count": 0
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 443,
+    "variables": 182,
+    "parameters": 12,
+    "features": 84,
+    "assertions": 50,
+    "warnings": 0,
+    "build_s": 18.75,
+    "load_s": 2.7,
+    "load_cpu_s": 4.04,
+    "file_bytes": 226770,
+    "range_points": 111,
+    "range_unproven": 0,
+    "range_mean_s": 0.65,
+    "range_worst_s": 2.39
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
