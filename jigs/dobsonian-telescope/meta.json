@@ -1,0 +1,148 @@
+{
+  "id": "dobsonian-telescope",
+  "title": "Dobsonian telescope",
+  "summary": "give your mirror, get the telescope",
+  "description": "A Newtonian on a plywood rocker box, from your mirror: the secondary for the field you choose, the spider, the focuser position, the altitude bearings on the real balance point (computed from the masses, then measured on the model), the rocker box and a cut sheet for the plywood.",
+  "domain": "Woodwork, optics",
+  "process": "Plywood cutting (saw, router or CNC), paper form tube, mirror cell assembly",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Closed-form centre of mass over 20+ bodies checked by measure, swept clearance, many coupled range formulas, structure changing by choice."
+  },
+  "standards": [
+    "Mike Lockwood, loptics.com: secondary sizing table and offset, 0.5 in field for general use (https://www.loptics.com/ATM/diagonals.html)",
+    "Stellafane ATM: Dobsonian OTA design (tube ID about 2 in over the mirror, spare in-travel 1/4 to 1/2 in, https://stellafane.org/tm/dob/ota/design.html), rocker box (sides about 1.2 tube OD, swing margin at least 2 in) and ground board",
+    "Reiner Vogel, rocker box notes: Teflon pads at 35 degrees, 1 cm2 of Teflon per kg (citing Kriege and Berry), http://www.reinervogel.net/Planung/5_Rocker_e.html"
+  ],
+  "materials": [
+    "Birch plywood 12 to 24 mm (rocker box, ground board, altitude bearings, mirror cell plate)",
+    "Paper concrete-form tube, rolled aluminium or glass-fibre tube",
+    "Pyrex mirror (yours)",
+    "Virgin Teflon pads",
+    "Ebony-Star type textured laminate",
+    "Focuser, eyepiece and finder of your choice"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        1750,
+        2000,
+        1250
+      ],
+      "target": [
+        110,
+        236,
+        650
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 30
+    },
+    "look": {
+      "rotation": 270
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/plywood-cut-sheet.svg",
+      "set": "Cut sheet",
+      "gap": "12 mm",
+      "width": "2440 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/plywood-cut-sheet.dxf",
+      "set": "Cut sheet",
+      "gap": "12 mm",
+      "width": "2440 mm"
+    },
+    {
+      "command": "cut.export",
+      "path": "exports/cut-sheet-with-kerf.svg",
+      "bodies": [
+        "Right side board",
+        "Left side board",
+        "Front board",
+        "Back board",
+        "Rocker floor",
+        "Ground board",
+        "Altitude bearing right",
+        "Altitude bearing left",
+        "Mirror cell plate",
+        "Tube rear plate",
+        "Retainer right",
+        "Retainer left"
+      ],
+      "layout": "sheet",
+      "gap": "10 mm",
+      "kerf": "1 mm",
+      "width": "2440 mm"
+    },
+    {
+      "command": "cut.list",
+      "format": "csv",
+      "bodies": [
+        "Right side board",
+        "Left side board",
+        "Front board",
+        "Back board",
+        "Rocker floor",
+        "Ground board",
+        "Altitude bearing right",
+        "Altitude bearing left",
+        "Mirror cell plate",
+        "Tube rear plate",
+        "Retainer right",
+        "Retainer left"
+      ]
+    },
+    {
+      "command": "file.export",
+      "path": "exports/plywood-sixteen-inch.svg",
+      "set": "Cut sheet",
+      "gap": "12 mm",
+      "width": "2440 mm",
+      "values": {
+        "mirror_diameter": "400 mm",
+        "focal_ratio": 4.5,
+        "mirror_thickness": "40 mm",
+        "eye_height_limit": "2300 mm",
+        "board_thickness": "21 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 669,
+    "variables": 237,
+    "parameters": 12,
+    "features": 137,
+    "assertions": 79,
+    "warnings": 0,
+    "build_s": 21.35,
+    "load_s": 2.19,
+    "load_cpu_s": 2.95,
+    "file_bytes": 312484,
+    "range_points": 108,
+    "range_unproven": 0,
+    "range_mean_s": 0.2,
+    "range_worst_s": 0.44
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
