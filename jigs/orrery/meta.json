@@ -1,0 +1,121 @@
+{
+  "id": "orrery",
+  "title": "Geared orrery",
+  "summary": "set the date, the gears place the planets",
+  "description": "A hand-cranked brass orrery, Mercury to Saturn and the Moon, each on its own gear train searched to the accuracy you ask; set the date and every bead stands where its gears put it, at its body's real mean longitude on the day the arms were set and drifting only by its train's error after. Laser-cut brass gears, stock brass tube and rod, a walnut plinth.",
+  "domain": "Mechanisms, laser cutting, astronomy",
+  "process": "Fibre-laser cut brass sheet 1 mm (gears, bridge, crank, carrier plates, Saturn's ring, degree ring); stock K&S brass tube and rod cut to length, arms bent; turned brass bosses for the arms; soft-soldered; turned or bought walnut plinth; painted wooden beads",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Gear trains from a search, involutes from formulas, a coupled multi-body mechanism with a Moon parallel motion, an as-built stack measured layer by layer, and astronomy checked against JPL and IERS on every date."
+  },
+  "standards": [
+    "E. M. Standish, JPL Solar System Dynamics, Approximate Positions of the Planets, Table 1 (Keplerian elements and rates, J2000 ecliptic and equinox, 1800-2050): mean longitudes at J2000 and their rates (read)",
+    "IERS Conventions (2003), IERS Technical Note 32, fundamental arguments F and Omega of the Moon and the general precession p_A (Simon et al. 1994; Kinoshita and Souchay 1990), read as coded in ERFA src/faf03.c, faom03.c, fapa03.c",
+    "NASA NSSDC fact sheets: Saturn (sidereal period 10 755.699 d, obliquity 26.73 deg, equatorial radius 60 268 km), Saturnian rings (A ring outer edge 136 780 km), Planetary Fact Sheet (periods, cross-check) (read)",
+    "Basic rack: addendum 1.00 m, dedendum 1.25 m, 20 deg (KHK Gear Technical Reference, Table 3.1, the JIS B 1701-2 form of the ISO 53 rack; read on khkgears.net); undercut-free at 17 teeth (same page); ISO 53 itself not read",
+    "Contact ratio = path of contact / base pitch, at least 1.2 (IIT Kharagpur lecture notes, Design of Machine Elements, ch. 8 Gears, slides 16-17, read); path of contact and interference point from the involute geometry (own derivation)",
+    "Laser cutting: minimum hole and bridge 50 % of the sheet thickness (SendCutSend EDU[CAD]TION study guide, ch. 5.2, read); brass C260 sheet 0.040 in and 0.063 in, +/-0.005 in (SendCutSend brass page, read); this Jig keeps the narrowest tooth space at least the full thickness (AGENTS.md rule)",
+    "K&S Precision Metals telescopic brass tube #3400: 1/16 to 13/32 in OD in 1/32 in steps, wall 0.014 in, 12 in long (ksmetals.com, read); round brass rod 1/8 in x 12 in (8164, ksmetals.com) and 1/8 in and 5/32 in x 36 in (1162, 1163; retailer listings, secondary)",
+    "C26000 cartridge brass: density 0.308 lb/in3 (8.53 g/cm3), modulus of elasticity 16 000 ksi (110 317 MPa) (Wieland Concast C26000 datasheet, read)",
+    "Cantilever deflection q L^4 / 8 E I and P L^3 / 3 E I (standard beam formulas, own application)"
+  ],
+  "materials": [
+    "Brass sheet 1 mm, C260 / CuZn37 (8530 kg/m3): every gear, the bridge, the crank, the Earth's carrier plates, Saturn's ring, the degree ring",
+    "K&S telescopic brass tube, 5/32 to 11/32 in, wall 0.014 in: the planets' tubes and the bushes",
+    "Brass rod 1/8 in (centre post, arbors, idler pins, the Earth's spindle) and 5/32 in (the arms, bent); 8 mm brass rod for the pillars",
+    "Brass bar for the arm bosses (turned, cross-drilled 5/32 in)",
+    "Wooden beads, 6 to 50 mm, painted",
+    "Walnut, 22 mm, turned or cut round, oiled: the plinth and the crank knob",
+    "Soft solder"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -260,
+        -700,
+        470
+      ],
+      "target": [
+        40,
+        0,
+        60
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 31
+    },
+    "look": {
+      "rotation": 270
+    }
+  },
+  "exports": [
+    {
+      "command": "cut.export",
+      "path": "exports/orrery-brass-cut.dxf",
+      "kerf": "laser_kerf / 2",
+      "copies": true
+    },
+    {
+      "command": "cut.export",
+      "path": "exports/orrery-brass-cut.svg",
+      "kerf": "laser_kerf / 2",
+      "copies": true,
+      "width": "600 mm",
+      "gap": "4 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/laser-cut-sheet.svg",
+      "set": "Laser cut sheet",
+      "width": "600 mm"
+    },
+    {
+      "command": "cut.export",
+      "path": "exports/earth-module-2.5-cut.dxf",
+      "kerf": "laser_kerf / 2",
+      "copies": true,
+      "values": {
+        "planet_set": 1,
+        "moon": 0,
+        "period_error": 0.1,
+        "gear_module": "2.5 mm",
+        "orrery_diameter": "500 mm",
+        "laser_kerf": "0.15 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 1627,
+    "variables": 1028,
+    "parameters": 10,
+    "features": 216,
+    "assertions": 69,
+    "warnings": 0,
+    "build_s": 59.33,
+    "load_s": 3.7,
+    "load_cpu_s": 9.36,
+    "file_bytes": 849877,
+    "range_points": 102,
+    "range_unproven": 0,
+    "range_mean_s": 0.35,
+    "range_worst_s": 0.64
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

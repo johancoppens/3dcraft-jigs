@@ -1,0 +1,61 @@
+{
+  "note": "Values copied from the sources named here; make.py derives every rate and period from them. Do not round.",
+  "planets": {
+    "source": "E. M. Standish, JPL Solar System Dynamics, 'Approximate Positions of the Planets', Table 1: Keplerian elements and their rates, J2000 ecliptic and equinox, valid 1800 AD - 2050 AD (https://ssd.jpl.nasa.gov/planets/approx_pos.html). L is the mean longitude at J2000.0 (deg), L_rate its rate (deg per Julian century); e is the eccentricity. The Earth's row is the Earth-Moon barycentre (EM Bary).",
+    "rows": [
+      {
+        "key": "me",
+        "name": "Mercury",
+        "L": 252.2503235,
+        "L_rate": 149472.67411175,
+        "e": 0.20563593
+      },
+      {
+        "key": "ve",
+        "name": "Venus",
+        "L": 181.9790995,
+        "L_rate": 58517.81538729,
+        "e": 0.00677672
+      },
+      {
+        "key": "ea",
+        "name": "Earth",
+        "L": 100.46457166,
+        "L_rate": 35999.37244981,
+        "e": 0.01671123
+      },
+      {
+        "key": "ma",
+        "name": "Mars",
+        "L": -4.55343205,
+        "L_rate": 19140.30268499,
+        "e": 0.0933941
+      },
+      {
+        "key": "ju",
+        "name": "Jupiter",
+        "L": 34.39644051,
+        "L_rate": 3034.74612775,
+        "e": 0.04838624
+      },
+      {
+        "key": "sa",
+        "name": "Saturn",
+        "L": 49.95424423,
+        "L_rate": 1222.49362201,
+        "e": 0.05386179
+      }
+    ]
+  },
+  "moon": {
+    "source": "IERS Conventions (2003), IERS Technical Note 32, fundamental arguments from Simon et al. (1994), A&A 282, 663, as coded in ERFA (liberfa/erfa: src/faf03.c, src/faom03.c, src/fapa03.c). The Moon's mean longitude L = F + Omega, referred to the mean equinox of date; its sidereal rate is L's rate less the general precession in longitude p_A. Coefficients in arcseconds (F, Omega) and radians (p_A), t in Julian centuries since J2000.0. Only the terms linear in t are used: a geared Moon turns at a constant rate.",
+    "F_arcsec": 335779.526232,
+    "F_rate_arcsec": 1739527262.8478,
+    "Omega_arcsec": 450160.398036,
+    "Omega_rate_arcsec": -6962890.5431,
+    "pA_rate_rad": 0.02438175
+  },
+  "check": {
+    "source": "NASA Goddard (NSSDC) fact sheets, read as a cross-check only (not used by make.py): Saturn's sidereal orbit period 10 755.699 d (make.py derives 10 755.884 d from Standish's rate, 17 ppm apart); the Planetary Fact Sheet's rounded orbital periods (Mercury 88.0, Venus 224.7, Earth 365.2, Moon 27.3, Mars 687.0 d) agree with the derived ones to their rounding."
+  }
+}
