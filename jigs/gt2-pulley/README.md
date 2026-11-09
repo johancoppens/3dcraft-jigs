@@ -168,4 +168,4 @@ tools/jigs.py check gt2-pulley
 - `body.appearance` takes a colour from expressions but `metallic` and `roughness` only as numbers, so one choice
   cannot switch a body between a bright metal and a plastic look: this Jig makes the toothed rim as two extrusions that
   differ only in appearance, one on per process
-  ([repro](../../findings/J-xxx-appearance-numbers-not-expressions/repro.json)).
+  ([repro](../../findings/J-053-appearance-numbers-not-expressions/repro.json)).
