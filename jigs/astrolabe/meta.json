@@ -1,0 +1,91 @@
+{
+  "id": "astrolabe",
+  "title": "Planispheric astrolabe",
+  "summary": "25 to 65 degrees north: your plate, a lettered star rete",
+  "description": "A planispheric astrolabe for a place from 25 to 65 degrees north (not the tropics, not the southern hemisphere), in brass: a mater with its degree scale, a plate of almucantars and azimuths in exact stereographic projection, a rete of lettered star pointers from the Yale Bright Star Catalogue with the ecliptic ring, a rule, and an altitude scale with an alidade on the back, to laser cut and engrave.",
+  "domain": "Laser cutting, engraving, astronomy",
+  "process": "Laser or waterjet cutting of brass sheet; engraving by fibre laser or rotary cutter; letter punches for the star key; soldered limb and alidade vanes; hand finishing",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Data-driven exact projection, coupled closed-form clipping, one-face engraving and a proven, locked stack over the range."
+  },
+  "standards": [
+    "D. Abdullah, The Engineering and Programming Methods Used in Manufacture of Astrolabes and Errors Resulting, arXiv:2511.12088 (2025), eq. 5-9: closed forms of almucantars and azimuths in stereographic projection (read)",
+    "Yale Bright Star Catalogue, 5th revised edition, Hoffleit & Warren 1991 (CDS V/50), J2000.0 positions (read through the Harvard TDC ASCII file and ReadMe)",
+    "IAU Division C Working Group on Star Names, IAU-CSN (E. Mamajek), names by HR number (read; CC BY)",
+    "Mean obliquity at J2000.0, 23 deg 26 min 21.448 s (read in Wikipedia, Axial tilt; the Astronomical Almanac constant)"
+  ],
+  "materials": [
+    "Brass sheet CuZn37, 1 to 3 mm (8500 kg/m3)",
+    "Limb from two rings of the sheet, soft-soldered, or one ring of double thickness",
+    "Brass rod for the pin, wedge and locating pin; brass wire for the ring",
+    "Black wax or paint in the engraved lines"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "view": "iso",
+    "zoom": 1.4,
+    "look": {
+      "rotation": 120
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/laser-cut-sheet.dxf",
+      "set": "Laser cut sheet"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/laser-cut-sheet.svg",
+      "set": "Laser cut sheet"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/plate-engraving.dxf",
+      "set": "Plate engraving",
+      "values": {
+        "engraving": 2
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/limb-engraving.dxf",
+      "set": "Limb engraving"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/back-engraving.dxf",
+      "set": "Back engraving"
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 1324,
+    "variables": 822,
+    "parameters": 12,
+    "features": 128,
+    "assertions": 47,
+    "warnings": 0,
+    "build_s": 163.61,
+    "load_s": 2.96,
+    "load_cpu_s": 5.09,
+    "file_bytes": 977093,
+    "range_points": 100,
+    "range_unproven": 0,
+    "range_mean_s": 2.43,
+    "range_worst_s": 6.98
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
