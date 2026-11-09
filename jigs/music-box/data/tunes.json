@@ -1,0 +1,25 @@
+{
+  "comment": "Melodies and basses for the music box. Each token is NOTE:SLOTS; a slot is an eighth note (slots_per_quarter 2). Bars are separated by | and every bar here is 8 slots. Notes are written in scientific pitch; R is a rest. Transcribed for this Jig from the tunes themselves; the tunes are old enough to be free (see README).",
+  "comb_notes": ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6"],
+  "tunes": [
+    {
+      "name": "Ode to Joy",
+      "credit": "Beethoven, Symphony No. 9, finale theme (1824)",
+      "melody": "E5:2 E5:2 F5:2 G5:2 | G5:2 F5:2 E5:2 D5:2 | C5:2 C5:2 D5:2 E5:2 | E5:3 D5:1 D5:4 | E5:2 E5:2 F5:2 G5:2 | G5:2 F5:2 E5:2 D5:2 | C5:2 C5:2 D5:2 E5:2 | D5:3 C5:1 C5:4",
+      "bass": "C4:8 | G4:8 | C4:8 | G4:8 | C4:8 | G4:8 | C4:8 | C4:8"
+    },
+    {
+      "name": "Twinkle, Twinkle, Little Star",
+      "credit": "French air 'Ah! vous dirai-je, maman', first published 1761",
+      "melody": "C5:2 C5:2 G5:2 G5:2 | A5:2 A5:2 G5:4 | F5:2 F5:2 E5:2 E5:2 | D5:2 D5:2 C5:4 | G5:2 G5:2 F5:2 F5:2 | E5:2 E5:2 D5:4 | G5:2 G5:2 F5:2 F5:2 | E5:2 E5:2 D5:4 | C5:2 C5:2 G5:2 G5:2 | A5:2 A5:2 G5:4 | F5:2 F5:2 E5:2 E5:2 | D5:2 D5:2 C5:4",
+      "bass": "C4:8 | F4:8 | F4:8 | G4:8 | C4:8 | G4:8 | C4:8 | G4:8 | C4:8 | F4:8 | F4:8 | C4:8"
+    },
+    {
+      "name": "Frere Jacques",
+      "credit": "French nursery round, manuscript c. 1780, first printed 1811",
+      "melody": "C5:2 D5:2 E5:2 C5:2 | C5:2 D5:2 E5:2 C5:2 | E5:2 F5:2 G5:4 | E5:2 F5:2 G5:4 | G5:1 A5:1 G5:1 F5:1 E5:2 C5:2 | G5:1 A5:1 G5:1 F5:1 E5:2 C5:2 | C5:2 G4:2 C5:4 | C5:2 G4:2 C5:4",
+      "bass": "C4:8 | G4:8 | C4:8 | G4:8 | C4:8 | G4:8 | C4:8 | C4:8"
+    }
+  ],
+  "slots_per_quarter": 2
+}

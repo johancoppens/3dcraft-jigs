@@ -8,3 +8,4 @@ Data and designs from elsewhere used by the Jigs, with their licences (AGENTS.md
 | `gridfinity-bin`, `gridfinity-baseplate` | The Gridfinity system's dimensions | Zack Freedman, [gridfinity.xyz](https://gridfinity.xyz/) | MIT (the system); the Jigs are independent designs |
 | `strandbeest-leg` | The Jansen linkage's "holy numbers" | Theo Jansen | Credited; "Strandbeest" is his name for his works |
 | `nest-box` | Nest measurements per species | Vogelbescherming Nederland, *Nestkasten in soorten en maten*; hole-height rule and wood thickness: Avon Wildlife Trust, *Basically Boxes* | Facts, cited |
+| `music-box` | Melodies | Beethoven, Ninth Symphony theme (1824); *Ah! vous dirai-je, maman* (1761); *Frère Jacques* (c. 1780, printed 1811); transcribed for this Jig | Public domain |

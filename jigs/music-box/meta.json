@@ -1,0 +1,111 @@
+{
+  "id": "music-box",
+  "title": "Music box",
+  "summary": "pick a tune, turn the crank",
+  "description": "A printable cylinder music box: a pinned drum for three old tunes, a comb whose teeth are tuned by the cantilever formula, cut from spring steel or printed, and a crank that plays the tune while the pins pass the comb.",
+  "domain": "3D printing, mechanisms",
+  "process": "3D printing (FDM); spring-steel comb laser cut, or printed comb",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Data-driven wrapped pins, tuned comb, closed-form pluck and many coupled cross-body formulas over a wide range."
+  },
+  "standards": [
+    "Cantilever beam first bending mode, Euler-Bernoulli: omega_1 = 3.5160 / L^2 * sqrt(EI / mu)",
+    "Equal temperament from A4 = 440 Hz",
+    "Laser cut slot at least the sheet thickness"
+  ],
+  "materials": [
+    "Printed in PETG or PLA: case, drum with pins and gear, pinion, crank arm, comb clamp, pawl",
+    "Comb: spring-steel strip 0.3 or 0.5 mm, hardened, laser cut; or printed PETG or PLA, 1.6 mm",
+    "Steel rod, 4 mm: drum axle, crank shaft and pawl pin",
+    "Three M3 x 12 screws into the comb's pedestal"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.01
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -190,
+        -280,
+        190
+      ],
+      "target": [
+        0,
+        -18,
+        28
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "rotation": 0
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/print-plate.3mf",
+      "values": {
+        "show": 2
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/comb-laser.dxf",
+      "set": "Comb flat pattern"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/comb-laser.svg",
+      "set": "Comb flat pattern"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/print-plate-printed-comb.3mf",
+      "values": {
+        "show": 2,
+        "comb_material": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/drum.step",
+      "bodies": [
+        "Drum"
+      ]
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 579,
+    "variables": 208,
+    "parameters": 9,
+    "features": 89,
+    "assertions": 68,
+    "warnings": 0,
+    "build_s": 100.81,
+    "load_s": 3.95,
+    "load_cpu_s": 4.33,
+    "file_bytes": 935848,
+    "range_points": 103,
+    "range_unproven": 0,
+    "range_mean_s": 1.17,
+    "range_worst_s": 5.21
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
