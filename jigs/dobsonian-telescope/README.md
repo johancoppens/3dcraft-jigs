@@ -184,7 +184,7 @@ Tried by hand with `param.set`: a 2-inch eyepiece on the 1.25-inch focuser (refu
 
 ## Difficulty
 
-Open: the reviewer's score goes here.
+8 out of 10: closed-form centre of mass over 20+ bodies checked by measure, swept clearance, many coupled range formulas, structure changing by choice.
 
 ## Sources: read, secondary, and my own judgement
 

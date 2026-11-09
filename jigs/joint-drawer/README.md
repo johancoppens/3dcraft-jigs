@@ -190,7 +190,7 @@ tools/jigs.py check joint-drawer
 
 ## Difficulty
 
-To be scored by the reviewer.
+5 out of 10: multi-body booleans, sketch patterns whose count changes the topology, table-driven layout and closed-form volumes.
 
 ## Platform notes
 

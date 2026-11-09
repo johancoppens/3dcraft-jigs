@@ -132,7 +132,7 @@ tools/jigs.py check rc-wing
 
 ## Difficulty
 
-7/10: formula airfoil, ruled lofts, rib pattern booleans and coupled range formulas over one wing.
+7 out of 10: formula airfoil, ruled lofts, rib pattern booleans and coupled range formulas over one wing.
 
 ## Platform notes
 

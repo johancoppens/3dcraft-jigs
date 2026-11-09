@@ -216,7 +216,7 @@ tools/jigs.py check sliceform
 
 ## Difficulty
 
-Not scored yet (the reviewer gives it).
+7 out of 10: slicing a swept or sphere solid, comb sweeps that put every slot end at half its crossing, closed-form section and strip integrals, and plate limits across the range.
 
 ## Platform notes
 

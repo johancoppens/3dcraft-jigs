@@ -153,7 +153,7 @@ tools/jigs.py check polyhedron-net
 
 ## Difficulty
 
-5/10: folds driven by a parameter, a per-solid net table with hand-derived coordinates and tab hinges, topology by
+5 out of 10: folds driven by a parameter, a per-solid net table with hand-derived coordinates and tab hinges, topology by
 `when`, and cavity closure.
 
 ## Platform notes

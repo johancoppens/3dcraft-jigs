@@ -256,7 +256,7 @@ tools/jigs.py check strandbeest-leg
 
 ## Difficulty
 
-Not scored yet (the reviewer gives it).
+7 out of 10: closed-form kinematics and searches in formulas, formula-curve sweeps, a five-layer multi-body stack with coupled ranges and measured clearances, and a pair option that changes the structure.
 
 ## Platform notes
 

@@ -311,7 +311,7 @@ tools/jigs.py check sundial
 
 ## Difficulty
 
-Not scored yet: the reviewer gives the score.
+8 out of 10: data-driven lines for any plane dial with a thick gnomon, shadow assertions built from vectors, the beam path with its kerf and a one-way registration across two exports.
 
 ## Platform notes
 

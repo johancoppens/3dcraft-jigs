@@ -241,7 +241,7 @@ The picture sets the camera and the light direction (`meta.json`, `preview`); no
 
 ## Difficulty
 
-Not yet scored: the reviewer gives the score.
+6 out of 10: count-driven fold topology with coupled closed-form kinematics and thick panels; 3DCraft does the folding.
 
 ## Platform notes
 

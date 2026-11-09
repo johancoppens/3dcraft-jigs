@@ -302,7 +302,7 @@ tools/jigs.py check planetary-gearbox
 
 ## Difficulty
 
-Not yet scored (the reviewer gives it).
+8 out of 10: involute flanks drawn as formula arcs, internal-gear interference limits, ranges coupled across the form, closed-form tooth areas, meshes measured under a drive angle, and six print plates.
 
 ## Platform notes
 

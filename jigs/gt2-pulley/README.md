@@ -156,7 +156,7 @@ tools/jigs.py check gt2-pulley
 
 ## Difficulty
 
-6 of 10: a three-part build, coupled ranges and process-driven topology.
+6 out of 10: a three-part build, coupled ranges and process-driven topology.
 
 ## Platform notes
 
