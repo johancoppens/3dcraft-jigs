@@ -1,198 +1,279 @@
 # Tuned chimes
 
-A wind chime of tubes hanging from a disc, or a glockenspiel of flat bars on a frame, that is **in tune
-before you cut it**: every tube or bar gets the length of its note from the physics of a vibrating beam,
-and its cord or pin holes at the nodes. Licence: CC-BY-4.0.
+A wind chime of metal tubes, or a glockenspiel of flat bars, that is in tune before you cut it. Pick a scale and the
+stock you have bought, and every tube or bar gets its length from the free-free beam formula, corrected for shear and
+rotary inertia, with its hole at the node where it hangs still. It exports a full-size cut-and-drill sheet, says how
+far a tube cut to the millimetre is off its note in cents, and takes your tuner's reading of a test piece so that the
+rest of the set comes out right.
 
-| Parameter | Group | Default | Range |
-|---|---|---|---|
-| Instrument | Instrument | Wind chime (tubes) | Wind chime (tubes), Glockenspiel (bars) |
-| Scale | Notes | Major pentatonic | table `scales` (below) |
-| Lowest note | Notes | C | C, C#, D, Eb, E, F, F#, G, G#, A, Bb, B (table `notes`) |
-| Octave | Notes | 5 | `octMin` to `octMax` (whole; see *Ranges*) |
-| Notes | Notes | 6 | 3 to the scale's `maxNotes` (at most two octaves, at most 12) |
-| Tube material | Wind chime | Aluminium EN AW-6060 T6 | table `tubeMaterials` |
-| Tube size | Wind chime | 25 x 1.5 | table `tubeSizes`, 12 to 50 mm outside |
-| Striker gap | Wind chime | 12 mm | 5 to 30 mm, step 1 mm |
-| Bar material | Glockenspiel | Aluminium flat bar EN AW-6060 | table `barMaterials` (the wood bars are straight, not undercut: a starting point, see *Overtones*) |
-| Bar width | Glockenspiel | 30 mm | 15 to 60 mm, step 1 mm |
-| Bar thickness | Glockenspiel | 6 mm | max(3 mm, width / 8) to 25 mm, step 0.5 mm (a wide thin bar is a plate, not a beam) |
+![Six satin aluminium tubes hanging from an oak disc, with a walnut striker and an oak sail](preview.png)
 
-The default is a wind chime of six aluminium tubes 25 × 1.5 mm in C major pentatonic from C5: C5 D5 E5
-G5 A5 C6, 532.7, 502.4, 473.8, 433.8, 409.0 and 374.3 mm long, hanging from a walnut or plywood disc of
-154 mm. *A minor* is the scale *Natural minor* from A; *Westminster* (the Big Ben quarters) is in its
-original key with lowest note B (B, E, F#, G#).
+## What it shows
 
-## The physics
+- **A physics formula is the design** (`variable.set`, `table.set`): every length is the free-free beam (Euler-Bernoulli
+  plus the Timoshenko correction) worked out from the note's frequency, the metal's table row and the section; a
+  second, independent computation sits in every length assertion. Change the tube and every length, the disc, the
+  striker and the sail follow.
+- **A scale from a table** (`choicesFrom`, `variable.publish` with formula ranges): the number of notes stops at two
+  octaves, the octave range follows the tube, so a tube too short to drill or too long to handle cannot be asked for.
+- **Which notes exist is the form's choice**, tubes or bars, and how they hang: each piece is a feature with a `when`
+  condition, the striker's height and the tube's cord length change with the hanging style.
+- **A drive parameter**: the *gust* slider swings the striker and the sail on their cord, each part at its own angle,
+  up to the one that brings the striker just up to a tube (`feature.transform`).
+- **A cut-and-drill sheet that exports without picking** (`sketch.text`, `set.define`, `file.export`): hidden full-size
+  strips, one per note, with their frequency, cut length and hole distance, and the outlines of the disc and sail, as
+  a named set of faces.
+- A static drawing of a chime is one set of numbers; this one is any scale in five metals, a wind you pick, and a
+  correction from a real tube.
 
-A tube or bar that hangs or rests freely at both ends is a **free-free beam**. Its first bending mode
-(Euler-Bernoulli beam theory) has the frequency
+## The real thing
 
-  f = (β₁L)² / (2π L²) · √(E I / (ρ A)),  with (β₁L)² = 4.7300² = 22.373,
+**The formula.** A tube or bar hanging free at both ends is a free-free beam. Its first bending mode has the
+frequency (Tom Irvine, *Bending Frequencies of Bernoulli-Euler Beams*, rev. W, 2026, Table 1 and Appendix H, read):
 
-so the Euler-Bernoulli length for a note of frequency f is
+    f = 22.373 / (2 pi L^2) * sqrt(E I / (rho A))
 
-  L_EB = √( 22.373 / (2π f) · √(E I / (ρ A)) ).
+with E the Young's modulus, rho the density, A the section and I its second moment. Only the radius of gyration
+r = sqrt(I / A) matters: for a tube of outside and inside diameter D, d it is sqrt(D^2 + d^2) / 4; for a bar of
+thickness t, t / sqrt(12) (it bends through its thickness; the width falls out). The first mode's nodes lie
+22.4 % of the length in from each end: the root of the free-free mode shape, computed for this Jig as 0.22416,
+and the 22.4 % Lee Hite uses (below). A tube hangs from a cord through a hole at the top node; a bar
+rests on felt over two rails at both nodes with a pin through its holes.
 
-E is Young's modulus, ρ the density, A the cross-section and I its second moment of area. Only
-√(I / A), the radius of gyration, matters: for a tube of outside diameter D and inside diameter d it is
-√(D² + d²) / 4, for a bar of thickness t (it bends through its thickness; the width drops out) t / √12.
-So the length grows with the square root of the tube's size and of the speed of sound √(E/ρ), and falls
-with the square root of the frequency: an octave up is 1/√2 = 0.707 times as long.
+**Shear and rotary inertia.** The Euler-Bernoulli formula alone is too high for a short, stiff tube: for the default
+tubes it comes out 22.7 cents sharp at 533.5 mm and 45.0 cents sharp at 375 mm against a Timoshenko solution. The
+Jig uses a closed-form correction fitted to Timoshenko's beam
+(the same as the old Jig's, reviewed again here), `(f_EB / f_T)^2 = 1 + C (r / L)^2`, `C = 47.7 + 11.7 E / (kappa G)`
+with the shear coefficient kappa from Cowper's formulas for a thin-walled tube and a rectangle (read from the table on
+Wikipedia's *Timoshenko-Ehrenfest beam theory*; G from the table below). Solved for the length that sounds f:
+`L = sqrt((sqrt(C^2 r^4 + 4 L_EB^4) - C r^2) / 2)`.
 
-**Timoshenko correction.** Euler-Bernoulli ignores shear and rotary inertia, which lower the pitch of a
-short, fat piece: the default tubes would be 22 (C5) to 43 cents (C6) flat, so out of tune with each
-other by 21 cents, and a 50 mm tube or a thick wooden bar near the shortest allowed length by hundreds of
-cents. The Jig uses a closed form fitted to the Timoshenko beam (solved numerically by the reviewer of
-this Jig, two ways):
+**Independent recomputation.** A shooting-method solver of the Timoshenko free-free beam (the two coupled equations
+with their free-end conditions; written for this Jig, not committed, `verify.py` in the builder's scratch folder), at
+the Jig's cut lengths, for the default 25 x 1.5 mm aluminium chime:
 
-  (f_EB / f_T)² ≈ 1 + C (r_g / L)²,  C = 47.7 + 11.7 · E / (κ G),
+| Note | Target Hz | Cut mm | Solver Hz | Error (cents) |
+|---|---|---|---|---|
+| C5 | 523.25 | 533.5 | 523.44 | +0.6 |
+| D5 | 587.33 | 503.5 | 586.75 | -1.7 |
+| E5 | 659.26 | 474.5 | 659.48 | +0.6 |
+| G5 | 783.99 | 434.5 | 784.07 | +0.2 |
+| A5 | 880.00 | 410.0 | 878.53 | -2.9 |
+| C6 | 1046.50 | 375.0 | 1045.86 | -1.1 |
 
-with G the shear modulus (table column `G`: aluminium 26, steel 79, stainless 77, copper 44, brass
-39 GPa, wood about E/14 along the grain) and κ the shear coefficient (0.53 for a thin-walled tube, 5/6
-for a rectangle). It is within 4 cents of the full solution for L/r_g ≥ 30 and within 2 cents for
-L/r_g ≥ 45. The length that sounds f then solves L⁴ + C r_g² L² = L_EB⁴, a quadratic in L²:
+These differences are the closed form against the solver plus the rounding of the cut length to 0.5 mm. A sweep over all five metals, three tube and three bar sizes at L / r from 30 to 150 (the same solver) found the closed
+form within 1.7 cents of it; the form's shortest length keeps every note at L / r of 30 or more. Below that the
+correction fails fast (-12 cents at L / r = 15 for a 50 x 2 mm tube), so the form does not offer it.
 
-  **L = √( (√(C² r_g⁴ + 4 L_EB⁴) − C r_g²) / 2 )**
+**How far theory is from a real cut tube.** The calculation assumes a perfectly uniform tube of the table's stiffness
+and density. A real tube differs:
 
-(variables `LEB1`… and `L1`…; the exact root of the same equation that a fixed-point iteration
-L ← L_EB (1 + C (r_g/L)²)^(−1/4) converges to). Checked against a shooting-method Timoshenko solver: the
-default C5 and C6 tubes, a 50 × 2 tube near its shortest, a 30 × 6 aluminium bar and 25 mm padauk and
-rosewood bars all come out within 2 cents.
+- **Stiffness and density.** The published Young's modulus of a metal group spreads (the `Stiffness band` column below
+  is half of that spread); the pitch follows the square root of E, so the band becomes cents as the form's output
+  *Pitch spread*: about 13 cents for aluminium, 21 for mild steel, 28 for stainless, 43 for brass and 76 for copper
+  (where the sources disagree most, 110 to 132 GPa). Density adds a little.
+- **Wall tolerance.** A 0.1 mm thicker wall on 25 x 1.5 mm changes the radius of gyration by 0.4 %, 7 cents (my
+  estimate of a normal tolerance, not from a standard).
+- **The tube's section** is not circular everywhere; Hite warns of tubes that beat between two close frequencies, and
+  of a tuner that may not hear the note a chime sounds because of its non-harmonic overtones (Compendium, pp. 21, 24 to 25).
+- **A cut end and a drilled hole** shift the pitch a little more, which is not modelled.
 
-The notes are **equal temperament** with A4 = 440 Hz: f = 440 · 2^((octave − 4) + (note − 9)/12) for
-the lowest note, and each further note is that times 2^(s/12), s its semitones above the lowest from the
-scale table. Variables `f1`…`f12` are the frequencies in Hz and `L1`…`L12` the lengths (`document.inspect`
-lists them).
+So before trimming a good aluminium tube is likely within about 10 to 20 cents of its note, copper perhaps 80
+(my estimate from the spread of published moduli, not a measurement: I have no measured comparison of a real tube
+to this calculation). The rounding error shown for each note on the form is only the error of rounding the cut to 0.5 mm, against the
+Jig's closed form; the solver above adds up to 2.9 cents (A5).
 
-The first mode has its **nodes 0.2242 L from each end** (22.4 %): hung or supported there, the tube or
-bar rings longest. A tube hangs from a cord through a cross hole at the top node; a bar rests on felt over
-the frame's rails, held by a pin through a hole at each node. The tubes hang with their middles level and
-the striker 18 mm below them (its 12 mm edge spans 12 to 24 mm below the middles): the exact middle is a
-node of the first overtone, which Lee Hite calls the "dead zone" and says to stay out of; a strike a
-little off centre (or at the bottom end, with bottom-aligned tubes) sounds the overtone too.
+**Correction by trimming.** Shortening a tube raises its pitch: cents = 3462 x (amount cut) / L, so 6.5 cents per mm
+on the longest default tube and 9.2 on the shortest (both form outputs). A tube cannot be made longer, so the Jig works
+from one test piece, the same procedure on the form and here:
 
-**Overtones.** A straight, slender bar's first overtone is 2.76 times its fundamental (a non-harmonic
-ratio, the bell-like sound of a glockenspiel; fine for metal bars). Xylophone and marimba bars are
-undercut (arched underneath) to tune that overtone to 3:1 or 4:1; this Jig makes straight bars, so the
-**wooden** bars sound duller than a real xylophone's and are a starting point, not a finished instrument.
-Fat tubes push the overtone down (about 2.14 times at L/r_g = 15), another reason for the shortest length
-below.
+1. Leave *Test piece reads* at 0 and cut one tube to the output *Test piece* (the first note's length), square and
+   deburred, **not drilled**.
+2. Hang it in a loop of string at 22.4 % of its length and tap it, as Hite does with a string slipknot at the node
+   (Compendium, *Tuning the Chime*, p. 24). Read a chromatic tuner against note 1 and enter the cents (minus when
+   flat), -100 to +100. A tuner names the nearest note: when the piece is more than 50 cents off (copper can be, see
+   *Pitch spread*), it names the note above or below note 1; add 100 to its reading for the note above, subtract 100
+   for the note below. The reading gives the true speed of sound of your stock, and every length,
+   hole and the sheet correct themselves; the test piece's own length stays on the form.
+3. **Flat** (minus): every length gets shorter; trim the test piece to note 1's new length. **Sharp** (plus): every
+   length gets longer and the piece is now too short for note 1; trim it to note 2's new length, which it always reaches
+   (in every scale of the table note 2 is at least two semitones, 200 cents, above note 1, and the reading at most 100;
+   an assertion checks it), and cut note 1 again from the stock.
+   The output *Stock to buy* is the lengths plus 3 mm a cut; a sharp reading costs one more cut.
+4. Cut the rest to their corrected lengths with about 1 mm to spare (Hite cuts about 1/8 inch long to smooth the ends,
+   p. 8), deburr, hang each one the same way, read it and file the bottom end until it is in tune. What is left is the
+   tube-to-tube spread of wall and section, a few cents.
+5. Drill each node hole last, at the sheet's distance from the top end, measured on the finished tube.
 
-## How it is built
+At 0, the reading means the test piece rings exactly on its note; the formula predicts that to within the rounding of
+its length to 0.5 mm (+1.5 cents for the default), so leaving it at 0 when nothing was measured changes nothing that
+matters.
 
-- **Wind chime.** The tubes stand on a circle of radius `Rc` round the disc's centre, the longest first,
-  their middles level at `zc`. `Rc` is the larger of what keeps neighbouring tubes `tubeGap` apart
-  (max(OD/2, 12 mm)) and what leaves the striker (a 12 mm walnut puck) at least 25 mm of radius with the
-  striker gap. Each tube has a cross hole of OD/6 (3 to 6 mm) at its top node, square to the radius; its
-  cord runs through it, up the bore and through the disc, with a knot on top. A centre cord runs from
-  the hanging ring through the disc and the striker to the wind sail, a rounded plywood plate below the
-  longest tube.
-- **Glockenspiel.** The bars lie side by side along x, each centred across the frame. The frame is one
-  12 mm plywood part: two rails running straight through the first and the last bar's nodes and two end
-  pieces. The nodes between lie a few mm off a straight line (L falls as 1/√f, not linearly); the rail
-  width is computed to take that (`maxDev`) plus the pin. Each bar has a hole of width/5 (4 to 6 mm) at
-  each node and rests 3 mm above the rail (a felt strip), on brass pins 1.5 mm thinner than the hole (a
-  rubber sleeve).
-- **Cut list.** The named sets `Note 1` … `Note 12` hold the tube or bar of each note (`select.set
-  {"set": "Note 3"}`), `Tubes`, `Bars` and `Notes` all of them; the assertions *Tube k is in tune* and
-  *Bar k is in tune* name each piece, and `L1`…`L12` give the cut lengths. To read them:
+**Making it.** Steel, brass or copper tubes and flat bars come from any metal supplier, the aluminium tube (default) from a DIY
+store. The cord is waxed linen or kite line through the node hole, up the bore and through the disc, knotted on top.
+The top is an oak disc turned or routed with a rounded rim; three cords lift it to a brass ring over its balance point. The striker is a
+turned walnut disc with a rounded edge on the line from the disc's centre, the sail an almond of 5 mm oak board with the
+rounded face towards the tubes. On the glockenspiel the bars rest on a felt strip on two oak rails running straight
+through the nodes of the first and last bar; a brass pin stands in a hole through the rail at each node (on the cut sheet)
+and through the bar's node hole, keeping the bar in place, and a sleeve of felt or rubber on the pin stops it buzzing.
 
-  ```sh
-  craft3d-cli run dist/tuned-chimes.3dcraftjig \
-    --cmd param.set --params '{"values": {"scale": "Major", "N": 8, "tubeSize": "20 x 1.5"}}' \
-    --cmd document.inspect
-  ```
+## Parameters
 
-- **Cut sheet.** The face set `Cut sheet` holds the flat parts to laser-cut: the disc (with the cord holes)
-  and the wind sail, or the glockenspiel frame (with the pin holes):
-  `file.export {"path": "chime.svg", "set": "Cut sheet"}`.
+**The notes**
+- *Instrument*: wind chime or glockenspiel.
+- *Scale*: major or minor pentatonic, major, natural minor, chords, Westminster quarters.
+- *Lowest note* and *Octave*: the octave's range follows the tube or bar so no piece is too short to drill or too long
+  to handle (for 25 x 1.5 mm aluminium, six notes of major pentatonic: octave 3 to 6).
+- *Number of notes*: 3 up to two octaves of the scale, at most 12.
 
-## Ranges
+**The metal**
+- *Metal*: aluminium EN AW-6060 T6, mild steel, stainless 1.4301, brass CuZn37, copper Cu-DHP (table below).
+- *Tube size*: 14 common sizes (wind chime). *Flat bar size*: 9 common sizes (glockenspiel).
+- *Test piece reads*: -100 to +100 cents, the tuner's reading of the test piece against note 1 (procedure above).
 
-Every point of the form gives a playable instrument:
+**Hanging** (wind chime only)
+- *How the tubes hang*: bottoms level, tops level or middles level. Hite calls bottom aligned best, because the striker
+  reaches the end edge of every tube, and notes top aligned may look better and that all three work when the striker
+  avoids the exact centre (Compendium, Step 13, p. 11). The striker hits near the bottom end with bottoms level, 0.03 to
+  0.06 of the length below the middle with middles level, and with tops level at the height where the longest and the
+  shortest tube are struck equally far from their nodes (the longest at 0.413 of its length, the shortest at 0.587 at
+  the defaults, where the first mode moves 0.54 times as much as at the end; at least 0.37 over two octaves). An
+  assertion holds every tube's strike point, measured on the model, a tenth of its length or more from a node. The
+  centre is not avoided with tops level: one striker height cannot keep a whole set of lengths off it, and at the
+  defaults G5 is struck at 0.507 of its length, 3 mm from its centre, where the first overtone is barely excited. Hite
+  calls that dead zone very narrow and easily overcome by a slightly off-centre strike (Step 17, p. 11); the 14 mm
+  striker spans it. Choose bottoms level, his preferred hanging, to stay well clear of the centre.
+- *Wind that makes it ring*: 1 to 6 m/s, 2.5 by default; the sail is sized for it (see *Sail*).
+- *Gust*: the slider, 0 to 100 %, with the striker touching a tube at 100 %.
 
-- **Two octaves at most.** The scale table gives `maxNotes` for each scale, the most notes within 24
-  semitones (and 12 at most): the shortest tube is then at least half the longest, so a striker just
-  below the tubes' middles still hits each one between its top node and its bottom end.
-- **Octave.** `Lfloor` is the shortest note that can still be drilled and hung, and is slender enough
-  (L/r_g ≥ 30) for the Timoshenko closed form and a clean overtone: for a tube max(100 mm, 5 × OD,
-  30 r_g), for a bar max(80 mm, 3 × width, 30 r_g). `Lceil` is the longest that is still handy: 1500 mm
-  for a tube, 700 mm for a bar. Through their Euler-Bernoulli equivalents (`LfloorEB`, `LceilEB`) and
-  L_EB ∝ 1/√f, these give the highest top note and the lowest bottom note, and so `octMax` and `octMin` (kept within 2 to 8) for the
-  chosen lowest note, scale and number of notes. Thick tubes and stiff metals reach higher; thin wooden
-  bars stay low.
+At the defaults (C major pentatonic, six aluminium tubes 25 x 1.5 mm, tops level, 2.5 m/s): test piece 533.5 mm; tubes
+533.5, 503, 474.5, 434.5, 409.5 and 375 mm long (523.3 to 1046.5 Hz), holes 119.5, 113, 106.5, 97.5, 92 and 84 mm from
+the top end, rounding errors at most 1.2 cents, 2 748 mm of stock, 0.82 kg of metal, an oak disc of radius 82 mm, a
+sail 67 x 93 mm, a 56 mm walnut striker. A test piece that reads 13 cents flat shortens them to 531.5 ... 373.5 mm; one
+that reads 13 cents sharp lengthens them to 535.5 ... 376.5 mm, and the 533.5 mm piece becomes note 2 (505 mm).
 
-## Checked
+A glockenspiel of 30 x 6 mm aluminium flat bar in C major from C5: eight bars, 244.5 to 172.5 mm long, node holes 55 to
+38.5 mm from the ends, rounding errors at most 4.1 cents (the 0.5 mm cut step is a larger share of a short bar), 1 667 mm
+of stock.
 
-The assertions (`assert.list`), at every regeneration:
+**The materials** (value used, source read):
 
-- **Tube k / Bar k is in tune (length)**, for each of the 12 notes: the body's box lies at its place and
-  both of its ends lie within 0.01 mm of where the corrected (Timoshenko) length, worked out again from
-  the note's frequency, puts them (1, or 0 when the note is not there). 0.01 mm on 400 mm is under 0.1 cent.
-- **Tube k: cord hole at the node** and **Bar k: holes at the nodes**: a hole of the cord or pin diameter
-  whose box lies within 0.01 mm of 0.2242 L from the end (each end, for a bar).
-- **Note 1: extent along its length / across**: the longest note's body, measured, is the formula's length
-  and the tube's diameter (or the bar's thickness).
-- **Every note is there**, **Node holes go through**, **one per tube, two per bar**.
-- **Notes do not hit each other**: the least clearance between tubes (bars) is the gap they were spaced for
-  (asserted to 85 % of it: what the clearance measure can prove of curved faces; the tube assertions'
-  boxes place every tube exactly).
-- **Nothing touches a note**: no body overlaps a tube or bar: the cords and pins pass through the holes.
-- **Striker**: the striker's box is a disc of radius Rc − OD/2 − striker gap, within 0.01 mm, standing
-  12 to 25 mm below the tubes' middles; with the tubes' boxes on the circle of radius Rc, the gap to every
-  tube is exactly the striker gap.
-- **The striker reaches every tube**: no tube ends above or begins below the striker.
-- **Shortest note long enough to drill and hang**, **Longest note short enough to handle** (above).
-- **Disc or frame volume**: the disc with its holes, or the frame with every pin seated in a rail, equals
-  its closed form (a pin off the rail would add volume).
-- **Cut sheet**: the disc and the sail, or the frame.
+| Metal | E (GPa) | G (GPa) | Density | Stiffness band | Source |
+|---|---|---|---|---|---|
+| Aluminium EN AW-6060 T6 | 70 | 27 | 2700 | +/-1.5 % | EN 1999-1-1 section 3.2.5 (read: E 70 000, G 27 000 N/mm2, 2 700 kg/m3) |
+| Mild steel (S235, conduit) | 210 | 81 | 7850 | +/-2.4 % | EN 1993-1-1 section 3.2.6 via eurocodeapplied.com (read) |
+| Stainless steel 1.4301 | 197 | 77 | 7950 | +/-3.3 % | AZoM, Grade 304 properties page (read: E 190 to 203, G 74 to 81 GPa, density 7.85 to 8.06) |
+| Brass CuZn37 | 110 | 41 | 8440 | +/-5 % | CW508L data sheet (read: 8.44 g/cm3, E 110 000 N/mm2); G from nu = 0.34 |
+| Copper Cu-DHP | 121 | 45 | 8930 | +/-9 % | Hite's table 16 Msi; KME TECU 132 GPa (from a search listing): my midpoint; G from nu = 0.34 |
 
-`check-range` passes, plain and `--deep`: 125 of 125 points each (the default, 64 corners, 44 choices,
-16 random; seed 1, 3DCraft `main` at 3faaaea0), regeneration median about 0.3 s, at most 1.2 s. The
-octave range was also checked in Python over every scale, note count, lowest note, material and size:
-`octMin` ≤ `octMax` everywhere, with the Timoshenko lengths.
+The bands are my reading of the published spread for each group, not tolerances from a standard.
 
-## How to tune finally
+**Sail.** A flat plate in a wind: drag F = 1/2 rho v^2 Cd A, Cd 1.17 (the figure Wikipedia's drag coefficient article
+gives for a square plate; it marks it "citation needed", and an alternative of 1.28 is listed: an estimate). Striker and
+sail hang on one cord from the disc's centre, so the cord bends at the striker: its upper part leans by
+atan(F / (W_striker + W_sail)), its lower part by atan(F / W_sail). The striker reaches a tube when the upper part leans by
+the angle that brings its rim to the tube, so the sail is sized for F = (W_striker + W_sail) tan(that angle) at the wind
+you ask, statically. The model shows both parts at their own angles as the *Gust* slider moves. It is a starting point,
+not a prediction: gusts are not steady, and the sail's own lean, which lowers its drag by the cosine of the angle, is
+left out. That lean is large for a light sail under a heavy striker (tens of degrees at full gust), so such a chime needs
+more wind than the output says. The sail stays
+in proportion: between 12 cm2 and an almond 1.1 times the disc's radius wide; at those limits the output *Rings in a
+wind of* gives the wind it really takes, which then differs from the wind asked.
 
-For **metal**, the cut length is right to within about a quarter of a semitone: the alloy's modulus and
-density vary by a few per cent, and the cord hole and end burrs take a little mass. For **wood** it is only
-a starting point: the modulus varies by ±20 % from board to board (±165 cents), and the table's values are
-static moduli at 12 % moisture (the dynamic modulus that sets the pitch is some 5 to 15 % higher). So:
+**Balance.** The tubes go round the ring in pitch order, so the longest side is heavier and a disc hung from its centre
+would hang about 2 degrees off level. The bridle meets at the ring over the centre of mass of tubes and disc (3.1 mm off
+centre at the defaults); tie the three cords so the ring sits there. The light striker and sail hang at the centre and are
+left out (they move the balance point by about a tenth of a millimetre).
 
-1. Cut each piece **3 to 5 mm long** (wood: 5 to 10 %), square, and deburr.
-2. Drill the node hole(s) at 22.4 % of the **final** length (measure from the top end for a tube).
-3. Hang or support it at the nodes, strike it at the middle and read the pitch with a tuner app.
-4. It reads flat (too low): shorten it. Saw off a large correction first, then file or sand the bottom
-   end square, a little at a time; the pitch
-   rises about 3.5 cents for every 0.1 % of the length taken off (f ∝ 1/L², so 0.25 mm on 250 mm). Too short
-   cannot be undone (a bar can be lowered by thinning its middle underside, as xylophone makers do).
+**Sources, and what each is.** Read in full or at the place cited: Irvine's beam notes, EN 1999-1-1 (a copy of the
+2007 text, clause 3.2.5), Hite's compendium (PDF updated 5/9/2022: support at 22.4 %, pp. 20 and 24; cut about 1/8 inch long and
+chamfer, p. 8; alignment and striker, Steps 13 and 17, p. 11; beating and tuner caution, pp. 21, 24 to 25), the CW508L
+brass sheet, AZoM's stainless data, eurocodeapplied.com for EN 1993-1-1. Read through a search listing only: KME's TECU
+copper figure. From Wikipedia (the Timoshenko table, 1.17 and 1.28 for a plate): secondary, as the text says. My own: the
+stiffness bands, the wall tolerance, the sail sizing, the three numbers for hanging, and the Jig's closed form, which was
+checked against a solver written for this Jig (not against a published solution).
 
-## Sources
+## Checks
 
-- N. H. Fletcher and T. D. Rossing, *The Physics of Musical Instruments*, 2nd ed., Springer 1998, ch. 2
-  (bars: the free-free beam, its frequency ratios and nodes) and ch. 19 (bars, chimes and tubular bells).
-- S. P. Timoshenko, "On the correction for shear of the differential equation for transverse vibrations
-  of prismatic bars", *Philosophical Magazine* 41 (1921) 744–746; G. R. Cowper, "The shear coefficient in
-  Timoshenko's beam theory", *J. Appl. Mech.* 33 (1966) 335–340 (κ). The closed form's constants were
-  fitted by this Jig's reviewer to a numerical (shooting-method) Timoshenko solution.
-- The free-free beam's eigenvalue: cos(βL) cosh(βL) = 1, β₁L = 4.7300, (β₁L)² = 22.373, nodes at
-  0.2242 L (S. S. Rao, *Vibration of Continuous Systems*, Wiley 2007, the chapter on the transverse
-  vibration of beams, or any vibration text with Euler-Bernoulli beams).
-- Leland (Lee) Hite, *Tubular Bell Chimes Design Handbook* (www.leehite.org/Chimes.htm): hang at the
-  22.4 % node, cut long and tune, and the striker: strike the end edge with bottom-aligned tubes, and with
-  top- or centre-aligned tubes keep away from the exact centre, the first overtone's "dead zone" (The
-  Build Plan, steps 13 and 17, p. 11; Striker, pp. 38–39). Chuck's wind chime calculators work from the
-  same beam formula. Only the descriptions were used; no code was copied.
-- Equal temperament with A4 = 440 Hz: ISO 16:1975.
-- Material values: aluminium 6060-T6 E ≈ 69.5 GPa, G ≈ 26 GPa, 2700 kg/m³ from extruders' alloy data
-  sheets (e.g. Aalco's and Hydro's 6060 sheets; EN 755-2 gives the alloy's strength, not its modulus);
-  structural steel E = 210 GPa, G = 81 GPa (EN 1993-1-1; 200 and 79 GPa are used for thin EMT, typical
-  for mild steel tube); stainless 1.4301 (EN 10088-1 annex: E = 200 GPa at 20 °C, 193 typical for
-  annealed tube); copper Cu-DHP and brasses from the Copper Development Association data sheets; padauk,
-  Honduran rosewood and hard maple (static modulus of elasticity at 12 % moisture, and dried density) from
-  Eric Meier, *The Wood Database* (wood-database.com). Wood varies from board to board: tune by ear.
-- Tube sizes: common aluminium tube, EN 1057 copper and US EMT conduit (ANSI C80.3) sizes.
+The Jig measures itself at every change of the form (79 assertions, those of the other instrument and of absent notes
+inactive):
 
-`build.json` was written by `python3 -I gen.py > build.json`; edit `gen.py` and run it again to change
-the model.
+- **Every length is the beam formula's, recomputed.** Each tube's or bar's measured extent equals a second computation
+  of the length, written from the table values, the note's own frequency and the test piece's reading (the test piece
+  worked out again too), not through the variables of the model, within 0.26 mm (half the 0.5 mm cut step).
+- **Node holes, on the model against the formula.** Each tube has one wall of a hole of the drill diameter within 0.31 mm of
+  22.416 % of its length from its top end, at the tube's place; each bar has two, from each end.
+- **The strips of the cut sheet** are exactly the cut lengths, and the sheet holds one face per note plus the flat parts.
+- **Volumes in closed form.** The tubes' or bars' volume equals section times the lengths, less the holes (and corners
+  for bars), the disc's underside and the frame's underside (less a pin hole at every node) are their closed-form
+  areas, and the sail's face is the area the wind calculation asked for, within 2 %.
+- **Balance.** The measured centre of mass of the tubes and the disc (x and y) is the closed-form balance point within
+  0.2 mm, and the ring's measured box puts it there.
+- **Tubes do not touch.** Neighbouring tubes stand the planned gap apart; the striker's clearance to the tube it swings to
+  is the gap less the gust's share (within 8 % and 0.3 mm), the striker stands within every tube's length, and its measured
+  centre meets each tube at least a tenth of its length from a node.
+- **A bar is the stock chosen**: width and thickness of the first bar equal the table row; pins stand clear in the bar holes.
+- Every note present, and a sharp test piece always long enough to become note 2.
+
+Mutation tests in a scratch copy, each noticed by the assertions named: the node fraction changed (hole check), the beam
+constant or the wave speed changed (all lengths), the wall of the tube changed (lengths), one tube 1 % long or cut to another note's length (that tube's
+length), a bar's width off its stock (the stock check), a drilled hole moved (its node check), the strike height changed (node margin), the ring radius shrunk (tube gap,
+striker clearance), the sail's shape factor changed (sail area), the swing angle doubled (striker clearance), the old
+striker height of 0.7 of the shortest tube (node margin: 0.076), the reading applied without the test piece (lengths),
+the balance point or the ring moved (balance, ring), a frame pin hole left out (frame underside).
+
+`tools/jigs.py check` runs `check-range`: 144 points (the defaults, up to 64 corners of the box of the ranges, every other
+choice and 32 random points from seed 1), all pass, none unproven, the slowest 7.8 s on a busy machine (budget 12 s). By hand with `param.set`: flat and sharp readings of 13 cents, the
+glockenspiel with 8 and 12 bars, and three 12 mm stainless tubes at 1 m/s (the sail at its cap, 70 x 99 mm, ringing at
+2.2 m/s). The closed form holds to 1.7 cents for L / r at 30 and above, as far as the sweep covers; the independent solver
+differs from the model by at most 3 cents for the default chime (closed form plus 0.5 mm rounding). The assertions prove the geometry is the formula's, not that the metal obeys it;
+the *Pitch spread* output and the tuning procedure above are the honest answer to that.
+
+Not checked: the strength of cord and knots, how a real gust behaves, the sound of any tube beyond the first mode (see
+Hite on overtones).
+
+## Export
+
+- **The cut-and-drill sheet:** File, Export, *Sheet of set: Cut sheet*, as SVG or DXF, at true size: one strip per note with its
+  Roman number, frequency, cut length and hole distance; the disc (underside, with its holes) and the sail, or the
+  glockenspiel's frame with its pin holes. Print it at 100 % or send it to a laser. In SVG give a stroke width
+  (0.25 mm): the default 0.01 mm lines are too thin to see on screen. The strips' lengths are the cut lengths; the holes are at
+  the node distance from each end. Digits with enclosed counters (0, 4, 6, 8, 9) show as outlines without their inner
+  shape, because of how the set exports (see Platform notes).
+- The form's outputs give the test piece, the stock to buy, and for every note its frequency (to tell the tubes apart
+  with a tuner), cut length, hole distance and rounding error; notes beyond the set read 0.
+
+## Files
+
+`build.json` (the source), `meta.json`, `formtest.md`, `preview.png`, and `dist/tuned-chimes.3dcraftjig`,
+`dist/thumbs/tuned-chimes.png` from the tool. The Python scratch files are not committed (AGENTS.md section 3).
+
+## Rebuild
+
+```sh
+tools/jigs.py build tuned-chimes
+tools/jigs.py render tuned-chimes
+tools/jigs.py check tuned-chimes
+```
+
+## Difficulty
+
+7 out of 10: coupled per-note beam physics with a fitted Timoshenko closed form, two instruments, a drive slider, a cut
+sheet and kernel limits over the range.
+
+## Platform notes
+
+- **The cut sheet's lettering.** `file.export` of a named set of faces packs every face on its own (`findings/J-xxx-set-sheet-packs-faces/`), so the strips are one face each with the letters as holes in it, and the digits lose their inner counters (0, 4, 6, 8, 9). Engraving the numbers as pockets ran into the kernel: thirteen rows of text cut at once are refused for "more memory for their indexes", and cutting them row by row takes a minute ([repro](../../findings/J-xxx-many-glyph-boolean/repro.json), to be proposed).
+- **File size.** The file is 978 kB against a budget of 1 MB: 332 kB of it is the bundled sans font, embedded whole
+  because the strips carry text (F-037), and the rest is pretty-printed JSON in an uncompressed ZIP (F-138).
+- **Twelve copies of every per-note step.** A pattern instance has no index to read a table with (J-011, see F-027), so
+  each tube, bar, strip, length variable, assertion and output is written twelve times and switched by `when`; most of
+  `build.json`'s 900 steps are these copies.
+- **Note names on the sheet.** A sketch text cannot print a table's text column (F-035), so the strips carry a Roman number and the frequency instead of "C5".
+- **No Hz or cents unit** in outputs (`findings/J-xxx-no-frequency-unit/`): frequencies and cents are plain numbers named in their label.
+- **Cut list of a tube.** A drilled tube with chamfered ends is not a plate to `cut.list`, so the Jig has no saw list of tubes; its hidden full-size strips carry the cut lengths and hole positions instead. A plain extruded tube would be listed as a plate whose thickness is the tube's length, which is `J-004`'s reading.
+- **Frame chamfer.** The chamfer stops at the frame's outer edge: `feature.chamfer` refuses the four top edges around the frame's opening, and the same on a plain rectangular hole ([repro](../../findings/J-xxx-chamfer-inner-loop/repro.json), to be proposed). The opening stays square-edged.
+- STEP or mesh export of the whole document also carries the hidden strips, far above the chime (the mesh side is `findings/J-xxx-hidden-body-in-mesh-export/`), so the Jig offers the sheet, not a 3D file.
+- **The sail is built at the origin and then placed.** Its edge round was refused at some heights when drawn in place (a boolean "partly on and partly off a face boundary"), at 5 of the first 46 points of the range check; drawn around the origin and moved by `feature.transform` it never failed. A literal copy of the same outline at the same height passed, so no reproducer was found.
+- The feature `Extrude1` is the tool of the disc's hole cut and keeps its automatic name. The frame's pin holes are cut by
+  the pins themselves (`feature.boolean` with `keepTool`), so they have no tool of their own.
