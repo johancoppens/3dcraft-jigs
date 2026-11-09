@@ -1,0 +1,156 @@
+{
+  "id": "solar-cooker",
+  "title": "Parabolic solar cooker",
+  "summary": "mirror petals bent into a dish, the pot level at the focus",
+  "description": "A parabolic solar cooker from flat petals of mirror sheet: give your pot and the size of the dish, and get the petal template to cut, the steel plates to laser cut and the sunlight it brings to the pot. The dish tilts on an axle through the focus, so the pot stays level and in the light at every sun height.",
+  "domain": "Sheet metal, energy",
+  "process": "Mirror aluminium sheet cut from a template, bent and riveted; laser-cut steel plates; square steel tube sawn and welded",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Exact developable petals from quadratic splines with a closed-form cut template, optical ranges coupled to the pot, the sun's image and the aiming margin, a drive that tilts the dish about its focus, and single-measure proofs across bodies."
+  },
+  "standards": [
+    "W. B. Stine and M. Geyer, Power From the Sun (2001), chapter 8: paraboloid z = a^2/4f (8.19), depth d^2/16f (8.8), rim angle (8.9), focal radius p = 2f/(1 + cos psi) (8.6), the sun's image 2 p tan(epsilon/2) with the sun's disc of about 33 minutes of arc (9.6 mrad) (8.40), slope error counted twice (8.41)",
+    "Alanod, Solar Reflectors brochure (06.2025) and MIRO-SUN reflective 90 weatherproof data sheet: 0.5 mm anodised aluminium mirror sheet, total solar reflectance 90 (data sheet 91) %, diffuse 10 %, ASTM G173 weighting, width up to 1250 mm, bending radius at least 1.5 (data sheet 2.0) times the thickness",
+    "ASTM G173-03 reference direct normal spectrum, 900.1 W/m2 (as quoted from the standard's scope; the standard not read)",
+    "Gesipa, Blind rivets alu/steel, standard dome head (catalogue page): 4 mm rivets, 4.1 mm drill hole, grip 0.5-1.5 mm (4 x 5) and 3.0-4.0 mm (4 x 7); Honsel folding blind rivet 4.0 mm: 4.2 mm bore hole",
+    "Eurocode Applied, bolt design properties (summary of EN 1993-1-8 Table 3.3, the standard not read): e1, e2 >= 1.2 d0, p1 >= 2.2 d0, p2 >= 2.4 d0"
+  ],
+  "materials": [
+    "Anodised aluminium mirror sheet 0.5 mm (MIRO-SUN type) for the petals",
+    "Aluminium sheet 3 mm, laser cut (hub ring)",
+    "Steel plate 5 and 6 mm, laser cut (quadrants, pot ring, pivot arms, hangers)",
+    "Steel flat bar 25 x 4 mm rolled (rim hoop), round bar 30 mm (axles)",
+    "Steel square tube 40 x 40 x 2 mm, powder coated black (stand)",
+    "4 mm aluminium blind rivets (Gesipa 4 x 5 and 4 x 7 type), M6 and M10 bolts, two M10 star knobs, a 160 mm turntable bearing"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.01
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        2600,
+        -1900,
+        2300
+      ],
+      "target": [
+        -60,
+        0,
+        560
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 28
+    },
+    "look": {
+      "rotation": 270,
+      "light": [
+        330,
+        50
+      ]
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/petal-template.svg",
+      "set": "Petal template"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/petal-template.dxf",
+      "set": "Petal template"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/plates.dxf",
+      "set": "Plates to laser cut",
+      "gap": "10 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cooker.step",
+      "bodies": [
+        "Mirror petals",
+        "Mirror petals between",
+        "Rim hoop",
+        "Hub ring",
+        "Pivot arm",
+        "Pivot arm, far side",
+        "Clamp knobs",
+        "Ground cross",
+        "Turntable",
+        "Fork beam",
+        "Uprights",
+        "Quadrant",
+        "Quadrant, far side",
+        "Axles",
+        "Hanger",
+        "Hanger, far side",
+        "Pot ring",
+        "Pot",
+        "Lid"
+      ]
+    },
+    {
+      "command": "cut.list",
+      "format": "csv",
+      "bodies": [
+        "Petal template",
+        "Hub ring",
+        "Pot ring",
+        "Quadrant",
+        "Quadrant, far side",
+        "Pivot arm",
+        "Pivot arm, far side",
+        "Hanger",
+        "Hanger, far side"
+      ]
+    },
+    {
+      "command": "file.export",
+      "path": "exports/large-dish-petal.dxf",
+      "set": "Petal template",
+      "values": {
+        "pot_diameter": "300 mm",
+        "pot_height": "200 mm",
+        "focal_ratio": 0.4,
+        "dish_diameter": "1600 mm",
+        "petal_count": 30,
+        "cooking_height": "1050 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 330,
+    "variables": 136,
+    "parameters": 8,
+    "features": 61,
+    "assertions": 28,
+    "warnings": 0,
+    "build_s": 11.72,
+    "load_s": 4.37,
+    "load_cpu_s": 5.61,
+    "file_bytes": 181394,
+    "range_points": 97,
+    "range_unproven": 0,
+    "range_mean_s": 2.52,
+    "range_worst_s": 9.24
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
