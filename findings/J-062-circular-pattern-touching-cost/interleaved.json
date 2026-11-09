@@ -1,0 +1,23 @@
+[
+["variable.set", {"name": "focal", "expr": "300 mm"}],
+["variable.set", {"name": "count", "expr": "24"}],
+["variable.set", {"name": "half_angle", "expr": "180 deg / count"}],
+["variable.set", {"name": "inner", "expr": "125 mm * cos(half_angle)"}],
+["variable.set", {"name": "outer", "expr": "500 mm * cos(half_angle)"}],
+["variable.set", {"name": "petal_focal", "expr": "focal * cos(half_angle)^2"}],
+["variable.set", {"name": "sheet", "expr": "0.5 mm"}],
+["sketch.create", {"name": "Petal section", "plane": "zx"}],
+["sketch.spline", {"sketch": "Petal section", "degree": 2, "control": [["inner^2 / (4 * petal_focal)", "inner"], ["inner * outer / (4 * petal_focal)", "(inner + outer) / 2"], ["outer^2 / (4 * petal_focal)", "outer"]]}],
+["sketch.spline", {"sketch": "Petal section", "degree": 2, "control": [["inner^2 / (4 * petal_focal) - sheet", "inner"], ["inner * outer / (4 * petal_focal) - sheet", "(inner + outer) / 2"], ["outer^2 / (4 * petal_focal) - sheet", "outer"]]}],
+["sketch.line", {"sketch": "Petal section", "from": "e1", "to": "e5"}],
+["sketch.line", {"sketch": "Petal section", "from": "e3", "to": "e7"}],
+["feature.extrude", {"sketch": "Petal section", "distance": "300 mm", "symmetric": true, "name": "Petal blank"}],
+["sketch.create", {"name": "Wedge", "plane": "xy", "offset": "-10 mm"}],
+["sketch.polyline", {"sketch": "Wedge", "closed": true, "points": [["0 mm", "0 mm"], ["530 mm", "-530 mm * tan(half_angle)"], ["530 mm", "530 mm * tan(half_angle)"]]}],
+["feature.extrude", {"sketch": "Wedge", "distance": "250 mm", "name": "Wedge prism"}],
+["feature.boolean", {"op": "intersect", "target": "Petal blank", "tool": "Wedge prism", "name": "Petal"}],
+["feature.transform", {"source": "Petal", "keep": true, "angle": "2 * half_angle", "axis": [0, 0, 1], "name": "Petal between"}],
+["feature.pattern", {"source": "Petal", "count": "count / 2", "angle": "4 * half_angle", "name": "Every other petal"}],
+["feature.pattern", {"source": "Petal between", "count": "count / 2", "angle": "4 * half_angle", "name": "Petals between"}],
+["document.check", {}]
+]

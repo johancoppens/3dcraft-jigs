@@ -1,0 +1,11 @@
+[
+ ["datum.plane", {"name": "Wall face", "through": [[0, 0, 0], [50, 0, 0], [0, 0, 50]]}],
+ ["sketch.create", {"name": "Plate outline", "plane": "Wall face", "offset": -3}],
+ ["sketch.circle", {"sketch": "Plate outline", "center": [0, 0], "radius": 50}],
+ ["sketch.circle", {"sketch": "Plate outline", "center": [30, 0], "radius": 5}],
+ ["feature.extrude", {"sketch": "Plate outline", "distance": 3, "name": "Plate"}],
+ ["set.define", {"name": "Front", "kind": "face", "where": {"in": "Plate", "name": "*endCap*"}}],
+ ["file.export", {"path": "face.svg", "set": "Front"}],
+ ["cut.list", {}],
+ ["cut.export", {"path": "cut.svg", "bodies": ["Plate"]}]
+]

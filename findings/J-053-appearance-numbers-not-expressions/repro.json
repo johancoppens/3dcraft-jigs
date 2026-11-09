@@ -1,0 +1,5 @@
+[
+["variable.set", {"name": "printed", "expr": "1"}],
+["feature.block", {"name": "Part", "size": [10, 10, 10]}],
+["body.appearance", {"body": "Part", "color": ["if(printed, 232, 18)", "if(printed, 112, 18)", "if(printed, 34, 20)"], "metallic": "if(printed, 0, 1)", "roughness": 0.4}]
+]

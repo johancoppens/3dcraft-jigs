@@ -248,8 +248,8 @@ Not yet scored: the reviewer gives the score.
 - F-063 (examples' feedback, open): a fold's DXF names its layers `boundary`, `mountain`, `valley`, and they cannot be
   renamed to CUT and CREASE.
 - F-015 (examples' feedback): thick panels are not built when folded to 180 degrees. The Jig stops them where they meet.
-- [J-xxx](../../findings/J-xxx-flat-folded-body-cannot-be-moved/repro.json): a flat-folded body cannot be moved, so at
+- [J-051](../../3DCRAFT-FEEDBACK.md#j-051-a-body-folded-flat-cannot-be-built-on-or-moved): a flat-folded body cannot be moved, so at
   Fold 100 the pack is not levelled and squared, as it is at every other position; at 99 it stands on its edge and at
   100 it lies in the sketch's plane.
-- [J-xxx](../../findings/J-xxx-flat-fold-search-miura/repro.json): the layer-order search of `flatFoldable` runs out of
+- [J-067](../../3DCRAFT-FEEDBACK.md#j-067-the-flat-fold-layer-order-search-gives-up-on-larger-miura-grids): the layer-order search of `flatFoldable` runs out of
   work on larger Miura grids at steep angles; the Jig keeps to 14 × 16 and to 70 degrees above 144 cells to stay within its allowance.

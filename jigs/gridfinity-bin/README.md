@@ -156,10 +156,10 @@ tools/jigs.py check gridfinity-bin
 
 ## Platform notes
 
-Proposed entry for `3DCRAFT-FEEDBACK.md`, with a reproducer in `findings/`:
+Entry [J-045](../../3DCRAFT-FEEDBACK.md#j-045-a-3d-export-cannot-be-given-a-named-set-and-without-bodies-it-writes-hidden-bodies-too-see-f-045-f-161) in `3DCRAFT-FEEDBACK.md`, with a reproducer in `findings/`:
 
 - A mesh export without `bodies` also writes bodies hidden with `feature.visible`, so a Jig's measuring gauges end up in the
   maker's slicer unless they name the body to export; a model cannot mark a helper body as not being a part
-  ([repro](../../findings/J-xxx-hidden-body-in-mesh-export/repro.json)). Related to F-161 in 3DCraft Examples' feedback list
+  ([repro](../../findings/J-045-3d-export-set/hidden-body.json)). Related to F-161 in 3DCraft Examples' feedback list
   (hidden helper bodies in the cut list). Workaround: the gauges are built only when *Show fit gauges* is on, so the default
   export is one printable bin.

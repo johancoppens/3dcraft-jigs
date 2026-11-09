@@ -1,0 +1,13 @@
+[
+["variable.set", {"name": "span", "expr": "40 mm"}],
+["variable.set", {"name": "bulge", "expr": "6 mm"}],
+["sketch.create", {"name": "Arc", "plane": "xy"}],
+["sketch.path", {"sketch": "Arc", "start": ["0 mm", "0 mm"], "segments": [{"arc": ["span", "0 mm"], "through": ["span/2", "bulge"]}, {"line": ["span", "-20 mm"]}, {"line": ["0 mm", "-20 mm"]}, {"line": "start"}]}],
+["feature.extrude", {"sketch": "Arc", "distance": "5 mm", "name": "Plate"}],
+["variable.set", {"name": "bulge", "expr": "-3 mm"}],
+["document.check", {}],
+["variable.set", {"name": "bulge", "expr": "0.5 mm"}],
+["document.check", {}],
+["variable.set", {"name": "bulge", "expr": "0.01 mm"}],
+["document.check", {}]
+]

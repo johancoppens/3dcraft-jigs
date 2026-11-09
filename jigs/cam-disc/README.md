@@ -167,8 +167,8 @@ tools/jigs.py check cam-disc
 ## Platform notes
 
 - **Rim chamfer.** The cam's rim edges are left sharp: `feature.chamfer` refuses the rim of a closed formula curve (its side is split in two
-  pieces where one face changes, see F-158), and building the rim from a ruled loft made every later boolean cost about 3 s. Proposed
-  entry `J-xxx-chamfer-closed-curve-rim`.
+  pieces where one face changes, see F-158), and building the rim from a ruled loft made every later boolean cost about 3 s:
+  [J-047](../../3DCRAFT-FEEDBACK.md#j-047-a-chamfer-cannot-follow-the-rim-of-an-extruded-freeform-outline-see-f-075-f-158).
 - **Extremum of a formula.** 3DCraft has no maximum of a formula over an interval, so the peaks are sampled in about 150 variables, and a
-  body's `boxMax` on the spline curve is an unknown output (F-057). Proposed entry `J-xxx-extremum-of-a-formula`.
+  body's `boxMax` on the spline curve is an unknown output (F-057): [J-055](../../3DCRAFT-FEEDBACK.md#j-055-no-maximum-minimum-or-root-of-a-formula-over-an-interval).
 - Expressions stop at 4096 bytes (F-011), which the sampled expressions come close to.

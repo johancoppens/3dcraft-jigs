@@ -1,0 +1,11 @@
+[
+ ["variable.set", {"name": "lift", "expr": "30 mm"}],
+ ["variable.set", {"name": "base", "expr": "50 mm"}],
+ ["sketch.create", {"name": "Plot"}],
+ ["sketch.curve", {"sketch": "Plot", "x": "t*100 mm", "y": "10 mm + lift*sin(pi*t)/(base/1 mm/50 + t)", "t": [0, 1]}],
+ ["sketch.line", {"sketch": "Plot", "from": "e2", "to": [100, 0]}],
+ ["sketch.line", {"sketch": "Plot", "from": [100, 0], "to": [0, 0]}],
+ ["sketch.line", {"sketch": "Plot", "from": [0, 0], "to": "e1"}],
+ ["feature.extrude", {"sketch": "Plot", "distance": "1 mm", "name": "Plot body"}],
+ ["variable.measure", {"name": "peak", "measure": "boxMax", "of": "Plot body", "axis": "y"}]
+]

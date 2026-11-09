@@ -1,0 +1,9 @@
+[
+["sketch.create", {"plane": "xy", "name": "Ring"}],
+["sketch.circle", {"sketch": "Ring", "center": ["0 mm", "0 mm"], "radius": "100 mm"}],
+["sketch.circle", {"sketch": "Ring", "center": ["0 mm", "0 mm"], "radius": "90 mm"}],
+["feature.extrude", {"sketch": "Ring", "distance": "500 mm", "name": "Tube"}],
+["face.appearance", {"faces": ["F2:side(e4)"], "color": "#0c0c0e", "metallic": 0, "roughness": 0.8}],
+["body.appearance", {"body": "Tube", "color": "#ffffff"}],
+["view.render", {"path": "control-none.png", "width": 500, "height": 375, "camera": {"eye": [0, -700, 900], "target": [0, 0, 300], "up": [0, 0, 1], "fovY": 35}, "renderer": "cpu", "look": {"mode": "studio", "accumulate": 1}}]
+]

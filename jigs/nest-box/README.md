@@ -148,7 +148,7 @@ ranges, not by an assertion.
 choice and 32 random points from seed 1), all passing, none unproven. Every bird is built at least once. Assertions that do not apply to a bird are inactive there,
 such as the hole-rim rule on the open-fronted birds. The overlap check covers the larch boards only, because the pair
 zinc guard and front with a coincident curved edge cannot be decided by the kernel
-([J-xxx overlap on coincident curve](../../findings/J-xxx-overlap-curve-hole/repro.json)).
+([J-002](../../3DCRAFT-FEEDBACK.md#j-002-measureoverlap-errors-when-a-curve-coincides-with-a-circle)).
 
 Not checked: the strength of the screws, a form tester's reading of the plan, or any real bird's acceptance.
 
@@ -181,22 +181,22 @@ tools/jigs.py check nest-box
 
 ## Platform notes
 
-Proposed entries for `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
+Entries in `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
 
 - A touching plate and a ring whose inner edge is a `sketch.curve` coincident with a drilled circle cannot be measured
-  by `overlap` ([repro](../../findings/J-xxx-overlap-curve-hole/repro.json)): the Jig's overlap assertion leaves out the
+  by `overlap` ([repro](../../findings/J-002-overlap-curve-hole/repro.json)): the Jig's overlap assertion leaves out the
   zinc parts, the workaround.
 - `cut.list` and `cut.export` refuse a `bodies` list naming a conditional feature that is inactive at this point
-  ([repro](../../findings/J-xxx-cut-bodies-inactive/repro.json)); so this Jig cannot limit `cut.export` to the wood, and
+  ([repro](../../findings/J-003-cut-bodies-inactive/repro.json)); so this Jig cannot limit `cut.export` to the wood, and
   the marking-out sheet goes through a named set.
 - `cut.list` reads an extruded bent strip as a plate as thick as the strip's length, and a board with an eased arris as
-  a thick plate along its length ([repro](../../findings/J-xxx-eased-plate/repro.json)); so the boards stay sawn square
+  a thick plate along its length ([repro](../../findings/J-004-eased-plate/repro.json)); so the boards stay sawn square
   (with corners rounded in their own plane) and the cut list carries the zinc strip's odd row.
 - `material.preset` with a pattern cannot be applied to a conditional body that is inactive at the defaults: the
-  pattern must be given by hand ([repro](../../findings/J-xxx-preset-inactive-body/repro.json)).
+  pattern must be given by hand ([repro](../../findings/J-005-preset-inactive-body/repro.json)).
 - A named set of kind sketch is accepted by `set.define` but `file.export` refuses it ("holds no flat face";
-  [repro](../../findings/J-xxx-set-of-sketch-export/repro.json)), so the Plank plan has no entry of its own in the export
+  [repro](../../findings/J-007-set-of-sketch-export/repro.json)), so the Plank plan has no entry of its own in the export
   dialog: it has to be picked in the Features tab, as the Jig's description says.
 - A rectangle or text in a sketch cannot be switched off by a formula: zero size is refused
-  ([repro](../../findings/J-xxx-sketch-entity-when/repro.json)). The Plank plan draws an absent batten or partition as
+  ([repro](../../findings/J-006-sketch-entity-when/repro.json)). The Plank plan draws an absent batten or partition as
   a 0.01 mm speck with a label of that size, the workaround.

@@ -177,12 +177,12 @@ tools/jigs.py check loudspeaker-box
 ## Platform notes
 
 - There is no frequency unit: `38 Hz` is refused, so Fs, fb and f3 are plain numbers with the unit in the label and `1/(1 s)` in the
-  formulas (proposed J-xxx, [repro](../../findings/J-xxx-no-frequency-unit/repro.json)).
+  formulas ([J-056](../../3DCRAFT-FEEDBACK.md#j-056-no-frequency-or-electrical-units-hz-v-a-w-h-mah-wh-see-f-106), [repro](../../findings/J-056-frequency-electrical-units/frequency.json)).
 - `cut.list` reads a rebated board as a plate along the wrong axis, or gives it no dimensions (J-004), and lists hidden bodies
-  (proposed J-xxx, [repro](../../findings/J-xxx-cut-list-hidden-body/repro.json)); limiting it with `bodies` fails on a feature that is off
+  ([J-046](../../3DCRAFT-FEEDBACK.md#j-046-cutlist-and-cutexport-cannot-be-limited-to-the-parts-to-cut-see-f-161-j-003), [repro](../../findings/J-046-cut-list-set/hidden-body.json)); limiting it with `bodies` fails on a feature that is off
   (J-003). So the blanks are outputs instead.
 - A veneer cannot follow a choice of wood, as a pattern's colours are literal (J-009, F-171); there is one walnut. Faces are coloured by literal names
   (F-025): the driver's are.
 - The driver's profile is drawn so that the basket arms land on a flat ring on the frame: a basket arm crossing the rim where the frame's
   cone meets its cylinder made a face the kernel could not tessellate at some depths (it reported the boundary crossing itself).
-- Every arc in the driver and port profiles is given by a centre written as a formula: an arc given by a through-point loses its centre when its points come close to collinear, and a long session of extreme values left one document unrecoverable (proposed J-xxx, [repro and the broken file](../../findings/J-xxx-sketch-arc-centre-escapes/)).
+- Every arc in the driver and port profiles is given by a centre written as a formula: an arc given by a through-point loses its centre when its points come close to collinear, and a long session of extreme values left one document unrecoverable ([J-033](../../3DCRAFT-FEEDBACK.md#j-033-a-sketch-arc-given-by-a-through-point-loses-its-centre-when-it-flips-or-flattens-and-can-leave-a-document-unrecoverable-see-f-112-f-113), [repro and the broken file](../../findings/J-033-sketch-arc-centre-escapes/)).

@@ -1,0 +1,7 @@
+[
+["variable.set", {"name": "lat", "expr": "51 deg"}],
+["variable.set", {"name": "hour_09", "expr": "atan2(sin(lat) * sin(15 deg * (9 - 12)), cos(15 deg * (9 - 12)))"}],
+["variable.set", {"name": "hour_10", "expr": "atan2(sin(lat) * sin(15 deg * (10 - 12)), cos(15 deg * (10 - 12)))"}],
+["variable.set", {"name": "hour_11", "expr": "atan2(sin(lat) * sin(15 deg * (11 - 12)), cos(15 deg * (11 - 12)))"}],
+["variable.set", {"name": "hour_line(k)", "expr": "atan2(sin(lat) * sin(15 deg * (k - 12)), cos(15 deg * (k - 12)))"}]
+]

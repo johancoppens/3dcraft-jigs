@@ -1,0 +1,7 @@
+[
+  ["feature.block", {"name": "Part", "size": ["20 mm", "20 mm", "10 mm"], "position": ["-10 mm", "-10 mm", "0 mm"]}],
+  ["feature.block", {"name": "Gauge", "size": ["5 mm", "5 mm", "5 mm"], "position": ["-2.5 mm", "-2.5 mm", "20 mm"]}],
+  ["feature.visible", {"feature": "Gauge", "visible": false}],
+  ["document.check", {}],
+  ["file.export", {"path": "part.3mf"}]
+]

@@ -1,0 +1,8 @@
+[
+ ["feature.block", {"size": [80, 40, 1], "name": "Brass plate"}],
+ ["feature.cylinder", {"radius": 1.5875, "height": 60, "position": [100, 0, 0], "name": "Brass rod"}],
+ ["feature.block", {"size": [30, 30, 2], "position": [0, 60, 0], "name": "Spacer", "when": "0"}],
+ ["set.define", {"name": "Laser parts", "kind": "body", "where": {"any": [{"name": "Brass plate"}, {"name": "Spacer"}]}}],
+ ["cut.list", {"format": "csv"}],
+ ["cut.export", {"path": "parts.svg", "bodies": {"set": "Laser parts"}}]
+]

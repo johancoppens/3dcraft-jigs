@@ -1,0 +1,6 @@
+[
+ ["feature.block", {"size": ["100 mm", "60 mm", "18 mm"], "name": "Board"}],
+ ["feature.block", {"size": ["80 mm", "40 mm", "18 mm"], "position": ["0 mm", "0 mm", "40 mm"], "name": "Helper"}],
+ ["feature.visible", {"feature": "Helper", "visible": false}],
+ ["cut.list", {"format": "csv"}]
+]

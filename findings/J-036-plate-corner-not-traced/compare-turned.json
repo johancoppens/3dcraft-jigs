@@ -1,0 +1,1364 @@
+[
+[
+"table.set",
+{
+"name": "shapes",
+"columns": [
+"shape",
+"surface"
+],
+"rows": [
+[
+"Saddle",
+"z = x^2 - y^2"
+],
+[
+"Ripple",
+"z = cos x + cos y"
+],
+[
+"Ball",
+"a sphere cut flat at the foot"
+],
+[
+"Twisted tower",
+"rounded-square sections turning up the height"
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "shape",
+"expr": "4"
+}
+],
+[
+"variable.set",
+{
+"name": "width",
+"expr": "220 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "height",
+"expr": "350 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "relief",
+"expr": "45"
+}
+],
+[
+"variable.set",
+{
+"name": "twist",
+"expr": "-180 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_slices",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_slices",
+"expr": "4"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_thickness",
+"expr": "6.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_thickness",
+"expr": "6.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "laser_kerf",
+"expr": "0.4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "slot_play",
+"expr": "0.4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "lift",
+"expr": "0"
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_slot_cut",
+"expr": "walnut_thickness + slot_play"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_slot_cut",
+"expr": "birch_thickness + slot_play"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_slot_drawn",
+"expr": "birch_slot_cut - laser_kerf"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_slot_drawn",
+"expr": "walnut_slot_cut - laser_kerf"
+}
+],
+[
+"variable.set",
+{
+"name": "thicker_sheet",
+"expr": "max(birch_thickness, walnut_thickness)"
+}
+],
+[
+"variable.set",
+{
+"name": "web_min",
+"expr": "2 * thicker_sheet"
+}
+],
+[
+"variable.set",
+{
+"name": "relief_depth",
+"expr": "if(shape <= 2, relief / 100 * height, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "saddle_relief",
+"expr": "if(shape == 1, relief_depth, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "ripple_relief",
+"expr": "if(shape == 2, relief_depth / 2, 0 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "ripple_wavenumber",
+"expr": "1.5 * pi / half_width"
+}
+],
+[
+"variable.set",
+{
+"name": "ball_centre_z",
+"expr": "height - half_width"
+}
+],
+[
+"variable.set",
+{
+"name": "tower_corner",
+"expr": "pow(2, 0.25)"
+}
+],
+[
+"variable.set",
+{
+"name": "tower_waist",
+"expr": "0.15"
+}
+],
+[
+"variable.set",
+{
+"name": "tower_side",
+"expr": "half_width / tower_corner"
+}
+],
+[
+"variable.set",
+{
+"name": "meeting_level",
+"expr": "choose(shape, height / 2, height / 2, ball_centre_z, height / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "deepest_slot",
+"expr": "choose(shape, height / 2, height / 2, half_width, height / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "finger_min",
+"expr": "max(web_min, deepest_slot / 10)"
+}
+],
+[
+"variable.set",
+{
+"name": "end_margin",
+"expr": "max(birch_slot_cut, walnut_slot_cut) / 2 + finger_min"
+}
+],
+[
+"variable.set",
+{
+"name": "grid_relief",
+"expr": "half_width - end_margin"
+}
+],
+[
+"variable.set",
+{
+"name": "grid_ball",
+"expr": "min((sqrt(2 * half_width^2 - end_margin^2) - end_margin) / 2, half_width * sqrt((1 - (web_min / half_width)^2) / 2) - thicker_sheet)"
+}
+],
+[
+"variable.set",
+{
+"name": "tower_inner_min",
+"expr": "tower_side * (1 - tower_waist)"
+}
+],
+[
+"variable.set",
+{
+"name": "grid_tower",
+"expr": "(sqrt(2 * tower_inner_min^2 - end_margin^2) - end_margin) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "grid",
+"expr": "choose(shape, grid_relief, grid_relief, grid_ball, grid_tower)"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_pitch",
+"expr": "2 * grid / (birch_slices - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_pitch",
+"expr": "2 * grid / (walnut_slices - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_slices_max",
+"expr": "min(12, floor(2 * grid / (walnut_slot_cut + finger_min)) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_slices_max",
+"expr": "min(12, floor(2 * grid / (birch_slot_cut + finger_min)) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "relief_max",
+"expr": "floor(min(45, 100 / height * choose(shape, (height / 2 - web_min) / (1.5 - (grid_relief / half_width)^2 / 2), height / 2 - 1.25 * web_min, height, height)))"
+}
+],
+[
+"variable.set",
+{
+"name": "width_min",
+"expr": "if(shape == 4, 220 mm, 150 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "height_min",
+"expr": "ceil(max(100 mm, choose(shape, 0.3, 0.3, 0.6, 0.8) * width), 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "height_max",
+"expr": "floor(min(800 mm, choose(shape, 1, 1, 0.95, 1.6) * width), 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "comb_bar",
+"expr": "2 * height + 20 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "comb_end",
+"expr": "half_width + 13 * (thicker_sheet + 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "lift_height",
+"expr": "lift / 100 * height"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_square_sum",
+"expr": "grid^2 * birch_slices * (birch_slices + 1) / (3 * (birch_slices - 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_square_sum",
+"expr": "grid^2 * walnut_slices * (walnut_slices + 1) / (3 * (walnut_slices - 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_cosine_sum",
+"expr": "sin(birch_slices * ripple_wavenumber * birch_pitch / 2) / sin(ripple_wavenumber * birch_pitch / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_cosine_sum",
+"expr": "sin(walnut_slices * ripple_wavenumber * walnut_pitch / 2) / sin(ripple_wavenumber * walnut_pitch / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "crossing_height_sum",
+"expr": "walnut_slices * (saddle_relief / half_width^2 * birch_square_sum + ripple_relief * birch_cosine_sum) + birch_slices * (walnut_slices * (height - relief_depth) - saddle_relief / half_width^2 * walnut_square_sum + ripple_relief * walnut_cosine_sum)"
+}
+],
+[
+"variable.set",
+{
+"name": "section_area_sum",
+"expr": "birch_slices * (2 * half_width * (height - relief_depth) - 2 * saddle_relief * half_width / 3 - 2 * ripple_relief / ripple_wavenumber) + 2 * saddle_relief / half_width * birch_square_sum + 2 * ripple_relief * half_width * birch_cosine_sum"
+}
+],
+[
+"variable.set",
+{
+"name": "strip_half",
+"expr": "walnut_slot_drawn / 4"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_strip_area",
+"expr": "strip_half * crossing_height_sum + walnut_slices * (birch_slices * 2 * strip_half^3 * saddle_relief / (3 * half_width^2) + 2 * ripple_relief * (sin(ripple_wavenumber * strip_half) / ripple_wavenumber - strip_half) * birch_cosine_sum)"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_section_radius",
+"expr": "sqrt(max(half_width^2 - grid^2, 1 mm^2))"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_section_depth",
+"expr": "clamp(ball_centre_z / outer_section_radius, -1, 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_ball_section",
+"expr": "outer_section_radius^2 * (pi - acos(outer_section_depth) / (1 rad) + outer_section_depth * sqrt(1 - outer_section_depth^2))"
+}
+],
+[
+"variable.set",
+{
+"name": "comb_edge_rise",
+"expr": "(saddle_relief * (-half_width)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (-half_width))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "comb_edge_middle",
+"expr": "if(shape <= 2, (height - relief_depth - saddle_relief * (-half_width)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (-half_width))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_1",
+"expr": "if(1 <= birch_slices, 0 * birch_pitch - grid, half_width + 1 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_1",
+"expr": "if(1 <= walnut_slices, 0 * walnut_pitch - grid, half_width + 1 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_2",
+"expr": "if(2 <= birch_slices, 1 * birch_pitch - grid, half_width + 2 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_2",
+"expr": "if(2 <= walnut_slices, 1 * walnut_pitch - grid, half_width + 2 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_3",
+"expr": "if(3 <= birch_slices, 2 * birch_pitch - grid, half_width + 3 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_3",
+"expr": "if(3 <= walnut_slices, 2 * walnut_pitch - grid, half_width + 3 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_4",
+"expr": "if(4 <= birch_slices, 3 * birch_pitch - grid, half_width + 4 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_4",
+"expr": "if(4 <= walnut_slices, 3 * walnut_pitch - grid, half_width + 4 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_5",
+"expr": "if(5 <= birch_slices, 4 * birch_pitch - grid, half_width + 5 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_5",
+"expr": "if(5 <= walnut_slices, 4 * walnut_pitch - grid, half_width + 5 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_6",
+"expr": "if(6 <= birch_slices, 5 * birch_pitch - grid, half_width + 6 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_6",
+"expr": "if(6 <= walnut_slices, 5 * walnut_pitch - grid, half_width + 6 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_7",
+"expr": "if(7 <= birch_slices, 6 * birch_pitch - grid, half_width + 7 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_7",
+"expr": "if(7 <= walnut_slices, 6 * walnut_pitch - grid, half_width + 7 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_8",
+"expr": "if(8 <= birch_slices, 7 * birch_pitch - grid, half_width + 8 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_8",
+"expr": "if(8 <= walnut_slices, 7 * walnut_pitch - grid, half_width + 8 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_9",
+"expr": "if(9 <= birch_slices, 8 * birch_pitch - grid, half_width + 9 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_9",
+"expr": "if(9 <= walnut_slices, 8 * walnut_pitch - grid, half_width + 9 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_10",
+"expr": "if(10 <= birch_slices, 9 * birch_pitch - grid, half_width + 10 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_10",
+"expr": "if(10 <= walnut_slices, 9 * walnut_pitch - grid, half_width + 10 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_11",
+"expr": "if(11 <= birch_slices, 10 * birch_pitch - grid, half_width + 11 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_11",
+"expr": "if(11 <= walnut_slices, 10 * walnut_pitch - grid, half_width + 11 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_x_12",
+"expr": "if(12 <= birch_slices, 11 * birch_pitch - grid, half_width + 12 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_y_12",
+"expr": "if(12 <= walnut_slices, 11 * walnut_pitch - grid, half_width + 12 * (thicker_sheet + 5 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_1",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_1)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_1))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_1",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_1)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_1))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_2",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_2)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_2))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_2",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_2)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_2))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_3",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_3)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_3))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_3",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_3)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_3))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_4",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_4)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_4))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_4",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_4)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_4))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_5",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_5)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_5))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_5",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_5)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_5))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_6",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_6)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_6))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_6",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_6)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_6))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_7",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_7)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_7))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_7",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_7)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_7))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_8",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_8)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_8))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_8",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_8)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_8))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_9",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_9)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_9))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_9",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_9)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_9))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_10",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_10)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_10))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_10",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_10)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_10))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_11",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_11)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_11))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_11",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_11)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_11))) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_tooth_end_12",
+"expr": "comb_edge_rise + if(shape <= 2, (height - relief_depth - saddle_relief * (walnut_y_12)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (walnut_y_12))) / 2, meeting_level)"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_tooth_end_12",
+"expr": "comb_edge_middle + (saddle_relief * (birch_x_12)^2 / half_width^2 + ripple_relief * cos(ripple_wavenumber * (birch_x_12))) / 2"
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 1",
+"plane": "xy",
+"offset": "height * 0 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 1",
+"x": "tower_side * (1 - tower_waist * sin(pi * 0 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (0 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 0 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (0 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 2",
+"plane": "xy",
+"offset": "height * 1 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 2",
+"x": "tower_side * (1 - tower_waist * sin(pi * 1 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (1 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 1 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (1 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 3",
+"plane": "xy",
+"offset": "height * 2 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 3",
+"x": "tower_side * (1 - tower_waist * sin(pi * 2 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (2 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 2 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (2 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 4",
+"plane": "xy",
+"offset": "height * 3 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 4",
+"x": "tower_side * (1 - tower_waist * sin(pi * 3 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (3 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 3 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (3 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 5",
+"plane": "xy",
+"offset": "height * 4 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 5",
+"x": "tower_side * (1 - tower_waist * sin(pi * 4 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (4 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 4 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (4 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 6",
+"plane": "xy",
+"offset": "height * 5 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 6",
+"x": "tower_side * (1 - tower_waist * sin(pi * 5 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (5 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 5 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (5 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Tower section 7",
+"plane": "xy",
+"offset": "height * 6 / 6"
+}
+],
+[
+"sketch.curve",
+{
+"sketch": "Tower section 7",
+"x": "tower_side * (1 - tower_waist * sin(pi * 6 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * cos(t + 1 deg + twist * (6 / 6 - 0.5))",
+"y": "tower_side * (1 - tower_waist * sin(pi * 6 / 6)) * pow(4 / (3 + cos(4 * t)), 0.25) * sin(t + 1 deg + twist * (6 / 6 - 0.5))",
+"t": [
+"0 deg",
+"360 deg"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Tower section 1",
+"Tower section 2",
+"Tower section 3",
+"Tower section 4",
+"Tower section 5",
+"Tower section 6",
+"Tower section 7"
+],
+"name": "Twisted tower"
+}
+],
+[
+"sketch.create",
+{
+"name": "Birch cutting plane",
+"plane": "yz",
+"offset": "-grid"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Birch cutting plane",
+"from": [
+"-half_width - 10 mm",
+"0 mm"
+],
+"to": [
+"half_width + 10 mm",
+"height + 10 mm"
+]
+}
+],
+[
+"feature.fill",
+{
+"sketch": "Birch cutting plane",
+"name": "Birch cutting sheet"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Birch cutting sheet",
+"count": "birch_slices",
+"step": [
+"birch_pitch",
+0,
+0
+],
+"name": "Birch cutting sheets"
+}
+],
+[
+"feature.boolean",
+{
+"op": "intersect",
+"target": "Birch cutting sheets",
+"tool": "Twisted tower",
+"keepTool": true,
+"name": "Birch sections"
+}
+],
+[
+"sketch.create",
+{
+"name": "Birch slot comb profile",
+"plane": "yz",
+"offset": "-half_width"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Birch slot comb profile",
+"start": [
+"-half_width - 5 mm",
+"comb_bar + 10 mm"
+],
+"segments": [
+{
+"line": [
+"-half_width - 5 mm",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_1 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_1 - birch_slot_drawn / 2",
+"birch_tooth_end_1"
+]
+},
+{
+"line": [
+"walnut_y_1 + birch_slot_drawn / 2",
+"birch_tooth_end_1"
+]
+},
+{
+"line": [
+"walnut_y_1 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_2 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_2 - birch_slot_drawn / 2",
+"birch_tooth_end_2"
+]
+},
+{
+"line": [
+"walnut_y_2 + birch_slot_drawn / 2",
+"birch_tooth_end_2"
+]
+},
+{
+"line": [
+"walnut_y_2 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_3 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_3 - birch_slot_drawn / 2",
+"birch_tooth_end_3"
+]
+},
+{
+"line": [
+"walnut_y_3 + birch_slot_drawn / 2",
+"birch_tooth_end_3"
+]
+},
+{
+"line": [
+"walnut_y_3 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_4 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_4 - birch_slot_drawn / 2",
+"birch_tooth_end_4"
+]
+},
+{
+"line": [
+"walnut_y_4 + birch_slot_drawn / 2",
+"birch_tooth_end_4"
+]
+},
+{
+"line": [
+"walnut_y_4 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_5 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_5 - birch_slot_drawn / 2",
+"birch_tooth_end_5"
+]
+},
+{
+"line": [
+"walnut_y_5 + birch_slot_drawn / 2",
+"birch_tooth_end_5"
+]
+},
+{
+"line": [
+"walnut_y_5 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_6 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_6 - birch_slot_drawn / 2",
+"birch_tooth_end_6"
+]
+},
+{
+"line": [
+"walnut_y_6 + birch_slot_drawn / 2",
+"birch_tooth_end_6"
+]
+},
+{
+"line": [
+"walnut_y_6 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_7 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_7 - birch_slot_drawn / 2",
+"birch_tooth_end_7"
+]
+},
+{
+"line": [
+"walnut_y_7 + birch_slot_drawn / 2",
+"birch_tooth_end_7"
+]
+},
+{
+"line": [
+"walnut_y_7 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_8 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_8 - birch_slot_drawn / 2",
+"birch_tooth_end_8"
+]
+},
+{
+"line": [
+"walnut_y_8 + birch_slot_drawn / 2",
+"birch_tooth_end_8"
+]
+},
+{
+"line": [
+"walnut_y_8 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_9 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_9 - birch_slot_drawn / 2",
+"birch_tooth_end_9"
+]
+},
+{
+"line": [
+"walnut_y_9 + birch_slot_drawn / 2",
+"birch_tooth_end_9"
+]
+},
+{
+"line": [
+"walnut_y_9 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_10 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_10 - birch_slot_drawn / 2",
+"birch_tooth_end_10"
+]
+},
+{
+"line": [
+"walnut_y_10 + birch_slot_drawn / 2",
+"birch_tooth_end_10"
+]
+},
+{
+"line": [
+"walnut_y_10 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_11 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_11 - birch_slot_drawn / 2",
+"birch_tooth_end_11"
+]
+},
+{
+"line": [
+"walnut_y_11 + birch_slot_drawn / 2",
+"birch_tooth_end_11"
+]
+},
+{
+"line": [
+"walnut_y_11 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_12 - birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"walnut_y_12 - birch_slot_drawn / 2",
+"birch_tooth_end_12"
+]
+},
+{
+"line": [
+"walnut_y_12 + birch_slot_drawn / 2",
+"birch_tooth_end_12"
+]
+},
+{
+"line": [
+"walnut_y_12 + birch_slot_drawn / 2",
+"comb_bar"
+]
+},
+{
+"line": [
+"comb_end",
+"comb_bar"
+]
+},
+{
+"line": [
+"comb_end",
+"comb_bar + 10 mm"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Birch slot comb profile",
+"distance": "width",
+"name": "Birch slot comb"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Birch sections",
+"tool": "Birch slot comb",
+"name": "Slotted birch sections"
+}
+],
+[
+"feature.plate",
+{
+"faces": [
+"Birch cutting sheets:copy(1)/Birch cutting sheet:startCap()"
+],
+"thickness": "birch_thickness",
+"side": "mid",
+"name": "Birch slice 2"
+}
+],
+[
+"variable.set",
+{
+"name": "birch_slices",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "walnut_slices",
+"expr": "4"
+}
+]
+]

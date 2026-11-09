@@ -1,0 +1,12 @@
+[
+["sketch.create", {"plane": "xy", "name": "Ring"}],
+["sketch.circle", {"sketch": "Ring", "center": ["0 mm", "0 mm"], "radius": "100 mm"}],
+["sketch.circle", {"sketch": "Ring", "center": ["0 mm", "0 mm"], "radius": "90 mm"}],
+["feature.extrude", {"sketch": "Ring", "distance": "500 mm", "name": "Tube"}],
+["face.appearance", {"faces": ["F2:side(e4)"], "color": "#0c0c0e", "metallic": 0, "roughness": 0.8}],
+["feature.cylinder", {"radius": "20 mm", "height": "40 mm", "position": ["0 mm", "80 mm", "250 mm"], "axis": [0, 1, 0], "name": "Port"}],
+["feature.boolean", {"op": "subtract", "target": "Tube", "tool": "Port", "name": "Ported"}],
+["feature.transform", {"source": "Ported", "angle": "30 deg", "axis": [1, 0, 0], "name": "Moved"}],
+["body.appearance", {"body": "Moved", "color": "#ffffff"}],
+["view.render", {"path": "face.png", "width": 500, "height": 375, "camera": {"eye": [0, -700, 900], "target": [0, 0, 300], "up": [0, 0, 1], "fovY": 35}, "renderer": "cpu", "look": {"mode": "studio", "accumulate": 1}}]
+]

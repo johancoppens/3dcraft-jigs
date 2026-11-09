@@ -1,0 +1,10 @@
+[
+["variable.set", {"name": "columns", "expr": "24"}],
+["variable.set", {"name": "rows", "expr": "16"}],
+["sketch.create", {"name": "Plate outline", "plane": "xy", "offset": "-12 mm"}],
+["sketch.rect", {"sketch": "Plate outline", "from": ["0 mm", "0 mm"], "to": ["columns * 50 mm", "rows * 50 mm"]}],
+["sketch.circle", {"sketch": "Plate outline", "center": ["25 mm", "25 mm"], "radius": "8 mm"}],
+["sketch.pattern", {"sketch": "Plate outline", "entities": ["e10"], "count": "columns", "step": ["50 mm", "0 mm"], "count2": "rows", "step2": ["0 mm", "50 mm"]}],
+["feature.extrude", {"sketch": "Plate outline", "distance": "12 mm", "name": "Plate"}],
+["cut.list", {}]
+]

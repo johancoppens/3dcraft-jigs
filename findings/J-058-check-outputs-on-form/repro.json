@@ -1,0 +1,10 @@
+[
+ ["variable.set", {"name": "width", "expr": "40 mm"}],
+ ["variable.publish", {"name": "width", "label": "Width", "description": "Width of the plate", "group": "Size", "min": "20 mm", "max": "80 mm", "step": "1 mm"}],
+ ["feature.block", {"size": ["width", "30 mm", "5 mm"], "name": "Plate"}],
+ ["feature.block", {"size": ["10 mm", "10 mm", "10 mm"], "position": ["width + 2 mm", "0 mm", "0 mm"], "name": "Lug"}],
+ ["variable.measure", {"name": "lug_gap", "measure": "distance", "from": "Plate", "to": "Lug", "label": "Check: plate to lug"}],
+ ["variable.measure", {"name": "lug_side", "measure": "boxMin", "of": "Lug", "axis": "x", "label": "Check: lug's left side"}],
+ ["assert.add", {"name": "Lug sits 2 mm off the plate", "measure": "value", "expr": "lug_gap + 0 * lug_side", "eq": "2 mm", "tol": "0.01"}],
+ ["output.list", {}]
+]

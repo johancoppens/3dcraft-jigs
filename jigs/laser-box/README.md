@@ -146,8 +146,8 @@ tools/jigs.py check laser-box
   A cut through `feature.extrude`'s `cut` leaves an automatically named extrusion (F-002): this Jig extrudes and
   subtracts in two named steps instead.
 - `sketch.path` refuses an image point as its `start`, `sketch.line` takes it: the panels end each run with a
-  `sketch.line` (proposed J-xxx, `findings/J-xxx-sketch-path-from-image/`).
+  `sketch.line` (J-008, `findings/J-008-sketch-path-from-image/`).
 - A `pattern`'s colours take no expressions, unlike `color`: the veneer cannot follow a choice of material, so
-  the Jig stays birch plywood only (proposed J-xxx, `findings/J-xxx-pattern-colours-from-a-table/`).
+  the Jig stays birch plywood only (J-009, `findings/J-009-pattern-colours-from-a-table/`).
 
 From the showcase model of 3DCraft's `plan/laserbox.md` (2026-10-16), redone.

@@ -1,0 +1,5 @@
+[
+ ["feature.block", {"size": ["100 mm", "60 mm", "3 mm"], "name": "Plate"}],
+ ["feature.transform", {"source": "Plate", "angle": "40 deg", "axis": [0, 1, 0], "pivot": ["0 mm", "0 mm", "300 mm"], "name": "Turned plate"}],
+ ["cut.list", {"format": "csv"}]
+]

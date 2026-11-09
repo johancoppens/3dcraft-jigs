@@ -1,0 +1,8 @@
+[
+["variable.set", {"name": "fold_angle", "expr": "180 deg"}],
+["sketch.create", {"plane": "xy", "name": "Paper"}],
+["sketch.polyline", {"sketch": "Paper", "points": [[-50, -50], [50, -50], [50, 50], [-50, 50]], "closed": true}],
+["sketch.line", {"sketch": "Paper", "from": [0, -50], "to": [0, 50], "construction": true}],
+["feature.fold", {"sketch": "Paper", "name": "Card", "fixed": [-25, 0], "creases": [{"line": "e11", "kind": "valley", "angle": "fold_angle"}]}],
+["feature.transform", {"source": "Card", "name": "Moved card", "translate": ["0 mm", "0 mm", "10 mm"]}]
+]

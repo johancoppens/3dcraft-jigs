@@ -1,0 +1,92 @@
+[
+ [
+  "sketch.create",
+  {
+   "name": "Frame outline",
+   "plane": "xy"
+  }
+ ],
+ [
+  "sketch.polyline",
+  {
+   "sketch": "Frame outline",
+   "closed": true,
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     100,
+     0
+    ],
+    [
+     100,
+     70
+    ],
+    [
+     0,
+     70
+    ]
+   ]
+  }
+ ],
+ [
+  "sketch.polyline",
+  {
+   "sketch": "Frame outline",
+   "closed": true,
+   "points": [
+    [
+     20,
+     15
+    ],
+    [
+     80,
+     15
+    ],
+    [
+     80,
+     52
+    ],
+    [
+     20,
+     52
+    ]
+   ]
+  }
+ ],
+ [
+  "feature.extrude",
+  {
+   "sketch": "Frame outline",
+   "distance": "14 mm",
+   "name": "Frame blank"
+  }
+ ],
+ [
+  "feature.chamfer",
+  {
+   "name": "Frame",
+   "distance": "1.5 mm",
+   "edges": [
+    [
+     "Frame blank:side(e13)",
+     "Frame blank:endCap(e5,e6,e7,e8)"
+    ],
+    [
+     "Frame blank:side(e14)",
+     "Frame blank:endCap(e5,e6,e7,e8)"
+    ],
+    [
+     "Frame blank:side(e15)",
+     "Frame blank:endCap(e5,e6,e7,e8)"
+    ],
+    [
+     "Frame blank:side(e16)",
+     "Frame blank:endCap(e5,e6,e7,e8)"
+    ]
+   ]
+  }
+ ]
+]

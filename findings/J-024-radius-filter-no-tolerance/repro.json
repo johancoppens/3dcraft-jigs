@@ -1,0 +1,294 @@
+[
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "50 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_height",
+"expr": "50 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_length",
+"expr": "170.25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_width",
+"expr": "8.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_wall",
+"expr": "1.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_edge_radius",
+"expr": "1 mm"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rail section",
+"plane": "xy",
+"offset": "-half_length"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Rail section",
+"start": [
+"half_width - rail_wall",
+"half_height - rail_width"
+],
+"segments": [
+{
+"line": [
+"half_width - rail_edge_radius",
+"half_height - rail_width"
+]
+},
+{
+"arc": [
+"half_width",
+"half_height - rail_width + rail_edge_radius"
+],
+"center": [
+"half_width - rail_edge_radius",
+"half_height - rail_width + rail_edge_radius"
+]
+},
+{
+"line": [
+"half_width",
+"half_height - rail_edge_radius"
+]
+},
+{
+"arc": [
+"half_width - rail_edge_radius",
+"half_height"
+],
+"center": [
+"half_width - rail_edge_radius",
+"half_height - rail_edge_radius"
+]
+},
+{
+"line": [
+"half_width - rail_width + rail_edge_radius",
+"half_height"
+]
+},
+{
+"arc": [
+"half_width - rail_width",
+"half_height - rail_edge_radius"
+],
+"center": [
+"half_width - rail_width + rail_edge_radius",
+"half_height - rail_edge_radius"
+]
+},
+{
+"line": [
+"half_width - rail_width",
+"half_height - rail_wall"
+]
+},
+{
+"line": [
+"half_width - rail_wall",
+"half_height - rail_wall"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rail section",
+"distance": "2 * half_length",
+"name": "Rail (+X, +Y)"
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder",
+"radius": {
+"min": "1 mm"
+}
+}
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "113.15 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_length",
+"expr": "183 mm"
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder",
+"radius": {
+"min": "1 mm"
+}
+}
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "50 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_length",
+"expr": "56.75 mm"
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder",
+"radius": {
+"min": "1 mm"
+}
+}
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "50 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_length",
+"expr": "85.1 mm"
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder",
+"radius": {
+"min": "1 mm"
+}
+}
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "113.15 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_length",
+"expr": "183 mm"
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder",
+"radius": {
+"min": "1 mm"
+}
+}
+}
+],
+[
+"variable.set",
+{
+"name": "half_width",
+"expr": "50 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "half_length",
+"expr": "56.75 mm"
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder",
+"radius": {
+"min": "1 mm"
+}
+}
+}
+],
+[
+"select.query",
+{
+"kind": "face",
+"where": {
+"in": "Rail (+X, +Y)",
+"surface": "cylinder"
+},
+"context": true
+}
+]
+]

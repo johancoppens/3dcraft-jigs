@@ -1,0 +1,7 @@
+[
+["feature.block",{"name":"Plate","size":["90 mm","10 mm","60 mm"]}],
+["feature.block",{"name":"Cutter","size":["20 mm","12 mm","62 mm"],"position":["30 mm","-1 mm","-1 mm"]}],
+["feature.boolean",{"op":"subtract","target":"Plate","tool":"Cutter","name":"Cut through"}],
+["assert.add",{"name":"The slot splits the top face into two faces","measure":"count","of":{"kind":"face","where":{"in":"Cut through","normal":{"along":"z"},"surface":"plane","above":{"z":"59 mm"}}},"eq":"2"}],
+["document.check",{}]
+]

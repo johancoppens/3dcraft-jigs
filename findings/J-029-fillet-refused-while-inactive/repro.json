@@ -1,0 +1,7 @@
+[
+ ["variable.set", {"name": "with_lug", "expr": "0"}],
+ ["feature.block", {"size": ["40 mm", "40 mm", "10 mm"], "name": "Plate"}],
+ ["feature.block", {"size": ["10 mm", "10 mm", "20 mm"], "position": ["15 mm", "15 mm", "10 mm"], "when": "with_lug", "name": "Lug"}],
+ ["feature.boolean", {"op": "union", "target": "Plate", "tool": "Lug", "when": "with_lug", "name": "Plate with lug"}],
+ ["feature.fillet", {"edges": [["F1:face(1)", "F2:face(2)"]], "radius": "2 mm", "when": "with_lug", "name": "Lug root"}]
+]

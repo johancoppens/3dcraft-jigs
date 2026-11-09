@@ -221,8 +221,8 @@ Not scored yet (the reviewer gives it).
 ## Platform notes
 
 - `feature.plate` plates one connected face per feature, so the slices of a family, which are one body of
-  sections, need one plate each, switched by their count: proposed J-xxx,
-  [`findings/J-xxx-plate-separate-faces/`](../../findings/J-xxx-plate-separate-faces/). A layer from a section by
+  sections, need one plate each, switched by their count: [J-050](../../3DCRAFT-FEEDBACK.md#j-050-featureplate-takes-one-connected-sheet-only),
+  [`findings/J-050-plate-separate-faces/`](../../findings/J-050-plate-separate-faces/). A layer from a section by
   `feature.plate` (`side: mid`) is the route F-139 in 3DCraft Examples' list describes.
 - A pattern's copies cannot differ (J-011, F-027): each comb's twelve teeth, each with its own depth, are written
   out in one `sketch.path`, the unused ones parked beyond the shape.
@@ -233,7 +233,7 @@ Not scored yet (the reviewer gives it).
 - The box of a slice with spline edges is not proven closely enough to assert the width (F-122); the slices are
   sections of a shape that fits the width by construction.
 - `feature.plate` refuses some valid sections of a twisted loft ("the edge across a corner could not be traced"):
-  proposed J-xxx, [`findings/J-xxx-plate-corner-not-traced/`](../../findings/J-xxx-plate-corner-not-traced/). The
+  [J-036](../../3DCRAFT-FEEDBACK.md#j-036-featureplate-refuses-some-sections-of-a-twisted-loft-the-edge-across-a-corner-could-not-be-traced-see-f-169), [`findings/J-036-plate-corner-not-traced/`](../../findings/J-036-plate-corner-not-traced/). The
   first draft had a fourth shape, a tower lofted through turning rounded squares; check-range and probes found
   such refusals at several points of its range (twists of −120 and ±180 deg, sheets of 1.5 and 6.5 mm), no change
   of its construction cured them all, so the tower was left out rather than offered with holes in its range. The
@@ -243,5 +243,5 @@ Not scored yet (the reviewer gives it).
   ("face 0 cannot be tessellated: its loops do not bound a region"), at two corners of the range (600 × 570 mm,
   12 birch slices of 1.5 mm, slice 11). The ball's height is now limited so that every slice reaches the flat
   foot (a sounder sculpture too: every slice stands); the kerf also ends at 0.3 mm (this Jig's judgement of the
-  most a CO2 laser burns away in plywood). Proposed J-xxx,
-  [`findings/J-xxx-plate-cannot-be-meshed/`](../../findings/J-xxx-plate-cannot-be-meshed/).
+  most a CO2 laser burns away in plywood). [J-035](../../3DCRAFT-FEEDBACK.md#j-035-featureplate-refuses-a-valid-section-face-0-cannot-be-tessellated),
+  [`findings/J-035-plate-cannot-be-meshed/`](../../findings/J-035-plate-cannot-be-meshed/).

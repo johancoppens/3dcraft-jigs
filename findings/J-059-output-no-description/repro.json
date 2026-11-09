@@ -1,0 +1,5 @@
+[
+["variable.set", {"name": "load_on_anchor", "expr": "250 N"}],
+["variable.output", {"name": "anchor_pull", "expr": "load_on_anchor", "label": "Pull on each wall anchor", "unit": "N", "description": "Have the anchor and the wall checked by a competent person for this pull."}],
+["document.check", {}]
+]

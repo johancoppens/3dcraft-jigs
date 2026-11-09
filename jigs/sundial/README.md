@@ -316,13 +316,13 @@ Not scored yet: the reviewer gives the score.
 ## Platform notes
 
 - **One formula per hour, written out per hour.** A pattern has no index to read a table or a formula with (J-011, see
-  F-027), and an expression cannot define a function or a local name (proposed
-  [`findings/J-xxx-expression-functions/`](../../findings/J-xxx-expression-functions/repro.json)): each of the 23 hour lines
+  F-027), and an expression cannot define a function or a local name
+  ([J-054](../../3DCRAFT-FEEDBACK.md#j-054-an-expression-cannot-define-a-function-or-a-local-name)): each of the 23 hour lines
   and 22 half-hour ticks has its own variables and its own polyline, and each of the numerals' 53 letters its own polyline.
 - **Hours the sun does not reach.** A sketch entity cannot be switched off by a formula (J-006): an hour line, tick or
   numeral that should not be there is moved by its own formula three diameters times its hour away from the dial, where no
   two of them meet, and the intersection with the engraving's mask removes it. Assertion 9 proves none is left.
-- **A named set is laid out, not placed** (proposed `findings/J-xxx-set-sheet-packs-faces/`, from the astrolabe; see
+- **A named set is laid out, not placed** ([J-044](../../3DCRAFT-FEEDBACK.md#j-044-a-named-set-exports-each-face-in-its-own-place-on-the-sheet-not-where-it-lies-see-f-142), from the astrolabe; see
   F-142): `file.export` of a set draws each face from its own bounding box. So everything engraved is one region (the
   numerals reach across the chapter band and touch both rings), and the engraving file is placed on the plate by the
   output *Engraving inset* or by its index marks and the plate's notches, not by a shared origin (one file with a cut
@@ -333,12 +333,12 @@ Not scored yet: the reviewer gives the score.
   2.0 s regeneration (measured on a busy machine at the pin); as polygons the whole Jig regenerates in about 1 s.
 - **The kerf in the bodies, not in `cut.export`.** `cut.export` with a kerf would compensate the outlines, but it cannot be
   told which face of a plate is the front: a wall dial's plate, facing −y, came out mirrored against the named set and the
-  engraving (proposed [`findings/J-xxx-cut-export-mirror/`](../../findings/J-xxx-cut-export-mirror/repro.json)). The bodies
+  engraving ([J-043](../../3DCRAFT-FEEDBACK.md#j-043-a-flat-face-or-a-plate-cannot-be-exported-as-seen-from-a-chosen-side-see-f-086)). The bodies
   are therefore the beam's path (`feature.offsetProfile`), and the cut sheet is a named set of faces drawn from the front.
   The model then shows the gnomon half a kerf into the plate along its foot, where the two beam paths meet.
 - **Edges left square.** The plate's and the gnomon's edges are not chamfered: the cut sheet is their front faces, which
-  a chamfer would shrink, and their back faces, which keep the outline, export mirrored (proposed
-  [`findings/J-xxx-back-face-export-mirrored/`](../../findings/J-xxx-back-face-export-mirrored/repro.json)). The maker
+  a chamfer would shrink, and their back faces, which keep the outline, export mirrored
+  ([J-043](../../3DCRAFT-FEEDBACK.md#j-043-a-flat-face-or-a-plate-cannot-be-exported-as-seen-from-a-chosen-side-see-f-086)). The maker
   breaks the edges by hand.
 - **Preview light.** The preview raises the key light to 70° (`look.light` [200, 70]): at the default light the slate's
   far edge showed stepped shadow bands (see F-026).

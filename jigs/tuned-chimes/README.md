@@ -263,17 +263,17 @@ sheet and kernel limits over the range.
 
 ## Platform notes
 
-- **The cut sheet's lettering.** `file.export` of a named set of faces packs every face on its own (`findings/J-xxx-set-sheet-packs-faces/`), so the strips are one face each with the letters as holes in it, and the digits lose their inner counters (0, 4, 6, 8, 9). Engraving the numbers as pockets ran into the kernel: thirteen rows of text cut at once are refused for "more memory for their indexes", and cutting them row by row takes a minute ([repro](../../findings/J-xxx-many-glyph-boolean/repro.json), to be proposed).
+- **The cut sheet's lettering.** `file.export` of a named set of faces packs every face on its own ([J-044](../../3DCRAFT-FEEDBACK.md#j-044-a-named-set-exports-each-face-in-its-own-place-on-the-sheet-not-where-it-lies-see-f-142)), so the strips are one face each with the letters as holes in it, and the digits lose their inner counters (0, 4, 6, 8, 9). Engraving the numbers as pockets ran into the kernel: thirteen rows of text cut at once are refused for "more memory for their indexes", and cutting them row by row takes a minute ([J-039](../../3DCRAFT-FEEDBACK.md#j-039-a-cut-by-thirteen-rows-of-text-is-refused-for-memory-after-28-s-and-25-gb-see-f-034)).
 - **File size.** The file is 978 kB against a budget of 1 MB: 332 kB of it is the bundled sans font, embedded whole
   because the strips carry text (F-037), and the rest is pretty-printed JSON in an uncompressed ZIP (F-138).
 - **Twelve copies of every per-note step.** A pattern instance has no index to read a table with (J-011, see F-027), so
   each tube, bar, strip, length variable, assertion and output is written twelve times and switched by `when`; most of
   `build.json`'s 900 steps are these copies.
 - **Note names on the sheet.** A sketch text cannot print a table's text column (F-035), so the strips carry a Roman number and the frequency instead of "C5".
-- **No Hz or cents unit** in outputs (`findings/J-xxx-no-frequency-unit/`): frequencies and cents are plain numbers named in their label.
+- **No Hz or cents unit** in outputs ([J-056](../../3DCRAFT-FEEDBACK.md#j-056-no-frequency-or-electrical-units-hz-v-a-w-h-mah-wh-see-f-106)): frequencies and cents are plain numbers named in their label.
 - **Cut list of a tube.** A drilled tube with chamfered ends is not a plate to `cut.list`, so the Jig has no saw list of tubes; its hidden full-size strips carry the cut lengths and hole positions instead. A plain extruded tube would be listed as a plate whose thickness is the tube's length, which is `J-004`'s reading.
-- **Frame chamfer.** The chamfer stops at the frame's outer edge: `feature.chamfer` refuses the four top edges around the frame's opening, and the same on a plain rectangular hole ([repro](../../findings/J-xxx-chamfer-inner-loop/repro.json), to be proposed). The opening stays square-edged.
-- STEP or mesh export of the whole document also carries the hidden strips, far above the chime (the mesh side is `findings/J-xxx-hidden-body-in-mesh-export/`), so the Jig offers the sheet, not a 3D file.
+- **Frame chamfer.** The chamfer stops at the frame's outer edge: `feature.chamfer` refuses the four top edges around the frame's opening, and the same on a plain rectangular hole ([J-030](../../3DCRAFT-FEEDBACK.md#j-030-chamfering-the-rim-of-a-rectangular-opening-is-refused-see-f-033)). The opening stays square-edged.
+- STEP or mesh export of the whole document also carries the hidden strips, far above the chime (the mesh side is [J-045](../../3DCRAFT-FEEDBACK.md#j-045-a-3d-export-cannot-be-given-a-named-set-and-without-bodies-it-writes-hidden-bodies-too-see-f-045-f-161)), so the Jig offers the sheet, not a 3D file.
 - **The sail is built at the origin and then placed.** Its edge round was refused at some heights when drawn in place (a boolean "partly on and partly off a face boundary"), at 5 of the first 46 points of the range check; drawn around the origin and moved by `feature.transform` it never failed. A literal copy of the same outline at the same height passed, so no reproducer was found.
 - The feature `Extrude1` is the tool of the disc's hole cut and keeps its automatic name. The frame's pin holes are cut by
   the pins themselves (`feature.boolean` with `keepTool`), so they have no tool of their own.

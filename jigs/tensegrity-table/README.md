@@ -294,6 +294,6 @@ tools/jigs.py check tensegrity-table
   chains (`feature.when`) with their own wood pattern, costing 18 features to show one plate.
 - **Alternatives by `feature.when` cannot share a source body.** Three `feature.transform` of one plate, on for one veneer
   each, are refused ("the body already went into" the first, though that one is inactive). Why this Jig needs one chain per veneer
-  ([finding](../../findings/J-xxx-when-alternatives-share-source/repro.json)).
+  ([finding](../../findings/J-028-when-alternatives-share-source/repro.json)).
 - A `feature.boolean` of a cutter whose end cap falls exactly on a face can fail at some parameter values, within the
   tolerance: the rod bore cutter runs 3 mm past the arm to stay clear of it.

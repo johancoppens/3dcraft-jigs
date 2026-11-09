@@ -1,0 +1,9 @@
+[
+ ["feature.block", {"size": ["300 mm", "10 mm", "120 mm"], "position": ["-150 mm", "0 mm", "-120 mm"], "name": "Wall"}],
+ ["feature.draft", {"faces": ["F1:face(2)", "F1:face(3)"], "neutral": "F1:face(1)", "angle": "1.5 deg", "name": "Wall drafted"}],
+ ["feature.block", {"size": ["300 mm", "40 mm", "15 mm"], "position": ["-150 mm", "-25 mm", "-15 mm"], "name": "Flange"}],
+ ["feature.boolean", {"op": "union", "target": "Wall drafted", "tool": "Flange", "name": "Wall with flange"}],
+ ["feature.cylinder", {"radius": "40 mm", "height": "35 mm", "position": ["0 mm", "5 mm", "0 mm"], "axis": [0, -1, 0], "name": "Boss"}],
+ ["feature.boolean", {"op": "union", "target": "Wall with flange", "tool": "Boss", "name": "Wall with boss"}],
+ ["feature.fillet", {"edges": [["F1:face(2)", "F5:face(0)"], ["F3:face(0)", "F5:face(0)"], ["F1:face(2)", "F3:face(0)"]], "radius": "5 mm", "name": "Junction rounds"}]
+]

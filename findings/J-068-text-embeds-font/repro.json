@@ -1,0 +1,7 @@
+[["feature.block", {"size": ["40 mm", "20 mm", "5 mm"], "name": "Plate"}],
+ ["sketch.create", {"face": "Plate:face(1)", "name": "Label"}],
+ ["sketch.text", {"sketch": "Label", "text": "CW", "size": "5 mm", "at": ["5 mm", "5 mm"]}],
+ ["feature.extrude", {"sketch": "Label", "distance": "-0.5 mm", "cut": "Plate", "name": "Engraved"}],
+ ["variable.set", {"name": "width", "expr": "40 mm"}],
+ ["variable.publish", {"name": "width", "label": "Width", "description": "w", "group": "g", "min": "30 mm", "max": "50 mm", "step": "1 mm"}],
+ ["document.check", {}]]

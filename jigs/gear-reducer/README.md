@@ -321,7 +321,7 @@ images of the other wheel.
 
 - **Rounds where a boss meets a drafted wall.** A cylindrical boss meets a drafted wall in an ellipse, and rounding it
   together with the flange's junction is refused ("fillets of freeform edges that meet in a vertex are not built yet");
-  rounding them one after another is refused too ([finding](../../findings/J-xxx-boss-rounds-on-drafted-wall/repro.json)).
+  rounding them one after another is refused too ([finding](../../findings/J-048-rounds-on-drafted-wall/repro.json)).
   The bosses are therefore octagons, whose junctions with the wall are straight; their corners along the shaft are
   rounded, and the rounds where they meet the flange are built, but their junction with the wall itself could not be
   rounded in this housing (refused with "tangent contact of higher order" or a fillet that does not end cleanly, though
@@ -329,26 +329,26 @@ images of the other wheel.
   sharp: a pattern maker would add them.
 - **A tooth drawn as one `sketch.path` cannot be united.** The same tooth outline drawn as one path (fillets tangent to
   the root circle, flank arcs given by points they pass through) extrudes, but any boolean with a body that crosses or
-  touches its end faces fails ("two curves leave a point in the same direction and stay together")
-  ([finding](../../findings/J-xxx-path-outline-boolean-tangent/repro.json)). Every gear is therefore drawn with points
+  touches its end faces failed in this Jig ("two curves leave a point in the same direction and stay together"); a
+  minimal reproducer of it does not fail at the pin, so it is not filed. Every gear is therefore drawn with points
   and arcs whose centres are formulas: the pinions are united with their shafts, the wheels with their hubs.
 - **Flanks as arcs, not splines or formula curves.** A live spline through five involute points left the mesh gap
   varying by −20 to +9 % over the angle (nine points still ±6 %); an exact `sketch.curve` gave the gap to 0.0001 mm but
   is always fitted with 35 control points whatever the document's tolerance, which made each wheel several seconds of
-  load ([finding](../../findings/J-xxx-curve-fit-fixed-size/repro.json)).
+  load ([finding](../../findings/J-066-formula-curve-fit-size/involute.json)).
 - **A round cannot be added while its bodies are switched off.** A `feature.fillet` given a `when` that is false when
-  it is added is refused because its faces "are not one body" ([finding](../../findings/J-xxx-fillet-refused-while-inactive/repro.json)).
+  it is added is refused because its faces "are not one body" ([finding](../../findings/J-029-fillet-refused-while-inactive/repro.json)).
   `build.json` therefore builds with *Show* at *Closed* and sets *Open* just before publishing.
 - **Proven bounds on gear flanks are loose.** `measure.distance` between the flanks finds the gap but proves only a
   fraction of it on some sizes (0.093 mm found, 0.016 mm proven), the family of the planetary gearbox's finding on
-  `clearance` ([finding](../../findings/J-xxx-clearance-set-proves-less/repro.json)).
+  `clearance` ([finding](../../findings/J-019-assertion-stops-short/clearance.json)).
 - **A distance assertion with both bounds stops proving early.** Between a pinion's flanks and the wheel flanks they
   face, a gap opened to 0.232 mm by a tooth 0.05° out of phase comes back unproven against 0.001 to 0.15 mm ("at least
   0.093 mm"), while the same assertion with only the max fails it (at least 0.230 mm), and `measure.distance` proves
-  0.230 mm ([finding](../../findings/J-xxx-distance-assertion-proves-less/repro.json)). The gaps are therefore outputs
+  0.230 mm ([finding](../../findings/J-019-assertion-stops-short/repro.json)). The gaps are therefore outputs
   (`variable.measure`, which holds the distance found and is known only when proven to the document's tolerance) and
   the assertions bound those outputs both ways.
 - **No chamfers on the teeth.** The wheels' bores are chamfered 1 mm (`feature.chamfer`, cheap here: the wheels' faces
   are arcs and planes), but the teeth's ends are left square: a chamfer along a chain of tooth flanks is refused
-  ([finding](../../findings/J-xxx-chamfer-tooth-chain/repro.json), from the planetary gearbox). The machine shop
+  ([finding](../../findings/J-047-chamfer-freeform-rim/tooth-chain.json), from the planetary gearbox). The machine shop
   deburrs them as usual.

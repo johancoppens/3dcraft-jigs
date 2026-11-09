@@ -1,0 +1,15 @@
+[
+["variable.set",{"name":"xdir_x","expr":"0"}],
+["variable.set",{"name":"xdir_y","expr":"0.6"}],
+["variable.set",{"name":"xdir_z","expr":"0.8"}],
+["variable.set",{"name":"zdir_x","expr":"0"}],
+["variable.set",{"name":"zdir_y","expr":"-0.8"}],
+["variable.set",{"name":"zdir_z","expr":"0.6"}],
+["variable.set",{"name":"ydir_x","expr":"zdir_y*xdir_z - zdir_z*xdir_y"}],
+["variable.set",{"name":"ydir_y","expr":"zdir_z*xdir_x - zdir_x*xdir_z"}],
+["variable.set",{"name":"ydir_z","expr":"zdir_x*xdir_y - zdir_y*xdir_x"}],
+["variable.set",{"name":"turn_angle","expr":"acos((xdir_x + ydir_y + zdir_z - 1) / 2)"}],
+["feature.block",{"size":["100 mm","20 mm","10 mm"],"name":"Master"}],
+["feature.transform",{"source":"Master","keep":true,"angle":"turn_angle","axis":["ydir_z - zdir_y","zdir_x - xdir_z","xdir_y - ydir_x"],"translate":["500 mm","0 mm","0 mm"],"name":"Placed by hand-written matrix to axis-angle"}],
+["document.check",{}]
+]

@@ -1,0 +1,12 @@
+A sketch arc given by a through-point loses its centre when the three points come close to collinear.
+
+repro.json: an arc from (0,0) to (40,0) through (20, bulge). Set bulge to 0.0001 mm: the sketch reports a
+conflicting constraint, and -3 mm likewise, although a near-flat or reversed arc is a valid request; 6 mm recovers.
+
+dead.3dcraft (from loudspeaker-box, saved after a long param.set session, values at the defaults):
+  craft3d-cli run dead.3dcraft --cmd sketch.inspect --params '{"sketch":"Driver cone profile"}'
+The arc's centre e6 sits at (-1784331, 803236) and constraint c11 is reported as conflicting. `document.check` says
+`Driver` has no body. The same values build in a new document: the solved state, not the values, is what is broken,
+and resetting the parameters does not recover it.
+
+Workaround in loudspeaker-box: every arc is given by a centre written as a formula.

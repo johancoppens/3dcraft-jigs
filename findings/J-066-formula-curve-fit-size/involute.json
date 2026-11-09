@@ -1,0 +1,5 @@
+[
+ ["variable.set", {"name": "base_radius", "expr": "22.32 mm"}],
+ ["sketch.create", {"name": "Involute", "plane": "xy"}],
+ ["sketch.curve", {"sketch": "Involute", "x": "base_radius * (cos(t) + t * sin(t))", "y": "base_radius * (sin(t) - t * cos(t))", "t": [0.15, 0.62]}]
+]

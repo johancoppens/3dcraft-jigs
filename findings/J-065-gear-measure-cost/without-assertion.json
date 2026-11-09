@@ -1,0 +1,15 @@
+[
+["variable.set", {"name": "gear_module", "expr": "1.5 mm"}],
+["variable.set", {"name": "teeth", "expr": "120"}],
+["variable.set", {"name": "pitch", "expr": "gear_module * teeth / 2"}],
+["variable.set", {"name": "tip", "expr": "pitch + gear_module"}],
+["variable.set", {"name": "root", "expr": "pitch - 1.25 * gear_module"}],
+["variable.set", {"name": "step_angle", "expr": "2 * pi / teeth"}],
+["variable.set", {"name": "flank_angle", "expr": "0.35 * step_angle"}],
+["variable.set", {"name": "tip_angle", "expr": "0.12 * step_angle"}],
+["sketch.create", {"name": "Gear outline", "plane": "xy"}],
+["sketch.path", {"sketch": "Gear outline", "start": ["root * cos(flank_angle - step_angle)", "root * sin(flank_angle - step_angle)"], "segments": [{"arc": ["root * cos(-flank_angle)", "root * sin(-flank_angle)"], "center": ["0 mm", "0 mm"]}, {"line": ["tip * cos(-tip_angle)", "tip * sin(-tip_angle)"]}, {"arc": ["tip * cos(tip_angle)", "tip * sin(tip_angle)"], "center": ["0 mm", "0 mm"]}, {"line": ["root * cos(flank_angle)", "root * sin(flank_angle)"]}]}],
+["sketch.pattern", {"sketch": "Gear outline", "entities": ["e4", "e6", "e9", "e11"], "chain": ["e1", "e10"], "angle": "360 deg / teeth", "center": ["0 mm", "0 mm"], "count": "teeth"}],
+["sketch.circle", {"sketch": "Gear outline", "center": ["0 mm", "0 mm"], "radius": "2 mm"}],
+["feature.extrude", {"sketch": "Gear outline", "distance": "1 mm", "name": "Gear"}]
+]

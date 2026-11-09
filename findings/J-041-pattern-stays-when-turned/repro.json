@@ -1,0 +1,7 @@
+[
+["feature.block", {"size": ["120 mm", "12 mm", "4 mm"], "name": "Bar blank"}],
+["material.preset", {"body": "Bar blank", "preset": "walnut"}],
+["feature.transform", {"source": "Bar blank", "keep": true, "translate": ["0 mm", "40 mm", "0 mm"], "name": "Bar straight"}],
+["feature.transform", {"source": "Bar blank", "angle": "60 deg", "translate": ["30 mm", "60 mm", "0 mm"], "name": "Bar turned"}],
+["view.render", {"path": "grain.png", "width": 800, "height": 600, "view": "top", "renderer": "cpu", "look": {"mode": "studio", "accumulate": 1}}]
+]

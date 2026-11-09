@@ -1,0 +1,4 @@
+[["feature.block", {"size": ["10 mm", "10 mm", "10 mm"], "name": "Plate"}],
+ ["variable.set", {"name": "residual", "expr": "0.005 mm"}],
+ ["assert.add", {"name": "A residual of 0.005 mm is under 0.000015 mm (it is not)", "measure": "value", "expr": "residual", "max": "0.000015 mm"}],
+ ["document.check", {}]]

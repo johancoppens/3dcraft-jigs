@@ -1,0 +1,8 @@
+[["sketch.create",{"plane":"xy","name":"Base outline"}],
+["sketch.rect",{"sketch":"Base outline","from":[0,0],"to":[100,100]}],
+["feature.extrude",{"sketch":"Base outline","distance":10,"name":"Base"}],
+["sketch.create",{"plane":"xy","offset":20,"name":"Option outline"}],
+["sketch.rect",{"sketch":"Option outline","from":[0,0],"to":[100,100]}],
+["feature.extrude",{"sketch":"Option outline","distance":10,"name":"Option","when":"0"}],
+["assert.add",{"name":"Base does not overlap the option","measure":"overlap","of":"Base","to":"Option","is":false}],
+["document.check",{}]]

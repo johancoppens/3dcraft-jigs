@@ -1,0 +1,7 @@
+[
+ ["variable.set", {"name": "pick", "expr": "2"}],
+ ["feature.block", {"size": ["20 mm", "20 mm", "5 mm"], "name": "Blank"}],
+ ["feature.transform", {"source": "Blank", "translate": ["0 mm", "0 mm", "0 mm"], "when": "pick == 1", "name": "Option one"}],
+ ["feature.transform", {"source": "Blank", "translate": ["0 mm", "0 mm", "10 mm"], "when": "pick == 2", "name": "Option two"}],
+ ["document.check", {}]
+]

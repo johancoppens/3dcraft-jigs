@@ -214,11 +214,11 @@ tools/jigs.py check geodesic-dome
   `feature.transform` per strut of the sector's fundamental domain (4, 9 or 20), each with its own rotation, because a
   pattern cannot place the struts of a sector from a table.
 - `feature.transform` takes an axis and an angle, not a target frame: placing a body along two directions means writing
-  the matrix-to-axis-angle conversion by hand. Each strut placement carries nine helper variables for it (proposed
-  entry in the builder's report; no reproducer needed, the command's parameters say it).
+  the matrix-to-axis-angle conversion by hand. Each strut placement carries nine helper variables for it
+  ([J-052](../../3DCRAFT-FEEDBACK.md#j-052-featuretransform-cannot-place-a-body-by-a-target-frame)).
 - There is no assertion that a body is in one piece ([F-068](../../../3dcraft-examples/3DCRAFT-FEEDBACK.md)): the master
   strut's faces are counted instead (24, or 22 where the kerf is wide enough to remove the cut-back end), and a measured
   length catches anything that sticks out.
 - A bolt hole that the kerf cuts in two is reported as one face
-  ([J-xxx-split-face-counts-as-one](../../findings/J-xxx-split-face-counts-as-one/repro.json)): the bolt-hole count
+  ([J-023](../../3DCRAFT-FEEDBACK.md#j-023-a-face-cut-in-two-by-a-boolean-counts-as-one-face-see-f-141)): the bolt-hole count
   assertion counts one face per hole.

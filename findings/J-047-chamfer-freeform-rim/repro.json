@@ -1,0 +1,7 @@
+[
+ ["variable.set", {"name": "r", "expr": "30 mm"}],
+ ["sketch.create", {"name": "Closed curve"}],
+ ["sketch.curve", {"sketch": "Closed curve", "x": "(r + 5 mm*cos(2*t))*cos(t)", "y": "(r + 5 mm*cos(2*t))*sin(t)", "t": [0, "2*pi"], "closed": true}],
+ ["feature.extrude", {"sketch": "Closed curve", "distance": "10 mm", "name": "Prism"}],
+ ["feature.chamfer", {"edges": [["F2:side(e2)", "F2:endCap(e2)"]], "distance": "1 mm", "chain": true, "name": "Rim"}]
+]

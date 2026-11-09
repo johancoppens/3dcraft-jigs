@@ -302,13 +302,13 @@ and a parallel motion, and coupled ranges proven over the range.
 
 ## Platform notes
 
-- [J-xxx gear measure cost](../../findings/J-xxx-gear-measure-cost/repro.json) (performance, proposed): measuring a flat
+- [J-065](../../3DCRAFT-FEEDBACK.md#j-065-measuring-a-flat-gear-costs-about-14-ms-of-cpu-per-tooth-far-more-than-building-it) (performance, [repro](../../findings/J-065-gear-measure-cost/repro.json)): measuring a flat
   gear costs about 1.5 ms of CPU per tooth; `info` spends most of this Jig's load measuring its 35 gears. Workaround: the
   closed-form area check is kept to two gears, a mesh's engagement is shown by a box extent rather than a face distance
   (18 face distances cost about 10 s of CPU), no mass output.
-- [J-xxx cut.export takes no set](../../findings/J-xxx-cut-export-no-set/repro.json) (missing capability, proposed):
+- [J-046](../../3DCRAFT-FEEDBACK.md#j-046-cutlist-and-cutexport-cannot-be-limited-to-the-parts-to-cut-see-f-161-j-003) (missing capability, [repro](../../findings/J-046-cut-list-set/repro.json)):
   `cut.export` exports every plate, and a rod or tube is a plate of its length. Workaround: every rod, tube, pillar, bush
   and boss has chamfered ends (real deburring), so that only the 1 mm brass parts are plates.
-- J-011 (a pattern instance has no index) and the sundial's proposed *expression functions* entry: each gear has its own
+- J-011 (a pattern instance has no index) and [J-054](../../3DCRAFT-FEEDBACK.md#j-054-an-expression-cannot-define-a-function-or-a-local-name) (an expression cannot define a function): each gear has its own
   sketch and about 25 variables of the same formulas with its own tooth count (12 to 33 gears, about 750 variables);
   the three idlers are one drawing placed three times (`feature.transform` with `keep`).

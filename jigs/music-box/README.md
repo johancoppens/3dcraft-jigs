@@ -278,10 +278,12 @@ tools/jigs.py check music-box
   a sketch entity cannot be switched off by a formula ([J-006](../../3DCRAFT-FEEDBACK.md#j-006-a-sketch-entity-cannot-be-switched-off-by-a-formula)),
   so each tune has its own sketch switched by `when`.
 - A pin with slanted edges, wrapped onto the drum, is far heavier than a rectangular one (60 diamond pins: 32 s and 2.5 GB,
-  against 0.4 s and 30 MB for rectangles, [reproducer](../../findings/J-xxx-wrap-oblique-edges-heavy/repro.json)), so the pins
+  against 0.4 s and 30 MB for rectangles, [reproducer](../../findings/J-063-wrap-oblique-edges-heavy/repro.json)), so the pins
   are rectangles and their undersides print as short bridges rather than 45° points. The same wrap with a whole circle can
   fail ([J-013](../../3DCRAFT-FEEDBACK.md#j-013-a-circle-wrapped-onto-a-cylinder-and-joined-can-fail-documentcheck)).
 - An assertion's bound finer than the document's tolerance passes silently: the expected value it reports is the one given,
-  but the comparison is at the tolerance ([reproducer](../../findings/J-xxx-assert-max-below-tolerance/repro.json)), which hid a
+  but the comparison is at the tolerance ([reproducer](../../findings/J-020-assert-bound-below-tolerance/repro.json)), which hid a
   real error in an early check of this Jig, so tight checks here are counts, not bounds on lengths.
+- What an assertion measures may not exceed 16 384 bytes ([J-069](../../3DCRAFT-FEEDBACK.md#j-069-expressions-are-capped-at-different-sizes-in-different-places)), so the check that every pin stands on its note
+  and beat is split into two or three assertions per tune.
 - `feature.extrude`'s tool of a join or cut keeps an automatic name (`Extrude6`): the tool warns about them.

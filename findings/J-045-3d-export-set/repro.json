@@ -1,0 +1,8 @@
+[
+  ["feature.block", {"name": "Piece 1", "size": ["20 mm", "20 mm", "5 mm"]}],
+  ["feature.block", {"name": "Piece 2", "size": ["20 mm", "20 mm", "5 mm"], "position": ["30 mm", "0 mm", "0 mm"]}],
+  ["feature.block", {"name": "Context", "size": ["100 mm", "100 mm", "2 mm"], "position": ["-10 mm", "-40 mm", "-2 mm"]}],
+  ["set.define", {"name": "To print", "kind": "body", "where": {"name": "Piece *"}}],
+  ["document.check", {}],
+  ["file.export", {"path": "to-print.3mf", "set": "To print"}]
+]

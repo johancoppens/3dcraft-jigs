@@ -1,0 +1,8 @@
+[
+ ["variable.set", {"name": "cell_voltage", "expr": "2.411 V"}],
+ ["variable.set", {"name": "cell_current", "expr": "0.499 A"}],
+ ["variable.set", {"name": "cell_power", "expr": "1.2 W"}],
+ ["variable.set", {"name": "cell_charge", "expr": "3200 mA * 1 h"}],
+ ["variable.set", {"name": "cell_energy", "expr": "11.52 W * 1 h"}],
+ ["variable.set", {"name": "joules_work", "expr": "1 J"}]
+]

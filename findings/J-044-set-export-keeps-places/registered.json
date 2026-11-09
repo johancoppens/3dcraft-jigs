@@ -1,0 +1,9 @@
+[["sketch.create",{"plane":"xy","name":"Plate outline"}],
+["sketch.rect",{"sketch":"Plate outline","from":[0,0],"to":[300,120]}],
+["feature.extrude",{"sketch":"Plate outline","distance":30,"name":"Board"}],
+["sketch.create",{"plane":"xy","offset":30,"name":"Pocket outline"}],
+["sketch.rect",{"sketch":"Pocket outline","from":[60,30],"to":[240,90]}],
+["feature.extrude",{"sketch":"Pocket outline","distance":12,"reversed":true,"cut":"Board","name":"Pocketed board"}],
+["set.define",{"name":"Outline and pocket","kind":"face","where":{"in":"Pocketed board","normal":{"along":"z"},"surface":"plane"}}],
+["file.export",{"path":"registered.dxf","set":"Outline and pocket"}],
+["document.check",{}]]

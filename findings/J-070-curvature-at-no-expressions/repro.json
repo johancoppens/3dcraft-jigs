@@ -1,0 +1,8 @@
+[
+["variable.set",{"name":"radius_of_mirror","expr":"100 mm"}],
+["variable.set",{"name":"tilt","expr":"-50 deg"}],
+["feature.sphere",{"radius":"radius_of_mirror","name":"Ball"}],
+["assert.add",{"name":"curvature at a plain point","measure":"curvature","of":"Ball","at":[0,0,100],"eq":"1/radius_of_mirror^2","tol":"0.01/radius_of_mirror^2"}],
+["assert.add",{"name":"curvature at a point given by formulas","measure":"curvature","of":"Ball","at":["0 mm","radius_of_mirror*sin(tilt)","radius_of_mirror*cos(tilt)"],"eq":"1/radius_of_mirror^2","tol":"0.01/radius_of_mirror^2"}],
+["assert.list",{}]
+]

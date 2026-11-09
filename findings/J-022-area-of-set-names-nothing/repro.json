@@ -1,0 +1,74 @@
+[
+[
+"file.new",
+{
+"units": "mm"
+}
+],
+[
+"sketch.create",
+{
+"plane": "xy",
+"name": "Profile"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Profile",
+"from": [
+0,
+0
+],
+"to": [
+20,
+10
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Profile",
+"distance": "5 mm",
+"name": "Block"
+}
+],
+[
+"set.define",
+{
+"name": "Blocks",
+"kind": "body",
+"where": {
+"name": "Block"
+}
+}
+],
+[
+"assert.add",
+{
+"name": "extent of the set: works",
+"measure": "extent",
+"of": {
+"set": "Blocks"
+},
+"axis": "x",
+"eq": "20 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "area of the same set: of names nothing",
+"measure": "area",
+"of": {
+"set": "Blocks"
+},
+"eq": "700"
+}
+],
+[
+"assert.list",
+{}
+]
+]

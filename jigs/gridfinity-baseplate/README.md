@@ -23,7 +23,7 @@ The defaults are a 400 x 500 mm drawer and a 256 mm bed: 9 x 11 = 99 cells, fill
   magnet holes (`feature.pattern`), the screw hole, the window and the weight pocket are unioned once into a single
   cut, on or off by `when`. Every piece copies that one cut and patterns it across its own cells only: at the largest
   plate that is 3 times less work than one 196-cell cutter applied to every piece
-  ([finding](../../findings/J-xxx-subtract-many-lump-tool/repro.json)).
+  ([finding](../../findings/J-061-subtract-many-lump-tool/repro.json)).
 - **One pocket cutter, copied to every joint.** A ruled `feature.loft` of the bowtie, flared at its mouth, goes to the
   joints by `feature.transform` and `feature.pattern`. The clips in place are a `sketch.pattern` with `count2` and
   `step2`: one clip per cell along a joint, one joint per step of the middle pieces.
@@ -185,17 +185,17 @@ tools/jigs.py check gridfinity-baseplate
 
 ## Platform notes
 
-Proposed entries for `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
+Entries in `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
 
 - A mesh export (3MF, STL) takes a list of body names or every body, never a named set
-  ([repro](../../findings/J-xxx-mesh-export-named-set/repro.json)). A list cannot follow a layout whose number of bodies
+  ([repro](../../findings/J-045-3d-export-set/repro.json)). A list cannot follow a layout whose number of bodies
   changes, and a name that is switched off is refused; so the Jig has a *Show drawer* parameter, which a maker switches off
   to export every body. With a set this switch would not exist. Related: F-045.
 - `feature.chamfer` refuses the first-layer chamfer round a bowtie, at the concave corners of its neck: already
   [F-033](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-033). The clip to print and the
   pocket's flared mouth are lofts instead.
 - Subtracting a many-lump tool from each of many small targets is 3 times slower than giving each target its own cutter
-  of only the lumps that reach it ([repro](../../findings/J-xxx-subtract-many-lump-tool/repro.json),
-  [the fast form](../../findings/J-xxx-subtract-many-lump-tool/repro-small-tools.json)): 1.9 s against 0.66 s, 4.6 s of CPU
+  of only the lumps that reach it ([repro](../../findings/J-061-subtract-many-lump-tool/repro.json),
+  [the fast form](../../findings/J-061-subtract-many-lump-tool/repro-small-tools.json)): 1.9 s against 0.66 s, 4.6 s of CPU
   against 2.0 s, for 196 cells in 16 pieces. So this Jig cuts every piece with its own pattern, at a cost of three more
   features per piece.

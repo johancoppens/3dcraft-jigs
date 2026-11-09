@@ -204,11 +204,11 @@ tools/jigs.py check drag-chain
 - `measure.thickness` reads about zero where a 45-degree hole meets a flat face, an acute rim (compare F-020 in
   `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`): the walls are asserted one by one instead.
 - A named set cannot name what a mesh export writes
-  ([findings/J-xxx-mesh-export-named-set](../../findings/J-xxx-mesh-export-named-set/repro.json)), and `file.export` also writes
-  hidden bodies ([findings/J-xxx-hidden-body-in-mesh-export](../../findings/J-xxx-hidden-body-in-mesh-export/repro.json)): so the
+  ([findings/J-045-3d-export-set](../../findings/J-045-3d-export-set/repro.json)), and `file.export` also writes
+  hidden bodies ([findings/J-045-3d-export-set](../../findings/J-045-3d-export-set/hidden-body.json)): so the
   helpers are switched off in the print view, and the parts are the originals moved there.
 - A `variable.measure` cannot be given a condition; a measure of a body that is off reads "cannot be measured". So the measures of
   the assembled chain are assertions with a `when`, and the form's outputs use formulas.
 - `clearance` between the lid and the link reported 0.07 mm (`measure.clearance` even "clear") where `overlap` found 13.5 mm³ in
-  common ([findings/J-xxx-clearance-clear-on-overlap](../../findings/J-xxx-clearance-clear-on-overlap/repro.json), not minimal: a
+  common ([findings/J-018-clearance-clear-on-overlap](../../findings/J-018-clearance-clear-on-overlap/repro.json), not minimal: a
   mutant of this Jig with its lid seat raised 0.5 mm): the lid's fit is asserted with `overlap` as well.

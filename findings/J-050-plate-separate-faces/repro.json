@@ -1,0 +1,9 @@
+[
+["sketch.create", {"name": "Cutting plane", "plane": "yz"}],
+["sketch.rect", {"sketch": "Cutting plane", "from": ["-60 mm", "0 mm"], "to": ["60 mm", "80 mm"]}],
+["feature.fill", {"sketch": "Cutting plane", "name": "Cutting sheet"}],
+["feature.pattern", {"source": "Cutting sheet", "count": "3", "step": ["30 mm", "0 mm", "0 mm"], "name": "Cutting sheets"}],
+["feature.sphere", {"radius": "50 mm", "position": ["30 mm", "0 mm", "30 mm"], "name": "Ball"}],
+["feature.boolean", {"op": "intersect", "target": "Cutting sheets", "tool": "Ball", "name": "Sections"}],
+["feature.plate", {"faces": ["Cutting sheets:copy(0)/Cutting sheet:startCap()", "Cutting sheets:copy(1)/Cutting sheet:startCap()", "Cutting sheets:copy(2)/Cutting sheet:startCap()"], "thickness": "4 mm", "side": "mid", "name": "Slices"}]
+]

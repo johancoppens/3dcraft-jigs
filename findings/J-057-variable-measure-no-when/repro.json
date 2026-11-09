@@ -1,0 +1,5 @@
+[
+ ["feature.block", {"name": "Plate", "size": ["20 mm", "20 mm", "5 mm"]}],
+ ["variable.set", {"name": "show", "expr": "1"}],
+ ["variable.measure", {"name": "only_in_view_two", "measure": "volume", "of": "Plate", "when": "show == 2"}]
+]

@@ -172,7 +172,7 @@ Tried by hand with `param.set`: a 2-inch eyepiece on the 1.25-inch focuser (refu
   bodies, because the default also finds the hidden construction bodies.
 - The hub blocks are not in the cut sheet: they are cut from scrap to the tube's curve.
 - There is no STEP export on purpose: a mesh or STEP export of the whole document would include the three hidden swing bodies and the
-  mirror's construction copy (see `findings/J-xxx-hidden-body-in-mesh-export`).
+  mirror's construction copy (see [J-045](../../3DCRAFT-FEEDBACK.md#j-045-a-3d-export-cannot-be-given-a-named-set-and-without-bodies-it-writes-hidden-bodies-too-see-f-045-f-161)).
 
 ## Files
 
@@ -202,9 +202,11 @@ Open: the reviewer's score goes here.
 
 ## Platform notes
 
-- `face.appearance` given on a feature's face before a `feature.boolean` and `feature.transform` is lost in the render
-  ([reproducer](../../findings/J-xxx-face-colour-lost-through-boolean/repro.json); compare F-048 in the examples' feedback). The black
+- `face.appearance` given on an earlier feature's face is hidden in the render once the body's colour is given on a later
+  feature ([J-040](../../3DCRAFT-FEEDBACK.md#j-040-a-face-colour-given-on-a-feature-is-hidden-when-the-bodys-colour-is-given-on-a-later-feature); compare F-048 in the examples' feedback). The black
   inside of the tube is given on the transformed feature instead.
 - `material.preset`'s `color` takes literals only, so the tube's colour by material is a `body.appearance` after the preset
-  (compare `findings/J-xxx-appearance-numbers-not-expressions`).
+  (compare [J-053](../../3DCRAFT-FEEDBACK.md#j-053-metallic-roughness-and-transmission-take-numbers-only-so-a-material-look-cannot-follow-a-choice)).
 - A chamfer on a plate breaks `cut.list` (J-004): the boards keep square edges.
+- A curvature assertion's `at` takes plain numbers only ([J-070](../../3DCRAFT-FEEDBACK.md#j-070-a-curvature-assertions-at-takes-plain-numbers-only-see-f-094)), so the mirror's curvature is measured on an
+  unmoved construction copy at the origin.

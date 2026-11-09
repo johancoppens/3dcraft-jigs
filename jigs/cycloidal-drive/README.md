@@ -227,5 +227,5 @@ The preview is rendered without reflections (`look.reflections: false`): with th
 - Booleans refuse near-tangent cuts at a coarse tolerance, "between half and twice the tolerance" (F-137). At 0.01 mm the
   cutaway's planes could graze a hole. The static planes therefore run midway between ring pins and the cut in the output
   is turned with it, so no plane comes within 0.08 mm of tangent to any hole over the range.
-- A mesh export takes body names, never a named set ([finding](../../findings/J-xxx-mesh-export-named-set/repro.json)):
+- A mesh export takes body names, never a named set ([finding](../../findings/J-045-3d-export-set/repro.json)):
   the printed parts are the whole of the print layout, so *The model* exports just them.

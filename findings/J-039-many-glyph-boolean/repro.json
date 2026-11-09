@@ -1,0 +1,223 @@
+[
+ [
+  "variable.set",
+  {
+   "name": "row_h",
+   "expr": "9 mm"
+  }
+ ],
+ [
+  "variable.set",
+  {
+   "name": "letter",
+   "expr": "5 mm"
+  }
+ ],
+ [
+  "feature.block",
+  {
+   "name": "Sheet plate",
+   "size": [
+    "400 mm",
+    "140 mm",
+    "1 mm"
+   ],
+   "position": [
+    "0 mm",
+    "0 mm",
+    "-1 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.create",
+  {
+   "name": "Lettering",
+   "plane": "xy",
+   "offset": "0 mm"
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "1  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "130 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "2  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "120 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "3  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "110 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "4  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "100 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "5  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "90 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "6  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "80 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "7  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "70 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "8  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "60 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "9  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "50 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "10  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "40 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "11  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "30 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "12  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "20 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.text",
+  {
+   "sketch": "Lettering",
+   "text": "13  523.25 HZ  CUT 532.5 MM  DRILL 119.4 MM  CENTS -0.3",
+   "size": "letter",
+   "font": "mono",
+   "at": [
+    "8 mm",
+    "10 mm"
+   ]
+  }
+ ],
+ [
+  "feature.extrude",
+  {
+   "sketch": "Lettering",
+   "distance": "0.3 mm",
+   "reversed": true,
+   "cut": "Sheet plate",
+   "name": "Engraved letters"
+  }
+ ],
+ [
+  "document.check",
+  {}
+ ]
+]

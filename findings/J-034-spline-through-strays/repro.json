@@ -1,0 +1,181 @@
+[
+ [
+  "variable.set",
+  {
+   "name": "rb",
+   "expr": "13.155697 mm"
+  }
+ ],
+ [
+  "variable.set",
+  {
+   "name": "ta",
+   "expr": "0.745"
+  }
+ ],
+ [
+  "sketch.create",
+  {
+   "name": "Spline flank"
+  }
+ ],
+ [
+  "sketch.point",
+  {
+   "sketch": "Spline flank",
+   "at": [
+    "0 mm",
+    "0 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.spline",
+  {
+   "sketch": "Spline flank",
+   "through": [
+    [
+     "rb * (cos((ta * 0 / 7)) + (ta * 0 / 7) * sin((ta * 0 / 7)))",
+     "rb * (sin((ta * 0 / 7)) - (ta * 0 / 7) * cos((ta * 0 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 1 / 7)) + (ta * 1 / 7) * sin((ta * 1 / 7)))",
+     "rb * (sin((ta * 1 / 7)) - (ta * 1 / 7) * cos((ta * 1 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 2 / 7)) + (ta * 2 / 7) * sin((ta * 2 / 7)))",
+     "rb * (sin((ta * 2 / 7)) - (ta * 2 / 7) * cos((ta * 2 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 3 / 7)) + (ta * 3 / 7) * sin((ta * 3 / 7)))",
+     "rb * (sin((ta * 3 / 7)) - (ta * 3 / 7) * cos((ta * 3 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 4 / 7)) + (ta * 4 / 7) * sin((ta * 4 / 7)))",
+     "rb * (sin((ta * 4 / 7)) - (ta * 4 / 7) * cos((ta * 4 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 5 / 7)) + (ta * 5 / 7) * sin((ta * 5 / 7)))",
+     "rb * (sin((ta * 5 / 7)) - (ta * 5 / 7) * cos((ta * 5 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 6 / 7)) + (ta * 6 / 7) * sin((ta * 6 / 7)))",
+     "rb * (sin((ta * 6 / 7)) - (ta * 6 / 7) * cos((ta * 6 / 7)))"
+    ],
+    [
+     "rb * (cos((ta * 7 / 7)) + (ta * 7 / 7) * sin((ta * 7 / 7)))",
+     "rb * (sin((ta * 7 / 7)) - (ta * 7 / 7) * cos((ta * 7 / 7)))"
+    ]
+   ],
+   "live": true
+  }
+ ],
+ [
+  "sketch.line",
+  {
+   "sketch": "Spline flank",
+   "from": "e9",
+   "to": "e1"
+  }
+ ],
+ [
+  "sketch.line",
+  {
+   "sketch": "Spline flank",
+   "from": "e1",
+   "to": "e2"
+  }
+ ],
+ [
+  "feature.extrude",
+  {
+   "sketch": "Spline flank",
+   "distance": "1 mm",
+   "name": "Spline involute"
+  }
+ ],
+ [
+  "sketch.create",
+  {
+   "name": "Curve flank",
+   "plane": "xy",
+   "offset": "2 mm"
+  }
+ ],
+ [
+  "sketch.point",
+  {
+   "sketch": "Curve flank",
+   "at": [
+    "0 mm",
+    "0 mm"
+   ]
+  }
+ ],
+ [
+  "sketch.curve",
+  {
+   "sketch": "Curve flank",
+   "x": "rb * (cos(t) + t * sin(t))",
+   "y": "rb * (sin(t) - t * cos(t))",
+   "t": [
+    0,
+    "ta"
+   ]
+  }
+ ],
+ [
+  "sketch.line",
+  {
+   "sketch": "Curve flank",
+   "from": "e3",
+   "to": "e1"
+  }
+ ],
+ [
+  "sketch.line",
+  {
+   "sketch": "Curve flank",
+   "from": "e1",
+   "to": "e2"
+  }
+ ],
+ [
+  "feature.extrude",
+  {
+   "sketch": "Curve flank",
+   "distance": "1 mm",
+   "name": "Curve involute"
+  }
+ ],
+ [
+  "measure.ray",
+  {
+   "from": [
+    0,
+    0,
+    0.5
+   ],
+   "direction": [
+    0.9986518641523303,
+    0.05190813255238216,
+    0
+   ]
+  }
+ ],
+ [
+  "measure.ray",
+  {
+   "from": [
+    0,
+    0,
+    2.5
+   ],
+   "direction": [
+    0.9986518641523303,
+    0.05190813255238216,
+    0
+   ]
+  }
+ ]
+]

@@ -180,8 +180,8 @@ tools/jigs.py check keyboard-plate
 - A pattern instance has no index, so the stagger of each column cannot come from a table in one pattern (J-011, F-027):
   each column strip is a `feature.transform` of the seed column, switched by `feature.when`, and the chain of unions
   passes columns that are off through (a feature's `when` replaces entities a sketch could otherwise leave out: J-006).
-- `metallic`, `transmission` and other appearance numbers cannot follow a choice (proposed
-  `findings/J-xxx-appearance-numbers-not-expressions/`): the plate materials change colour and density only, so the
+- `metallic`, `transmission` and other appearance numbers cannot follow a choice
+  ([J-053](../../3DCRAFT-FEEDBACK.md#j-053-metallic-roughness-and-transmission-take-numbers-only-so-a-material-look-cannot-follow-a-choice)): the plate materials change colour and density only, so the
   smoke acrylic renders as dark glossy plastic rather than see-through, and aluminium as a dielectric anodised colour.
 - An extrusion `cut` or `join` in one step cannot be named (F-002): the Jig extrudes and joins in two named steps.
 - `measure.thickness` cannot prove a plate with cutouts over the range (found 1.5 mm, proved 0 at some points: F-020):

@@ -104,6 +104,6 @@ tools/jigs.py check welded-box
 
 ## Platform notes
 
-- `measure.overlap` cannot always tell touching plates apart at zero clearance, through `param.set` ([reproducer](../../findings/J-xxx-overlap-touching-plates/repro.json), in the family of F-130): the overlap checks are off at 0 clearance.
+- `measure.overlap` cannot always tell touching plates apart at zero clearance, through `param.set` ([reproducer](../../findings/J-025-overlap-touching-plates/repro.json), in the family of F-130): the overlap checks are off at 0 clearance.
 - `measure.section` treats plates that only touch as separate open sections, so the torsion of a welded box cannot be confirmed on the model (it also failed to mesh on a 2 m x 100 mm beam, while a 3 m cube measured); GJ is therefore a formula and an upper bound.
 - A face colour cannot follow a choice (F-171), so cut edges are not picked out. The tool of a `feature.extrude` with `cut` cannot be named, so the build warns about those names.

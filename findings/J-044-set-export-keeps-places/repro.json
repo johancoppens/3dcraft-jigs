@@ -1,0 +1,92 @@
+[
+ [
+  "feature.block",
+  {
+   "size": [
+    "100 mm",
+    "60 mm",
+    "6 mm"
+   ],
+   "position": [
+    "0 mm",
+    "0 mm",
+    "0 mm"
+   ],
+   "name": "Plate"
+  }
+ ],
+ [
+  "sketch.create",
+  {
+   "plane": "xy",
+   "offset": "6 mm",
+   "name": "Marks"
+  }
+ ],
+ [
+  "sketch.circle",
+  {
+   "sketch": "Marks",
+   "center": [
+    "20 mm",
+    "30 mm"
+   ],
+   "radius": "4 mm"
+  }
+ ],
+ [
+  "sketch.circle",
+  {
+   "sketch": "Marks",
+   "center": [
+    "50 mm",
+    "45 mm"
+   ],
+   "radius": "4 mm"
+  }
+ ],
+ [
+  "sketch.circle",
+  {
+   "sketch": "Marks",
+   "center": [
+    "80 mm",
+    "20 mm"
+   ],
+   "radius": "4 mm"
+  }
+ ],
+ [
+  "feature.extrude",
+  {
+   "sketch": "Marks",
+   "distance": "1 mm",
+   "reversed": true,
+   "cut": "Plate",
+   "name": "Engraved marks"
+  }
+ ],
+ [
+  "set.define",
+  {
+   "name": "Engraving",
+   "kind": "face",
+   "where": {
+    "in": "Engraved marks",
+    "normal": {
+     "along": "z"
+    },
+    "below": {
+     "z": 5.5
+    }
+   }
+  }
+ ],
+ [
+  "file.export",
+  {
+   "path": "engraving.dxf",
+   "set": "Engraving"
+  }
+ ]
+]

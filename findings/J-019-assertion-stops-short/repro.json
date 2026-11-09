@@ -1,0 +1,4820 @@
+[
+[
+"table.set",
+{
+"name": "modules",
+"columns": [
+"module",
+{
+"name": "value",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"1.5 mm",
+1.5
+],
+[
+"2 mm",
+2
+],
+[
+"2.5 mm",
+2.5
+],
+[
+"3 mm",
+3
+],
+[
+"4 mm",
+4
+],
+[
+"5 mm",
+5
+],
+[
+"6 mm",
+6
+],
+[
+"8 mm",
+8
+],
+[
+"10 mm",
+10
+],
+[
+"12 mm",
+12
+],
+[
+"16 mm",
+16
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "bearings",
+"columns": [
+"bearing",
+{
+"name": "bore",
+"unit": "mm"
+},
+{
+"name": "outside",
+"unit": "mm"
+},
+{
+"name": "width",
+"unit": "mm"
+},
+{
+"name": "rating",
+"unit": "N"
+}
+],
+"rows": [
+[
+"6203",
+17,
+40,
+12,
+9563.7
+],
+[
+"6204",
+20,
+47,
+14,
+12810.9
+],
+[
+"6205",
+25,
+52,
+15,
+14011.9
+],
+[
+"6206",
+30,
+62,
+16,
+19483.2
+],
+[
+"6207",
+35,
+72,
+17,
+25666.2
+],
+[
+"6208",
+40,
+80,
+18,
+29135.9
+],
+[
+"6209",
+45,
+85,
+19,
+33077.0
+],
+[
+"6210",
+50,
+90,
+20,
+36751.2
+],
+[
+"6211",
+55,
+100,
+21,
+45674.3
+],
+[
+"6212",
+60,
+110,
+22,
+55126.8
+],
+[
+"6213",
+65,
+120,
+23,
+60375.7
+],
+[
+"6214",
+70,
+125,
+24,
+65099.7
+],
+[
+"6215",
+75,
+130,
+25,
+69298.8
+],
+[
+"6216",
+80,
+140,
+26,
+76126.9
+],
+[
+"6217",
+85,
+150,
+28,
+88199.3
+],
+[
+"6218",
+90,
+160,
+30,
+100801.1
+],
+[
+"6219",
+95,
+170,
+32,
+114448.3
+],
+[
+"6220",
+100,
+180,
+34,
+128099.9
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "driven_machines",
+"columns": [
+"machine",
+"factor",
+"key_factor"
+],
+"rows": [
+[
+"Uniform load",
+1.0,
+0.8
+],
+[
+"Light shocks",
+1.25,
+0.7
+],
+[
+"Moderate shocks",
+1.5,
+0.6
+],
+[
+"Heavy shocks",
+1.75,
+0.6
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "gear_steels",
+"columns": [
+"steel",
+{
+"name": "yield",
+"unit": "MPa"
+}
+],
+"rows": [
+[
+"C45 normalised",
+305
+],
+[
+"42CrMo4 quenched and tempered",
+650
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "keys",
+"columns": [
+"shaft_upto",
+{
+"name": "upto",
+"unit": "mm"
+},
+{
+"name": "width",
+"unit": "mm"
+},
+{
+"name": "height",
+"unit": "mm"
+},
+{
+"name": "shaft_depth",
+"unit": "mm"
+},
+{
+"name": "hub_depth",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"to 22 mm",
+22,
+6,
+6,
+3.5,
+2.8
+],
+[
+"to 30 mm",
+30,
+8,
+7,
+4.0,
+3.3
+],
+[
+"to 38 mm",
+38,
+10,
+8,
+5.0,
+3.3
+],
+[
+"to 44 mm",
+44,
+12,
+8,
+5.0,
+3.3
+],
+[
+"to 50 mm",
+50,
+14,
+9,
+5.5,
+3.8
+],
+[
+"to 58 mm",
+58,
+16,
+10,
+6.0,
+4.3
+],
+[
+"to 65 mm",
+65,
+18,
+11,
+7.0,
+4.4
+],
+[
+"to 75 mm",
+75,
+20,
+12,
+7.5,
+4.9
+],
+[
+"to 85 mm",
+85,
+22,
+14,
+9.0,
+5.4
+],
+[
+"to 95 mm",
+95,
+25,
+14,
+9.0,
+5.4
+],
+[
+"to 110 mm",
+110,
+28,
+16,
+10.0,
+6.4
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "bolts",
+"columns": [
+"bolt",
+{
+"name": "diameter",
+"unit": "mm"
+},
+{
+"name": "clearance",
+"unit": "mm"
+},
+{
+"name": "tap_drill",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"M10",
+10,
+11,
+8.5
+],
+[
+"M12",
+12,
+13.5,
+10.2
+],
+[
+"M16",
+16,
+17.5,
+14
+],
+[
+"M20",
+20,
+22,
+17.5
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "input_angle",
+"expr": "0 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "ratio_wanted",
+"expr": "12.5"
+}
+],
+[
+"variable.set",
+{
+"name": "input_speed",
+"expr": "1450"
+}
+],
+[
+"variable.set",
+{
+"name": "driven_machine",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "gear_steel",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "input_power",
+"expr": "4"
+}
+],
+[
+"variable.set",
+{
+"name": "cast_wall",
+"expr": "10 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "show",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "pressure_angle",
+"expr": "20 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "involute_function",
+"expr": "tan(pressure_angle) - pressure_angle / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_teeth",
+"expr": "19"
+}
+],
+[
+"variable.set",
+{
+"name": "lewis_form_factor",
+"expr": "0.314"
+}
+],
+[
+"variable.set",
+{
+"name": "face_width_factor",
+"expr": "12"
+}
+],
+[
+"variable.set",
+{
+"name": "max_width_factor",
+"expr": "5 * pi"
+}
+],
+[
+"variable.set",
+{
+"name": "target_life",
+"expr": "20000"
+}
+],
+[
+"variable.set",
+{
+"name": "bearing_load_margin",
+"expr": "1.05"
+}
+],
+[
+"variable.set",
+{
+"name": "root_fillet_factor",
+"expr": "0.3"
+}
+],
+[
+"variable.set",
+{
+"name": "ratio_split",
+"expr": "1.3"
+}
+],
+[
+"variable.set",
+{
+"name": "design_factor",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "allowable_shear",
+"expr": "42 MPa"
+}
+],
+[
+"variable.set",
+{
+"name": "key_pressure_base",
+"expr": "150 MPa"
+}
+],
+[
+"variable.set",
+{
+"name": "draft_angle",
+"expr": "1.5 deg"
+}
+],
+[
+"variable.set",
+{
+"name": "application_factor",
+"expr": "driven_machines[driven_machine].factor"
+}
+],
+[
+"variable.set",
+{
+"name": "allowable_bending",
+"expr": "gear_steels[gear_steel].yield / design_factor"
+}
+],
+[
+"variable.set",
+{
+"name": "allowable_key_pressure",
+"expr": "driven_machines[driven_machine].key_factor * key_pressure_base"
+}
+],
+[
+"variable.set",
+{
+"name": "input_torque",
+"expr": "input_power * 30000 / (pi * input_speed) * 1 N * 1 m"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_rounded",
+"expr": "round(pinion_teeth * ratio_split * sqrt(ratio_wanted))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_teeth",
+"expr": "wheel_2_rounded + (mod(wheel_2_rounded, pinion_teeth) == 0)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_ratio",
+"expr": "wheel_2_teeth / pinion_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_rounded",
+"expr": "round(pinion_teeth * ratio_wanted / stage_1_ratio)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_teeth",
+"expr": "wheel_4_rounded + (mod(wheel_4_rounded, pinion_teeth) == 0)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_ratio",
+"expr": "wheel_4_teeth / pinion_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "ratio_built",
+"expr": "stage_1_ratio * stage_2_ratio"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_speed",
+"expr": "input_speed / stage_1_ratio"
+}
+],
+[
+"variable.set",
+{
+"name": "output_speed",
+"expr": "intermediate_speed / stage_2_ratio"
+}
+],
+[
+"variable.set",
+{
+"name": "input_design_torque",
+"expr": "application_factor * input_torque"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_design_torque",
+"expr": "input_design_torque * stage_1_ratio"
+}
+],
+[
+"variable.set",
+{
+"name": "output_design_torque",
+"expr": "intermediate_design_torque * stage_2_ratio"
+}
+],
+[
+"variable.set",
+{
+"name": "input_shaft_minimum",
+"expr": "pow(16 * input_design_torque / (pi * allowable_shear) / 1 mm^3, 1 / 3) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bore_row",
+"expr": "if(input_shaft_minimum + 5 mm <= 17 mm, 1, ceil((input_shaft_minimum + 5 mm) / 5 mm) - 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_shaft_minimum",
+"expr": "pow(16 * intermediate_design_torque / (pi * allowable_shear) / 1 mm^3, 1 / 3) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bore_row",
+"expr": "if(intermediate_shaft_minimum + 5 mm <= 17 mm, 1, ceil((intermediate_shaft_minimum + 5 mm) / 5 mm) - 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_shaft_minimum",
+"expr": "pow(16 * output_design_torque / (pi * allowable_shear) / 1 mm^3, 1 / 3) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bore_row",
+"expr": "if(output_shaft_minimum + 5 mm <= 17 mm, 1, ceil((output_shaft_minimum + 5 mm) / 5 mm) - 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_row",
+"expr": "1 + (cast_wall > 8 mm) + (cast_wall > 11 mm) + (cast_wall > 14 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_diameter",
+"expr": "bolts[bolt_row].diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_hole",
+"expr": "bolts[bolt_row].clearance"
+}
+],
+[
+"variable.set",
+{
+"name": "boss_wall",
+"expr": "1.25 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "boss_reach",
+"expr": "boss_wall / cos(draft_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "junction_round",
+"expr": "0.5 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "bearing_gap",
+"expr": "2 * boss_reach + 2 * junction_round + 1.75 * bolt_diameter + 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft_clearance",
+"expr": "max(5 mm, cast_wall)"
+}
+],
+[
+"variable.set",
+{
+"name": "side_clearance",
+"expr": "max(10 mm, 1.2 * cast_wall) + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_lewis_volume",
+"expr": "2 * input_design_torque / (face_width_factor * pinion_teeth * lewis_form_factor * allowable_bending)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_pitch_speed",
+"expr": "pi * pinion_teeth * input_speed / 60000 / 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_strength_row",
+"expr": "1 + (modules[1].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[1].value) / 3.56)) + (modules[2].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[2].value) / 3.56)) + (modules[3].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[3].value) / 3.56)) + (modules[4].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[4].value) / 3.56)) + (modules[5].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[5].value) / 3.56)) + (modules[6].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[6].value) / 3.56)) + (modules[7].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[7].value) / 3.56)) + (modules[8].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[8].value) / 3.56)) + (modules[9].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[9].value) / 3.56)) + (modules[10].value^3 < stage_1_lewis_volume * (1 + sqrt(stage_1_pitch_speed * modules[10].value) / 3.56))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_lewis_volume",
+"expr": "2 * intermediate_design_torque / (face_width_factor * pinion_teeth * lewis_form_factor * allowable_bending)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_pitch_speed",
+"expr": "pi * pinion_teeth * intermediate_speed / 60000 / 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_strength_row",
+"expr": "1 + (modules[1].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[1].value) / 3.56)) + (modules[2].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[2].value) / 3.56)) + (modules[3].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[3].value) / 3.56)) + (modules[4].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[4].value) / 3.56)) + (modules[5].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[5].value) / 3.56)) + (modules[6].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[6].value) / 3.56)) + (modules[7].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[7].value) / 3.56)) + (modules[8].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[8].value) / 3.56)) + (modules[9].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[9].value) / 3.56)) + (modules[10].value^3 < stage_2_lewis_volume * (1 + sqrt(stage_2_pitch_speed * modules[10].value) / 3.56))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_bearing_bore",
+"expr": "bearings[input_bore_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_bearing_outside",
+"expr": "bearings[input_bore_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_bearing_width",
+"expr": "bearings[input_bore_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_bearing_rating",
+"expr": "bearings[input_bore_row].rating"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_shoulder_radius",
+"expr": "trial_input_bearing_bore / 2 + (trial_input_bearing_outside - trial_input_bearing_bore) / 8"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_bearing_bore",
+"expr": "bearings[intermediate_bore_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_bearing_outside",
+"expr": "bearings[intermediate_bore_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_bearing_width",
+"expr": "bearings[intermediate_bore_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_bearing_rating",
+"expr": "bearings[intermediate_bore_row].rating"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_shoulder_radius",
+"expr": "trial_intermediate_bearing_bore / 2 + (trial_intermediate_bearing_outside - trial_intermediate_bearing_bore) / 8"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_bearing_bore",
+"expr": "bearings[output_bore_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_bearing_outside",
+"expr": "bearings[output_bore_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_bearing_width",
+"expr": "bearings[output_bore_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_bearing_rating",
+"expr": "bearings[output_bore_row].rating"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_shoulder_radius",
+"expr": "trial_output_bearing_bore / 2 + (trial_output_bearing_outside - trial_output_bearing_bore) / 8"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_seat",
+"expr": "trial_intermediate_bearing_bore + 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_seat",
+"expr": "trial_output_bearing_bore + 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_collar_radius",
+"expr": "trial_wheel_2_seat / 2 + max(3 mm, 0.08 * trial_wheel_2_seat)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_collar_radius",
+"expr": "trial_wheel_4_seat / 2 + max(3 mm, 0.08 * trial_wheel_4_seat)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_key_row",
+"expr": "1 + (trial_wheel_2_seat > keys[1].upto) + (trial_wheel_2_seat > keys[2].upto) + (trial_wheel_2_seat > keys[3].upto) + (trial_wheel_2_seat > keys[4].upto) + (trial_wheel_2_seat > keys[5].upto) + (trial_wheel_2_seat > keys[6].upto) + (trial_wheel_2_seat > keys[7].upto) + (trial_wheel_2_seat > keys[8].upto) + (trial_wheel_2_seat > keys[9].upto) + (trial_wheel_2_seat > keys[10].upto)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_key_width",
+"expr": "keys[trial_wheel_2_key_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_key_height",
+"expr": "keys[trial_wheel_2_key_row].height"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_key_shaft_depth",
+"expr": "keys[trial_wheel_2_key_row].shaft_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_key_hub_depth",
+"expr": "keys[trial_wheel_2_key_row].hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_key_needed",
+"expr": "2 * input_torque * stage_1_ratio / (trial_wheel_2_seat * (trial_wheel_2_key_height - trial_wheel_2_key_shaft_depth) * allowable_key_pressure)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_key_row",
+"expr": "1 + (trial_wheel_4_seat > keys[1].upto) + (trial_wheel_4_seat > keys[2].upto) + (trial_wheel_4_seat > keys[3].upto) + (trial_wheel_4_seat > keys[4].upto) + (trial_wheel_4_seat > keys[5].upto) + (trial_wheel_4_seat > keys[6].upto) + (trial_wheel_4_seat > keys[7].upto) + (trial_wheel_4_seat > keys[8].upto) + (trial_wheel_4_seat > keys[9].upto) + (trial_wheel_4_seat > keys[10].upto)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_key_width",
+"expr": "keys[trial_wheel_4_key_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_key_height",
+"expr": "keys[trial_wheel_4_key_row].height"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_key_shaft_depth",
+"expr": "keys[trial_wheel_4_key_row].shaft_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_key_hub_depth",
+"expr": "keys[trial_wheel_4_key_row].hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_4_key_needed",
+"expr": "2 * input_torque * ratio_built / (trial_wheel_4_seat * (trial_wheel_4_key_height - trial_wheel_4_key_shaft_depth) * allowable_key_pressure)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_room",
+"expr": "(trial_input_bearing_outside + trial_intermediate_bearing_outside) / 2 + bearing_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_room_row",
+"expr": "1 + (modules[1].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[2].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[3].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[4].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[5].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[6].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[7].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[8].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[9].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room) + (modules[10].value * (pinion_teeth + wheel_2_teeth) / 2 < trial_stage_1_room)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_pinion_row",
+"expr": "1 + (modules[1].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[2].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[3].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[4].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[5].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[6].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[7].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[8].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[9].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm) + (modules[10].value * (pinion_teeth / 2 - 1.25) < trial_input_shoulder_radius + 1 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_key_row",
+"expr": "1 + (max_width_factor * modules[1].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[2].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[3].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[4].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[5].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[6].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[7].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[8].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[9].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm) + (max_width_factor * modules[10].value < trial_wheel_2_key_needed + trial_wheel_2_key_width + 3 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_module_row",
+"expr": "max(max(stage_1_strength_row, trial_stage_1_room_row), max(trial_stage_1_pinion_row, trial_stage_1_key_row))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_module",
+"expr": "modules[trial_stage_1_module_row].value"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_width",
+"expr": "ceil(max(face_width_factor * trial_stage_1_module, trial_wheel_2_key_needed + trial_wheel_2_key_width + 2 mm) / 1 mm) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_wheel_2_tip_radius",
+"expr": "trial_stage_1_module * (wheel_2_teeth / 2 + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_room",
+"expr": "max((trial_intermediate_bearing_outside + trial_output_bearing_outside) / 2 + bearing_gap, trial_wheel_2_tip_radius + trial_output_collar_radius + shaft_clearance)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_room_row",
+"expr": "1 + (modules[1].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[2].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[3].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[4].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[5].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[6].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[7].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[8].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[9].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room) + (modules[10].value * (pinion_teeth + wheel_4_teeth) / 2 < trial_stage_2_room)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_pinion_row",
+"expr": "1 + (modules[1].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[2].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[3].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[4].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[5].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[6].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[7].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[8].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[9].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm) + (modules[10].value * (pinion_teeth / 2 - 1.25) < trial_intermediate_collar_radius + 1 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_key_row",
+"expr": "1 + (max_width_factor * modules[1].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[2].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[3].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[4].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[5].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[6].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[7].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[8].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[9].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm) + (max_width_factor * modules[10].value < trial_wheel_4_key_needed + trial_wheel_4_key_width + 3 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_module_row",
+"expr": "max(max(max(stage_2_strength_row, trial_stage_2_room_row), max(trial_stage_2_pinion_row, trial_stage_2_key_row)), trial_stage_1_module_row)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_module",
+"expr": "modules[trial_stage_2_module_row].value"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_width",
+"expr": "ceil(max(face_width_factor * trial_stage_2_module, trial_wheel_4_key_needed + trial_wheel_4_key_width + 2 mm) / 1 mm) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_gap",
+"expr": "max(10 mm, 2 * trial_stage_2_module)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stack_half_width",
+"expr": "(trial_stage_1_width + trial_stage_gap + trial_stage_2_width) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_deepest_tip",
+"expr": "max(trial_wheel_2_tip_radius, trial_stage_2_module * (wheel_4_teeth / 2 + 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_cavity_half_width",
+"expr": "trial_stack_half_width + side_clearance + trial_deepest_tip * tan(draft_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_force",
+"expr": "2 * input_design_torque / (trial_stage_1_module * pinion_teeth * cos(pressure_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_force",
+"expr": "2 * intermediate_design_torque / (trial_stage_2_module * pinion_teeth * cos(pressure_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_1_y",
+"expr": "-(trial_stage_gap + trial_stage_2_width) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_stage_2_y",
+"expr": "(trial_stage_1_width + trial_stage_gap) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_bearing_y",
+"expr": "trial_cavity_half_width + trial_input_bearing_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_bearing_y",
+"expr": "trial_cavity_half_width + trial_intermediate_bearing_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_bearing_y",
+"expr": "trial_cavity_half_width + trial_output_bearing_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_input_bearing_load",
+"expr": "trial_stage_1_force * (0.5 - trial_stage_1_y / (2 * trial_input_bearing_y))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_output_bearing_load",
+"expr": "trial_stage_2_force * (0.5 + trial_stage_2_y / (2 * trial_output_bearing_y))"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_front_load",
+"expr": "sqrt((cos(pressure_angle) * ((0.5 - trial_stage_1_y / (2 * trial_intermediate_bearing_y)) * trial_stage_1_force + (0.5 - trial_stage_2_y / (2 * trial_intermediate_bearing_y)) * trial_stage_2_force))^2 + (sin(pressure_angle) * ((0.5 - trial_stage_1_y / (2 * trial_intermediate_bearing_y)) * trial_stage_1_force - (0.5 - trial_stage_2_y / (2 * trial_intermediate_bearing_y)) * trial_stage_2_force))^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_back_load",
+"expr": "sqrt((cos(pressure_angle) * ((0.5 + trial_stage_1_y / (2 * trial_intermediate_bearing_y)) * trial_stage_1_force + (0.5 + trial_stage_2_y / (2 * trial_intermediate_bearing_y)) * trial_stage_2_force))^2 + (sin(pressure_angle) * ((0.5 + trial_stage_1_y / (2 * trial_intermediate_bearing_y)) * trial_stage_1_force - (0.5 + trial_stage_2_y / (2 * trial_intermediate_bearing_y)) * trial_stage_2_force))^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "trial_intermediate_bearing_load",
+"expr": "max(trial_intermediate_front_load, trial_intermediate_back_load)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_rating_needed",
+"expr": "bearing_load_margin * trial_input_bearing_load * pow(target_life * 60 * input_speed / 1000000, 1 / 3)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_life_row",
+"expr": "1 + (bearings[1].rating < input_rating_needed) + (bearings[2].rating < input_rating_needed) + (bearings[3].rating < input_rating_needed) + (bearings[4].rating < input_rating_needed) + (bearings[5].rating < input_rating_needed) + (bearings[6].rating < input_rating_needed) + (bearings[7].rating < input_rating_needed) + (bearings[8].rating < input_rating_needed) + (bearings[9].rating < input_rating_needed) + (bearings[10].rating < input_rating_needed) + (bearings[11].rating < input_rating_needed) + (bearings[12].rating < input_rating_needed) + (bearings[13].rating < input_rating_needed) + (bearings[14].rating < input_rating_needed) + (bearings[15].rating < input_rating_needed) + (bearings[16].rating < input_rating_needed) + (bearings[17].rating < input_rating_needed)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_row",
+"expr": "max(input_bore_row, input_life_row)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_rating_needed",
+"expr": "bearing_load_margin * trial_intermediate_bearing_load * pow(target_life * 60 * intermediate_speed / 1000000, 1 / 3)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_life_row",
+"expr": "1 + (bearings[1].rating < intermediate_rating_needed) + (bearings[2].rating < intermediate_rating_needed) + (bearings[3].rating < intermediate_rating_needed) + (bearings[4].rating < intermediate_rating_needed) + (bearings[5].rating < intermediate_rating_needed) + (bearings[6].rating < intermediate_rating_needed) + (bearings[7].rating < intermediate_rating_needed) + (bearings[8].rating < intermediate_rating_needed) + (bearings[9].rating < intermediate_rating_needed) + (bearings[10].rating < intermediate_rating_needed) + (bearings[11].rating < intermediate_rating_needed) + (bearings[12].rating < intermediate_rating_needed) + (bearings[13].rating < intermediate_rating_needed) + (bearings[14].rating < intermediate_rating_needed) + (bearings[15].rating < intermediate_rating_needed) + (bearings[16].rating < intermediate_rating_needed) + (bearings[17].rating < intermediate_rating_needed)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_row",
+"expr": "max(intermediate_bore_row, intermediate_life_row)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_rating_needed",
+"expr": "bearing_load_margin * trial_output_bearing_load * pow(target_life * 60 * output_speed / 1000000, 1 / 3)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_life_row",
+"expr": "1 + (bearings[1].rating < output_rating_needed) + (bearings[2].rating < output_rating_needed) + (bearings[3].rating < output_rating_needed) + (bearings[4].rating < output_rating_needed) + (bearings[5].rating < output_rating_needed) + (bearings[6].rating < output_rating_needed) + (bearings[7].rating < output_rating_needed) + (bearings[8].rating < output_rating_needed) + (bearings[9].rating < output_rating_needed) + (bearings[10].rating < output_rating_needed) + (bearings[11].rating < output_rating_needed) + (bearings[12].rating < output_rating_needed) + (bearings[13].rating < output_rating_needed) + (bearings[14].rating < output_rating_needed) + (bearings[15].rating < output_rating_needed) + (bearings[16].rating < output_rating_needed) + (bearings[17].rating < output_rating_needed)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_row",
+"expr": "max(output_bore_row, output_life_row)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_bore",
+"expr": "bearings[input_bearing_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_outside",
+"expr": "bearings[input_bearing_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_width",
+"expr": "bearings[input_bearing_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_rating",
+"expr": "bearings[input_bearing_row].rating"
+}
+],
+[
+"variable.set",
+{
+"name": "input_shoulder_radius",
+"expr": "input_bearing_bore / 2 + (input_bearing_outside - input_bearing_bore) / 8"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_bore",
+"expr": "bearings[intermediate_bearing_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_outside",
+"expr": "bearings[intermediate_bearing_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_width",
+"expr": "bearings[intermediate_bearing_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_rating",
+"expr": "bearings[intermediate_bearing_row].rating"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_shoulder_radius",
+"expr": "intermediate_bearing_bore / 2 + (intermediate_bearing_outside - intermediate_bearing_bore) / 8"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_bore",
+"expr": "bearings[output_bearing_row].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_outside",
+"expr": "bearings[output_bearing_row].outside"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_width",
+"expr": "bearings[output_bearing_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_rating",
+"expr": "bearings[output_bearing_row].rating"
+}
+],
+[
+"variable.set",
+{
+"name": "output_shoulder_radius",
+"expr": "output_bearing_bore / 2 + (output_bearing_outside - output_bearing_bore) / 8"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_seat",
+"expr": "intermediate_bearing_bore + 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_seat",
+"expr": "output_bearing_bore + 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_collar_radius",
+"expr": "wheel_2_seat / 2 + max(3 mm, 0.08 * wheel_2_seat)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_collar_radius",
+"expr": "wheel_4_seat / 2 + max(3 mm, 0.08 * wheel_4_seat)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_row",
+"expr": "1 + (wheel_2_seat > keys[1].upto) + (wheel_2_seat > keys[2].upto) + (wheel_2_seat > keys[3].upto) + (wheel_2_seat > keys[4].upto) + (wheel_2_seat > keys[5].upto) + (wheel_2_seat > keys[6].upto) + (wheel_2_seat > keys[7].upto) + (wheel_2_seat > keys[8].upto) + (wheel_2_seat > keys[9].upto) + (wheel_2_seat > keys[10].upto)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_width",
+"expr": "keys[wheel_2_key_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_height",
+"expr": "keys[wheel_2_key_row].height"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_shaft_depth",
+"expr": "keys[wheel_2_key_row].shaft_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_hub_depth",
+"expr": "keys[wheel_2_key_row].hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_needed",
+"expr": "2 * input_torque * stage_1_ratio / (wheel_2_seat * (wheel_2_key_height - wheel_2_key_shaft_depth) * allowable_key_pressure)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_row",
+"expr": "1 + (wheel_4_seat > keys[1].upto) + (wheel_4_seat > keys[2].upto) + (wheel_4_seat > keys[3].upto) + (wheel_4_seat > keys[4].upto) + (wheel_4_seat > keys[5].upto) + (wheel_4_seat > keys[6].upto) + (wheel_4_seat > keys[7].upto) + (wheel_4_seat > keys[8].upto) + (wheel_4_seat > keys[9].upto) + (wheel_4_seat > keys[10].upto)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_width",
+"expr": "keys[wheel_4_key_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_height",
+"expr": "keys[wheel_4_key_row].height"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_shaft_depth",
+"expr": "keys[wheel_4_key_row].shaft_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_hub_depth",
+"expr": "keys[wheel_4_key_row].hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_needed",
+"expr": "2 * input_torque * ratio_built / (wheel_4_seat * (wheel_4_key_height - wheel_4_key_shaft_depth) * allowable_key_pressure)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_room",
+"expr": "(input_bearing_outside + intermediate_bearing_outside) / 2 + bearing_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_room_row",
+"expr": "1 + (modules[1].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[2].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[3].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[4].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[5].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[6].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[7].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[8].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[9].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room) + (modules[10].value * (pinion_teeth + wheel_2_teeth) / 2 < stage_1_room)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_pinion_row",
+"expr": "1 + (modules[1].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[2].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[3].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[4].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[5].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[6].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[7].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[8].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[9].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm) + (modules[10].value * (pinion_teeth / 2 - 1.25) < input_shoulder_radius + 1 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_key_row",
+"expr": "1 + (max_width_factor * modules[1].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[2].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[3].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[4].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[5].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[6].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[7].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[8].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[9].value < wheel_2_key_needed + wheel_2_key_width + 3 mm) + (max_width_factor * modules[10].value < wheel_2_key_needed + wheel_2_key_width + 3 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_module_row",
+"expr": "max(max(max(stage_1_strength_row, stage_1_room_row), max(stage_1_pinion_row, stage_1_key_row)), trial_stage_1_module_row)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_module",
+"expr": "modules[stage_1_module_row].value"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_width",
+"expr": "ceil(max(face_width_factor * stage_1_module, wheel_2_key_needed + wheel_2_key_width + 2 mm) / 1 mm) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_tip_radius",
+"expr": "stage_1_module * (wheel_2_teeth / 2 + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_room",
+"expr": "max((intermediate_bearing_outside + output_bearing_outside) / 2 + bearing_gap, wheel_2_tip_radius + output_collar_radius + shaft_clearance)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_room_row",
+"expr": "1 + (modules[1].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[2].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[3].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[4].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[5].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[6].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[7].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[8].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[9].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room) + (modules[10].value * (pinion_teeth + wheel_4_teeth) / 2 < stage_2_room)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_pinion_row",
+"expr": "1 + (modules[1].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[2].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[3].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[4].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[5].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[6].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[7].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[8].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[9].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm) + (modules[10].value * (pinion_teeth / 2 - 1.25) < intermediate_collar_radius + 1 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_key_row",
+"expr": "1 + (max_width_factor * modules[1].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[2].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[3].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[4].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[5].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[6].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[7].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[8].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[9].value < wheel_4_key_needed + wheel_4_key_width + 3 mm) + (max_width_factor * modules[10].value < wheel_4_key_needed + wheel_4_key_width + 3 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_module_row",
+"expr": "max(max(max(max(stage_2_strength_row, stage_2_room_row), max(stage_2_pinion_row, stage_2_key_row)), stage_1_module_row), trial_stage_2_module_row)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_module",
+"expr": "modules[stage_2_module_row].value"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_width",
+"expr": "ceil(max(face_width_factor * stage_2_module, wheel_4_key_needed + wheel_4_key_width + 2 mm) / 1 mm) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_gap",
+"expr": "max(10 mm, 2 * stage_2_module)"
+}
+],
+[
+"variable.set",
+{
+"name": "stack_half_width",
+"expr": "(stage_1_width + stage_gap + stage_2_width) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "deepest_tip",
+"expr": "max(wheel_2_tip_radius, stage_2_module * (wheel_4_teeth / 2 + 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "cavity_half_width",
+"expr": "stack_half_width + side_clearance + deepest_tip * tan(draft_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_force",
+"expr": "2 * input_design_torque / (stage_1_module * pinion_teeth * cos(pressure_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_force",
+"expr": "2 * intermediate_design_torque / (stage_2_module * pinion_teeth * cos(pressure_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_y",
+"expr": "-(stage_gap + stage_2_width) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_y",
+"expr": "(stage_1_width + stage_gap) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_y",
+"expr": "cavity_half_width + input_bearing_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_y",
+"expr": "cavity_half_width + intermediate_bearing_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_y",
+"expr": "cavity_half_width + output_bearing_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_load",
+"expr": "stage_1_force * (0.5 - stage_1_y / (2 * input_bearing_y))"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_load",
+"expr": "stage_2_force * (0.5 + stage_2_y / (2 * output_bearing_y))"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_front_load",
+"expr": "sqrt((cos(pressure_angle) * ((0.5 - stage_1_y / (2 * intermediate_bearing_y)) * stage_1_force + (0.5 - stage_2_y / (2 * intermediate_bearing_y)) * stage_2_force))^2 + (sin(pressure_angle) * ((0.5 - stage_1_y / (2 * intermediate_bearing_y)) * stage_1_force - (0.5 - stage_2_y / (2 * intermediate_bearing_y)) * stage_2_force))^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_back_load",
+"expr": "sqrt((cos(pressure_angle) * ((0.5 + stage_1_y / (2 * intermediate_bearing_y)) * stage_1_force + (0.5 + stage_2_y / (2 * intermediate_bearing_y)) * stage_2_force))^2 + (sin(pressure_angle) * ((0.5 + stage_1_y / (2 * intermediate_bearing_y)) * stage_1_force - (0.5 + stage_2_y / (2 * intermediate_bearing_y)) * stage_2_force))^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_load",
+"expr": "max(intermediate_front_load, intermediate_back_load)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_bearing_life",
+"expr": "(input_bearing_rating / input_bearing_load)^3 * 1000000 / (60 * input_speed)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_bearing_life",
+"expr": "(intermediate_bearing_rating / intermediate_bearing_load)^3 * 1000000 / (60 * intermediate_speed)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_bearing_life",
+"expr": "(output_bearing_rating / output_bearing_load)^3 * 1000000 / (60 * output_speed)"
+}
+],
+[
+"variable.set",
+{
+"name": "shortest_bearing_life",
+"expr": "min(input_bearing_life, min(intermediate_bearing_life, output_bearing_life))"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_diameter",
+"expr": "input_bearing_bore - 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_diameter",
+"expr": "output_bearing_bore - 5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_row",
+"expr": "1 + (input_end_diameter > keys[1].upto) + (input_end_diameter > keys[2].upto) + (input_end_diameter > keys[3].upto) + (input_end_diameter > keys[4].upto) + (input_end_diameter > keys[5].upto) + (input_end_diameter > keys[6].upto) + (input_end_diameter > keys[7].upto) + (input_end_diameter > keys[8].upto) + (input_end_diameter > keys[9].upto) + (input_end_diameter > keys[10].upto)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_width",
+"expr": "keys[input_end_key_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_height",
+"expr": "keys[input_end_key_row].height"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_shaft_depth",
+"expr": "keys[input_end_key_row].shaft_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_hub_depth",
+"expr": "keys[input_end_key_row].hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_needed",
+"expr": "2 * input_torque / (input_end_diameter * (input_end_key_height - input_end_key_shaft_depth) * allowable_key_pressure)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_row",
+"expr": "1 + (output_end_diameter > keys[1].upto) + (output_end_diameter > keys[2].upto) + (output_end_diameter > keys[3].upto) + (output_end_diameter > keys[4].upto) + (output_end_diameter > keys[5].upto) + (output_end_diameter > keys[6].upto) + (output_end_diameter > keys[7].upto) + (output_end_diameter > keys[8].upto) + (output_end_diameter > keys[9].upto) + (output_end_diameter > keys[10].upto)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_width",
+"expr": "keys[output_end_key_row].width"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_height",
+"expr": "keys[output_end_key_row].height"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_shaft_depth",
+"expr": "keys[output_end_key_row].shaft_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_hub_depth",
+"expr": "keys[output_end_key_row].hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_needed",
+"expr": "2 * input_torque * ratio_built / (output_end_diameter * (output_end_key_height - output_end_key_shaft_depth) * allowable_key_pressure)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_centre_distance",
+"expr": "stage_1_module * (pinion_teeth + wheel_2_teeth) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_backlash_min",
+"expr": "0.04 mm + stage_1_centre_distance / 3000 + 0.02 * stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_backlash",
+"expr": "1.25 * stage_1_backlash_min"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_circular_backlash",
+"expr": "stage_1_backlash / cos(pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_pitch_line_speed",
+"expr": "stage_1_pitch_speed * stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_lewis_stress",
+"expr": "2 * input_design_torque * (1 + sqrt(stage_1_pitch_line_speed) / 3.56) / (stage_1_width * pinion_teeth * lewis_form_factor * stage_1_module^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_centre_distance",
+"expr": "stage_2_module * (pinion_teeth + wheel_4_teeth) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_backlash_min",
+"expr": "0.04 mm + stage_2_centre_distance / 3000 + 0.02 * stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_backlash",
+"expr": "1.25 * stage_2_backlash_min"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_circular_backlash",
+"expr": "stage_2_backlash / cos(pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_pitch_line_speed",
+"expr": "stage_2_pitch_speed * stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_lewis_stress",
+"expr": "2 * intermediate_design_torque * (1 + sqrt(stage_2_pitch_line_speed) / 3.56) / (stage_2_width * pinion_teeth * lewis_form_factor * stage_2_module^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_shaft_x",
+"expr": "stage_1_centre_distance + stage_2_centre_distance"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_pitch_radius",
+"expr": "stage_1_module * pinion_teeth / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_base_radius",
+"expr": "pinion_1_pitch_radius * cos(pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_tip_radius",
+"expr": "pinion_1_pitch_radius + stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_root_radius",
+"expr": "pinion_1_pitch_radius - 1.25 * stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_root_fillet",
+"expr": "root_fillet_factor * stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_tooth_half",
+"expr": "pi / 2 / pinion_teeth - stage_1_circular_backlash / 4 / pinion_1_pitch_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_offset",
+"expr": "-pinion_1_tooth_half - involute_function"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_foot_radius",
+"expr": "sqrt(pinion_1_root_radius^2 + 2 * pinion_1_root_radius * pinion_1_root_fillet)"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_start",
+"expr": "max(0.15, sqrt((max(pinion_1_base_radius, pinion_1_foot_radius + 0.1 * stage_1_module) / pinion_1_base_radius)^2 - 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_end",
+"expr": "sqrt((pinion_1_tip_radius / pinion_1_base_radius)^2 - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_angle",
+"expr": "pinion_1_flank_offset + pinion_1_flank_start - atan(pinion_1_flank_start) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_fillet_angle",
+"expr": "pinion_1_flank_angle - atan(pinion_1_root_fillet / pinion_1_foot_radius) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_tooth_step",
+"expr": "360 deg / pinion_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_pitch_radius",
+"expr": "stage_1_module * wheel_2_teeth / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_base_radius",
+"expr": "wheel_2_pitch_radius * cos(pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_root_radius",
+"expr": "wheel_2_pitch_radius - 1.25 * stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_root_fillet",
+"expr": "root_fillet_factor * stage_1_module"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_tooth_half",
+"expr": "pi / 2 / wheel_2_teeth - stage_1_circular_backlash / 4 / wheel_2_pitch_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_flank_offset",
+"expr": "-wheel_2_tooth_half - involute_function"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_foot_radius",
+"expr": "sqrt(wheel_2_root_radius^2 + 2 * wheel_2_root_radius * wheel_2_root_fillet)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_flank_start",
+"expr": "max(0.15, sqrt((max(wheel_2_base_radius, wheel_2_foot_radius + 0.1 * stage_1_module) / wheel_2_base_radius)^2 - 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_flank_end",
+"expr": "sqrt((wheel_2_tip_radius / wheel_2_base_radius)^2 - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_flank_angle",
+"expr": "wheel_2_flank_offset + wheel_2_flank_start - atan(wheel_2_flank_start) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_fillet_angle",
+"expr": "wheel_2_flank_angle - atan(wheel_2_root_fillet / wheel_2_foot_radius) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_tooth_step",
+"expr": "360 deg / wheel_2_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_pitch_radius",
+"expr": "stage_2_module * pinion_teeth / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_base_radius",
+"expr": "pinion_3_pitch_radius * cos(pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_tip_radius",
+"expr": "pinion_3_pitch_radius + stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_root_radius",
+"expr": "pinion_3_pitch_radius - 1.25 * stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_root_fillet",
+"expr": "root_fillet_factor * stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_tooth_half",
+"expr": "pi / 2 / pinion_teeth - stage_2_circular_backlash / 4 / pinion_3_pitch_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_offset",
+"expr": "-pinion_3_tooth_half - involute_function"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_foot_radius",
+"expr": "sqrt(pinion_3_root_radius^2 + 2 * pinion_3_root_radius * pinion_3_root_fillet)"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_start",
+"expr": "max(0.15, sqrt((max(pinion_3_base_radius, pinion_3_foot_radius + 0.1 * stage_2_module) / pinion_3_base_radius)^2 - 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_end",
+"expr": "sqrt((pinion_3_tip_radius / pinion_3_base_radius)^2 - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_angle",
+"expr": "pinion_3_flank_offset + pinion_3_flank_start - atan(pinion_3_flank_start) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_fillet_angle",
+"expr": "pinion_3_flank_angle - atan(pinion_3_root_fillet / pinion_3_foot_radius) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_tooth_step",
+"expr": "360 deg / pinion_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_pitch_radius",
+"expr": "stage_2_module * wheel_4_teeth / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_base_radius",
+"expr": "wheel_4_pitch_radius * cos(pressure_angle)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_tip_radius",
+"expr": "wheel_4_pitch_radius + stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_root_radius",
+"expr": "wheel_4_pitch_radius - 1.25 * stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_root_fillet",
+"expr": "root_fillet_factor * stage_2_module"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_tooth_half",
+"expr": "pi / 2 / wheel_4_teeth - stage_2_circular_backlash / 4 / wheel_4_pitch_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_flank_offset",
+"expr": "-wheel_4_tooth_half - involute_function"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_foot_radius",
+"expr": "sqrt(wheel_4_root_radius^2 + 2 * wheel_4_root_radius * wheel_4_root_fillet)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_flank_start",
+"expr": "max(0.15, sqrt((max(wheel_4_base_radius, wheel_4_foot_radius + 0.1 * stage_2_module) / wheel_4_base_radius)^2 - 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_flank_end",
+"expr": "sqrt((wheel_4_tip_radius / wheel_4_base_radius)^2 - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_flank_angle",
+"expr": "wheel_4_flank_offset + wheel_4_flank_start - atan(wheel_4_flank_start) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_fillet_angle",
+"expr": "wheel_4_flank_angle - atan(wheel_4_root_fillet / wheel_4_foot_radius) / 1 rad"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_tooth_step",
+"expr": "360 deg / wheel_4_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_angle",
+"expr": "180 deg / wheel_2_teeth - 90 deg - (input_angle - 90 deg) * pinion_teeth / wheel_2_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "output_angle",
+"expr": "0.05 deg + 180 deg / wheel_4_teeth - 90 deg - (intermediate_angle - 90 deg) * pinion_teeth / wheel_4_teeth"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_start",
+"expr": "-stack_half_width"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_end",
+"expr": "stage_1_start + stage_1_width"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_start",
+"expr": "stage_1_end + stage_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_end",
+"expr": "stack_half_width"
+}
+],
+[
+"variable.set",
+{
+"name": "tip_clearance",
+"expr": "max(10 mm, 1.2 * cast_wall)"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_half_width",
+"expr": "cavity_half_width + cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "widest_bearing",
+"expr": "max(input_bearing_width, max(intermediate_bearing_width, output_bearing_width))"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_inset",
+"expr": "junction_round + 1.1 * bolt_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_width",
+"expr": "max(widest_bearing + 5 mm - cast_wall, bolt_inset + 1.3 * bolt_diameter)"
+}
+],
+[
+"variable.set",
+{
+"name": "boss_face",
+"expr": "wall_half_width + flange_width"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_length",
+"expr": "max(2 * input_end_diameter, input_end_key_needed + input_end_key_width + 10 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_length",
+"expr": "max(2 * output_end_diameter, output_end_key_needed + output_end_key_width + 10 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end",
+"expr": "-boss_face - input_end_length"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end",
+"expr": "boss_face + output_end_length"
+}
+],
+[
+"variable.set",
+{
+"name": "shaft_chamfer",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_thickness",
+"expr": "1.5 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_round",
+"expr": "2 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "inner_round",
+"expr": "cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "sump_clearance",
+"expr": "max(30 mm, 4 * stage_2_module)"
+}
+],
+[
+"variable.set",
+{
+"name": "lower_depth",
+"expr": "deepest_tip + sump_clearance + cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "upper_height",
+"expr": "deepest_tip + tip_clearance + cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "corner_radius",
+"expr": "max(4 * cast_wall, 2 * outer_round + lower_depth * tan(draft_angle) + 2 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "input_boss_radius",
+"expr": "input_bearing_outside / 2 + boss_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_boss_radius",
+"expr": "intermediate_bearing_outside / 2 + boss_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "output_boss_radius",
+"expr": "output_bearing_outside / 2 + boss_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "boss_side_input",
+"expr": "min(max(0.45 * input_boss_radius, flange_thickness + 2 * junction_round + 2 mm), input_boss_radius - 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "boss_side_intermediate",
+"expr": "min(max(0.45 * intermediate_boss_radius, flange_thickness + 2 * junction_round + 2 mm), intermediate_boss_radius - 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "boss_side_output",
+"expr": "min(max(0.45 * output_boss_radius, flange_thickness + 2 * junction_round + 2 mm), output_boss_radius - 5 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "corner_inner",
+"expr": "corner_radius - cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "corner_reach",
+"expr": "sqrt((corner_inner - tip_clearance - 1 mm)^2 - (corner_inner - cavity_half_width + stack_half_width)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_left",
+"expr": "-max(pinion_1_tip_radius + corner_inner - corner_reach + cast_wall, input_boss_radius / cos(draft_angle) + 2 * junction_round + 2 mm + corner_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "outer_right",
+"expr": "output_shaft_x + max(wheel_4_tip_radius + corner_inner - corner_reach + cast_wall, output_boss_radius / cos(draft_angle) + 2 * junction_round + 2 mm + corner_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "flange_round",
+"expr": "0.25 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "facing_stock",
+"expr": "flange_round + flange_thickness * tan(draft_angle) + 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "facing_left",
+"expr": "-input_boss_radius / cos(draft_angle) - junction_round - 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "facing_right",
+"expr": "output_shaft_x + output_boss_radius / cos(draft_angle) + junction_round + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_row_y",
+"expr": "wall_half_width + bolt_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_12_x",
+"expr": "(input_boss_radius / cos(draft_angle) + stage_1_centre_distance - intermediate_boss_radius / cos(draft_angle)) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_23_x",
+"expr": "(stage_1_centre_distance + intermediate_boss_radius / cos(draft_angle) + output_shaft_x - output_boss_radius / cos(draft_angle)) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "bolt_corner_offset",
+"expr": "(corner_radius + flange_width / 2) * sqrt(2) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_bolt_row",
+"expr": "min(bolt_row + 1, 4)"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_bolt",
+"expr": "bolts[foot_bolt_row].diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "flat_bottom_half_width",
+"expr": "wall_half_width - lower_depth * tan(draft_angle) - outer_round - junction_round - 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_radius",
+"expr": "min(1.6 * foot_bolt, (flat_bottom_half_width - junction_round - 1 mm) / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_tapping_depth",
+"expr": "1.5 * foot_bolt + 3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_height",
+"expr": "foot_tapping_depth + 3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_inset",
+"expr": "lower_depth * tan(draft_angle) + outer_round + foot_radius + junction_round + 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_x_left",
+"expr": "outer_left + foot_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_x_right",
+"expr": "outer_right - foot_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_y",
+"expr": "wall_half_width - foot_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "plug_tap_drill",
+"expr": "14.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "plug_boss_radius",
+"expr": "14 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "plug_boss_height",
+"expr": "0.75 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "plug_pad_proud",
+"expr": "0.6 * cast_wall"
+}
+],
+[
+"variable.set",
+{
+"name": "plug_pad_half",
+"expr": "plug_boss_radius + lower_depth * tan(draft_angle) + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "plug_spot_radius",
+"expr": "13 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "dowel_diameter",
+"expr": "if(bolt_diameter > 12 mm, 10 mm, 8 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "dowel_x",
+"expr": "outer_right + flange_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "breather_x",
+"expr": "stage_1_centre_distance"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_x0",
+"expr": "pinion_1_base_radius * (cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 0 / 4)) + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 0 / 4) * sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 0 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_y0",
+"expr": "pinion_1_base_radius * (sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 0 / 4)) - sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 0 / 4) * cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 0 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_x1",
+"expr": "pinion_1_base_radius * (cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 1 / 4)) + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 1 / 4) * sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 1 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_y1",
+"expr": "pinion_1_base_radius * (sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 1 / 4)) - sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 1 / 4) * cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 1 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_x2",
+"expr": "pinion_1_base_radius * (cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 2 / 4)) + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 2 / 4) * sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 2 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_y2",
+"expr": "pinion_1_base_radius * (sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 2 / 4)) - sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 2 / 4) * cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 2 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_x3",
+"expr": "pinion_1_base_radius * (cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 3 / 4)) + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 3 / 4) * sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 3 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_y3",
+"expr": "pinion_1_base_radius * (sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 3 / 4)) - sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 3 / 4) * cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 3 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_x4",
+"expr": "pinion_1_base_radius * (cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 4 / 4)) + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 4 / 4) * sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 4 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_flank_y4",
+"expr": "pinion_1_base_radius * (sin(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 4 / 4)) - sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 4 / 4) * cos(pinion_1_flank_offset + sqrt(pinion_1_flank_start^2 + (pinion_1_flank_end^2 - pinion_1_flank_start^2) * 4 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_arc1_x",
+"expr": "((pinion_1_flank_x0^2 + pinion_1_flank_y0^2) * (pinion_1_flank_y1 - pinion_1_flank_y2) + (pinion_1_flank_x1^2 + pinion_1_flank_y1^2) * (pinion_1_flank_y2 - pinion_1_flank_y0) + (pinion_1_flank_x2^2 + pinion_1_flank_y2^2) * (pinion_1_flank_y0 - pinion_1_flank_y1)) / (2 * (pinion_1_flank_x0 * (pinion_1_flank_y1 - pinion_1_flank_y2) + pinion_1_flank_x1 * (pinion_1_flank_y2 - pinion_1_flank_y0) + pinion_1_flank_x2 * (pinion_1_flank_y0 - pinion_1_flank_y1)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_arc1_y",
+"expr": "((pinion_1_flank_x0^2 + pinion_1_flank_y0^2) * (pinion_1_flank_x2 - pinion_1_flank_x1) + (pinion_1_flank_x1^2 + pinion_1_flank_y1^2) * (pinion_1_flank_x0 - pinion_1_flank_x2) + (pinion_1_flank_x2^2 + pinion_1_flank_y2^2) * (pinion_1_flank_x1 - pinion_1_flank_x0)) / (2 * (pinion_1_flank_x0 * (pinion_1_flank_y1 - pinion_1_flank_y2) + pinion_1_flank_x1 * (pinion_1_flank_y2 - pinion_1_flank_y0) + pinion_1_flank_x2 * (pinion_1_flank_y0 - pinion_1_flank_y1)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_arc2_x",
+"expr": "((pinion_1_flank_x2^2 + pinion_1_flank_y2^2) * (pinion_1_flank_y3 - pinion_1_flank_y4) + (pinion_1_flank_x3^2 + pinion_1_flank_y3^2) * (pinion_1_flank_y4 - pinion_1_flank_y2) + (pinion_1_flank_x4^2 + pinion_1_flank_y4^2) * (pinion_1_flank_y2 - pinion_1_flank_y3)) / (2 * (pinion_1_flank_x2 * (pinion_1_flank_y3 - pinion_1_flank_y4) + pinion_1_flank_x3 * (pinion_1_flank_y4 - pinion_1_flank_y2) + pinion_1_flank_x4 * (pinion_1_flank_y2 - pinion_1_flank_y3)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_1_arc2_y",
+"expr": "((pinion_1_flank_x2^2 + pinion_1_flank_y2^2) * (pinion_1_flank_x4 - pinion_1_flank_x3) + (pinion_1_flank_x3^2 + pinion_1_flank_y3^2) * (pinion_1_flank_x2 - pinion_1_flank_x4) + (pinion_1_flank_x4^2 + pinion_1_flank_y4^2) * (pinion_1_flank_x3 - pinion_1_flank_x2)) / (2 * (pinion_1_flank_x2 * (pinion_1_flank_y3 - pinion_1_flank_y4) + pinion_1_flank_x3 * (pinion_1_flank_y4 - pinion_1_flank_y2) + pinion_1_flank_x4 * (pinion_1_flank_y2 - pinion_1_flank_y3)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_x0",
+"expr": "pinion_3_base_radius * (cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 0 / 4)) + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 0 / 4) * sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 0 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_y0",
+"expr": "pinion_3_base_radius * (sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 0 / 4)) - sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 0 / 4) * cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 0 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_x1",
+"expr": "pinion_3_base_radius * (cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 1 / 4)) + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 1 / 4) * sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 1 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_y1",
+"expr": "pinion_3_base_radius * (sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 1 / 4)) - sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 1 / 4) * cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 1 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_x2",
+"expr": "pinion_3_base_radius * (cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 2 / 4)) + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 2 / 4) * sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 2 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_y2",
+"expr": "pinion_3_base_radius * (sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 2 / 4)) - sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 2 / 4) * cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 2 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_x3",
+"expr": "pinion_3_base_radius * (cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 3 / 4)) + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 3 / 4) * sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 3 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_y3",
+"expr": "pinion_3_base_radius * (sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 3 / 4)) - sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 3 / 4) * cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 3 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_x4",
+"expr": "pinion_3_base_radius * (cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 4 / 4)) + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 4 / 4) * sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 4 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_flank_y4",
+"expr": "pinion_3_base_radius * (sin(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 4 / 4)) - sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 4 / 4) * cos(pinion_3_flank_offset + sqrt(pinion_3_flank_start^2 + (pinion_3_flank_end^2 - pinion_3_flank_start^2) * 4 / 4)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_arc1_x",
+"expr": "((pinion_3_flank_x0^2 + pinion_3_flank_y0^2) * (pinion_3_flank_y1 - pinion_3_flank_y2) + (pinion_3_flank_x1^2 + pinion_3_flank_y1^2) * (pinion_3_flank_y2 - pinion_3_flank_y0) + (pinion_3_flank_x2^2 + pinion_3_flank_y2^2) * (pinion_3_flank_y0 - pinion_3_flank_y1)) / (2 * (pinion_3_flank_x0 * (pinion_3_flank_y1 - pinion_3_flank_y2) + pinion_3_flank_x1 * (pinion_3_flank_y2 - pinion_3_flank_y0) + pinion_3_flank_x2 * (pinion_3_flank_y0 - pinion_3_flank_y1)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_arc1_y",
+"expr": "((pinion_3_flank_x0^2 + pinion_3_flank_y0^2) * (pinion_3_flank_x2 - pinion_3_flank_x1) + (pinion_3_flank_x1^2 + pinion_3_flank_y1^2) * (pinion_3_flank_x0 - pinion_3_flank_x2) + (pinion_3_flank_x2^2 + pinion_3_flank_y2^2) * (pinion_3_flank_x1 - pinion_3_flank_x0)) / (2 * (pinion_3_flank_x0 * (pinion_3_flank_y1 - pinion_3_flank_y2) + pinion_3_flank_x1 * (pinion_3_flank_y2 - pinion_3_flank_y0) + pinion_3_flank_x2 * (pinion_3_flank_y0 - pinion_3_flank_y1)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_arc2_x",
+"expr": "((pinion_3_flank_x2^2 + pinion_3_flank_y2^2) * (pinion_3_flank_y3 - pinion_3_flank_y4) + (pinion_3_flank_x3^2 + pinion_3_flank_y3^2) * (pinion_3_flank_y4 - pinion_3_flank_y2) + (pinion_3_flank_x4^2 + pinion_3_flank_y4^2) * (pinion_3_flank_y2 - pinion_3_flank_y3)) / (2 * (pinion_3_flank_x2 * (pinion_3_flank_y3 - pinion_3_flank_y4) + pinion_3_flank_x3 * (pinion_3_flank_y4 - pinion_3_flank_y2) + pinion_3_flank_x4 * (pinion_3_flank_y2 - pinion_3_flank_y3)))"
+}
+],
+[
+"variable.set",
+{
+"name": "pinion_3_arc2_y",
+"expr": "((pinion_3_flank_x2^2 + pinion_3_flank_y2^2) * (pinion_3_flank_x4 - pinion_3_flank_x3) + (pinion_3_flank_x3^2 + pinion_3_flank_y3^2) * (pinion_3_flank_x2 - pinion_3_flank_x4) + (pinion_3_flank_x4^2 + pinion_3_flank_y4^2) * (pinion_3_flank_x3 - pinion_3_flank_x2)) / (2 * (pinion_3_flank_x2 * (pinion_3_flank_y3 - pinion_3_flank_y4) + pinion_3_flank_x3 * (pinion_3_flank_y4 - pinion_3_flank_y2) + pinion_3_flank_x4 * (pinion_3_flank_y2 - pinion_3_flank_y3)))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_root_half",
+"expr": "-wheel_2_fillet_angle"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_tip_half",
+"expr": "-(wheel_2_flank_offset + wheel_2_flank_end - atan(wheel_2_flank_end) / 1 rad)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_fillet_x",
+"expr": "(wheel_2_root_radius + wheel_2_root_fillet) * cos(wheel_2_fillet_angle * 1 rad)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_fillet_y",
+"expr": "(wheel_2_root_radius + wheel_2_root_fillet) * sin(wheel_2_fillet_angle * 1 rad)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_fillet_area",
+"expr": "0.5 * wheel_2_root_fillet * (wheel_2_fillet_x * (sin((wheel_2_flank_angle + pi / 2) * 1 rad) - sin((wheel_2_fillet_angle + pi) * 1 rad)) - wheel_2_fillet_y * (cos((wheel_2_flank_angle + pi / 2) * 1 rad) - cos((wheel_2_fillet_angle + pi) * 1 rad)) + wheel_2_root_fillet * (wheel_2_flank_angle + pi / 2 - wheel_2_fillet_angle - pi))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_tooth_area",
+"expr": "0.5 * wheel_2_root_radius^2 * (2 * pi / wheel_2_teeth - 2 * wheel_2_root_half) + wheel_2_tip_radius^2 * wheel_2_tip_half + wheel_2_base_radius^2 * (wheel_2_flank_end^3 - wheel_2_flank_start^3) / 3 + 2 * wheel_2_fillet_area"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_angle",
+"expr": "asin(wheel_2_key_width / wheel_2_seat)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_bore_area",
+"expr": "pi * (wheel_2_seat / 2)^2 + wheel_2_key_width * (wheel_2_seat / 2 + wheel_2_key_hub_depth - sqrt((wheel_2_seat / 2)^2 - (wheel_2_key_width / 2)^2)) - (wheel_2_seat / 2)^2 * (wheel_2_key_angle / 1 rad - sin(wheel_2_key_angle) * cos(wheel_2_key_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_root_half",
+"expr": "-wheel_4_fillet_angle"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_tip_half",
+"expr": "-(wheel_4_flank_offset + wheel_4_flank_end - atan(wheel_4_flank_end) / 1 rad)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_fillet_x",
+"expr": "(wheel_4_root_radius + wheel_4_root_fillet) * cos(wheel_4_fillet_angle * 1 rad)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_fillet_y",
+"expr": "(wheel_4_root_radius + wheel_4_root_fillet) * sin(wheel_4_fillet_angle * 1 rad)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_fillet_area",
+"expr": "0.5 * wheel_4_root_fillet * (wheel_4_fillet_x * (sin((wheel_4_flank_angle + pi / 2) * 1 rad) - sin((wheel_4_fillet_angle + pi) * 1 rad)) - wheel_4_fillet_y * (cos((wheel_4_flank_angle + pi / 2) * 1 rad) - cos((wheel_4_fillet_angle + pi) * 1 rad)) + wheel_4_root_fillet * (wheel_4_flank_angle + pi / 2 - wheel_4_fillet_angle - pi))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_tooth_area",
+"expr": "0.5 * wheel_4_root_radius^2 * (2 * pi / wheel_4_teeth - 2 * wheel_4_root_half) + wheel_4_tip_radius^2 * wheel_4_tip_half + wheel_4_base_radius^2 * (wheel_4_flank_end^3 - wheel_4_flank_start^3) / 3 + 2 * wheel_4_fillet_area"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_angle",
+"expr": "asin(wheel_4_key_width / wheel_4_seat)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_bore_area",
+"expr": "pi * (wheel_4_seat / 2)^2 + wheel_4_key_width * (wheel_4_seat / 2 + wheel_4_key_hub_depth - sqrt((wheel_4_seat / 2)^2 - (wheel_4_key_width / 2)^2)) - (wheel_4_seat / 2)^2 * (wheel_4_key_angle / 1 rad - sin(wheel_4_key_angle) * cos(wheel_4_key_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "bore_chamfer",
+"expr": "1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_volume",
+"expr": "stage_1_width * (wheel_2_teeth * wheel_2_tooth_area - wheel_2_bore_area) - 2 * (2 * pi - 2 * wheel_2_key_angle / 1 rad) * bore_chamfer^2 / 2 * (wheel_2_seat / 2 + bore_chamfer / 3)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_volume",
+"expr": "stage_2_width * (wheel_4_teeth * wheel_4_tooth_area - wheel_4_bore_area) - 2 * (2 * pi - 2 * wheel_4_key_angle / 1 rad) * bore_chamfer^2 / 2 * (wheel_4_seat / 2 + bore_chamfer / 3)"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_contact_ratio",
+"expr": "(sqrt(pinion_1_tip_radius^2 - pinion_1_base_radius^2) + sqrt(wheel_2_tip_radius^2 - wheel_2_base_radius^2) - stage_1_centre_distance * sin(pressure_angle)) / (pi * stage_1_module * cos(pressure_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_flank_gap",
+"expr": "stage_1_backlash / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_contact_ratio",
+"expr": "(sqrt(pinion_3_tip_radius^2 - pinion_3_base_radius^2) + sqrt(wheel_4_tip_radius^2 - wheel_4_base_radius^2) - stage_2_centre_distance * sin(pressure_angle)) / (pi * stage_2_module * cos(pressure_angle))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_flank_gap",
+"expr": "stage_2_backlash / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "oil_depth",
+"expr": "min(wheel_4_tip_radius - 3 * stage_2_module, wheel_2_tip_radius - 2 * stage_1_module)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_immersion",
+"expr": "wheel_4_tip_radius - oil_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_immersion",
+"expr": "wheel_2_tip_radius - oil_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "input_shaft_stress",
+"expr": "16 * input_design_torque / (pi * input_end_diameter^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "intermediate_shaft_stress",
+"expr": "16 * intermediate_design_torque / (pi * intermediate_bearing_bore^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "output_shaft_stress",
+"expr": "16 * output_design_torque / (pi * output_end_diameter^3)"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_rim",
+"expr": "wheel_2_root_radius - wheel_2_seat / 2 - wheel_2_key_hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_rim",
+"expr": "wheel_4_root_radius - wheel_4_seat / 2 - wheel_4_key_hub_depth"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_2_key_pressure",
+"expr": "2 * input_torque * stage_1_ratio / (wheel_2_seat * (wheel_2_key_height - wheel_2_key_shaft_depth) * (stage_1_width - 2 mm - wheel_2_key_width))"
+}
+],
+[
+"variable.set",
+{
+"name": "wheel_4_key_pressure",
+"expr": "2 * input_torque * ratio_built / (wheel_4_seat * (wheel_4_key_height - wheel_4_key_shaft_depth) * (stage_2_width - 2 mm - wheel_4_key_width))"
+}
+],
+[
+"variable.set",
+{
+"name": "input_end_key_pressure",
+"expr": "2 * input_torque / (input_end_diameter * (input_end_key_height - input_end_key_shaft_depth) * (input_end_length - 10 mm - input_end_key_width))"
+}
+],
+[
+"variable.set",
+{
+"name": "output_end_key_pressure",
+"expr": "2 * input_torque * ratio_built / (output_end_diameter * (output_end_key_height - output_end_key_shaft_depth) * (output_end_length - 10 mm - output_end_key_width))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_1_torque_limit",
+"expr": "allowable_bending * face_width_factor * pinion_teeth * lewis_form_factor * modules[8].value^3 / (2 * (1 + sqrt(stage_1_pitch_speed * modules[8].value) / 3.56))"
+}
+],
+[
+"variable.set",
+{
+"name": "stage_2_torque_limit",
+"expr": "allowable_bending * face_width_factor * pinion_teeth * lewis_form_factor * modules[9].value^3 / (2 * (1 + sqrt(stage_2_pitch_speed * modules[9].value) / 3.56))"
+}
+],
+[
+"variable.set",
+{
+"name": "output_torque_limit",
+"expr": "pi * allowable_shear * (95 mm)^3 / 16"
+}
+],
+[
+"variable.set",
+{
+"name": "power_max",
+"expr": "floor(10 * min(30 * 1 N * 1 m * 30000 / (pi * input_speed) * application_factor, min(min(stage_1_torque_limit, stage_2_torque_limit / stage_1_ratio), output_torque_limit / ratio_built)) / application_factor * pi * input_speed / 30000 / (1 N * 1 m)) / 10"
+}
+],
+[
+"variable.set",
+{
+"name": "output_torque",
+"expr": "input_torque * ratio_built"
+}
+],
+[
+"variable.set",
+{
+"name": "cast_wall_max",
+"expr": "min(16 mm, 8 mm + floor(output_bearing_bore / 10 mm) * 1 mm)"
+}
+],
+[
+"sketch.create",
+{
+"name": "Pinion 1 outline",
+"plane": "zx",
+"offset": "stage_1_start"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_root_radius * cos(pinion_1_fillet_angle * 1 rad)",
+"pinion_1_root_radius * sin(pinion_1_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_foot_radius * cos(pinion_1_flank_angle * 1 rad)",
+"pinion_1_foot_radius * sin(pinion_1_flank_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"(pinion_1_root_radius + pinion_1_root_fillet) * cos(pinion_1_fillet_angle * 1 rad)",
+"(pinion_1_root_radius + pinion_1_root_fillet) * sin(pinion_1_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_flank_x0",
+"pinion_1_flank_y0"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_flank_x2",
+"pinion_1_flank_y2"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_flank_x4",
+"pinion_1_flank_y4"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_arc1_x",
+"pinion_1_arc1_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_arc2_x",
+"pinion_1_arc2_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_flank_x0",
+"-pinion_1_flank_y0"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_flank_x2",
+"-pinion_1_flank_y2"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_flank_x4",
+"-pinion_1_flank_y4"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_arc1_x",
+"-pinion_1_arc1_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_arc2_x",
+"-pinion_1_arc2_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_foot_radius * cos(pinion_1_flank_angle * 1 rad)",
+"-pinion_1_foot_radius * sin(pinion_1_flank_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"(pinion_1_root_radius + pinion_1_root_fillet) * cos(pinion_1_fillet_angle * 1 rad)",
+"-(pinion_1_root_radius + pinion_1_root_fillet) * sin(pinion_1_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_root_radius * cos(pinion_1_fillet_angle * 1 rad)",
+"-pinion_1_root_radius * sin(pinion_1_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 1 outline",
+"at": [
+"pinion_1_root_radius * cos(pinion_1_tooth_step + pinion_1_fillet_angle * 1 rad)",
+"pinion_1_root_radius * sin(pinion_1_tooth_step + pinion_1_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e8",
+"start": "e5",
+"end": "e6"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e9",
+"start": "e6",
+"end": "e7"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e4",
+"start": "e7",
+"end": "e12"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e14",
+"start": "e12",
+"end": "e11"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e13",
+"start": "e11",
+"end": "e10"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Pinion 1 outline",
+"from": "e5",
+"to": "e2"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Pinion 1 outline",
+"from": "e10",
+"to": "e15"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e3",
+"start": "e2",
+"end": "e1"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e16",
+"start": "e17",
+"end": "e15"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 1 outline",
+"center": "e4",
+"start": "e17",
+"end": "e18"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Pinion 1 outline",
+"entities": [
+"e26",
+"e24",
+"e19",
+"e20",
+"e21",
+"e22",
+"e23",
+"e25",
+"e27",
+"e28"
+],
+"chain": [
+"e1",
+"e18"
+],
+"angle": "pinion_1_tooth_step",
+"center": [
+"0 mm",
+"0 mm"
+],
+"count": "pinion_teeth"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Pinion 1 outline",
+"distance": "stage_1_width",
+"when": "show != 3",
+"name": "Pinion 1 teeth"
+}
+],
+[
+"sketch.create",
+{
+"name": "Input shaft section",
+"plane": "xy"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Input shaft section",
+"closed": true,
+"points": [
+[
+"0 mm",
+"input_end"
+],
+[
+"input_end_diameter / 2 - shaft_chamfer",
+"input_end"
+],
+[
+"input_end_diameter / 2",
+"input_end + shaft_chamfer"
+],
+[
+"input_end_diameter / 2",
+"-cavity_half_width - input_bearing_width"
+],
+[
+"input_bearing_bore / 2",
+"-cavity_half_width - input_bearing_width"
+],
+[
+"input_bearing_bore / 2",
+"-cavity_half_width"
+],
+[
+"input_shoulder_radius",
+"-cavity_half_width"
+],
+[
+"input_shoulder_radius",
+"cavity_half_width"
+],
+[
+"input_bearing_bore / 2",
+"cavity_half_width"
+],
+[
+"input_bearing_bore / 2",
+"cavity_half_width + input_bearing_width - shaft_chamfer"
+],
+[
+"input_bearing_bore / 2 - shaft_chamfer",
+"cavity_half_width + input_bearing_width"
+],
+[
+"0 mm",
+"cavity_half_width + input_bearing_width"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Input shaft section",
+"axis": "y",
+"when": "show != 3",
+"name": "Input shaft blank"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Input shaft blank",
+"tool": "Pinion 1 teeth",
+"when": "show != 3",
+"name": "Input pinion shaft"
+}
+],
+[
+"sketch.create",
+{
+"name": "Input end keyway",
+"plane": "xy",
+"offset": "input_end_diameter / 2 - input_end_key_shaft_depth"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Input end keyway",
+"start": [
+"input_end_key_width / 2",
+"input_end + 5 mm + input_end_key_width / 2"
+],
+"segments": [
+{
+"line": [
+"input_end_key_width / 2",
+"input_end + 5 mm + input_end_length - 10 mm - input_end_key_width / 2"
+]
+},
+{
+"arc": [
+"-input_end_key_width / 2",
+"input_end + 5 mm + input_end_length - 10 mm - input_end_key_width / 2"
+],
+"center": [
+"0 mm",
+"input_end + 5 mm + input_end_length - 10 mm - input_end_key_width / 2"
+]
+},
+{
+"line": [
+"-input_end_key_width / 2",
+"input_end + 5 mm + input_end_key_width / 2"
+]
+},
+{
+"arc": "start",
+"center": [
+"0 mm",
+"input_end + 5 mm + input_end_key_width / 2"
+]
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Input end keyway",
+"distance": "input_end_key_shaft_depth + 1 mm",
+"when": "show != 3",
+"name": "Input end keyway cutter"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Input pinion shaft",
+"tool": "Input end keyway cutter",
+"when": "show != 3",
+"name": "Input shaft keyed"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Input end keyway",
+"distance": "input_end_key_height",
+"when": "show <= 2",
+"name": "Input end key blank"
+}
+],
+[
+"feature.transform",
+{
+"source": "Input shaft keyed",
+"angle": "input_angle",
+"axis": [
+0,
+1,
+0
+],
+"when": "show != 3",
+"name": "Input shaft"
+}
+],
+[
+"feature.transform",
+{
+"source": "Input end key blank",
+"angle": "input_angle",
+"axis": [
+0,
+1,
+0
+],
+"when": "show <= 2",
+"name": "Input end key"
+}
+],
+[
+"sketch.create",
+{
+"name": "Wheel 2 outline",
+"plane": "zx",
+"offset": "stage_1_start"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wheel 2 outline",
+"start": [
+"wheel_2_root_radius * cos(wheel_2_fillet_angle * 1 rad)",
+"wheel_2_root_radius * sin(wheel_2_fillet_angle * 1 rad)"
+],
+"segments": [
+{
+"arc": [
+"wheel_2_foot_radius * cos(wheel_2_flank_angle * 1 rad)",
+"wheel_2_foot_radius * sin(wheel_2_flank_angle * 1 rad)"
+],
+"center": [
+"(wheel_2_root_radius + wheel_2_root_fillet) * cos(wheel_2_fillet_angle * 1 rad)",
+"(wheel_2_root_radius + wheel_2_root_fillet) * sin(wheel_2_fillet_angle * 1 rad)"
+],
+"clockwise": true
+},
+{
+"line": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)))",
+"wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)))",
+"wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)))"
+],
+"through": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)))",
+"wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)))",
+"wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)))"
+],
+"through": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)))",
+"wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)))",
+"-wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 4 / 4)))"
+],
+"center": [
+"0 mm",
+"0 mm"
+]
+},
+{
+"arc": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)))",
+"-wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 2 / 4)))"
+],
+"through": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)))",
+"-wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 3 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)))",
+"-wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 0 / 4)))"
+],
+"through": [
+"wheel_2_base_radius * (cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)) + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4) * sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)))",
+"-wheel_2_base_radius * (sin(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)) - sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4) * cos(wheel_2_flank_offset + sqrt(wheel_2_flank_start^2 + (wheel_2_flank_end^2 - wheel_2_flank_start^2) * 1 / 4)))"
+]
+},
+{
+"line": [
+"wheel_2_foot_radius * cos(wheel_2_flank_angle * 1 rad)",
+"-wheel_2_foot_radius * sin(wheel_2_flank_angle * 1 rad)"
+]
+},
+{
+"arc": [
+"wheel_2_root_radius * cos(wheel_2_fillet_angle * 1 rad)",
+"-wheel_2_root_radius * sin(wheel_2_fillet_angle * 1 rad)"
+],
+"center": [
+"(wheel_2_root_radius + wheel_2_root_fillet) * cos(wheel_2_fillet_angle * 1 rad)",
+"-(wheel_2_root_radius + wheel_2_root_fillet) * sin(wheel_2_fillet_angle * 1 rad)"
+],
+"clockwise": true
+},
+{
+"arc": [
+"wheel_2_root_radius * cos(wheel_2_tooth_step + wheel_2_fillet_angle * 1 rad)",
+"wheel_2_root_radius * sin(wheel_2_tooth_step + wheel_2_fillet_angle * 1 rad)"
+],
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Wheel 2 outline",
+"entities": [
+"e4",
+"e6",
+"e9",
+"e13",
+"e17",
+"e20",
+"e24",
+"e27",
+"e30",
+"e33"
+],
+"chain": [
+"e1",
+"e31"
+],
+"angle": "wheel_2_tooth_step",
+"center": [
+"0 mm",
+"0 mm"
+],
+"count": "wheel_2_teeth"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wheel 2 outline",
+"start": [
+"sqrt((wheel_2_seat / 2)^2 - (wheel_2_key_width / 2)^2)",
+"-wheel_2_key_width / 2"
+],
+"segments": [
+{
+"line": [
+"wheel_2_seat / 2 + wheel_2_key_hub_depth",
+"-wheel_2_key_width / 2"
+]
+},
+{
+"line": [
+"wheel_2_seat / 2 + wheel_2_key_hub_depth",
+"wheel_2_key_width / 2"
+]
+},
+{
+"line": [
+"sqrt((wheel_2_seat / 2)^2 - (wheel_2_key_width / 2)^2)",
+"wheel_2_key_width / 2"
+]
+},
+{
+"arc": "start",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Wheel 2 outline",
+"distance": "stage_1_width",
+"when": "show != 3",
+"name": "Wheel 2 blank"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F13:side(e42)",
+"F13:startCap(e4[*],e6[*],e9[*],e13[*],e17[*],e20[*],e24[*],e27[*],e30[*],e33[*])"
+],
+[
+"F13:side(e42)",
+"F13:endCap(e4[*],e6[*],e9[*],e13[*],e17[*],e20[*],e24[*],e27[*],e30[*],e33[*])"
+]
+],
+"distance": "bore_chamfer",
+"when": "show != 3",
+"name": "Wheel 2 bored"
+}
+],
+[
+"feature.transform",
+{
+"source": "Wheel 2 bored",
+"angle": "intermediate_angle",
+"axis": [
+0,
+1,
+0
+],
+"translate": [
+"stage_1_centre_distance",
+"0 mm",
+"0 mm"
+],
+"when": "show != 3",
+"name": "Wheel 2"
+}
+],
+[
+"sketch.create",
+{
+"name": "Pinion 3 outline",
+"plane": "zx",
+"offset": "stage_2_start"
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_root_radius * cos(pinion_3_fillet_angle * 1 rad)",
+"pinion_3_root_radius * sin(pinion_3_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_foot_radius * cos(pinion_3_flank_angle * 1 rad)",
+"pinion_3_foot_radius * sin(pinion_3_flank_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"(pinion_3_root_radius + pinion_3_root_fillet) * cos(pinion_3_fillet_angle * 1 rad)",
+"(pinion_3_root_radius + pinion_3_root_fillet) * sin(pinion_3_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_flank_x0",
+"pinion_3_flank_y0"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_flank_x2",
+"pinion_3_flank_y2"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_flank_x4",
+"pinion_3_flank_y4"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_arc1_x",
+"pinion_3_arc1_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_arc2_x",
+"pinion_3_arc2_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_flank_x0",
+"-pinion_3_flank_y0"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_flank_x2",
+"-pinion_3_flank_y2"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_flank_x4",
+"-pinion_3_flank_y4"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_arc1_x",
+"-pinion_3_arc1_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_arc2_x",
+"-pinion_3_arc2_y"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_foot_radius * cos(pinion_3_flank_angle * 1 rad)",
+"-pinion_3_foot_radius * sin(pinion_3_flank_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"(pinion_3_root_radius + pinion_3_root_fillet) * cos(pinion_3_fillet_angle * 1 rad)",
+"-(pinion_3_root_radius + pinion_3_root_fillet) * sin(pinion_3_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_root_radius * cos(pinion_3_fillet_angle * 1 rad)",
+"-pinion_3_root_radius * sin(pinion_3_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.point",
+{
+"sketch": "Pinion 3 outline",
+"at": [
+"pinion_3_root_radius * cos(pinion_3_tooth_step + pinion_3_fillet_angle * 1 rad)",
+"pinion_3_root_radius * sin(pinion_3_tooth_step + pinion_3_fillet_angle * 1 rad)"
+]
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e8",
+"start": "e5",
+"end": "e6"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e9",
+"start": "e6",
+"end": "e7"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e4",
+"start": "e7",
+"end": "e12"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e14",
+"start": "e12",
+"end": "e11"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e13",
+"start": "e11",
+"end": "e10"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Pinion 3 outline",
+"from": "e5",
+"to": "e2"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Pinion 3 outline",
+"from": "e10",
+"to": "e15"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e3",
+"start": "e2",
+"end": "e1"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e16",
+"start": "e17",
+"end": "e15"
+}
+],
+[
+"sketch.arc",
+{
+"sketch": "Pinion 3 outline",
+"center": "e4",
+"start": "e17",
+"end": "e18"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Pinion 3 outline",
+"entities": [
+"e26",
+"e24",
+"e19",
+"e20",
+"e21",
+"e22",
+"e23",
+"e25",
+"e27",
+"e28"
+],
+"chain": [
+"e1",
+"e18"
+],
+"angle": "pinion_3_tooth_step",
+"center": [
+"0 mm",
+"0 mm"
+],
+"count": "pinion_teeth"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Pinion 3 outline",
+"distance": "stage_2_width",
+"when": "show != 3",
+"name": "Pinion 3 teeth"
+}
+],
+[
+"sketch.create",
+{
+"name": "Intermediate shaft section",
+"plane": "xy"
+}
+],
+[
+"sketch.polyline",
+{
+"sketch": "Intermediate shaft section",
+"closed": true,
+"points": [
+[
+"0 mm",
+"-cavity_half_width - intermediate_bearing_width"
+],
+[
+"intermediate_bearing_bore / 2 - shaft_chamfer",
+"-cavity_half_width - intermediate_bearing_width"
+],
+[
+"intermediate_bearing_bore / 2",
+"-cavity_half_width - intermediate_bearing_width + shaft_chamfer"
+],
+[
+"intermediate_bearing_bore / 2",
+"-cavity_half_width"
+],
+[
+"wheel_2_seat / 2",
+"-cavity_half_width"
+],
+[
+"wheel_2_seat / 2",
+"stage_1_end"
+],
+[
+"intermediate_collar_radius",
+"stage_1_end"
+],
+[
+"intermediate_collar_radius",
+"cavity_half_width"
+],
+[
+"intermediate_bearing_bore / 2",
+"cavity_half_width"
+],
+[
+"intermediate_bearing_bore / 2",
+"cavity_half_width + intermediate_bearing_width - shaft_chamfer"
+],
+[
+"intermediate_bearing_bore / 2 - shaft_chamfer",
+"cavity_half_width + intermediate_bearing_width"
+],
+[
+"0 mm",
+"cavity_half_width + intermediate_bearing_width"
+]
+]
+}
+],
+[
+"feature.revolve",
+{
+"sketch": "Intermediate shaft section",
+"axis": "y",
+"when": "show != 3",
+"name": "Intermediate shaft blank"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Intermediate shaft blank",
+"tool": "Pinion 3 teeth",
+"when": "show != 3",
+"name": "Intermediate pinion shaft"
+}
+],
+[
+"sketch.create",
+{
+"name": "Wheel 2 keyway",
+"plane": "xy",
+"offset": "wheel_2_seat / 2 - wheel_2_key_shaft_depth"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wheel 2 keyway",
+"start": [
+"wheel_2_key_width / 2",
+"stage_1_start + 1 mm + wheel_2_key_width / 2"
+],
+"segments": [
+{
+"line": [
+"wheel_2_key_width / 2",
+"stage_1_end - 1 mm - wheel_2_key_width / 2"
+]
+},
+{
+"arc": [
+"-wheel_2_key_width / 2",
+"stage_1_end - 1 mm - wheel_2_key_width / 2"
+],
+"center": [
+"0 mm",
+"stage_1_end - 1 mm - wheel_2_key_width / 2"
+]
+},
+{
+"line": [
+"-wheel_2_key_width / 2",
+"stage_1_start + 1 mm + wheel_2_key_width / 2"
+]
+},
+{
+"arc": "start",
+"center": [
+"0 mm",
+"stage_1_start + 1 mm + wheel_2_key_width / 2"
+]
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Wheel 2 keyway",
+"distance": "wheel_2_key_shaft_depth + 1 mm",
+"when": "show != 3",
+"name": "Wheel 2 keyway cutter"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Intermediate pinion shaft",
+"tool": "Wheel 2 keyway cutter",
+"when": "show != 3",
+"name": "Intermediate shaft keyed"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Wheel 2 keyway",
+"distance": "wheel_2_key_height",
+"when": "show <= 2",
+"name": "Wheel 2 key blank"
+}
+],
+[
+"feature.transform",
+{
+"source": "Intermediate shaft keyed",
+"angle": "intermediate_angle",
+"axis": [
+0,
+1,
+0
+],
+"translate": [
+"stage_1_centre_distance",
+"0 mm",
+"0 mm"
+],
+"when": "show != 3",
+"name": "Intermediate shaft"
+}
+],
+[
+"feature.transform",
+{
+"source": "Wheel 2 key blank",
+"angle": "intermediate_angle",
+"axis": [
+0,
+1,
+0
+],
+"translate": [
+"stage_1_centre_distance",
+"0 mm",
+"0 mm"
+],
+"when": "show <= 2",
+"name": "Wheel 2 key"
+}
+],
+[
+"sketch.create",
+{
+"name": "Wheel 4 outline",
+"plane": "zx",
+"offset": "stage_2_start"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wheel 4 outline",
+"start": [
+"wheel_4_root_radius * cos(wheel_4_fillet_angle * 1 rad)",
+"wheel_4_root_radius * sin(wheel_4_fillet_angle * 1 rad)"
+],
+"segments": [
+{
+"arc": [
+"wheel_4_foot_radius * cos(wheel_4_flank_angle * 1 rad)",
+"wheel_4_foot_radius * sin(wheel_4_flank_angle * 1 rad)"
+],
+"center": [
+"(wheel_4_root_radius + wheel_4_root_fillet) * cos(wheel_4_fillet_angle * 1 rad)",
+"(wheel_4_root_radius + wheel_4_root_fillet) * sin(wheel_4_fillet_angle * 1 rad)"
+],
+"clockwise": true
+},
+{
+"line": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)))",
+"wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)))",
+"wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)))"
+],
+"through": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)))",
+"wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)))",
+"wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)))"
+],
+"through": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)))",
+"wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)))",
+"-wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 4 / 4)))"
+],
+"center": [
+"0 mm",
+"0 mm"
+]
+},
+{
+"arc": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)))",
+"-wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 2 / 4)))"
+],
+"through": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)))",
+"-wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 3 / 4)))"
+]
+},
+{
+"arc": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)))",
+"-wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 0 / 4)))"
+],
+"through": [
+"wheel_4_base_radius * (cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)) + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4) * sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)))",
+"-wheel_4_base_radius * (sin(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)) - sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4) * cos(wheel_4_flank_offset + sqrt(wheel_4_flank_start^2 + (wheel_4_flank_end^2 - wheel_4_flank_start^2) * 1 / 4)))"
+]
+},
+{
+"line": [
+"wheel_4_foot_radius * cos(wheel_4_flank_angle * 1 rad)",
+"-wheel_4_foot_radius * sin(wheel_4_flank_angle * 1 rad)"
+]
+},
+{
+"arc": [
+"wheel_4_root_radius * cos(wheel_4_fillet_angle * 1 rad)",
+"-wheel_4_root_radius * sin(wheel_4_fillet_angle * 1 rad)"
+],
+"center": [
+"(wheel_4_root_radius + wheel_4_root_fillet) * cos(wheel_4_fillet_angle * 1 rad)",
+"-(wheel_4_root_radius + wheel_4_root_fillet) * sin(wheel_4_fillet_angle * 1 rad)"
+],
+"clockwise": true
+},
+{
+"arc": [
+"wheel_4_root_radius * cos(wheel_4_tooth_step + wheel_4_fillet_angle * 1 rad)",
+"wheel_4_root_radius * sin(wheel_4_tooth_step + wheel_4_fillet_angle * 1 rad)"
+],
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Wheel 4 outline",
+"entities": [
+"e4",
+"e6",
+"e9",
+"e13",
+"e17",
+"e20",
+"e24",
+"e27",
+"e30",
+"e33"
+],
+"chain": [
+"e1",
+"e31"
+],
+"angle": "wheel_4_tooth_step",
+"center": [
+"0 mm",
+"0 mm"
+],
+"count": "wheel_4_teeth"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Wheel 4 outline",
+"start": [
+"sqrt((wheel_4_seat / 2)^2 - (wheel_4_key_width / 2)^2)",
+"-wheel_4_key_width / 2"
+],
+"segments": [
+{
+"line": [
+"wheel_4_seat / 2 + wheel_4_key_hub_depth",
+"-wheel_4_key_width / 2"
+]
+},
+{
+"line": [
+"wheel_4_seat / 2 + wheel_4_key_hub_depth",
+"wheel_4_key_width / 2"
+]
+},
+{
+"line": [
+"sqrt((wheel_4_seat / 2)^2 - (wheel_4_key_width / 2)^2)",
+"wheel_4_key_width / 2"
+]
+},
+{
+"arc": "start",
+"center": [
+"0 mm",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Wheel 4 outline",
+"distance": "stage_2_width",
+"when": "show != 3",
+"name": "Wheel 4 blank"
+}
+],
+[
+"feature.chamfer",
+{
+"edges": [
+[
+"F28:side(e42)",
+"F28:startCap(e4[*],e6[*],e9[*],e13[*],e17[*],e20[*],e24[*],e27[*],e30[*],e33[*])"
+],
+[
+"F28:side(e42)",
+"F28:endCap(e4[*],e6[*],e9[*],e13[*],e17[*],e20[*],e24[*],e27[*],e30[*],e33[*])"
+]
+],
+"distance": "bore_chamfer",
+"when": "show != 3",
+"name": "Wheel 4 bored"
+}
+],
+[
+"feature.transform",
+{
+"source": "Wheel 4 bored",
+"angle": "output_angle",
+"axis": [
+0,
+1,
+0
+],
+"translate": [
+"output_shaft_x",
+"0 mm",
+"0 mm"
+],
+"when": "show != 3",
+"name": "Wheel 4"
+}
+],
+[
+"assert.add",
+{
+"name": "Gap between facing flanks, 0.001 to 0.15 mm",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Intermediate shaft"
+},
+{
+"any": [
+{
+"name": "*F17:side(e19*"
+},
+{
+"name": "*F17:side(e20*"
+}
+]
+}
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Wheel 4"
+},
+{
+"any": [
+{
+"name": "*F28:side(e9*"
+},
+{
+"name": "*F28:side(e13*"
+}
+]
+}
+]
+}
+},
+"max": "0.15 mm",
+"min": "0.001 mm"
+}
+],
+[
+"measure.distance",
+{
+"from": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Intermediate shaft"
+},
+{
+"any": [
+{
+"name": "*F17:side(e19*"
+},
+{
+"name": "*F17:side(e20*"
+}
+]
+}
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"all": [
+{
+"in": "Wheel 4"
+},
+{
+"any": [
+{
+"name": "*F28:side(e9*"
+},
+{
+"name": "*F28:side(e13*"
+}
+]
+}
+]
+}
+}
+}
+]
+]

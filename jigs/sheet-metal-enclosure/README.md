@@ -246,5 +246,5 @@ tools/jigs.py check sheet-metal-enclosure
 
 Nothing is worked around. Known and already reported: a flat pattern's DXF splits each straight edge at the bend zone
 (F-051 in `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`). The material's metallic and roughness cannot follow a table
-(`findings/J-xxx-appearance-numbers-not-expressions`), so aluminium and stainless differ from the powder coat by colour
+([J-053](../../3DCRAFT-FEEDBACK.md#j-053-metallic-roughness-and-transmission-take-numbers-only-so-a-material-look-cannot-follow-a-choice)), so aluminium and stainless differ from the powder coat by colour
 only.

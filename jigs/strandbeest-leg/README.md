@@ -260,16 +260,16 @@ Not scored yet (the reviewer gives it).
 
 ## Platform notes
 
-- **No function or search in an expression** (J-xxx-expression-functions, J-xxx-extremum-of-a-formula). The foot's
+- **No function or search in an expression** ([J-054](../../3DCRAFT-FEEDBACK.md#j-054-an-expression-cannot-define-a-function-or-a-local-name), [J-055](../../3DCRAFT-FEEDBACK.md#j-055-no-maximum-minimum-or-root-of-a-formula-over-an-interval)). The foot's
   position as a function of the crank is written out 35 times, 2.6 to 3.8 kB each, once per sample of the parabolic
   and secant searches; the four curve pieces repeat the same formula again in `t`.
-- **A sweep along joined formula curves does not close** (proposed `J-xxx-sweep-joined-curves-open`): three pieces of
+- **A sweep along joined formula curves does not close** ([J-031](../../3DCRAFT-FEEDBACK.md#j-031-a-closed-path-of-formula-curve-pieces-that-meet-end-to-end-is-refused-for-a-sweep)): three pieces of
   the foot path meeting end to end are refused as a closed path ("comes back 0.0036 from where it started"), so the
   ribbon is four open sweeps, each starting where its tangent is level.
-- **The box of a swept spline is not proven to the tolerance** (proposed `J-xxx-sweep-extent-unproven`): a variable
+- **The box of a swept spline is not proven to the tolerance** ([J-027](../../3DCRAFT-FEEDBACK.md#j-027-the-extent-of-a-swept-body-is-not-proven-to-the-tolerance-and-a-sweeps-path-length-cannot-be-read-see-f-117-f-122)): a variable
   cannot read the path's length, so the step length is the search's and an assertion holds the drawn path to it within
   0.005 mm plus 50 millionths of the step (0.010 mm at the defaults).
-- **A wood pattern stays in the model's space** (proposed `J-xxx-pattern-stays-when-turned`): when a part is turned by
+- **A wood pattern stays in the model's space** ([J-041](../../3DCRAFT-FEEDBACK.md#j-041-a-material-pattern-stays-in-the-models-space-when-its-body-is-turned-see-f-083)): when a part is turned by
   a transform its grain does not turn with it, so the grain of the bars and triangles runs at a slant and drifts through
   them as the crank turns. Cosmetic.
 - **A sheet of a set lays faces as they stand** (F-162 covers the direction per part for `cut.export`): the export

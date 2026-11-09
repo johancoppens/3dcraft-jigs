@@ -145,7 +145,7 @@ carrying mains gear must have its parts bonded by someone competent.
 **Look.** Blue-grey powder coat (the sheet table's colour; the aluminium and stainless rows have their natural tone),
 bright rails, dark gear and panels. The workshop's warm key light tints bare aluminium beige, so its colour in the table
 is a cool grey that renders as a neutral silver (checked at rotations 0 and 180). The material's metallic and roughness
-cannot follow the table ([`J-xxx-appearance-numbers-not-expressions`](../../findings/J-xxx-appearance-numbers-not-expressions/repro.json)).
+cannot follow the table ([J-053](../../3DCRAFT-FEEDBACK.md#j-053-metallic-roughness-and-transmission-take-numbers-only-so-a-material-look-cannot-follow-a-choice)).
 
 ## Parameters
 
@@ -254,9 +254,9 @@ tools/jigs.py check rack-cabinet
 ## Platform notes
 
 Nothing is worked around except known things: an `overlap` assertion cannot name a feature that is off, so its list is
-a query by name ([`J-xxx-overlap-inactive-body`](../../findings/J-xxx-overlap-inactive-body/repro.json)). `bendable` on
+a query by name ([J-026](../../3DCRAFT-FEEDBACK.md#j-026-overlap-errors-on-a-feature-switched-off-by-when-instead-of-skipping-it)). `bendable` on
 the back and the door is left to `tools/bendcheck.py` because measures run at every regeneration (the examples' F-019).
-An output has a label but no description ([`J-xxx-output-no-description`](../../findings/J-xxx-output-no-description/repro.json)),
+An output has a label but no description ([J-059](../../3DCRAFT-FEEDBACK.md#j-059-an-output-cannot-have-a-description)),
 so the statement that a competent person must check the wall anchors is carried by the outputs' labels and the
 Mounting and Gear mass descriptions.
 A flat pattern's DXF edge split is known (the examples' F-051).

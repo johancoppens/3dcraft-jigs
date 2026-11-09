@@ -183,15 +183,15 @@ tools/jigs.py check wooden-stair
 
 ## Platform notes
 
-Proposed entries for `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
+Entries in `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
 
 - A set of faces exported as a sheet puts every face in its own place, so one part's outline and its pocket outlines cannot
-  be registered ([repro](../../findings/J-xxx-set-export-not-registered/repro.json)); hence the layout sketch, which must be
+  be registered ([repro](../../findings/J-044-set-export-keeps-places/registered.json)); hence the layout sketch, which must be
   selected (J-007).
 - `overlap` errors on an inactive body instead of skipping it, like J-003 for `cut.list`
-  ([repro](../../findings/J-xxx-overlap-inactive-body/repro.json)): two assertions, one with `when`.
+  ([repro](../../findings/J-026-overlap-inactive-body/repro.json)): two assertions, one with `when`.
 - Joining a sweep to another that starts from the same section sketch fails at the shared end
-  ([repro](../../findings/J-xxx-sweep-join-shared-section/repro.json)): the rail's returned ends are separate bodies (the same
+  ([repro](../../findings/J-032-sweep-join-shared-section/repro.json)): the rail's returned ends are separate bodies (the same
   edge-of-tolerance refusal as in F-113, which kept no reproducer for it).
 - `body.appearance` `pattern.axis` takes only literals, like the colours in J-009: the rail's grain axis does not follow
   the pitch.

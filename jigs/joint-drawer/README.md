@@ -172,7 +172,7 @@ moisture, the runners or how a drawer of a given load behaves.
   0.25 mm in this Jig's `meta.json`) or give the paths a stroke before printing.
 - **For CAM:** select the five boards and use **File › Export**, the selection, as STEP (from a script,
   `file.export` with `bodies`: Front, Left side, Right side, Back, Bottom). The case and knobs are not boards: a named set cannot pick bodies for STEP yet
-  ([finding](../../findings/J-xxx-mesh-export-named-set/repro.json)).
+  ([finding](../../findings/J-045-3d-export-set/repro.json)).
 - **Saw list:** the *Saw list* outputs give every board's length and height. `cut.list` lists a 6 mm bottom as a plate and no other board; a 9 or 12 mm bottom is "not a plate" too, because of its rebate's step (see Platform notes).
 
 ## Files
@@ -199,6 +199,6 @@ To be scored by the reviewer.
 - A pattern's colours cannot follow a table, so the picture stays walnut and maple whatever the timber
   (J-009, [`findings/J-009-pattern-colours-from-a-table`](../../findings/J-009-pattern-colours-from-a-table/repro.json)).
 - A boolean that splits a face leaves it one face to `count` queries; the tails are counted by their baselines instead
-  (related to F-141; [`findings/J-xxx-split-face-counts-as-one/repro.json`](../../findings/J-xxx-split-face-counts-as-one/repro.json)).
+  (related to F-141; [`findings/J-023-split-face-counts-as-one/repro.json`](../../findings/J-023-split-face-counts-as-one/repro.json)).
 - A `feature.extrude` with `cut` leaves the extrusion with an automatic name (F-002), so the cutters and booleans are
   named in two steps.

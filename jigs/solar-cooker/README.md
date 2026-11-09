@@ -40,7 +40,7 @@ stays put.
   ratio and the 36-petal limit (`petal_count_max`); the cooking height's minimum is what lets the dish swing clear of
   the stand.
 - **Interleaved patterns.** Petals that meet edge to edge in one `feature.pattern` are joined into one body at a cost
-  ([J-xxx-circular-pattern-touching-cost](../../findings/J-xxx-circular-pattern-touching-cost/README.md)), so every
+  ([J-062](../../findings/J-062-circular-pattern-touching-cost/README.md)), so every
   other petal is one pattern and the petals between are a second, two bodies that never meet in a boolean.
 - **Mirrors and weights.** `feature.mirror` makes the far arm, quadrant and hanger; the petal template is hidden too
   (it exports and measures, but stays out of the picture); `body.material` weighs every part, so `centerOfMass` can
@@ -318,9 +318,9 @@ Not scored yet (the reviewer gives it).
 ## Platform notes
 
 - A circular pattern of petals that meet edge to edge is joined into one body, and that costs about twice the CPU of
-  two interleaved patterns ([J-xxx-circular-pattern-touching-cost](../../findings/J-xxx-circular-pattern-touching-cost/README.md)):
+  two interleaved patterns ([J-062](../../findings/J-062-circular-pattern-touching-cost/README.md)):
   the workaround is the two interleaved petal sets, so the petal count is even.
-- `sketch.curve` fits a parabola as a cubic of 35 control points ([J-xxx-parabola-fit-cost](../../findings/J-xxx-parabola-fit-cost/README.md),
+- `sketch.curve` fits a parabola as a cubic of 35 control points ([J-066](../../findings/J-066-formula-curve-fit-size/README.md),
   see F-010 in `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`): the petals are drawn as exact quadratic splines.
 - A box or extent of a freeform body can be "not proven closely enough" (F-122): the template's length is measured
   between its straight ends, the dish's swing over the fork by `volumeBelow`, and whether the petal sets meet at
@@ -330,14 +330,14 @@ Not scored yet (the reviewer gives it).
   sun).
 - There is no watt (F-106): the power output is a plain number in watts.
 - `distance` from a face or body lying wholly inside another body reports the gap to that body's surface, not 0
-  ([J-xxx-distance-face-inside-body](../../findings/J-xxx-distance-face-inside-body/README.md)): a petal set sunk
+  ([J-021](../../findings/J-021-distance-inside-body/README.md)): a petal set sunk
   into the hub ring is caught by the seam probe, not by the hub's distance.
 - An output used only by assertions cannot be kept off the form
-  ([J-xxx-check-outputs-on-form](../../findings/J-xxx-check-outputs-on-form/README.md)): the checks measure inside the
+  ([J-058](../../findings/J-058-check-outputs-on-form/README.md)): the checks measure inside the
   assertions instead, so all 32 outputs are for the maker.
 - A whole-model STEP or 3MF holds hidden bodies too
-  ([J-xxx-hidden-body-in-mesh-export](../../findings/J-xxx-hidden-body-in-mesh-export/repro.json); see F-161 in
+  ([J-045](../../findings/J-045-3d-export-set/hidden-body.json); see F-161 in
   `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`): the four helpers are small or inside the pot except the petal as
   built, and the STEP of the real parts lists its bodies.
 - `cut.list` prints the tilted hub ring's thickness as 3.0000000000001705
-  ([J-xxx-cut-list-thickness-noise](../../findings/J-xxx-cut-list-thickness-noise/README.md)): cosmetic.
+  ([J-042](../../findings/J-042-cut-list-thickness-noise/README.md)): cosmetic.

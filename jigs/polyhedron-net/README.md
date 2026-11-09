@@ -61,7 +61,7 @@ it meets, working round the solid and leaving one face for last: press its tabs 
 direction that gave the fewest of them).
 
 **Limits of the model.** The folding net is a sheet with no thickness, and it has no tabs: tabs folded with the faces
-are refused by 3DCraft near closure ([finding](../../findings/J-xxx-tabs-refused-near-closure/repro.json)), so the tabs
+are refused by 3DCraft near closure ([finding](../../findings/J-038-tabs-refused-near-closure/repro.json)), so the tabs
 live on the flat pattern. The form's 100 % folds to 99.99 % of the closing angle (a 40 mm cube then stands
 0.013 mm taller than it should), because at exactly 100 % the free edges meet and 3DCraft refuses the fold
 ([finding](../../findings/J-014-fold-closed-loop/repro.json)).
@@ -121,7 +121,7 @@ passing, none unproven. Beyond the range check:
 
 Why whole millimetres: the form's values are whole millimetres because at one non-integer edge (44.9818… mm, the
 icosahedron on US Letter before the ranges were rounded) 3DCraft reports facets that merely share a vertex as touching
-([finding](../../findings/J-xxx-flat-fold-touch-false-positive/repro.json)). The form rounds a value typed between two steps to the
+([finding](../../findings/J-037-flat-fold-touch-false-positive/repro.json)). The form rounds a value typed between two steps to the
 nearest step; only `param.set` refuses it.
 
 Not checked: that real paper folds this cleanly; the glue; the bulk assumption against a particular paper.
@@ -158,21 +158,21 @@ tools/jigs.py check polyhedron-net
 
 ## Platform notes
 
-Entries in `3DCRAFT-FEEDBACK.md` (J-014, J-015) and proposed ones, each with a reproducer in `findings/` unless noted:
+Entries in `3DCRAFT-FEEDBACK.md` (J-014, J-015, J-022, J-037, J-038), each with a reproducer in `findings/` unless noted:
 
 - A fold whose free edges meet exactly at the closed state is refused ("touch or lie on each other"): a closed net is a
   legitimate state ([repro](../../findings/J-014-fold-closed-loop/repro.json)). Workaround: the crease angle is capped
   at 99.99 % of the closing angle.
 - Facets that share a vertex are reported as touching in a flat fold at one particular edge length, a false positive
-  ([repro](../../findings/J-xxx-flat-fold-touch-false-positive/repro.json)). Workaround: range ends rounded to whole
+  ([repro](../../findings/J-037-flat-fold-touch-false-positive/repro.json)). Workaround: range ends rounded to whole
   millimetres.
 - Glue tabs folded with the faces are refused near closure, even a few degrees past the neighbouring face
-  ([repro](../../findings/J-xxx-tabs-refused-near-closure/repro.json)). Workaround: tabs on the flat pattern only.
+  ([repro](../../findings/J-038-tabs-refused-near-closure/repro.json)). Workaround: tabs on the flat pattern only.
 - `cavity` of an open sheet returns a number that is not a volume (136 300 mm³ for a half-folded 64 000 mm³ cube) rather
   than saying it is not closed ([repro](../../findings/J-015-cavity-open-sheet/repro.json)). Workaround: the closure
   assertion is on only at 100 %.
 - A set of bodies used as `of: {"set": ...}` works for `extent` but `area` says it names nothing
-  ([repro](../../findings/J-xxx-area-of-set-names-nothing/repro.json)). Workaround: `{"kind": "body", "where": {"set": ...}}`.
+  ([repro](../../findings/J-022-area-of-set-names-nothing/repro.json)). Workaround: `{"kind": "body", "where": {"set": ...}}`.
 - The export dialog has no line width for an SVG crease pattern, so it is written as hairlines (no reproducer: the
   dialog).
 - Already filed: `F-105` (`distance` refuses sheets, so a seam gap cannot be measured; the closure is proven by

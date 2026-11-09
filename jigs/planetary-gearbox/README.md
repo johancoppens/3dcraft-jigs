@@ -312,19 +312,19 @@ steel pins and bearings read neutral grey; the renderer's reflections are on and
 - **Flanks as arcs, not splines or formula curves.** The flanks were live `sketch.spline`s through eight points of the
   involute; such a spline strays from the curve between its points far more than a cubic interpolant would (0.009 mm on
   a 14-tooth sun at module 2 with eight points, 0.031 mm with five, against 0.003 mm for a cubic interpolant of five:
-  [finding](../../findings/J-xxx-spline-through-strays/README.md)), and opening a Jig measures every body, which on
-  spline faces is slow ([finding](../../findings/J-xxx-gear-measure-cost/README.md), from the orrery): with splines the
+  [finding](../../findings/J-034-spline-through-strays/README.md)), and opening a Jig measures every body, which on
+  spline faces is slow ([finding](../../findings/J-065-gear-measure-cost/README.md), from the orrery): with splines the
   Jig took about 10 s of CPU to open, 13 to 15 s in the Closed view. `sketch.curve` is exact but fits 35 control points
-  per flank (the gear-reducer's [finding](../../findings/J-xxx-curve-fit-fixed-size/repro.json)). Three arcs per flank
+  per flank (the gear-reducer's [finding](../../findings/J-066-formula-curve-fit-size/involute.json)). Three arcs per flank
   keep the faces cylinders: about 3 s of CPU to open.
 - A chamfer could not follow a chain of tooth flanks when they were splines: `feature.chamfer` with `chain` on the
   bed-side edge of a gear was refused ("the distance does not fit on a face somewhere along it") even at 0.2 mm
-  ([finding](../../findings/J-xxx-chamfer-tooth-chain/repro.json); the family of F-075 and F-158 in
+  ([finding](../../findings/J-047-chamfer-freeform-rim/tooth-chain.json); the family of F-075 and F-158 in
   `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`). The planets' tip chamfer is therefore a revolved cone cut
-  ([finding](../../findings/J-xxx-cone-cut-across-teeth-cost/repro.json) on its cost with spline flanks), built on print
+  ([finding](../../findings/J-064-cone-cut-across-teeth-cost/repro.json) on its cost with spline flanks), built on print
   plate 6 only, and on the planets only: the assembled views show the gears without it.
 - `measure.clearance` between meshing gears proves a lower bound that depends on where the body stands
-  ([finding](../../findings/J-xxx-clearance-set-proves-less/repro.json)) and costs seconds per set of pairs (F-098): the
+  ([finding](../../findings/J-019-assertion-stops-short/clearance.json)) and costs seconds per set of pairs (F-098): the
   meshes are checked with `measure.distance` from one flank family at a time, and the gears are left out of the overlap
   set.
 - A planet pin moved off its axis makes the overlap assertion an error ("boolean does not support this: a curve that
@@ -333,4 +333,4 @@ steel pins and bearings read neutral grey; the renderer's reflections are on and
 - A pattern instance has no index to read its own placement with (J-011), so planets 2 to 6 are five `feature.transform`
   copies, each with the planet formula for its k.
 - `variable.measure` takes no `when`, so an output measured only in one view would be measured in every view
-  ([finding](../../findings/J-xxx-variable-measure-no-when/repro.json)); the measured gaps are assertions, not outputs.
+  ([finding](../../findings/J-057-variable-measure-no-when/repro.json)); the measured gaps are assertions, not outputs.

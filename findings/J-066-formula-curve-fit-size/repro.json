@@ -1,0 +1,21 @@
+[
+ ["variable.set", {"name": "focal", "expr": "300 mm"}],
+ ["variable.set", {"name": "inner", "expr": "120 mm"}],
+ ["variable.set", {"name": "outer", "expr": "495 mm"}],
+ ["variable.set", {"name": "sheet", "expr": "0.5 mm"}],
+ ["sketch.create", {"name": "Formula section", "plane": "zx"}],
+ ["sketch.curve", {"sketch": "Formula section", "x": "t^2 / (4 * focal)", "y": "t", "t": ["inner", "outer"]}],
+ ["sketch.curve", {"sketch": "Formula section", "x": "t^2 / (4 * focal) - sheet", "y": "t", "t": ["inner", "outer"]}],
+ ["sketch.line", {"sketch": "Formula section", "from": "e1", "to": "e4"}],
+ ["sketch.line", {"sketch": "Formula section", "from": "e2", "to": "e5"}],
+ ["feature.extrude", {"sketch": "Formula section", "distance": "120 mm", "symmetric": true, "name": "Strip from formulas"}],
+ ["feature.pattern", {"source": "Strip from formulas", "count": "12", "step": ["0 mm", "200 mm", "0 mm"], "name": "Strips from formulas"}],
+ ["sketch.create", {"name": "Exact section", "plane": "zx", "offset": "3000 mm"}],
+ ["sketch.spline", {"sketch": "Exact section", "degree": 2, "control": [["inner^2 / (4 * focal)", "inner"], ["inner * outer / (4 * focal)", "(inner + outer) / 2"], ["outer^2 / (4 * focal)", "outer"]]}],
+ ["sketch.spline", {"sketch": "Exact section", "degree": 2, "control": [["inner^2 / (4 * focal) - sheet", "inner"], ["inner * outer / (4 * focal) - sheet", "(inner + outer) / 2"], ["outer^2 / (4 * focal) - sheet", "outer"]]}],
+ ["sketch.line", {"sketch": "Exact section", "from": "e1", "to": "e5"}],
+ ["sketch.line", {"sketch": "Exact section", "from": "e3", "to": "e7"}],
+ ["feature.extrude", {"sketch": "Exact section", "distance": "120 mm", "symmetric": true, "name": "Strip from a quadratic spline"}],
+ ["feature.pattern", {"source": "Strip from a quadratic spline", "count": "12", "step": ["0 mm", "200 mm", "0 mm"], "name": "Strips from quadratic splines"}],
+ ["document.check", {}]
+]
