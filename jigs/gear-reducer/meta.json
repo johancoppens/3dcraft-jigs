@@ -1,0 +1,115 @@
+{
+  "id": "gear-reducer",
+  "title": "Two-stage gear reducer",
+  "summary": "ratio, speed and power in, a cast reducer out",
+  "description": "A two-stage spur gear reducer in a split cast iron housing, sized from the ratio, speed, power and driven machine: involute teeth, modules by the Lewis formula, shafts and bearings from the torque, and a slider that turns every gear.",
+  "domain": "Mechanisms, casting",
+  "process": "Sand casting (grey iron housing), turning and hobbing (shafts and gears), bought bearings and keys",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Formula-driven involutes, module and bearing choice coupled through two passes, rim-and-hub wheels on keyed shafts, a drafted, shelled, faced and split casting with measured process checks, and a phased drive."
+  },
+  "standards": [
+    "ISO 53 basic rack (addendum 1 m, dedendum 1.25 m, clearance 0.25 m) and ISO 54 modules, as the KHK Gear Technical Reference gives them (Tables 3.1 and 3.2, JIS B 1701-1/-2; read); eq. 3.7 undercut limit, Table 3.5 top land, eq. 10.9 contact ratio (read). ISO 53 and ISO 54 themselves not read",
+    "ISO/TR 10064-2 minimum normal backlash jbn,min = 2/3 (0.06 + 0.0005 a + 0.03 m) mm (vendor formula, checked against the table Gear Solutions prints; secondary)",
+    "Shigley, Mechanical Engineering Design, ch. 14: Lewis equation (14-8), Barth factor for hobbed teeth (14-6c), Y = 0.314 at 19 teeth (Table 14-2), design factor (Example 14-1), face width 3 to 5 circular pitches (14-1; this Jig uses 12 modules), rim backup ratio (14-39, 14-40); read in King Saud University lecture slides (secondary)",
+    "ISO 6336-1:2019 application factor KA 1.00/1.25/1.50/1.75 for an electric motor driving, as Dinner reproduces the table in Gear Technology, June 2021 (secondary)",
+    "ISO 281 basic rating life L10 = (C / P)^3; NSK ball bearing catalogue, 6200 series table p. B-11: d, D, B and Cr in lbf (read, static.chipdip.ru/lib/930/DOC028930011.pdf)",
+    "Autodesk Inventor help, Guiding Values of Basic Bearing Life Lh: 15 000 to 30 000 h for gear drives in 8 to 16 h service (read); this Jig asks 20 000 h",
+    "DIN 6885-1 parallel keys, form A: b x h, t1, t2 by shaft diameter (as fasten.it tabulates the standard; secondary); key flank pressure 150 MPa steel hub times 0.8/0.7/0.6 (Ettemeyer, as schweizer-fn.de gives it; secondary)",
+    "ASME code shaft torsion 42 MPa with keyways, as Khurmi and Gupta give it (secondary)",
+    "Wheel hubs: outside diameter 1.8 bores for steel, length at least 1.25 bores and never under the face width (Gopinath and Mayuram, Machine Design II, IIT Madras, module 2, lecture 17, read in a SlideShare copy); cast hubs 1.5 to 2.5 bores long (Lobben, Machinists' and Draftsmen's Handbook, 1910, p. 395, read)",
+    "IS 1821:1987, identical with ISO 273-1979: clearance holes, medium series 11, 13.5, 17.5, 22 mm for M10 to M20 (read, clause 2)",
+    "VDG-Merkblatt K 200: draft for machine moulding, rounds R = 2e outside and r = e inside, wall about 10 mm for hand moulding, 1 % shrinkage for grey iron (read)",
+    "Splash lubrication: Klueber (wheel dips 3 to 5 modules); Malakova et al., GRANT journal 10(2) (dip at most 1/6 of the pitch diameter, pitch line speed at most 12 m/s; read)",
+    "Saarstahl data sheets: minimum Rp0.2 of C45 normalised 305 MPa and 42CrMo4 quenched and tempered 650 MPa (read)"
+  ],
+  "materials": [
+    "Grey cast iron EN-GJL-250 (EN 1561), sand cast, painted machine green: housing base and cover (7.2 g/cm3)",
+    "C45 normalised or 42CrMo4 quenched and tempered (the form's choice): pinion shafts, wheels, output shaft",
+    "Steel: spacers and end covers",
+    "62-series deep groove ball bearings, six (sizes from the outputs)",
+    "DIN 6885 form A parallel keys, four",
+    "Hexagon bolts and nuts M10 to M20 (eight, through the flange), two dowel pins 8 or 10 mm, foot bolts one size up",
+    "M16 x 1.5 drain plug, level plug and breather; radial lip seals for the input and output shafts",
+    "Gear oil for splash lubrication (the output gives about how much)"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.01
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -400,
+        -700,
+        560
+      ],
+      "target": [
+        175,
+        0,
+        -50
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 28
+    },
+    "look": {
+      "rotation": 270,
+      "reflections": false
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/castings.step",
+      "values": {
+        "show": 3
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/machined-parts.step",
+      "values": {
+        "show": 4
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/reducer.step",
+      "values": {
+        "show": 2
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 1007,
+    "variables": 530,
+    "parameters": 8,
+    "features": 139,
+    "assertions": 71,
+    "warnings": 0,
+    "build_s": 77.9,
+    "load_s": 6.68,
+    "load_cpu_s": 7.28,
+    "file_bytes": 686654,
+    "range_points": 104,
+    "range_unproven": 0,
+    "range_mean_s": 2.99,
+    "range_worst_s": 6.46
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
