@@ -1,616 +1,6067 @@
 [
-["table.set", {"name": "systems", "columns": ["system", {"name": "hole", "unit": "mm"}, {"name": "grid", "unit": "mm"}, {"name": "plate", "unit": "mm"}, {"name": "side", "unit": "mm"}, {"name": "rib", "unit": "mm"}], "rows": [["System 16", 16, 50, 12, 100, 10], ["System 28", 28, 100, 25, 200, 20]]}],
-["table.set", {"name": "profiles", "columns": ["profile", {"name": "b", "unit": "mm"}, {"name": "t", "unit": "mm"}, {"name": "ro", "unit": "mm"}, {"name": "ri", "unit": "mm"}, "kgPerM"], "rows": [["SHS 40x40x3", 40, 3, 6, 3, 3.3], ["SHS 40x40x4", 40, 4, 8, 4, 4.2], ["SHS 50x50x3", 50, 3, 6, 3, 4.25], ["SHS 50x50x4", 50, 4, 8, 4, 5.45], ["SHS 50x50x5", 50, 5, 10, 5, 6.56], ["SHS 60x60x3", 60, 3, 6, 3, 5.19], ["SHS 60x60x4", 60, 4, 8, 4, 6.71], ["SHS 60x60x5", 60, 5, 10, 5, 8.13], ["SHS 70x70x4", 70, 4, 8, 4, 7.97], ["SHS 70x70x5", 70, 5, 10, 5, 9.7], ["SHS 80x80x4", 80, 4, 8, 4, 9.22], ["SHS 80x80x5", 80, 5, 10, 5, 11.27], ["SHS 80x80x6", 80, 6, 12, 6, 13.21], ["SHS 90x90x5", 90, 5, 10, 5, 12.84], ["SHS 100x100x4", 100, 4, 8, 4, 11.73], ["SHS 100x100x5", 100, 5, 10, 5, 14.41], ["SHS 100x100x6", 100, 6, 12, 6, 16.98], ["SHS 100x100x8", 100, 8, 20.0, 12.0, 21.39]]}],
-["variable.set", {"name": "sys", "expr": "1"}],
-["variable.set", {"name": "L", "expr": "1200 mm"}],
-["variable.set", {"name": "Wd", "expr": "800 mm"}],
-["variable.set", {"name": "ribTarget", "expr": "250 mm"}],
-["variable.set", {"name": "tabTarget", "expr": "200 mm"}],
-["variable.set", {"name": "tabPct", "expr": "60"}],
-["variable.set", {"name": "clrPct", "expr": "2"}],
-["variable.set", {"name": "relPct", "expr": "8"}],
-["variable.set", {"name": "frame", "expr": "3"}],
-["variable.set", {"name": "tableH", "expr": "900 mm"}],
-["variable.set", {"name": "profile", "expr": "11"}],
-["variable.set", {"name": "hd", "expr": "systems[sys].hole"}],
-["variable.set", {"name": "g", "expr": "systems[sys].grid"}],
-["variable.set", {"name": "pt", "expr": "systems[sys].plate"}],
-["variable.set", {"name": "sh", "expr": "systems[sys].side"}],
-["variable.set", {"name": "tr", "expr": "systems[sys].rib"}],
-["variable.set", {"name": "rh", "expr": "sh - pt"}],
-["variable.set", {"name": "zm", "expr": "-(pt + sh) / 2"}],
-["variable.set", {"name": "nX", "expr": "floor(L / g)"}],
-["variable.set", {"name": "nY", "expr": "floor(Wd / g)"}],
-["variable.set", {"name": "x0", "expr": "(L - (nX - 1) * g) / 2"}],
-["variable.set", {"name": "y0", "expr": "(Wd - (nY - 1) * g) / 2"}],
-["variable.set", {"name": "rows", "expr": "floor(sh / g)"}],
-["variable.set", {"name": "f", "expr": "tabPct / 100"}],
-["variable.set", {"name": "clr", "expr": "clrPct / 100 * pt"}],
-["variable.set", {"name": "rd", "expr": "relPct / 100 * pt"}],
-["variable.set", {"name": "e1", "expr": "rd / (2 * sqrt(2))"}],
-["variable.set", {"name": "tabL", "expr": "min(f * pt, pt - 3 mm)"}],
-["variable.set", {"name": "tabW", "expr": "max(40 mm, 3 * tr)"}],
-["variable.set", {"name": "sw", "expr": "tr + 2 * clr"}],
-["variable.set", {"name": "sl", "expr": "tabW + 2 * clr"}],
-["variable.set", {"name": "eN", "expr": "min(x0, y0)"}],
-["variable.set", {"name": "dN", "expr": "pt + clr"}],
-["variable.set", {"name": "aMax", "expr": "g / 2 - sqrt(max(0 mm * 1 mm, (hd / 2 + pt / 2) * (hd / 2 + pt / 2) - max(0 mm, eN - dN - rd) * max(0 mm, eN - dN - rd)))"}],
-["variable.set", {"name": "sysWeb", "expr": "g / 2 - hd / 2 - pt"}],
-["variable.set", {"name": "aE", "expr": "g / 2 + e1 - sqrt(max(0 mm * 1 mm, (hd / 2 + pt / 2 + rd) * (hd / 2 + pt / 2 + rd) - max(0 mm, eN - pt - e1) * max(0 mm, eN - pt - e1)))"}],
-["variable.set", {"name": "aD", "expr": "g / 2 + e1 - sqrt(max(0 mm * 1 mm, (hd / 2 + min(sysWeb, pt / 2) + rd) * (hd / 2 + min(sysWeb, pt / 2) + rd) - max(0 mm, g / 2 - pt - e1) * max(0 mm, g / 2 - pt - e1)))"}],
-["variable.set", {"name": "tabS", "expr": "min(3 * pt, floor(2 * (aMax - clr) / (1 mm)) * 1 mm, floor(2 * aE / (1 mm)) * 1 mm, floor(2 * aD / (1 mm)) * 1 mm)"}],
-["variable.set", {"name": "aN", "expr": "tabS / 2 + clr"}],
-["variable.set", {"name": "sN", "expr": "tabS + 2 * clr"}],
-["variable.set", {"name": "b", "expr": "profiles[profile].b"}],
-["variable.set", {"name": "t", "expr": "profiles[profile].t"}],
-["variable.set", {"name": "ro", "expr": "profiles[profile].ro"}],
-["variable.set", {"name": "ri", "expr": "profiles[profile].ri"}],
-["variable.set", {"name": "legsOn", "expr": "frame >= 2"}],
-["variable.set", {"name": "frameOn", "expr": "frame == 3"}],
-["variable.set", {"name": "legLen", "expr": "tableH - 2 * pt"}],
-["variable.set", {"name": "railZ", "expr": "-tableH + 150 mm"}],
-["variable.set", {"name": "railLenX", "expr": "L - 2 * pt - 2 * b"}],
-["variable.set", {"name": "railLenY", "expr": "Wd - 2 * pt - 2 * b"}],
-["variable.set", {"name": "dT", "expr": "tr / 2 + tabW / 2 + pt"}],
-["variable.set", {"name": "rE", "expr": "max(ceil((2 * dT + sl + 2 * rd + pt / 2) / g), floor(ribTarget / g))"}],
-["variable.set", {"name": "ribStep", "expr": "rE * g"}],
-["variable.set", {"name": "legClear", "expr": "if(legsOn, b + 10 mm, 0 mm)"}],
-["variable.set", {"name": "kMin", "expr": "max(pt + legClear + tr / 2, 2 * pt + dT + tabW / 2 + clr + rd)"}],
-["variable.set", {"name": "jminX", "expr": "max(0, ceil((kMin - x0) / g - 0.5))"}],
-["variable.set", {"name": "mX", "expr": "nX - 1 - 2 * jminX"}],
-["variable.set", {"name": "nRx", "expr": "max(1, min(ceil((L - 2 * pt) / ribStep) - 1, floor((mX - 1) / rE) + 1))"}],
-["variable.set", {"name": "jsX", "expr": "jminX + round(((mX - 1) - (nRx - 1) * rE) / 2)"}],
-["variable.set", {"name": "jminY", "expr": "max(0, ceil((kMin - y0) / g - 0.5))"}],
-["variable.set", {"name": "mY", "expr": "nY - 1 - 2 * jminY"}],
-["variable.set", {"name": "nRy", "expr": "max(1, min(ceil((Wd - 2 * pt) / ribStep) - 1, floor((mY - 1) / rE) + 1))"}],
-["variable.set", {"name": "jsY", "expr": "jminY + round(((mY - 1) - (nRy - 1) * rE) / 2)"}],
-["variable.set", {"name": "xr0", "expr": "x0 + (jsX + 0.5) * g"}],
-["variable.set", {"name": "yr0", "expr": "y0 + (jsY + 0.5) * g"}],
-["variable.set", {"name": "xrL", "expr": "xr0 + (nRx - 1) * ribStep"}],
-["variable.set", {"name": "yrL", "expr": "yr0 + (nRy - 1) * ribStep"}],
-["variable.set", {"name": "tE", "expr": "max(1, floor(tabTarget / g))"}],
-["variable.set", {"name": "tabStep", "expr": "tE * g"}],
-["variable.set", {"name": "nTx", "expr": "floor((nX - 2) / tE) + 1"}],
-["variable.set", {"name": "nTy", "expr": "floor((nY - 2) / tE) + 1"}],
-["variable.set", {"name": "xt0", "expr": "x0 + (round(((nX - 2) - (nTx - 1) * tE) / 2) + 0.5) * g"}],
-["variable.set", {"name": "yt0", "expr": "y0 + (round(((nY - 2) - (nTy - 1) * tE) / 2) + 0.5) * g"}],
-["variable.set", {"name": "zc", "expr": "-g"}],
-["variable.set", {"name": "webN", "expr": "min(sqrt(max(0 mm, g / 2 - aN) * max(0 mm, g / 2 - aN) + (eN - dN) * (eN - dN)), sqrt((g / 2 - aN + rd) * (g / 2 - aN + rd) + (eN - dN) * (eN - dN)) - rd) - hd / 2"}],
-["variable.set", {"name": "webD", "expr": "sqrt((g / 2 - tabS / 2 + e1) * (g / 2 - tabS / 2 + e1) + (g / 2 - pt - e1) * (g / 2 - pt - e1)) - rd - hd / 2"}],
-["variable.set", {"name": "webE", "expr": "sqrt((g / 2 - tabS / 2 + e1) * (g / 2 - tabS / 2 + e1) + (eN - pt - e1) * (eN - pt - e1)) - rd - hd / 2"}],
-["variable.set", {"name": "pitch", "expr": "max(tabStep, xt0, yt0, ribStep - 2 * dT, yr0 - dT - pt, Wd - pt - yrL - dT, xr0 - dT - pt, L - pt - xrL - dT)"}],
-["variable.set", {"name": "pocketOk", "expr": "pt - tabL >= 3 mm && tabL >= pt / 2"}],
-["variable.set", {"name": "widthOk", "expr": "tabW >= 40 mm && tabS >= 2.5 * pt"}],
-["variable.set", {"name": "webOk", "expr": "webN >= pt / 2 && webE >= pt / 2 && webD >= min(sysWeb, pt / 2)"}],
-["variable.set", {"name": "reliefOk", "expr": "rd >= 0.5 mm && sw > 4 * rd && sN > 4 * rd && rh / 2 > 2 * rd"}],
-["variable.set", {"name": "ribsOk", "expr": "mX >= 1 && mY >= 1 && ribStep - 2 * dT - sl - 2 * rd >= pt / 2"}],
-["sketch.create", {"name": "TopSketch", "plane": "xy", "offset": "-pt"}],
-["sketch.rect", {"sketch": "TopSketch", "from": ["0 mm", "0 mm"], "to": ["L", "Wd"]}],
-["sketch.circle", {"sketch": "TopSketch", "center": ["x0", "y0"], "radius": "hd / 2"}],
-["sketch.pattern", {"sketch": "TopSketch", "entities": ["e10"], "count": "nX", "step": ["g", "0 mm"], "count2": "nY", "step2": ["0 mm", "g"]}],
-["feature.extrude", {"sketch": "TopSketch", "distance": "pt", "name": "TopPlate"}],
-["sketch.create", {"name": "TopSlotsY", "plane": "xy", "offset": "-pt - 1 mm"}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (-(sw / 2))", "(yr0 - dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (-(sw / 2))", "(yr0 - dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (rd))", "(yr0 - dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (2 * (rd)))", "(yr0 - dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (2 * (rd)))", "(yr0 - dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (rd))", "(yr0 - dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (sw / 2)", "(yr0 - dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (sw / 2)", "(yr0 - dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (rd))", "(yr0 - dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (2 * (rd)))", "(yr0 - dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (2 * (rd)))", "(yr0 - dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (rd))", "(yr0 - dT) + (-(sl / 2))"]}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e1", "to": "e2"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e3", "start": "e4", "end": "e2"}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e4", "to": "e5"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e6", "start": "e7", "end": "e5"}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e7", "to": "e8"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e9", "start": "e10", "end": "e8"}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e10", "to": "e11"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e12", "start": "e1", "end": "e11"}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (-(sw / 2))", "(yr0 + dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (-(sw / 2))", "(yr0 + dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (rd))", "(yr0 + dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (2 * (rd)))", "(yr0 + dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (2 * (rd)))", "(yr0 + dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (rd))", "(yr0 + dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (sw / 2)", "(yr0 + dT) + (sl / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + (sw / 2)", "(yr0 + dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (rd))", "(yr0 + dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((sw / 2) - (2 * (rd)))", "(yr0 + dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (2 * (rd)))", "(yr0 + dT) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsY", "at": ["(xr0) + ((-(sw / 2)) + (rd))", "(yr0 + dT) + (-(sl / 2))"]}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e21", "to": "e22"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e23", "start": "e24", "end": "e22"}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e24", "to": "e25"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e26", "start": "e27", "end": "e25"}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e27", "to": "e28"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e29", "start": "e30", "end": "e28"}],
-["sketch.line", {"sketch": "TopSlotsY", "from": "e30", "to": "e31"}],
-["sketch.arc", {"sketch": "TopSlotsY", "center": "e32", "start": "e21", "end": "e31"}],
-["sketch.pattern", {"sketch": "TopSlotsY", "entities": ["e13", "e14", "e15", "e16", "e17", "e18", "e19", "e20", "e33", "e34", "e35", "e36", "e37", "e38", "e39", "e40"], "count": "nRx", "step": ["ribStep", "0 mm"], "count2": "nRy", "step2": ["0 mm", "ribStep"]}],
-["feature.extrude", {"sketch": "TopSlotsY", "distance": "pt + 2 mm", "cut": "TopPlate", "name": "TopSlottedY"}],
-["sketch.create", {"name": "TopSlotsX", "plane": "xy", "offset": "-pt - 1 mm"}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (-(sl / 2))", "(yr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (sl / 2)", "(yr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (sl / 2)", "(yr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (sl / 2)", "(yr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (sl / 2)", "(yr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (sl / 2)", "(yr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (sl / 2)", "(yr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (-(sl / 2))", "(yr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (-(sl / 2))", "(yr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (-(sl / 2))", "(yr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (-(sl / 2))", "(yr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 - dT) + (-(sl / 2))", "(yr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e1", "to": "e2"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e3", "start": "e2", "end": "e4"}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e4", "to": "e5"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e6", "start": "e5", "end": "e7"}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e7", "to": "e8"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e9", "start": "e8", "end": "e10"}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e10", "to": "e11"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e12", "start": "e11", "end": "e1"}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (-(sl / 2))", "(yr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (sl / 2)", "(yr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (sl / 2)", "(yr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (sl / 2)", "(yr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (sl / 2)", "(yr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (sl / 2)", "(yr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (sl / 2)", "(yr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (-(sl / 2))", "(yr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (-(sl / 2))", "(yr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (-(sl / 2))", "(yr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (-(sl / 2))", "(yr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopSlotsX", "at": ["(xr0 + dT) + (-(sl / 2))", "(yr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e21", "to": "e22"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e23", "start": "e22", "end": "e24"}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e24", "to": "e25"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e26", "start": "e25", "end": "e27"}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e27", "to": "e28"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e29", "start": "e28", "end": "e30"}],
-["sketch.line", {"sketch": "TopSlotsX", "from": "e30", "to": "e31"}],
-["sketch.arc", {"sketch": "TopSlotsX", "center": "e32", "start": "e31", "end": "e21"}],
-["sketch.pattern", {"sketch": "TopSlotsX", "entities": ["e13", "e14", "e15", "e16", "e17", "e18", "e19", "e20", "e33", "e34", "e35", "e36", "e37", "e38", "e39", "e40"], "count": "nRx", "step": ["ribStep", "0 mm"], "count2": "nRy", "step2": ["0 mm", "ribStep"]}],
-["feature.extrude", {"sketch": "TopSlotsX", "distance": "pt + 2 mm", "cut": "TopSlottedY", "name": "TopSlotted"}],
-["sketch.create", {"name": "TopNotches", "plane": "xy", "offset": "-pt - 1 mm"}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (-(aN))", "(0 mm) + (-(2 mm))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (aN)", "(0 mm) + (-(2 mm))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (aN)", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((aN) - (rd))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((aN) - (2 * (rd)))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((-(aN)) + (2 * (rd)))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((-(aN)) + (rd))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (-(aN))", "(0 mm) + (dN)"]}],
-["sketch.line", {"sketch": "TopNotches", "from": "e1", "to": "e2"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e2", "to": "e3"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e4", "start": "e3", "end": "e5"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e5", "to": "e6"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e7", "start": "e6", "end": "e8"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e8", "to": "e1"}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (-(aN))", "(Wd) - (-(2 mm))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (aN)", "(Wd) - (-(2 mm))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (aN)", "(Wd) - (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((aN) - (rd))", "(Wd) - (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((aN) - (2 * (rd)))", "(Wd) - (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((-(aN)) + (2 * (rd)))", "(Wd) - (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + ((-(aN)) + (rd))", "(Wd) - (dN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(xt0) + (-(aN))", "(Wd) - (dN)"]}],
-["sketch.line", {"sketch": "TopNotches", "from": "e15", "to": "e16"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e16", "to": "e17"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e18", "start": "e19", "end": "e17"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e19", "to": "e20"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e21", "start": "e22", "end": "e20"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e22", "to": "e15"}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (-(2 mm))", "(yt0) + (-(aN))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (-(2 mm))", "(yt0) + (aN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (dN)", "(yt0) + (aN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (dN)", "(yt0) + ((aN) - (rd))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (dN)", "(yt0) + ((aN) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (dN)", "(yt0) + ((-(aN)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (dN)", "(yt0) + ((-(aN)) + (rd))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(0 mm) + (dN)", "(yt0) + (-(aN))"]}],
-["sketch.line", {"sketch": "TopNotches", "from": "e29", "to": "e30"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e30", "to": "e31"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e32", "start": "e33", "end": "e31"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e33", "to": "e34"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e35", "start": "e36", "end": "e34"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e36", "to": "e29"}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (-(2 mm))", "(yt0) + (-(aN))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (-(2 mm))", "(yt0) + (aN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (dN)", "(yt0) + (aN)"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (dN)", "(yt0) + ((aN) - (rd))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (dN)", "(yt0) + ((aN) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (dN)", "(yt0) + ((-(aN)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (dN)", "(yt0) + ((-(aN)) + (rd))"]}],
-["sketch.point", {"sketch": "TopNotches", "at": ["(L) - (dN)", "(yt0) + (-(aN))"]}],
-["sketch.line", {"sketch": "TopNotches", "from": "e43", "to": "e44"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e44", "to": "e45"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e46", "start": "e45", "end": "e47"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e47", "to": "e48"}],
-["sketch.arc", {"sketch": "TopNotches", "center": "e49", "start": "e48", "end": "e50"}],
-["sketch.line", {"sketch": "TopNotches", "from": "e50", "to": "e43"}],
-["sketch.pattern", {"sketch": "TopNotches", "entities": ["e9", "e10", "e11", "e12", "e13", "e14", "e23", "e24", "e25", "e26", "e27", "e28"], "count": "nTx", "step": ["tabStep", "0 mm"]}],
-["sketch.pattern", {"sketch": "TopNotches", "entities": ["e37", "e38", "e39", "e40", "e41", "e42", "e51", "e52", "e53", "e54", "e55", "e56"], "count": "nTy", "step": ["0 mm", "tabStep"]}],
-["feature.extrude", {"sketch": "TopNotches", "distance": "pt + 2 mm", "cut": "TopSlotted", "name": "Top"}],
-["sketch.create", {"name": "FrontSketch", "plane": "zx"}],
-["sketch.rect", {"sketch": "FrontSketch", "from": ["-sh", "0 mm"], "to": ["-pt", "L"]}],
-["sketch.circle", {"sketch": "FrontSketch", "center": ["-g / 2", "x0"], "radius": "hd / 2"}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (-(sl / 2))", "(xr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (sl / 2)", "(xr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (sl / 2)", "(xr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (sl / 2)", "(xr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (sl / 2)", "(xr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (sl / 2)", "(xr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (sl / 2)", "(xr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (-(sl / 2))", "(xr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (-(sl / 2))", "(xr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (-(sl / 2))", "(xr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (-(sl / 2))", "(xr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "FrontSketch", "at": ["(zm) + (-(sl / 2))", "(xr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.line", {"sketch": "FrontSketch", "from": "e11", "to": "e12"}],
-["sketch.arc", {"sketch": "FrontSketch", "center": "e13", "start": "e12", "end": "e14"}],
-["sketch.line", {"sketch": "FrontSketch", "from": "e14", "to": "e15"}],
-["sketch.arc", {"sketch": "FrontSketch", "center": "e16", "start": "e15", "end": "e17"}],
-["sketch.line", {"sketch": "FrontSketch", "from": "e17", "to": "e18"}],
-["sketch.arc", {"sketch": "FrontSketch", "center": "e19", "start": "e18", "end": "e20"}],
-["sketch.line", {"sketch": "FrontSketch", "from": "e20", "to": "e21"}],
-["sketch.arc", {"sketch": "FrontSketch", "center": "e22", "start": "e21", "end": "e11"}],
-["sketch.pattern", {"sketch": "FrontSketch", "entities": ["e10"], "count": "nX", "step": ["0 mm", "g"], "count2": "rows", "step2": ["-g", "0 mm"]}],
-["sketch.pattern", {"sketch": "FrontSketch", "entities": ["e23", "e24", "e25", "e26", "e27", "e28", "e29", "e30"], "count": "nRx", "step": ["0 mm", "ribStep"]}],
-["feature.extrude", {"sketch": "FrontSketch", "distance": "pt", "name": "FrontPlate"}],
-["feature.block", {"name": "FrontTab", "size": ["tabS", "pt", "tabL + 1 mm"], "position": ["xt0 - tabS / 2", "0 mm", "-pt - 1 mm"]}],
-["feature.pattern", {"name": "FrontTabs", "source": "FrontTab", "count": "nTx", "step": ["tabStep", "0 mm", "0 mm"]}],
-["feature.boolean", {"op": "union", "target": "FrontPlate", "tool": "FrontTabs", "name": "FrontTabbed"}],
-["sketch.create", {"name": "FrontCuts", "plane": "zx", "offset": "-1 mm"}],
-["sketch.circle", {"sketch": "FrontCuts", "center": ["-pt - e1", "xt0 - tabS / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "FrontCuts", "center": ["-pt - e1", "xt0 + tabS / 2 - e1"], "radius": "rd"}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (-(aN))", "(0 mm) + (-(2 mm))"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (aN)", "(0 mm) + (-(2 mm))"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (aN)", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((aN) - (rd))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((aN) - (2 * (rd)))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((-(aN)) + (2 * (rd)))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((-(aN)) + (rd))", "(0 mm) + (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (-(aN))", "(0 mm) + (dN)"]}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e5", "to": "e6"}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e6", "to": "e7"}],
-["sketch.arc", {"sketch": "FrontCuts", "center": "e8", "start": "e7", "end": "e9"}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e9", "to": "e10"}],
-["sketch.arc", {"sketch": "FrontCuts", "center": "e11", "start": "e10", "end": "e12"}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e12", "to": "e5"}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (-(aN))", "(L) - (-(2 mm))"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (aN)", "(L) - (-(2 mm))"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (aN)", "(L) - (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((aN) - (rd))", "(L) - (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((aN) - (2 * (rd)))", "(L) - (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((-(aN)) + (2 * (rd)))", "(L) - (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + ((-(aN)) + (rd))", "(L) - (dN)"]}],
-["sketch.point", {"sketch": "FrontCuts", "at": ["(zc) + (-(aN))", "(L) - (dN)"]}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e19", "to": "e20"}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e20", "to": "e21"}],
-["sketch.arc", {"sketch": "FrontCuts", "center": "e22", "start": "e23", "end": "e21"}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e23", "to": "e24"}],
-["sketch.arc", {"sketch": "FrontCuts", "center": "e25", "start": "e26", "end": "e24"}],
-["sketch.line", {"sketch": "FrontCuts", "from": "e26", "to": "e19"}],
-["sketch.pattern", {"sketch": "FrontCuts", "entities": ["e2", "e4"], "count": "nTx", "step": ["0 mm", "tabStep"]}],
-["feature.extrude", {"sketch": "FrontCuts", "distance": "pt + 2 mm", "cut": "FrontTabbed", "name": "Front"}],
-["feature.mirror", {"source": "Front", "normal": [0, 1, 0], "point": ["0 mm", "Wd / 2", "0 mm"], "keep": true, "name": "Back"}],
-["sketch.create", {"name": "LeftSketch", "plane": "yz"}],
-["sketch.rect", {"sketch": "LeftSketch", "from": ["pt", "-sh"], "to": ["Wd - pt", "-pt"]}],
-["sketch.circle", {"sketch": "LeftSketch", "center": ["y0", "-g / 2"], "radius": "hd / 2"}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + (-(sw / 2))", "(zm) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + (-(sw / 2))", "(zm) + (sl / 2)"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((-(sw / 2)) + (rd))", "(zm) + (sl / 2)"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((-(sw / 2)) + (2 * (rd)))", "(zm) + (sl / 2)"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((sw / 2) - (2 * (rd)))", "(zm) + (sl / 2)"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((sw / 2) - (rd))", "(zm) + (sl / 2)"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + (sw / 2)", "(zm) + (sl / 2)"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + (sw / 2)", "(zm) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((sw / 2) - (rd))", "(zm) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((sw / 2) - (2 * (rd)))", "(zm) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((-(sw / 2)) + (2 * (rd)))", "(zm) + (-(sl / 2))"]}],
-["sketch.point", {"sketch": "LeftSketch", "at": ["(yr0) + ((-(sw / 2)) + (rd))", "(zm) + (-(sl / 2))"]}],
-["sketch.line", {"sketch": "LeftSketch", "from": "e11", "to": "e12"}],
-["sketch.arc", {"sketch": "LeftSketch", "center": "e13", "start": "e14", "end": "e12"}],
-["sketch.line", {"sketch": "LeftSketch", "from": "e14", "to": "e15"}],
-["sketch.arc", {"sketch": "LeftSketch", "center": "e16", "start": "e17", "end": "e15"}],
-["sketch.line", {"sketch": "LeftSketch", "from": "e17", "to": "e18"}],
-["sketch.arc", {"sketch": "LeftSketch", "center": "e19", "start": "e20", "end": "e18"}],
-["sketch.line", {"sketch": "LeftSketch", "from": "e20", "to": "e21"}],
-["sketch.arc", {"sketch": "LeftSketch", "center": "e22", "start": "e11", "end": "e21"}],
-["sketch.pattern", {"sketch": "LeftSketch", "entities": ["e10"], "count": "nY", "step": ["g", "0 mm"], "count2": "rows", "step2": ["0 mm", "-g"]}],
-["sketch.pattern", {"sketch": "LeftSketch", "entities": ["e23", "e24", "e25", "e26", "e27", "e28", "e29", "e30"], "count": "nRy", "step": ["ribStep", "0 mm"]}],
-["feature.extrude", {"sketch": "LeftSketch", "distance": "pt", "name": "LeftPlate"}],
-["feature.block", {"name": "LeftTab", "size": ["pt", "tabS", "tabL + 1 mm"], "position": ["0 mm", "yt0 - tabS / 2", "-pt - 1 mm"]}],
-["feature.pattern", {"name": "LeftTabs", "source": "LeftTab", "count": "nTy", "step": ["0 mm", "tabStep", "0 mm"]}],
-["feature.boolean", {"op": "union", "target": "LeftPlate", "tool": "LeftTabs", "name": "LeftTabbed"}],
-["feature.block", {"name": "LeftEnd", "size": ["pt", "tabL + 1 mm", "tabS"], "position": ["0 mm", "pt - tabL", "zc - tabS / 2"]}],
-["feature.pattern", {"name": "LeftEnds", "source": "LeftEnd", "count": "2", "step": ["0 mm", "Wd - 2 * pt + tabL - 1 mm", "0 mm"]}],
-["feature.boolean", {"op": "union", "target": "LeftTabbed", "tool": "LeftEnds", "name": "LeftEnded"}],
-["sketch.create", {"name": "LeftReliefs", "plane": "yz", "offset": "-1 mm"}],
-["sketch.circle", {"sketch": "LeftReliefs", "center": ["yt0 - tabS / 2 + e1", "-pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "LeftReliefs", "center": ["yt0 + tabS / 2 - e1", "-pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "LeftReliefs", "center": ["pt + e1", "zc - tabS / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "LeftReliefs", "center": ["pt + e1", "zc + tabS / 2 - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "LeftReliefs", "center": ["Wd - pt - e1", "zc - tabS / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "LeftReliefs", "center": ["Wd - pt - e1", "zc + tabS / 2 - e1"], "radius": "rd"}],
-["sketch.pattern", {"sketch": "LeftReliefs", "entities": ["e2", "e4"], "count": "nTy", "step": ["tabStep", "0 mm"]}],
-["feature.extrude", {"sketch": "LeftReliefs", "distance": "pt + 2 mm", "cut": "LeftEnded", "name": "Left"}],
-["feature.mirror", {"source": "Left", "normal": [1, 0, 0], "point": ["L / 2", "0 mm", "0 mm"], "keep": true, "name": "Right"}],
-["sketch.create", {"name": "RibYSketch", "plane": "yz", "offset": "xr0 - tr / 2"}],
-["sketch.rect", {"sketch": "RibYSketch", "from": ["pt", "-sh"], "to": ["Wd - pt", "-pt"]}],
-["feature.extrude", {"sketch": "RibYSketch", "distance": "tr", "name": "RibYPlate"}],
-["feature.block", {"name": "RibYTab", "size": ["tr", "tabW", "tabL + 1 mm"], "position": ["xr0 - tr / 2", "yr0 - dT - tabW / 2", "-pt - 1 mm"]}],
-["feature.pattern", {"name": "RibYTabPair", "source": "RibYTab", "count": "2", "step": ["0 mm", "2 * dT", "0 mm"]}],
-["feature.pattern", {"name": "RibYTabs", "source": "RibYTabPair", "count": "nRy", "step": ["0 mm", "ribStep", "0 mm"]}],
-["feature.block", {"name": "RibYEnd", "size": ["tr", "tabL + 1 mm", "tabW"], "position": ["xr0 - tr / 2", "pt - tabL", "zm - tabW / 2"]}],
-["feature.pattern", {"name": "RibYEnds", "source": "RibYEnd", "count": "2", "step": ["0 mm", "Wd - 2 * pt + tabL - 1 mm", "0 mm"]}],
-["feature.boolean", {"op": "union", "target": "RibYPlate", "tool": "RibYTabs", "name": "RibYTabbed"}],
-["feature.boolean", {"op": "union", "target": "RibYTabbed", "tool": "RibYEnds", "name": "RibYEnded"}],
-["sketch.create", {"name": "RibYLaps", "plane": "yz", "offset": "xr0 - tr / 2 - 1 mm"}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + (-(sw / 2))", "(-pt) - (-(2 mm))"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + (sw / 2)", "(-pt) - (-(2 mm))"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + (sw / 2)", "(-pt) - (rh / 2 + clr)"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + ((sw / 2) - (rd))", "(-pt) - (rh / 2 + clr)"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + ((sw / 2) - (2 * (rd)))", "(-pt) - (rh / 2 + clr)"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + ((-(sw / 2)) + (2 * (rd)))", "(-pt) - (rh / 2 + clr)"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + ((-(sw / 2)) + (rd))", "(-pt) - (rh / 2 + clr)"]}],
-["sketch.point", {"sketch": "RibYLaps", "at": ["(yr0) + (-(sw / 2))", "(-pt) - (rh / 2 + clr)"]}],
-["sketch.line", {"sketch": "RibYLaps", "from": "e1", "to": "e2"}],
-["sketch.line", {"sketch": "RibYLaps", "from": "e2", "to": "e3"}],
-["sketch.arc", {"sketch": "RibYLaps", "center": "e4", "start": "e5", "end": "e3"}],
-["sketch.line", {"sketch": "RibYLaps", "from": "e5", "to": "e6"}],
-["sketch.arc", {"sketch": "RibYLaps", "center": "e7", "start": "e8", "end": "e6"}],
-["sketch.line", {"sketch": "RibYLaps", "from": "e8", "to": "e1"}],
-["sketch.pattern", {"sketch": "RibYLaps", "entities": ["e9", "e10", "e11", "e12", "e13", "e14"], "count": "nRy", "step": ["ribStep", "0 mm"]}],
-["feature.extrude", {"sketch": "RibYLaps", "distance": "tr + 2 mm", "cut": "RibYEnded", "name": "RibYLapped"}],
-["sketch.create", {"name": "RibYReliefs", "plane": "yz", "offset": "xr0 - tr / 2 - 1 mm"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["yr0 - dT - tabW / 2 + e1", "-pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["yr0 - dT + tabW / 2 - e1", "-pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["yr0 + dT - tabW / 2 + e1", "-pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["yr0 + dT + tabW / 2 - e1", "-pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["pt + e1", "zm - tabW / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["pt + e1", "zm + tabW / 2 - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["Wd - pt - e1", "zm - tabW / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibYReliefs", "center": ["Wd - pt - e1", "zm + tabW / 2 - e1"], "radius": "rd"}],
-["sketch.pattern", {"sketch": "RibYReliefs", "entities": ["e2", "e4", "e6", "e8"], "count": "nRy", "step": ["ribStep", "0 mm"]}],
-["feature.extrude", {"sketch": "RibYReliefs", "distance": "tr + 2 mm", "cut": "RibYLapped", "name": "RibY"}],
-["feature.pattern", {"name": "RibsY", "source": "RibY", "count": "nRx", "step": ["ribStep", "0 mm", "0 mm"]}],
-["sketch.create", {"name": "RibXSketch", "plane": "zx", "offset": "yr0 - tr / 2"}],
-["sketch.rect", {"sketch": "RibXSketch", "from": ["-sh", "pt"], "to": ["-pt", "L - pt"]}],
-["feature.extrude", {"sketch": "RibXSketch", "distance": "tr", "name": "RibXPlate"}],
-["feature.block", {"name": "RibXTab", "size": ["tabW", "tr", "tabL + 1 mm"], "position": ["xr0 - dT - tabW / 2", "yr0 - tr / 2", "-pt - 1 mm"]}],
-["feature.pattern", {"name": "RibXTabPair", "source": "RibXTab", "count": "2", "step": ["2 * dT", "0 mm", "0 mm"]}],
-["feature.pattern", {"name": "RibXTabs", "source": "RibXTabPair", "count": "nRx", "step": ["ribStep", "0 mm", "0 mm"]}],
-["feature.block", {"name": "RibXEnd", "size": ["tabL + 1 mm", "tr", "tabW"], "position": ["pt - tabL", "yr0 - tr / 2", "zm - tabW / 2"]}],
-["feature.pattern", {"name": "RibXEnds", "source": "RibXEnd", "count": "2", "step": ["L - 2 * pt + tabL - 1 mm", "0 mm", "0 mm"]}],
-["feature.boolean", {"op": "union", "target": "RibXPlate", "tool": "RibXTabs", "name": "RibXTabbed"}],
-["feature.boolean", {"op": "union", "target": "RibXTabbed", "tool": "RibXEnds", "name": "RibXEnded"}],
-["sketch.create", {"name": "RibXLaps", "plane": "zx", "offset": "yr0 - tr / 2 - 1 mm"}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (-(2 mm))", "(xr0) + (-(sw / 2))"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (-(2 mm))", "(xr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (rh / 2)", "(xr0) + (sw / 2)"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (rh / 2)", "(xr0) + ((sw / 2) - (rd))"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (rh / 2)", "(xr0) + ((sw / 2) - (2 * (rd)))"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (rh / 2)", "(xr0) + ((-(sw / 2)) + (2 * (rd)))"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (rh / 2)", "(xr0) + ((-(sw / 2)) + (rd))"]}],
-["sketch.point", {"sketch": "RibXLaps", "at": ["(-sh) + (rh / 2)", "(xr0) + (-(sw / 2))"]}],
-["sketch.line", {"sketch": "RibXLaps", "from": "e1", "to": "e2"}],
-["sketch.line", {"sketch": "RibXLaps", "from": "e2", "to": "e3"}],
-["sketch.arc", {"sketch": "RibXLaps", "center": "e4", "start": "e5", "end": "e3"}],
-["sketch.line", {"sketch": "RibXLaps", "from": "e5", "to": "e6"}],
-["sketch.arc", {"sketch": "RibXLaps", "center": "e7", "start": "e8", "end": "e6"}],
-["sketch.line", {"sketch": "RibXLaps", "from": "e8", "to": "e1"}],
-["sketch.pattern", {"sketch": "RibXLaps", "entities": ["e9", "e10", "e11", "e12", "e13", "e14"], "count": "nRx", "step": ["0 mm", "ribStep"]}],
-["feature.extrude", {"sketch": "RibXLaps", "distance": "tr + 2 mm", "cut": "RibXEnded", "name": "RibXLapped"}],
-["sketch.create", {"name": "RibXReliefs", "plane": "zx", "offset": "yr0 - tr / 2 - 1 mm"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["-pt - e1", "xr0 - dT - tabW / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["-pt - e1", "xr0 - dT + tabW / 2 - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["-pt - e1", "xr0 + dT - tabW / 2 + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["-pt - e1", "xr0 + dT + tabW / 2 - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["zm - tabW / 2 + e1", "pt + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["zm + tabW / 2 - e1", "pt + e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["zm - tabW / 2 + e1", "L - pt - e1"], "radius": "rd"}],
-["sketch.circle", {"sketch": "RibXReliefs", "center": ["zm + tabW / 2 - e1", "L - pt - e1"], "radius": "rd"}],
-["sketch.pattern", {"sketch": "RibXReliefs", "entities": ["e2", "e4", "e6", "e8"], "count": "nRx", "step": ["0 mm", "ribStep"]}],
-["feature.extrude", {"sketch": "RibXReliefs", "distance": "tr + 2 mm", "cut": "RibXLapped", "name": "RibX"}],
-["feature.pattern", {"name": "RibsX", "source": "RibX", "count": "nRy", "step": ["0 mm", "ribStep", "0 mm"]}],
-["sketch.create", {"name": "LegSection", "plane": "xy", "offset": "-tableH + pt"}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + (pt)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + (pt)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt + b)", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt + b)", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + (pt + b)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + (pt + b)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt)", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt)", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.line", {"sketch": "LegSection", "from": "e1", "to": "e2"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e9", "start": "e2", "end": "e3"}],
-["sketch.line", {"sketch": "LegSection", "from": "e3", "to": "e4"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e10", "start": "e4", "end": "e5"}],
-["sketch.line", {"sketch": "LegSection", "from": "e5", "to": "e6"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e11", "start": "e6", "end": "e7"}],
-["sketch.line", {"sketch": "LegSection", "from": "e7", "to": "e8"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e12", "start": "e8", "end": "e1"}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + (pt + t)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + (pt + t)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt + b - t)", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt + b - t)", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + (pt + b - t)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + (pt + b - t)"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt + t)", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + (pt + t)", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "LegSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.line", {"sketch": "LegSection", "from": "e21", "to": "e22"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e29", "start": "e22", "end": "e23"}],
-["sketch.line", {"sketch": "LegSection", "from": "e23", "to": "e24"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e30", "start": "e24", "end": "e25"}],
-["sketch.line", {"sketch": "LegSection", "from": "e25", "to": "e26"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e31", "start": "e26", "end": "e27"}],
-["sketch.line", {"sketch": "LegSection", "from": "e27", "to": "e28"}],
-["sketch.arc", {"sketch": "LegSection", "center": "e32", "start": "e28", "end": "e21"}],
-["feature.extrude", {"sketch": "LegSection", "distance": "legLen", "name": "Leg", "when": "legsOn"}],
-["feature.pattern", {"name": "LegRow", "source": "Leg", "count": "2", "step": ["L - 2 * pt - b", "0 mm", "0 mm"], "when": "legsOn"}],
-["feature.pattern", {"name": "Legs", "source": "LegRow", "count": "2", "step": ["0 mm", "Wd - 2 * pt - b", "0 mm"], "when": "legsOn"}],
-["sketch.create", {"name": "FootSketch", "plane": "xy", "offset": "-tableH"}],
-["sketch.rect", {"sketch": "FootSketch", "from": ["0 mm", "0 mm"], "to": ["2 * pt + b", "2 * pt + b"]}],
-["sketch.circle", {"sketch": "FootSketch", "center": ["pt + b / 2", "pt + b / 2"], "radius": "6.5 mm"}],
-["feature.extrude", {"sketch": "FootSketch", "distance": "pt", "name": "Foot", "when": "legsOn"}],
-["feature.pattern", {"name": "FootRow", "source": "Foot", "count": "2", "step": ["L - 2 * pt - b", "0 mm", "0 mm"], "when": "legsOn"}],
-["feature.pattern", {"name": "Feet", "source": "FootRow", "count": "2", "step": ["0 mm", "Wd - 2 * pt - b", "0 mm"], "when": "legsOn"}],
-["sketch.create", {"name": "RailXSection", "plane": "yz", "offset": "pt + b"}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + (railZ)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + (railZ)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt + b)", "(0 mm) + ((railZ) + (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt + b)", "(0 mm) + ((railZ + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + (railZ + b)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + (railZ + b)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt)", "(0 mm) + ((railZ + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt)", "(0 mm) + ((railZ) + (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + ((railZ) + (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b) - (ro))", "(0 mm) + ((railZ + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + ((railZ + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt) + (ro))", "(0 mm) + ((railZ) + (ro))"]}],
-["sketch.line", {"sketch": "RailXSection", "from": "e1", "to": "e2"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e9", "start": "e2", "end": "e3"}],
-["sketch.line", {"sketch": "RailXSection", "from": "e3", "to": "e4"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e10", "start": "e4", "end": "e5"}],
-["sketch.line", {"sketch": "RailXSection", "from": "e5", "to": "e6"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e11", "start": "e6", "end": "e7"}],
-["sketch.line", {"sketch": "RailXSection", "from": "e7", "to": "e8"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e12", "start": "e8", "end": "e1"}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + (railZ + t)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + (railZ + t)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt + b - t)", "(0 mm) + ((railZ + t) + (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt + b - t)", "(0 mm) + ((railZ + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + (railZ + b - t)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + (railZ + b - t)"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt + t)", "(0 mm) + ((railZ + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + (pt + t)", "(0 mm) + ((railZ + t) + (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + ((railZ + t) + (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + b - t) - (ri))", "(0 mm) + ((railZ + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + ((railZ + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailXSection", "at": ["(0 mm) + ((pt + t) + (ri))", "(0 mm) + ((railZ + t) + (ri))"]}],
-["sketch.line", {"sketch": "RailXSection", "from": "e21", "to": "e22"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e29", "start": "e22", "end": "e23"}],
-["sketch.line", {"sketch": "RailXSection", "from": "e23", "to": "e24"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e30", "start": "e24", "end": "e25"}],
-["sketch.line", {"sketch": "RailXSection", "from": "e25", "to": "e26"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e31", "start": "e26", "end": "e27"}],
-["sketch.line", {"sketch": "RailXSection", "from": "e27", "to": "e28"}],
-["sketch.arc", {"sketch": "RailXSection", "center": "e32", "start": "e28", "end": "e21"}],
-["feature.extrude", {"sketch": "RailXSection", "distance": "railLenX", "name": "RailXBar", "when": "frameOn"}],
-["feature.cylinder", {"name": "RailXVent", "radius": "4 mm", "height": "t + 2 mm", "position": ["L / 2", "pt + b / 2", "railZ - 1 mm"], "when": "frameOn"}],
-["feature.boolean", {"op": "subtract", "target": "RailXBar", "tool": "RailXVent", "name": "RailX", "when": "frameOn"}],
-["feature.pattern", {"name": "RailsX", "source": "RailX", "count": "2", "step": ["0 mm", "Wd - 2 * pt - b", "0 mm"], "when": "frameOn"}],
-["sketch.create", {"name": "RailYSection", "plane": "zx", "offset": "pt + b"}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ) + (ro))", "(0 mm) + (pt)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b) - (ro))", "(0 mm) + (pt)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ + b)", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ + b)", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b) - (ro))", "(0 mm) + (pt + b)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ) + (ro))", "(0 mm) + (pt + b)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ)", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ)", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b) - (ro))", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b) - (ro))", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ) + (ro))", "(0 mm) + ((pt + b) - (ro))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ) + (ro))", "(0 mm) + ((pt) + (ro))"]}],
-["sketch.line", {"sketch": "RailYSection", "from": "e1", "to": "e2"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e9", "start": "e2", "end": "e3"}],
-["sketch.line", {"sketch": "RailYSection", "from": "e3", "to": "e4"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e10", "start": "e4", "end": "e5"}],
-["sketch.line", {"sketch": "RailYSection", "from": "e5", "to": "e6"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e11", "start": "e6", "end": "e7"}],
-["sketch.line", {"sketch": "RailYSection", "from": "e7", "to": "e8"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e12", "start": "e8", "end": "e1"}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + t) + (ri))", "(0 mm) + (pt + t)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b - t) - (ri))", "(0 mm) + (pt + t)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ + b - t)", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ + b - t)", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b - t) - (ri))", "(0 mm) + (pt + b - t)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + t) + (ri))", "(0 mm) + (pt + b - t)"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ + t)", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + (railZ + t)", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b - t) - (ri))", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + b - t) - (ri))", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + t) + (ri))", "(0 mm) + ((pt + b - t) - (ri))"]}],
-["sketch.point", {"sketch": "RailYSection", "at": ["(0 mm) + ((railZ + t) + (ri))", "(0 mm) + ((pt + t) + (ri))"]}],
-["sketch.line", {"sketch": "RailYSection", "from": "e21", "to": "e22"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e29", "start": "e22", "end": "e23"}],
-["sketch.line", {"sketch": "RailYSection", "from": "e23", "to": "e24"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e30", "start": "e24", "end": "e25"}],
-["sketch.line", {"sketch": "RailYSection", "from": "e25", "to": "e26"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e31", "start": "e26", "end": "e27"}],
-["sketch.line", {"sketch": "RailYSection", "from": "e27", "to": "e28"}],
-["sketch.arc", {"sketch": "RailYSection", "center": "e32", "start": "e28", "end": "e21"}],
-["feature.extrude", {"sketch": "RailYSection", "distance": "railLenY", "name": "RailYBar", "when": "frameOn"}],
-["feature.cylinder", {"name": "RailYVent", "radius": "4 mm", "height": "t + 2 mm", "position": ["pt + b / 2", "Wd / 2", "railZ - 1 mm"], "when": "frameOn"}],
-["feature.boolean", {"op": "subtract", "target": "RailYBar", "tool": "RailYVent", "name": "RailY", "when": "frameOn"}],
-["feature.pattern", {"name": "RailsY", "source": "RailY", "count": "2", "step": ["L - 2 * pt - b", "0 mm", "0 mm"], "when": "frameOn"}],
-["body.appearance", {"body": "Top", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "Front", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "Back", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "Left", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "Right", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "RibsY", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "RibsX", "color": "#B9BEC4", "metallic": 0.9, "roughness": 0.35}],
-["body.appearance", {"body": "Legs", "color": "#7D858C", "metallic": 0.85, "roughness": 0.45}],
-["body.appearance", {"body": "RailsX", "color": "#7D858C", "metallic": 0.85, "roughness": 0.45}],
-["body.appearance", {"body": "RailsY", "color": "#7D858C", "metallic": 0.85, "roughness": 0.45}],
-["body.appearance", {"body": "Feet", "color": "#7D858C", "metallic": 0.85, "roughness": 0.45}],
-["body.material", {"body": "Top", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "Front", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "Back", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "Left", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "Right", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "Feet", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "RibsY", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "RibsX", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "Legs", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "RailsX", "name": "S235 steel", "density": 7850}],
-["body.material", {"body": "RailsY", "name": "S235 steel", "density": 7850}],
-["set.define", {"name": "Cut sheet: top, skirts, feet", "kind": "face", "where": {"any": [{"in": "Top", "normal": {"along": "z"}}, {"in": "Front", "normal": {"along": "-y"}}, {"in": "Back", "normal": {"along": "y"}}, {"in": "Left", "normal": {"along": "-x"}}, {"in": "Right", "normal": {"along": "x"}}, {"in": "Feet", "normal": {"along": "z"}}]}}],
-["set.define", {"name": "Cut sheet: ribs", "kind": "face", "where": {"any": [{"in": "RibsY", "normal": {"along": "x"}}, {"in": "RibsX", "normal": {"along": "-y"}}]}}],
-["set.define", {"name": "Legs (tube)", "kind": "body", "where": {"name": "Legs"}}],
-["set.define", {"name": "Rails, long (tube)", "kind": "body", "where": {"name": "RailsX"}}],
-["set.define", {"name": "Rails, short (tube)", "kind": "body", "where": {"name": "RailsY"}}],
-["set.define", {"name": "Steel", "kind": "body", "where": {"any": [{"name": "Top"}, {"name": "Front"}, {"name": "Back"}, {"name": "Left"}, {"name": "Right"}, {"name": "Feet"}, {"name": "RibsY"}, {"name": "RibsX"}, {"name": "Legs"}, {"name": "RailsX"}, {"name": "RailsY"}]}}],
-["assert.add", {"name": "holes in the top", "measure": "count", "of": {"kind": "face", "where": {"in": "Top", "hole": true}}, "eq": "nX * nY"}],
-["assert.add", {"name": "holes in the skirts", "measure": "count", "of": {"kind": "face", "where": {"any": [{"in": "Front"}, {"in": "Back"}, {"in": "Left"}, {"in": "Right"}], "hole": true}}, "eq": "2 * rows * (nX + nY)"}],
-["assert.add", {"name": "no part overlaps another (every tab inside its slot)", "measure": "overlap", "of": {"kind": "body"}, "is": false}],
-["assert.add", {"name": "rule: tabs 50 to 75 % into the plate, at least a 3 mm weld pocket", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(pocketOk, 1, 0)"}],
-["assert.add", {"name": "rule: rib tabs at least 40 mm, skirt tabs at least 2.5 x the plate", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(widthOk, 1, 0)"}],
-["assert.add", {"name": "rule: webs at the notches at least half the plate; dogbones keep the system's web", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(webOk, 1, 0)"}],
-["assert.add", {"name": "rule: tabs at most 400 mm apart", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(pitch <= 400 mm, 1, 0)"}],
-["assert.add", {"name": "rule: reliefs at least 0.5 mm and fit their slots", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(reliefOk, 1, 0)"}],
-["assert.add", {"name": "rule: ribs clear the legs, two tabs fit between crossings", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(ribsOk, 1, 0)"}],
-["assert.add", {"name": "rule: rails below the skirts", "measure": "count", "of": {"kind": "body", "where": {"name": "Top"}}, "eq": "if(!frameOn || railZ + b < -sh, 1, 0)"}],
-["assert.add", {"name": "Legs: cut length legLen (measured with the top)", "measure": "extent", "of": {"kind": "body", "where": {"any": [{"set": "Legs (tube)"}, {"name": "Top"}]}}, "axis": "z", "eq": "if(legsOn, legLen + pt, pt)"}],
-["assert.add", {"name": "Rails, long: cut length railLenX (measured with the ribs across)", "measure": "extent", "of": {"kind": "body", "where": {"any": [{"set": "Rails, long (tube)"}, {"name": "RibsY"}]}}, "axis": "x", "eq": "if(frameOn, railLenX, xrL - xr0 + tr)"}],
-["assert.add", {"name": "Rails, short: cut length railLenY (measured with the ribs along)", "measure": "extent", "of": {"kind": "body", "where": {"any": [{"set": "Rails, short (tube)"}, {"name": "RibsX"}]}}, "axis": "y", "eq": "if(frameOn, railLenY, yrL - yr0 + tr)"}],
-["assert.add", {"name": "Steel weight (kg)", "measure": "mass", "of": {"kind": "body", "where": {"set": "Steel"}}, "min": "0"}],
-["variable.publish", {"name": "sys", "label": "System", "group": "System", "order": 1, "kind": "choice", "choicesFrom": "systems", "description": "System 16: 16 mm holes on a 50 mm grid, 12 mm top and skirts, 100 mm deep, 10 mm ribs. System 28: 28 mm holes on a 100 mm grid, 25 mm top and skirts, 200 mm deep, 20 mm ribs"}],
-["variable.publish", {"name": "L", "label": "Length", "group": "Size", "order": 1, "min": "600 mm", "max": "2000 mm", "step": "50 mm", "unit": "mm", "description": "Length of the top (x)"}],
-["variable.publish", {"name": "Wd", "label": "Width", "group": "Size", "order": 2, "min": "400 mm", "max": "1200 mm", "step": "50 mm", "unit": "mm", "description": "Width of the top (y)"}],
-["variable.publish", {"name": "ribTarget", "label": "Rib spacing", "group": "Size", "order": 3, "min": "150 mm", "max": "400 mm", "step": "50 mm", "unit": "mm", "description": "Ribs at most this far apart where the grid and the tabs allow, on the lines between the holes"}],
-["variable.publish", {"name": "tabTarget", "label": "Tab spacing", "group": "Tab and slot", "order": 1, "min": "100 mm", "max": "400 mm", "step": "50 mm", "unit": "mm", "description": "Tabs along the skirts at most this far apart, between two holes"}],
-["variable.publish", {"name": "tabPct", "label": "Tab depth (%)", "group": "Tab and slot", "order": 2, "kind": "integer", "min": "50", "max": "75", "description": "How far a tab reaches into the plate it enters, in % of that plate; at least 3 mm is left as the pocket for the plug weld"}],
-["variable.publish", {"name": "clrPct", "label": "Fit clearance (% of plate)", "group": "Tab and slot", "order": 3, "min": "1", "max": "4", "step": "0.5", "description": "Clearance per side between a tab and its slot, in % of the system's plate: 2 % is 0.24 mm in System 16 and 0.5 mm in System 28"}],
-["variable.publish", {"name": "relPct", "label": "Relief radius (% of plate)", "group": "Tab and slot", "order": 4, "min": "5", "max": "12", "step": "1", "description": "Radius of the T-bones and dogbones in the inside corners, in % of the system's plate: 8 % is about 1 mm in System 16 and 2 mm in System 28"}],
-["variable.publish", {"name": "frame", "label": "Base", "group": "Base", "order": 1, "kind": "choice", "choices": ["None", "Legs", "Legs and frame"], "description": "Only the block (for trestles), four legs on foot plates, or legs joined by rails near the floor"}],
-["variable.publish", {"name": "tableH", "label": "Working height", "group": "Base", "order": 2, "min": "600 mm", "max": "1000 mm", "step": "10 mm", "unit": "mm", "description": "Height of the top surface above the floor, with legs"}],
-["variable.publish", {"name": "profile", "label": "Tube", "group": "Base", "order": 3, "kind": "choice", "choicesFrom": "profiles", "description": "Square hollow section of the legs and rails (EN 10219-2): width x width x wall in mm"}],
-["document.info", {"title": "Welding table", "description": "A system welding table (16 mm or 28 mm holes) to laser cut and MIG weld: a perforated top, perforated skirts of the same plate on all four edges and half-lapped ribs, every plate joint tab and slot with T-bone and dogbone reliefs and tabs that stop short of the surface, so the plug welds grind flush; legs and rails of square tube from a table of EN 10219 sizes. Export the plates with File > Export..., DXF or SVG with the face sets \"Cut sheet: top, skirts, feet\" and \"Cut sheet: ribs\" (one per plate thickness); the sets Legs and Rails and the assertions (assert.list) give the tube cut list.", "author": "3DCraft Jigs", "licence": "CC-BY-4.0", "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/welding-table", "tags": ["welding", "fixture table", "steel", "laser", "tab and slot", "square tube"]}],
-["jig.export", {"path": "dist/welding-table.3dcraftjig"}]
+[
+"table.set",
+{
+"name": "hole_systems",
+"columns": [
+"system",
+{
+"name": "bore",
+"unit": "mm"
+},
+{
+"name": "grid",
+"unit": "mm"
+},
+{
+"name": "plate",
+"unit": "mm"
+},
+{
+"name": "side",
+"unit": "mm"
+},
+{
+"name": "longest",
+"unit": "mm"
+},
+{
+"name": "widest",
+"unit": "mm"
+},
+{
+"name": "leg_rating",
+"unit": "kg"
+},
+{
+"name": "stud_radius",
+"unit": "mm"
+},
+"stud_area",
+{
+"name": "nut_across_flats",
+"unit": "mm"
+},
+{
+"name": "nut_height",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"System 16, 50 mm grid",
+16,
+50,
+12,
+100,
+1800,
+1200,
+1000,
+8,
+157,
+24,
+15
+],
+[
+"System 16, 100 mm grid",
+16,
+100,
+12,
+100,
+1800,
+1200,
+1000,
+8,
+157,
+24,
+15
+],
+[
+"System 28, 100 mm grid",
+28,
+100,
+25,
+200,
+3000,
+1500,
+2000,
+12,
+353,
+36,
+22
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "leg_sections",
+"columns": [
+"section",
+{
+"name": "side",
+"unit": "mm"
+},
+{
+"name": "wall",
+"unit": "mm"
+},
+{
+"name": "outer_radius",
+"unit": "mm"
+},
+{
+"name": "inner_radius",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"SHS 40x40x3",
+40,
+3,
+6,
+3
+],
+[
+"SHS 40x40x4",
+40,
+4,
+8,
+4
+],
+[
+"SHS 50x50x3",
+50,
+3,
+6,
+3
+],
+[
+"SHS 50x50x4",
+50,
+4,
+8,
+4
+],
+[
+"SHS 50x50x5",
+50,
+5,
+10,
+5
+],
+[
+"SHS 60x60x3",
+60,
+3,
+6,
+3
+],
+[
+"SHS 60x60x4",
+60,
+4,
+8,
+4
+],
+[
+"SHS 60x60x5",
+60,
+5,
+10,
+5
+],
+[
+"SHS 70x70x4",
+70,
+4,
+8,
+4
+],
+[
+"SHS 80x80x4",
+80,
+4,
+8,
+4
+],
+[
+"SHS 80x80x5",
+80,
+5,
+10,
+5
+],
+[
+"SHS 80x80x6",
+80,
+6,
+12,
+6
+],
+[
+"SHS 100x100x4",
+100,
+4,
+8,
+4
+],
+[
+"SHS 100x100x5",
+100,
+5,
+10,
+5
+],
+[
+"SHS 100x100x6",
+100,
+6,
+12,
+6
+],
+[
+"SHS 120x120x5",
+120,
+5,
+10,
+5
+],
+[
+"SHS 120x120x6",
+120,
+6,
+12,
+6
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "block_system",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "table_length",
+"expr": "1200 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "table_width",
+"expr": "800 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "working_height",
+"expr": "900 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "base_style",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_section",
+"expr": "10"
+}
+],
+[
+"variable.set",
+{
+"name": "design_load",
+"expr": "500 kg"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_length",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_pitch",
+"expr": "100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_clearance",
+"expr": "0.25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_recess",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "beam_kerf",
+"expr": "0.4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "bore",
+"expr": "hole_systems[block_system].bore"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_grid",
+"expr": "hole_systems[block_system].grid"
+}
+],
+[
+"variable.set",
+{
+"name": "plate",
+"expr": "hole_systems[block_system].plate"
+}
+],
+[
+"variable.set",
+{
+"name": "side_depth",
+"expr": "hole_systems[block_system].side"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_columns",
+"expr": "floor(table_length / hole_grid)"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_rows",
+"expr": "floor(table_width / hole_grid)"
+}
+],
+[
+"variable.set",
+{
+"name": "edge_x",
+"expr": "(table_length - (hole_columns - 1) * hole_grid) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "edge_y",
+"expr": "(table_width - (hole_rows - 1) * hole_grid) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "side_rows",
+"expr": "floor(side_depth / hole_grid)"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_depth",
+"expr": "side_depth - plate"
+}
+],
+[
+"variable.set",
+{
+"name": "relief",
+"expr": "max(0.1 * plate, beam_kerf)"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_hole_margin",
+"expr": "hole_grid / 2 - sqrt(max(0 mm * 1 mm, (bore / 2 + plate / 2) * (bore / 2 + plate / 2) - (hole_grid / 2 - plate - tab_clearance) * (hole_grid / 2 - plate - tab_clearance)))"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_length_max",
+"expr": "floor(min(4 * plate, 2 * (tab_hole_margin - tab_clearance - relief)) / (1 mm)) * 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_every",
+"expr": "max(1, round(tab_pitch / hole_grid))"
+}
+],
+[
+"variable.set",
+{
+"name": "corner_width",
+"expr": "if(side_rows >= 2, tab_length, min(tab_length, floor((side_depth - (hole_grid / 2 + bore / 2 + plate / 2) - 10 mm) / (1 mm)) * 1 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "corner_first",
+"expr": "if(side_rows >= 2, -hole_grid, -(hole_grid / 2 + bore / 2 + plate / 2 + corner_width / 2))"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_every_x",
+"expr": "max(1, min(tab_every, hole_columns - 2))"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_step_x",
+"expr": "tab_every_x * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "tabs_x",
+"expr": "floor((hole_columns - 2) / tab_every_x) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "first_tab_x",
+"expr": "edge_x + (round(((hole_columns - 2) - (tabs_x - 1) * tab_every_x) / 2) + 0.5) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_every_y",
+"expr": "max(1, min(tab_every, hole_rows - 2))"
+}
+],
+[
+"variable.set",
+{
+"name": "tab_step_y",
+"expr": "tab_every_y * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "tabs_y",
+"expr": "floor((hole_rows - 2) / tab_every_y) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "first_tab_y",
+"expr": "edge_y + (round(((hole_rows - 2) - (tabs_y - 1) * tab_every_y) / 2) + 0.5) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "last_tab_x",
+"expr": "first_tab_x + (tabs_x - 1) * tab_step_x"
+}
+],
+[
+"variable.set",
+{
+"name": "last_tab_y",
+"expr": "first_tab_y + (tabs_y - 1) * tab_step_y"
+}
+],
+[
+"variable.set",
+{
+"name": "legs_on",
+"expr": "base_style >= 2"
+}
+],
+[
+"variable.set",
+{
+"name": "frame_on",
+"expr": "base_style == 3"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_width",
+"expr": "leg_sections[leg_section].side"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_wall",
+"expr": "leg_sections[leg_section].wall"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_outer_radius",
+"expr": "leg_sections[leg_section].outer_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_inner_radius",
+"expr": "leg_sections[leg_section].inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_height",
+"expr": "60 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_stud_radius",
+"expr": "hole_systems[block_system].stud_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_nut_radius",
+"expr": "hole_systems[block_system].nut_across_flats / sqrt(3)"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_nut_height",
+"expr": "hole_systems[block_system].nut_height"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_height",
+"expr": "180 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_bottom",
+"expr": "-working_height + foot_height + plate"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_length",
+"expr": "leg_bottom * -1 - plate"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_z",
+"expr": "-working_height + rail_height"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_length_x",
+"expr": "table_length - 2 * plate - 2 * leg_width"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_length_y",
+"expr": "table_width - 2 * plate - 2 * leg_width"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_spacing",
+"expr": "250 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "torch_gap",
+"expr": "60 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "torch_nozzle_allowance",
+"expr": "16 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_tab_offset",
+"expr": "plate / 2 + tab_length / 2 + plate"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_keepout",
+"expr": "plate + max(if(legs_on, leg_width + torch_gap, 0 mm) + plate / 2, rib_depth + torch_nozzle_allowance + plate / 2, hole_grid, rib_tab_offset + tab_length / 2 + plate)"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_step_min",
+"expr": "ceil(max(rib_depth + torch_nozzle_allowance + plate, 2 * rib_tab_offset + tab_length + plate) / hole_grid) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_every_wanted",
+"expr": "max(ceil(rib_step_min / hole_grid), floor(rib_spacing / hole_grid))"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_skip_x",
+"expr": "max(0, ceil((rib_keepout - edge_x) / hole_grid - 0.5))"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_lines_x",
+"expr": "hole_columns - 1 - 2 * rib_skip_x"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_every_x",
+"expr": "rib_every_wanted"
+}
+],
+[
+"variable.set",
+{
+"name": "ribs_across",
+"expr": "floor((rib_lines_x - 1) / rib_every_x) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_step_x",
+"expr": "rib_every_x * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_x0",
+"expr": "edge_x + (rib_skip_x + round(((rib_lines_x - 1) - (ribs_across - 1) * rib_every_x) / 2) + 0.5) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_skip_y",
+"expr": "max(0, ceil((rib_keepout - edge_y) / hole_grid - 0.5))"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_lines_y",
+"expr": "hole_rows - 1 - 2 * rib_skip_y"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_every_y",
+"expr": "rib_every_wanted"
+}
+],
+[
+"variable.set",
+{
+"name": "ribs_along",
+"expr": "floor((rib_lines_y - 1) / rib_every_y) + 1"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_step_y",
+"expr": "rib_every_y * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_y0",
+"expr": "edge_y + (rib_skip_y + round(((rib_lines_y - 1) - (ribs_along - 1) * rib_every_y) / 2) + 0.5) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_end_tab",
+"expr": "min(tab_length, rib_depth / 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "rib_mid",
+"expr": "-(plate + side_depth) / 2"
+}
+],
+[
+"sketch.create",
+{
+"name": "Top plan",
+"plane": "xy",
+"offset": "-plate"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": [
+"0 mm",
+"0 mm"
+],
+"segments": [
+{
+"line": [
+"(first_tab_x) + (-(tab_length / 2 + tab_clearance))",
+"(0 mm) + (0 mm)"
+]
+},
+{
+"line": [
+"(first_tab_x) + ((0 mm) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(first_tab_x) + ((0 mm) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + (plate + tab_clearance)"
+],
+"center": [
+"(first_tab_x) + ((0 mm) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(first_tab_x) + ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + (plate + tab_clearance)"
+]
+},
+{
+"arc": [
+"(first_tab_x) + ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(first_tab_x) + ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(first_tab_x) + ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + (0 mm)"
+]
+},
+{
+"line": [
+"(first_tab_x) + ((tab_step_x) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + (0 mm)"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e5",
+"e8",
+"e10",
+"e13",
+"e15",
+"e17"
+],
+"chain": [
+"e2",
+"e16"
+],
+"count": "tabs_x - 1"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Top plan",
+"from": "e16[last]",
+"to": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e19",
+"segments": [
+{
+"arc": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + (plate + tab_clearance)"
+],
+"center": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) - (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + (plate + tab_clearance)"
+]
+},
+{
+"arc": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(first_tab_x) + (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(0 mm) + (0 mm)"
+]
+},
+{
+"line": [
+"table_length",
+"0 mm"
+]
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e31",
+"segments": [
+{
+"line": [
+"(table_length) - (0 mm)",
+"(first_tab_y) + (-(tab_length / 2 + tab_clearance))"
+]
+},
+{
+"line": [
+"(table_length) - ((plate + tab_clearance) - 2 * (relief))",
+"(first_tab_y) + ((0 mm) - (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(table_length) - (plate + tab_clearance)",
+"(first_tab_y) + ((0 mm) - (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(table_length) - ((plate + tab_clearance) - (relief))",
+"(first_tab_y) + ((0 mm) - (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(table_length) - (plate + tab_clearance)",
+"(first_tab_y) + ((0 mm) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(table_length) - ((plate + tab_clearance) - 2 * (relief))",
+"(first_tab_y) + ((0 mm) + (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(table_length) - ((plate + tab_clearance) - (relief))",
+"(first_tab_y) + ((0 mm) + (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(table_length) - (0 mm)",
+"(first_tab_y) + ((0 mm) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"line": [
+"(table_length) - (0 mm)",
+"(first_tab_y) + ((tab_step_y) - (tab_length / 2 + tab_clearance))"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e36",
+"e39",
+"e41",
+"e44",
+"e46",
+"e48"
+],
+"chain": [
+"e33",
+"e47"
+],
+"count": "tabs_y - 1"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Top plan",
+"from": "e47[last]",
+"to": [
+"(table_length) - ((plate + tab_clearance) - 2 * (relief))",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) - (tab_length / 2 + tab_clearance))"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e50",
+"segments": [
+{
+"arc": [
+"(table_length) - (plate + tab_clearance)",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) - (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(table_length) - ((plate + tab_clearance) - (relief))",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) - (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(table_length) - (plate + tab_clearance)",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(table_length) - ((plate + tab_clearance) - 2 * (relief))",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(table_length) - ((plate + tab_clearance) - (relief))",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(table_length) - (0 mm)",
+"(first_tab_y) + (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"line": [
+"table_length",
+"table_width"
+]
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e62",
+"segments": [
+{
+"line": [
+"(last_tab_x) - (-(tab_length / 2 + tab_clearance))",
+"(table_width) - (0 mm)"
+]
+},
+{
+"line": [
+"(last_tab_x) - ((0 mm) - (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(last_tab_x) - ((0 mm) - (tab_length / 2 + tab_clearance))",
+"(table_width) - (plate + tab_clearance)"
+],
+"center": [
+"(last_tab_x) - ((0 mm) - (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(last_tab_x) - ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(table_width) - (plate + tab_clearance)"
+]
+},
+{
+"arc": [
+"(last_tab_x) - ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(last_tab_x) - ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(last_tab_x) - ((0 mm) + (tab_length / 2 + tab_clearance))",
+"(table_width) - (0 mm)"
+]
+},
+{
+"line": [
+"(last_tab_x) - ((tab_step_x) - (tab_length / 2 + tab_clearance))",
+"(table_width) - (0 mm)"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e67",
+"e70",
+"e72",
+"e75",
+"e77",
+"e79"
+],
+"chain": [
+"e64",
+"e78"
+],
+"count": "tabs_x - 1"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Top plan",
+"from": "e78[last]",
+"to": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) - (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - 2 * (relief))"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e81",
+"segments": [
+{
+"arc": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) - (tab_length / 2 + tab_clearance))",
+"(table_width) - (plate + tab_clearance)"
+],
+"center": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) - (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(table_width) - (plate + tab_clearance)"
+]
+},
+{
+"arc": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(table_width) - ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(last_tab_x) - (((tabs_x - 1) * (tab_step_x)) + (tab_length / 2 + tab_clearance))",
+"(table_width) - (0 mm)"
+]
+},
+{
+"line": [
+"0 mm",
+"table_width"
+]
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e93",
+"segments": [
+{
+"line": [
+"(0 mm) + (0 mm)",
+"(last_tab_y) - (-(tab_length / 2 + tab_clearance))"
+]
+},
+{
+"line": [
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))",
+"(last_tab_y) - ((0 mm) - (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(0 mm) + (plate + tab_clearance)",
+"(last_tab_y) - ((0 mm) - (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(0 mm) + ((plate + tab_clearance) - (relief))",
+"(last_tab_y) - ((0 mm) - (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) + (plate + tab_clearance)",
+"(last_tab_y) - ((0 mm) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))",
+"(last_tab_y) - ((0 mm) + (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(0 mm) + ((plate + tab_clearance) - (relief))",
+"(last_tab_y) - ((0 mm) + (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) + (0 mm)",
+"(last_tab_y) - ((0 mm) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"line": [
+"(0 mm) + (0 mm)",
+"(last_tab_y) - ((tab_step_y) - (tab_length / 2 + tab_clearance))"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e98",
+"e101",
+"e103",
+"e106",
+"e108",
+"e110"
+],
+"chain": [
+"e95",
+"e109"
+],
+"count": "tabs_y - 1"
+}
+],
+[
+"sketch.line",
+{
+"sketch": "Top plan",
+"from": "e109[last]",
+"to": [
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) - (tab_length / 2 + tab_clearance))"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": "e112",
+"segments": [
+{
+"arc": [
+"(0 mm) + (plate + tab_clearance)",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) - (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(0 mm) + ((plate + tab_clearance) - (relief))",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) - (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) + (plate + tab_clearance)",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(0 mm) + ((plate + tab_clearance) - (relief))",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) + (0 mm)",
+"(last_tab_y) - (((tabs_y - 1) * (tab_step_y)) + (tab_length / 2 + tab_clearance))"
+]
+},
+{
+"line": "e1"
+}
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Top plan",
+"center": [
+"edge_x",
+"edge_y"
+],
+"radius": "bore / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e126"
+],
+"count": "hole_columns",
+"step": [
+"hole_grid",
+"0 mm"
+],
+"count2": "hole_rows",
+"step2": [
+"0 mm",
+"hole_grid"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": [
+"(rib_x0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + (-(plate / 2 + tab_clearance))"
+],
+"segments": [
+{
+"arc": [
+"(rib_x0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))"
+],
+"center": [
+"(rib_x0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_x0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((plate / 2 + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(rib_x0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + (plate / 2 + tab_clearance)"
+],
+"center": [
+"(rib_x0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((plate / 2 + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_x0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + (plate / 2 + tab_clearance)"
+]
+},
+{
+"arc": [
+"(rib_x0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((plate / 2 + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(rib_x0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((plate / 2 + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_x0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))"
+]
+},
+{
+"arc": [
+"(rib_x0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + (-(plate / 2 + tab_clearance))"
+],
+"center": [
+"(rib_x0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + (relief))"
+],
+"clockwise": false
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": [
+"(rib_x0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + (-(plate / 2 + tab_clearance))"
+],
+"segments": [
+{
+"arc": [
+"(rib_x0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))"
+],
+"center": [
+"(rib_x0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_x0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((plate / 2 + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(rib_x0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + (plate / 2 + tab_clearance)"
+],
+"center": [
+"(rib_x0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)",
+"(rib_y0) + ((plate / 2 + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_x0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + (plate / 2 + tab_clearance)"
+]
+},
+{
+"arc": [
+"(rib_x0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((plate / 2 + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(rib_x0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((plate / 2 + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_x0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))"
+]
+},
+{
+"arc": [
+"(rib_x0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + (-(plate / 2 + tab_clearance))"
+],
+"center": [
+"(rib_x0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))",
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + (relief))"
+],
+"clockwise": false
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e130",
+"e132",
+"e135",
+"e137",
+"e140",
+"e142",
+"e145",
+"e146",
+"e150",
+"e152",
+"e155",
+"e157",
+"e160",
+"e162",
+"e165",
+"e166"
+],
+"count": "ribs_across",
+"step": [
+"rib_step_x",
+"0 mm"
+],
+"count2": "ribs_along",
+"step2": [
+"0 mm",
+"rib_step_y"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": [
+"(rib_x0) + (-(plate / 2 + tab_clearance))",
+"(rib_y0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"segments": [
+{
+"arc": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))",
+"(rib_y0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"center": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + (relief))",
+"(rib_y0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - 2 * (relief))",
+"(rib_y0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+]
+},
+{
+"arc": [
+"(rib_x0) + (plate / 2 + tab_clearance)",
+"(rib_y0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"center": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - (relief))",
+"(rib_y0 - rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_x0) + (plate / 2 + tab_clearance)",
+"(rib_y0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - 2 * (relief))",
+"(rib_y0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - (relief))",
+"(rib_y0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))",
+"(rib_y0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(rib_x0) + (-(plate / 2 + tab_clearance))",
+"(rib_y0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + (relief))",
+"(rib_y0 - rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top plan",
+"start": [
+"(rib_x0) + (-(plate / 2 + tab_clearance))",
+"(rib_y0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"segments": [
+{
+"arc": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))",
+"(rib_y0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"center": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + (relief))",
+"(rib_y0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - 2 * (relief))",
+"(rib_y0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+]
+},
+{
+"arc": [
+"(rib_x0) + (plate / 2 + tab_clearance)",
+"(rib_y0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"center": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - (relief))",
+"(rib_y0 + rib_tab_offset) + (tab_length / 2 + tab_clearance)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_x0) + (plate / 2 + tab_clearance)",
+"(rib_y0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - 2 * (relief))",
+"(rib_y0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(rib_x0) + ((plate / 2 + tab_clearance) - (relief))",
+"(rib_y0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))",
+"(rib_y0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(rib_x0) + (-(plate / 2 + tab_clearance))",
+"(rib_y0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"center": [
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + (relief))",
+"(rib_y0 + rib_tab_offset) + (-(tab_length / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top plan",
+"entities": [
+"e170",
+"e172",
+"e175",
+"e177",
+"e180",
+"e182",
+"e185",
+"e186",
+"e190",
+"e192",
+"e195",
+"e197",
+"e200",
+"e202",
+"e205",
+"e206"
+],
+"count": "ribs_along",
+"step": [
+"0 mm",
+"rib_step_y"
+],
+"count2": "ribs_across",
+"step2": [
+"rib_step_x",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Top plan",
+"distance": "plate",
+"name": "Top blank"
+}
+],
+[
+"variable.set",
+{
+"name": "top_chamfer",
+"expr": "2 mm"
+}
+],
+[
+"sketch.create",
+{
+"name": "Chamfer frustum, wide end",
+"plane": "xy",
+"offset": "-top_chamfer - plate - 1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Chamfer frustum, wide end",
+"from": [
+"-plate - 1 mm",
+"-plate - 1 mm"
+],
+"to": [
+"table_length + plate + 1 mm",
+"table_width + plate + 1 mm"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Chamfer frustum, narrow end",
+"plane": "xy",
+"offset": "1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Chamfer frustum, narrow end",
+"from": [
+"top_chamfer + 1 mm",
+"top_chamfer + 1 mm"
+],
+"to": [
+"table_length - top_chamfer - 1 mm",
+"table_width - top_chamfer - 1 mm"
+]
+}
+],
+[
+"feature.loft",
+{
+"sections": [
+"Chamfer frustum, wide end",
+"Chamfer frustum, narrow end"
+],
+"ruled": true,
+"intersect": "Top blank",
+"name": "Top"
+}
+],
+[
+"sketch.create",
+{
+"name": "Front plan",
+"plane": "zx"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Front plan",
+"from": [
+"-side_depth",
+"0 mm"
+],
+"to": [
+"-tab_recess",
+"table_length"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Front plan",
+"center": [
+"-hole_grid / 2",
+"edge_x"
+],
+"radius": "bore / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front plan",
+"entities": [
+"e10"
+],
+"count": "hole_columns",
+"step": [
+"0 mm",
+"hole_grid"
+],
+"count2": "side_rows",
+"step2": [
+"-hole_grid",
+"0 mm"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Front plan",
+"start": [
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)",
+"(rib_x0) + (-(plate / 2 + tab_clearance))"
+],
+"segments": [
+{
+"arc": [
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)",
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))"
+],
+"center": [
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)",
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)",
+"(rib_x0) + ((plate / 2 + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)",
+"(rib_x0) + (plate / 2 + tab_clearance)"
+],
+"center": [
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)",
+"(rib_x0) + ((plate / 2 + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))",
+"(rib_x0) + (plate / 2 + tab_clearance)"
+]
+},
+{
+"arc": [
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))",
+"(rib_x0) + ((plate / 2 + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))",
+"(rib_x0) + ((plate / 2 + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))",
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))"
+]
+},
+{
+"arc": [
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))",
+"(rib_x0) + (-(plate / 2 + tab_clearance))"
+],
+"center": [
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))",
+"(rib_x0) + ((-(plate / 2 + tab_clearance)) + (relief))"
+],
+"clockwise": false
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front plan",
+"entities": [
+"e14",
+"e16",
+"e19",
+"e21",
+"e24",
+"e26",
+"e29",
+"e30"
+],
+"count": "ribs_across",
+"step": [
+"0 mm",
+"rib_step_x"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Front plan",
+"distance": "plate",
+"name": "Front blank"
+}
+],
+[
+"sketch.create",
+{
+"name": "Front cuts",
+"plane": "zx",
+"offset": "-1 mm"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Front cuts",
+"start": [
+"(0 mm) - (-(2 mm))",
+"(first_tab_x + tab_step_x / 2) + (-((tab_step_x - tab_length) / 2))"
+],
+"segments": [
+{
+"line": [
+"(0 mm) - ((plate) - 2 * (relief))",
+"(first_tab_x + tab_step_x / 2) + (-((tab_step_x - tab_length) / 2))"
+]
+},
+{
+"arc": [
+"(0 mm) - (plate)",
+"(first_tab_x + tab_step_x / 2) + (-((tab_step_x - tab_length) / 2))"
+],
+"center": [
+"(0 mm) - ((plate) - (relief))",
+"(first_tab_x + tab_step_x / 2) + (-((tab_step_x - tab_length) / 2))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) - (plate)",
+"(first_tab_x + tab_step_x / 2) + ((tab_step_x - tab_length) / 2)"
+]
+},
+{
+"arc": [
+"(0 mm) - ((plate) - 2 * (relief))",
+"(first_tab_x + tab_step_x / 2) + ((tab_step_x - tab_length) / 2)"
+],
+"center": [
+"(0 mm) - ((plate) - (relief))",
+"(first_tab_x + tab_step_x / 2) + ((tab_step_x - tab_length) / 2)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) - (-(2 mm))",
+"(first_tab_x + tab_step_x / 2) + ((tab_step_x - tab_length) / 2)"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Front cuts",
+"entities": [
+"e3",
+"e6",
+"e8",
+"e11",
+"e13",
+"e14"
+],
+"count": "tabs_x - 1",
+"step": [
+"0 mm",
+"tab_step_x"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Front cuts",
+"start": [
+"(0 mm) - (-(2 mm))",
+"(0 mm) + (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(0 mm) - (-(2 mm))",
+"(0 mm) + (first_tab_x - tab_length / 2)"
+]
+},
+{
+"line": [
+"(0 mm) - ((plate) - 2 * (relief))",
+"(0 mm) + (first_tab_x - tab_length / 2)"
+]
+},
+{
+"arc": [
+"(0 mm) - (plate)",
+"(0 mm) + (first_tab_x - tab_length / 2)"
+],
+"center": [
+"(0 mm) - ((plate) - (relief))",
+"(0 mm) + (first_tab_x - tab_length / 2)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(0 mm) - (plate)",
+"(0 mm) + (-(2 mm))"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Front cuts",
+"start": [
+"(0 mm) - (-(2 mm))",
+"(table_length) - (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(0 mm) - (-(2 mm))",
+"(table_length) - (table_length - last_tab_x - tab_length / 2)"
+]
+},
+{
+"line": [
+"(0 mm) - ((plate) - 2 * (relief))",
+"(table_length) - (table_length - last_tab_x - tab_length / 2)"
+]
+},
+{
+"arc": [
+"(0 mm) - (plate)",
+"(table_length) - (table_length - last_tab_x - tab_length / 2)"
+],
+"center": [
+"(0 mm) - ((plate) - (relief))",
+"(table_length) - (table_length - last_tab_x - tab_length / 2)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) - (plate)",
+"(table_length) - (-(2 mm))"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Front cuts",
+"start": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(0 mm) + (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(0 mm) + (plate + tab_clearance)"
+],
+"center": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(0 mm) + ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(0 mm) + (plate + tab_clearance)"
+]
+},
+{
+"arc": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(0 mm) + ((plate + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(0 mm) + ((plate + tab_clearance) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(0 mm) + (-(2 mm))"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Front cuts",
+"start": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(table_length) - (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(table_length) - ((plate + tab_clearance) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(table_length) - (plate + tab_clearance)"
+],
+"center": [
+"(corner_first) + (-(corner_width / 2 + tab_clearance))",
+"(table_length) - ((plate + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(table_length) - (plate + tab_clearance)"
+]
+},
+{
+"arc": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(table_length) - ((plate + tab_clearance) - 2 * (relief))"
+],
+"center": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(table_length) - ((plate + tab_clearance) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(corner_first) + (corner_width / 2 + tab_clearance)",
+"(table_length) - (-(2 mm))"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Front cuts",
+"distance": "plate + 2 mm",
+"cut": "Front blank",
+"name": "Front"
+}
+],
+[
+"sketch.create",
+{
+"name": "Left plan",
+"plane": "yz"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Left plan",
+"from": [
+"plate",
+"-side_depth"
+],
+"to": [
+"table_width - plate",
+"-tab_recess"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Left plan",
+"center": [
+"edge_y",
+"-hole_grid / 2"
+],
+"radius": "bore / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Left plan",
+"entities": [
+"e10"
+],
+"count": "hole_rows",
+"step": [
+"hole_grid",
+"0 mm"
+],
+"count2": "side_rows",
+"step2": [
+"0 mm",
+"-hole_grid"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Left plan",
+"start": [
+"(rib_y0) + (-(plate / 2 + tab_clearance))",
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)"
+],
+"segments": [
+{
+"arc": [
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))",
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)"
+],
+"center": [
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + (relief))",
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_y0) + ((plate / 2 + tab_clearance) - 2 * (relief))",
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)"
+]
+},
+{
+"arc": [
+"(rib_y0) + (plate / 2 + tab_clearance)",
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)"
+],
+"center": [
+"(rib_y0) + ((plate / 2 + tab_clearance) - (relief))",
+"(rib_mid) + (rib_end_tab / 2 + tab_clearance)"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_y0) + (plate / 2 + tab_clearance)",
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(rib_y0) + ((plate / 2 + tab_clearance) - 2 * (relief))",
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))"
+],
+"center": [
+"(rib_y0) + ((plate / 2 + tab_clearance) - (relief))",
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + 2 * (relief))",
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))"
+]
+},
+{
+"arc": [
+"(rib_y0) + (-(plate / 2 + tab_clearance))",
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))"
+],
+"center": [
+"(rib_y0) + ((-(plate / 2 + tab_clearance)) + (relief))",
+"(rib_mid) + (-(rib_end_tab / 2 + tab_clearance))"
+],
+"clockwise": true
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Left plan",
+"entities": [
+"e14",
+"e16",
+"e19",
+"e21",
+"e24",
+"e26",
+"e29",
+"e30"
+],
+"count": "ribs_along",
+"step": [
+"rib_step_y",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Left plan",
+"distance": "plate",
+"name": "Left blank"
+}
+],
+[
+"sketch.create",
+{
+"name": "Left tongues",
+"plane": "yz"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Left tongues",
+"from": [
+"tab_recess",
+"corner_first - corner_width / 2"
+],
+"to": [
+"plate",
+"corner_first + corner_width / 2"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Left tongues",
+"from": [
+"table_width - plate",
+"corner_first - corner_width / 2"
+],
+"to": [
+"table_width - tab_recess",
+"corner_first + corner_width / 2"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Left tongues",
+"distance": "plate",
+"join": "Left blank",
+"name": "Left joined"
+}
+],
+[
+"sketch.create",
+{
+"name": "Left cuts",
+"plane": "yz",
+"offset": "-1 mm"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Left cuts",
+"start": [
+"(first_tab_y + tab_step_y / 2) + (-((tab_step_y - tab_length) / 2))",
+"(0 mm) - (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(first_tab_y + tab_step_y / 2) + (-((tab_step_y - tab_length) / 2))",
+"(0 mm) - ((plate) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(first_tab_y + tab_step_y / 2) + (-((tab_step_y - tab_length) / 2))",
+"(0 mm) - (plate)"
+],
+"center": [
+"(first_tab_y + tab_step_y / 2) + (-((tab_step_y - tab_length) / 2))",
+"(0 mm) - ((plate) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(first_tab_y + tab_step_y / 2) + ((tab_step_y - tab_length) / 2)",
+"(0 mm) - (plate)"
+]
+},
+{
+"arc": [
+"(first_tab_y + tab_step_y / 2) + ((tab_step_y - tab_length) / 2)",
+"(0 mm) - ((plate) - 2 * (relief))"
+],
+"center": [
+"(first_tab_y + tab_step_y / 2) + ((tab_step_y - tab_length) / 2)",
+"(0 mm) - ((plate) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(first_tab_y + tab_step_y / 2) + ((tab_step_y - tab_length) / 2)",
+"(0 mm) - (-(2 mm))"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Left cuts",
+"entities": [
+"e3",
+"e6",
+"e8",
+"e11",
+"e13",
+"e14"
+],
+"count": "tabs_y - 1",
+"step": [
+"tab_step_y",
+"0 mm"
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Left cuts",
+"start": [
+"(0 mm) + (-(2 mm))",
+"(0 mm) - (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(0 mm) + (first_tab_y - tab_length / 2)",
+"(0 mm) - (-(2 mm))"
+]
+},
+{
+"line": [
+"(0 mm) + (first_tab_y - tab_length / 2)",
+"(0 mm) - ((plate) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(0 mm) + (first_tab_y - tab_length / 2)",
+"(0 mm) - (plate)"
+],
+"center": [
+"(0 mm) + (first_tab_y - tab_length / 2)",
+"(0 mm) - ((plate) - (relief))"
+],
+"clockwise": true
+},
+{
+"line": [
+"(0 mm) + (-(2 mm))",
+"(0 mm) - (plate)"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Left cuts",
+"start": [
+"(table_width) - (-(2 mm))",
+"(0 mm) - (-(2 mm))"
+],
+"segments": [
+{
+"line": [
+"(table_width) - (table_width - last_tab_y - tab_length / 2)",
+"(0 mm) - (-(2 mm))"
+]
+},
+{
+"line": [
+"(table_width) - (table_width - last_tab_y - tab_length / 2)",
+"(0 mm) - ((plate) - 2 * (relief))"
+]
+},
+{
+"arc": [
+"(table_width) - (table_width - last_tab_y - tab_length / 2)",
+"(0 mm) - (plate)"
+],
+"center": [
+"(table_width) - (table_width - last_tab_y - tab_length / 2)",
+"(0 mm) - ((plate) - (relief))"
+],
+"clockwise": false
+},
+{
+"line": [
+"(table_width) - (-(2 mm))",
+"(0 mm) - (plate)"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Left cuts",
+"distance": "plate + 2 mm",
+"cut": "Left joined",
+"name": "Left"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Front",
+"normal": [
+0,
+1,
+0
+],
+"point": [
+"0 mm",
+"table_width / 2",
+"0 mm"
+],
+"keep": true,
+"name": "Back"
+}
+],
+[
+"feature.mirror",
+{
+"source": "Left",
+"normal": [
+1,
+0,
+0
+],
+"point": [
+"table_length / 2",
+"0 mm",
+"0 mm"
+],
+"keep": true,
+"name": "Right"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rib along blank plan",
+"plane": "zx",
+"offset": "rib_y0 - plate / 2"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib along blank plan",
+"from": [
+"-side_depth",
+"plate"
+],
+"to": [
+"-plate",
+"table_length - plate"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rib along blank plan",
+"distance": "plate",
+"name": "Rib along blank"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rib along tabs",
+"plane": "zx",
+"offset": "rib_y0 - plate / 2"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib along tabs",
+"from": [
+"rib_mid - rib_end_tab / 2",
+"tab_recess"
+],
+"to": [
+"rib_mid + rib_end_tab / 2",
+"plate"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib along tabs",
+"from": [
+"rib_mid - rib_end_tab / 2",
+"table_length - plate"
+],
+"to": [
+"rib_mid + rib_end_tab / 2",
+"table_length - tab_recess"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib along tabs",
+"from": [
+"-plate",
+"rib_x0 - rib_tab_offset - tab_length / 2"
+],
+"to": [
+"-tab_recess",
+"rib_x0 - rib_tab_offset + tab_length / 2"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib along tabs",
+"from": [
+"-plate",
+"rib_x0 + rib_tab_offset - tab_length / 2"
+],
+"to": [
+"-tab_recess",
+"rib_x0 + rib_tab_offset + tab_length / 2"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Rib along tabs",
+"entities": [
+"e21",
+"e22",
+"e23",
+"e24",
+"e29",
+"e30",
+"e31",
+"e32"
+],
+"count": "ribs_across",
+"step": [
+"0 mm",
+"rib_step_x"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rib along tabs",
+"distance": "plate",
+"join": "Rib along blank",
+"name": "Rib along tabbed"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rib along laps",
+"plane": "zx",
+"offset": "rib_y0 - plate / 2 - 1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib along laps",
+"from": [
+"-side_depth - 2 mm",
+"rib_x0 - plate / 2 - tab_clearance"
+],
+"to": [
+"-side_depth + rib_depth / 2",
+"rib_x0 + plate / 2 + tab_clearance"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Rib along laps",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8"
+],
+"count": "ribs_across",
+"step": [
+"0 mm",
+"rib_step_x"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rib along laps",
+"distance": "plate + 2 mm",
+"cut": "Rib along tabbed",
+"name": "Rib along"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Ribs along",
+"source": "Rib along",
+"count": "ribs_along",
+"step": [
+"0 mm",
+"rib_step_y",
+"0 mm"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Rib across blank plan",
+"plane": "yz",
+"offset": "rib_x0 - plate / 2"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib across blank plan",
+"from": [
+"plate",
+"-side_depth"
+],
+"to": [
+"table_width - plate",
+"-plate"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rib across blank plan",
+"distance": "plate",
+"name": "Rib across blank"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rib across tabs",
+"plane": "yz",
+"offset": "rib_x0 - plate / 2"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib across tabs",
+"from": [
+"tab_recess",
+"rib_mid - rib_end_tab / 2"
+],
+"to": [
+"plate",
+"rib_mid + rib_end_tab / 2"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib across tabs",
+"from": [
+"table_width - plate",
+"rib_mid - rib_end_tab / 2"
+],
+"to": [
+"table_width - tab_recess",
+"rib_mid + rib_end_tab / 2"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib across tabs",
+"from": [
+"rib_y0 - rib_tab_offset - tab_length / 2",
+"-plate"
+],
+"to": [
+"rib_y0 - rib_tab_offset + tab_length / 2",
+"-tab_recess"
+]
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib across tabs",
+"from": [
+"rib_y0 + rib_tab_offset - tab_length / 2",
+"-plate"
+],
+"to": [
+"rib_y0 + rib_tab_offset + tab_length / 2",
+"-tab_recess"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Rib across tabs",
+"entities": [
+"e21",
+"e22",
+"e23",
+"e24",
+"e29",
+"e30",
+"e31",
+"e32"
+],
+"count": "ribs_along",
+"step": [
+"rib_step_y",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rib across tabs",
+"distance": "plate",
+"join": "Rib across blank",
+"name": "Rib across tabbed"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rib across laps",
+"plane": "yz",
+"offset": "rib_x0 - plate / 2 - 1 mm"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Rib across laps",
+"from": [
+"rib_y0 - plate / 2 - tab_clearance",
+"-plate - rib_depth / 2 - tab_clearance"
+],
+"to": [
+"rib_y0 + plate / 2 + tab_clearance",
+"-plate + 2 mm"
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Rib across laps",
+"entities": [
+"e5",
+"e6",
+"e7",
+"e8"
+],
+"count": "ribs_along",
+"step": [
+"rib_step_y",
+"0 mm"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rib across laps",
+"distance": "plate + 2 mm",
+"cut": "Rib across tabbed",
+"name": "Rib across"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Ribs across",
+"source": "Rib across",
+"count": "ribs_across",
+"step": [
+"rib_step_x",
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Leg section",
+"plane": "xy",
+"offset": "leg_bottom"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Leg section",
+"start": [
+"(plate) + (leg_outer_radius)",
+"plate"
+],
+"segments": [
+{
+"line": [
+"(plate + leg_width) - (leg_outer_radius)",
+"plate"
+]
+},
+{
+"arc": [
+"plate + leg_width",
+"(plate) + (leg_outer_radius)"
+],
+"center": [
+"(plate + leg_width) - (leg_outer_radius)",
+"(plate) + (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate + leg_width",
+"(plate + leg_width) - (leg_outer_radius)"
+]
+},
+{
+"arc": [
+"(plate + leg_width) - (leg_outer_radius)",
+"plate + leg_width"
+],
+"center": [
+"(plate + leg_width) - (leg_outer_radius)",
+"(plate + leg_width) - (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(plate) + (leg_outer_radius)",
+"plate + leg_width"
+]
+},
+{
+"arc": [
+"plate",
+"(plate + leg_width) - (leg_outer_radius)"
+],
+"center": [
+"(plate) + (leg_outer_radius)",
+"(plate + leg_width) - (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate",
+"(plate) + (leg_outer_radius)"
+]
+},
+{
+"arc": [
+"(plate) + (leg_outer_radius)",
+"plate"
+],
+"center": [
+"(plate) + (leg_outer_radius)",
+"(plate) + (leg_outer_radius)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Leg section",
+"start": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"plate + leg_wall"
+],
+"segments": [
+{
+"line": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"plate + leg_wall"
+]
+},
+{
+"arc": [
+"plate + leg_width - leg_wall",
+"(plate + leg_wall) + (leg_inner_radius)"
+],
+"center": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"(plate + leg_wall) + (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate + leg_width - leg_wall",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+]
+},
+{
+"arc": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"plate + leg_width - leg_wall"
+],
+"center": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"plate + leg_width - leg_wall"
+]
+},
+{
+"arc": [
+"plate + leg_wall",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"center": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate + leg_wall",
+"(plate + leg_wall) + (leg_inner_radius)"
+]
+},
+{
+"arc": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"plate + leg_wall"
+],
+"center": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"(plate + leg_wall) + (leg_inner_radius)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Leg section",
+"distance": "leg_length",
+"name": "Leg",
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Leg row",
+"source": "Leg",
+"count": "2",
+"step": [
+"table_length - 2 * plate - leg_width",
+"0 mm",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Legs",
+"source": "Leg row",
+"count": "2",
+"step": [
+"0 mm",
+"table_width - 2 * plate - leg_width",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"sketch.create",
+{
+"name": "Foot plate plan",
+"plane": "xy",
+"offset": "leg_bottom - plate"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Foot plate plan",
+"start": [
+"(0 mm) + (plate)",
+"0 mm"
+],
+"segments": [
+{
+"line": [
+"(2 * plate + leg_width) - (plate)",
+"0 mm"
+]
+},
+{
+"arc": [
+"2 * plate + leg_width",
+"(0 mm) + (plate)"
+],
+"center": [
+"(2 * plate + leg_width) - (plate)",
+"(0 mm) + (plate)"
+],
+"clockwise": false
+},
+{
+"line": [
+"2 * plate + leg_width",
+"(2 * plate + leg_width) - (plate)"
+]
+},
+{
+"arc": [
+"(2 * plate + leg_width) - (plate)",
+"2 * plate + leg_width"
+],
+"center": [
+"(2 * plate + leg_width) - (plate)",
+"(2 * plate + leg_width) - (plate)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(0 mm) + (plate)",
+"2 * plate + leg_width"
+]
+},
+{
+"arc": [
+"0 mm",
+"(2 * plate + leg_width) - (plate)"
+],
+"center": [
+"(0 mm) + (plate)",
+"(2 * plate + leg_width) - (plate)"
+],
+"clockwise": false
+},
+{
+"line": [
+"0 mm",
+"(0 mm) + (plate)"
+]
+},
+{
+"arc": [
+"(0 mm) + (plate)",
+"0 mm"
+],
+"center": [
+"(0 mm) + (plate)",
+"(0 mm) + (plate)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Foot plate plan",
+"center": [
+"plate + leg_width / 2",
+"plate + leg_width / 2"
+],
+"radius": "foot_stud_radius + 0.5 mm"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Foot plate plan",
+"distance": "plate",
+"name": "Foot plate",
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Foot row",
+"source": "Foot plate",
+"count": "2",
+"step": [
+"table_length - 2 * plate - leg_width",
+"0 mm",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Feet",
+"source": "Foot row",
+"count": "2",
+"step": [
+"0 mm",
+"table_width - 2 * plate - leg_width",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_pad_radius",
+"expr": "min(40 mm, plate + leg_width / 2)"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Foot pad",
+"radius": "foot_pad_radius",
+"height": "foot_height - 25 mm",
+"position": [
+"plate + leg_width / 2",
+"plate + leg_width / 2",
+"-working_height"
+],
+"when": "legs_on"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Foot stud",
+"radius": "foot_stud_radius",
+"height": "25 mm + plate + foot_nut_height",
+"position": [
+"plate + leg_width / 2",
+"plate + leg_width / 2",
+"-working_height + foot_height - 25 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"feature.boolean",
+{
+"op": "union",
+"target": "Foot pad",
+"tool": "Foot stud",
+"name": "Levelling foot",
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Levelling foot row",
+"source": "Levelling foot",
+"count": "2",
+"step": [
+"table_length - 2 * plate - leg_width",
+"0 mm",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Levelling feet",
+"source": "Levelling foot row",
+"count": "2",
+"step": [
+"0 mm",
+"table_width - 2 * plate - leg_width",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"sketch.create",
+{
+"name": "Foot nut plan",
+"plane": "xy",
+"offset": "leg_bottom"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Foot nut plan",
+"start": [
+"(plate + leg_width / 2) + (foot_nut_radius)",
+"plate + leg_width / 2"
+],
+"segments": [
+{
+"line": [
+"(plate + leg_width / 2) + ((foot_nut_radius) / 2)",
+"(plate + leg_width / 2) + ((foot_nut_radius) * sqrt(3) / 2)"
+]
+},
+{
+"line": [
+"(plate + leg_width / 2) + (-(foot_nut_radius) / 2)",
+"(plate + leg_width / 2) + ((foot_nut_radius) * sqrt(3) / 2)"
+]
+},
+{
+"line": [
+"(plate + leg_width / 2) + (-(foot_nut_radius))",
+"(plate + leg_width / 2) + (0 mm)"
+]
+},
+{
+"line": [
+"(plate + leg_width / 2) + (-(foot_nut_radius) / 2)",
+"(plate + leg_width / 2) + (-(foot_nut_radius) * sqrt(3) / 2)"
+]
+},
+{
+"line": [
+"(plate + leg_width / 2) + ((foot_nut_radius) / 2)",
+"(plate + leg_width / 2) + (-(foot_nut_radius) * sqrt(3) / 2)"
+]
+},
+{
+"line": "start"
+}
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Foot nut plan",
+"center": [
+"plate + leg_width / 2",
+"plate + leg_width / 2"
+],
+"radius": "foot_stud_radius"
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Foot nut plan",
+"distance": "foot_nut_height",
+"name": "Foot nut",
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Foot nut row",
+"source": "Foot nut",
+"count": "2",
+"step": [
+"table_length - 2 * plate - leg_width",
+"0 mm",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Foot nuts",
+"source": "Foot nut row",
+"count": "2",
+"step": [
+"0 mm",
+"table_width - 2 * plate - leg_width",
+"0 mm"
+],
+"when": "legs_on"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rail long section",
+"plane": "yz",
+"offset": "plate + leg_width"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Rail long section",
+"start": [
+"(plate) + (leg_outer_radius)",
+"rail_z"
+],
+"segments": [
+{
+"line": [
+"(plate + leg_width) - (leg_outer_radius)",
+"rail_z"
+]
+},
+{
+"arc": [
+"plate + leg_width",
+"(rail_z) + (leg_outer_radius)"
+],
+"center": [
+"(plate + leg_width) - (leg_outer_radius)",
+"(rail_z) + (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate + leg_width",
+"(rail_z + leg_width) - (leg_outer_radius)"
+]
+},
+{
+"arc": [
+"(plate + leg_width) - (leg_outer_radius)",
+"rail_z + leg_width"
+],
+"center": [
+"(plate + leg_width) - (leg_outer_radius)",
+"(rail_z + leg_width) - (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(plate) + (leg_outer_radius)",
+"rail_z + leg_width"
+]
+},
+{
+"arc": [
+"plate",
+"(rail_z + leg_width) - (leg_outer_radius)"
+],
+"center": [
+"(plate) + (leg_outer_radius)",
+"(rail_z + leg_width) - (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate",
+"(rail_z) + (leg_outer_radius)"
+]
+},
+{
+"arc": [
+"(plate) + (leg_outer_radius)",
+"rail_z"
+],
+"center": [
+"(plate) + (leg_outer_radius)",
+"(rail_z) + (leg_outer_radius)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Rail long section",
+"start": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"rail_z + leg_wall"
+],
+"segments": [
+{
+"line": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"rail_z + leg_wall"
+]
+},
+{
+"arc": [
+"plate + leg_width - leg_wall",
+"(rail_z + leg_wall) + (leg_inner_radius)"
+],
+"center": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"(rail_z + leg_wall) + (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate + leg_width - leg_wall",
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)"
+]
+},
+{
+"arc": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"rail_z + leg_width - leg_wall"
+],
+"center": [
+"(plate + leg_width - leg_wall) - (leg_inner_radius)",
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"rail_z + leg_width - leg_wall"
+]
+},
+{
+"arc": [
+"plate + leg_wall",
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"center": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"plate + leg_wall",
+"(rail_z + leg_wall) + (leg_inner_radius)"
+]
+},
+{
+"arc": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"rail_z + leg_wall"
+],
+"center": [
+"(plate + leg_wall) + (leg_inner_radius)",
+"(rail_z + leg_wall) + (leg_inner_radius)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rail long section",
+"distance": "rail_length_x",
+"name": "Rail long tube",
+"when": "frame_on"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Rail long vent",
+"radius": "4 mm",
+"height": "leg_wall + 2 mm",
+"position": [
+"table_length / 2",
+"plate + leg_width / 2",
+"rail_z - 1 mm"
+],
+"when": "frame_on"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Rail long tube",
+"tool": "Rail long vent",
+"name": "Rail long",
+"when": "frame_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Rails long",
+"source": "Rail long",
+"count": "2",
+"step": [
+"0 mm",
+"table_width - 2 * plate - leg_width",
+"0 mm"
+],
+"when": "frame_on"
+}
+],
+[
+"sketch.create",
+{
+"name": "Rail short section",
+"plane": "zx",
+"offset": "plate + leg_width"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Rail short section",
+"start": [
+"(rail_z) + (leg_outer_radius)",
+"plate"
+],
+"segments": [
+{
+"line": [
+"(rail_z + leg_width) - (leg_outer_radius)",
+"plate"
+]
+},
+{
+"arc": [
+"rail_z + leg_width",
+"(plate) + (leg_outer_radius)"
+],
+"center": [
+"(rail_z + leg_width) - (leg_outer_radius)",
+"(plate) + (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"rail_z + leg_width",
+"(plate + leg_width) - (leg_outer_radius)"
+]
+},
+{
+"arc": [
+"(rail_z + leg_width) - (leg_outer_radius)",
+"plate + leg_width"
+],
+"center": [
+"(rail_z + leg_width) - (leg_outer_radius)",
+"(plate + leg_width) - (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rail_z) + (leg_outer_radius)",
+"plate + leg_width"
+]
+},
+{
+"arc": [
+"rail_z",
+"(plate + leg_width) - (leg_outer_radius)"
+],
+"center": [
+"(rail_z) + (leg_outer_radius)",
+"(plate + leg_width) - (leg_outer_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"rail_z",
+"(plate) + (leg_outer_radius)"
+]
+},
+{
+"arc": [
+"(rail_z) + (leg_outer_radius)",
+"plate"
+],
+"center": [
+"(rail_z) + (leg_outer_radius)",
+"(plate) + (leg_outer_radius)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Rail short section",
+"start": [
+"(rail_z + leg_wall) + (leg_inner_radius)",
+"plate + leg_wall"
+],
+"segments": [
+{
+"line": [
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)",
+"plate + leg_wall"
+]
+},
+{
+"arc": [
+"rail_z + leg_width - leg_wall",
+"(plate + leg_wall) + (leg_inner_radius)"
+],
+"center": [
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)",
+"(plate + leg_wall) + (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"rail_z + leg_width - leg_wall",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+]
+},
+{
+"arc": [
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)",
+"plate + leg_width - leg_wall"
+],
+"center": [
+"(rail_z + leg_width - leg_wall) - (leg_inner_radius)",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"(rail_z + leg_wall) + (leg_inner_radius)",
+"plate + leg_width - leg_wall"
+]
+},
+{
+"arc": [
+"rail_z + leg_wall",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"center": [
+"(rail_z + leg_wall) + (leg_inner_radius)",
+"(plate + leg_width - leg_wall) - (leg_inner_radius)"
+],
+"clockwise": false
+},
+{
+"line": [
+"rail_z + leg_wall",
+"(plate + leg_wall) + (leg_inner_radius)"
+]
+},
+{
+"arc": [
+"(rail_z + leg_wall) + (leg_inner_radius)",
+"plate + leg_wall"
+],
+"center": [
+"(rail_z + leg_wall) + (leg_inner_radius)",
+"(plate + leg_wall) + (leg_inner_radius)"
+],
+"clockwise": false
+}
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Rail short section",
+"distance": "rail_length_y",
+"name": "Rail short tube",
+"when": "frame_on"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Rail short vent",
+"radius": "4 mm",
+"height": "leg_wall + 2 mm",
+"position": [
+"plate + leg_width / 2",
+"table_width / 2",
+"rail_z - 1 mm"
+],
+"when": "frame_on"
+}
+],
+[
+"feature.boolean",
+{
+"op": "subtract",
+"target": "Rail short tube",
+"tool": "Rail short vent",
+"name": "Rail short",
+"when": "frame_on"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Rails short",
+"source": "Rail short",
+"count": "2",
+"step": [
+"table_length - 2 * plate - leg_width",
+"0 mm",
+"0 mm"
+],
+"when": "frame_on"
+}
+],
+[
+"body.appearance",
+{
+"body": "Top",
+"color": "#9AAAB8",
+"metallic": 0.2,
+"roughness": 0.55
+}
+],
+[
+"body.appearance",
+{
+"body": "Front",
+"color": "#9AAAB8",
+"metallic": 0.2,
+"roughness": 0.55
+}
+],
+[
+"body.appearance",
+{
+"body": "Back",
+"color": "#9AAAB8",
+"metallic": 0.2,
+"roughness": 0.55
+}
+],
+[
+"body.appearance",
+{
+"body": "Left",
+"color": "#9AAAB8",
+"metallic": 0.2,
+"roughness": 0.55
+}
+],
+[
+"body.appearance",
+{
+"body": "Right",
+"color": "#9AAAB8",
+"metallic": 0.2,
+"roughness": 0.55
+}
+],
+[
+"body.appearance",
+{
+"body": "Ribs along",
+"color": "#6F757B",
+"metallic": 0.85,
+"roughness": 0.5
+}
+],
+[
+"body.appearance",
+{
+"body": "Ribs across",
+"color": "#6F757B",
+"metallic": 0.85,
+"roughness": 0.5
+}
+],
+[
+"body.appearance",
+{
+"body": "Legs",
+"color": "#1C1E20",
+"metallic": 0.0,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Rails long",
+"color": "#1C1E20",
+"metallic": 0.0,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Rails short",
+"color": "#1C1E20",
+"metallic": 0.0,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Feet",
+"color": "#1C1E20",
+"metallic": 0.0,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Foot nuts",
+"color": "#1C1E20",
+"metallic": 0.0,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Levelling feet",
+"color": "#C8CCD0",
+"metallic": 0.9,
+"roughness": 0.3
+}
+],
+[
+"body.material",
+{
+"body": "Top",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Front",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Back",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Left",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Right",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Ribs along",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Ribs across",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Feet",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Foot nuts",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Legs",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Rails long",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Rails short",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"body.material",
+{
+"body": "Levelling feet",
+"name": "S235 steel",
+"density": 7850
+}
+],
+[
+"set.define",
+{
+"name": "Table box",
+"kind": "body",
+"where": {
+"any": [
+{
+"name": "Top"
+},
+{
+"name": "Front"
+},
+{
+"name": "Back"
+},
+{
+"name": "Left"
+},
+{
+"name": "Right"
+},
+{
+"name": "Ribs along"
+},
+{
+"name": "Ribs across"
+}
+]
+}
+}
+],
+[
+"set.define",
+{
+"name": "Steel",
+"kind": "body",
+"where": {
+"any": [
+{
+"name": "Top"
+},
+{
+"name": "Front"
+},
+{
+"name": "Back"
+},
+{
+"name": "Left"
+},
+{
+"name": "Right"
+},
+{
+"name": "Ribs along"
+},
+{
+"name": "Ribs across"
+},
+{
+"name": "Feet"
+},
+{
+"name": "Foot nuts"
+},
+{
+"name": "Legs"
+},
+{
+"name": "Rails long"
+},
+{
+"name": "Rails short"
+},
+{
+"name": "Levelling feet"
+}
+]
+}
+}
+],
+[
+"set.define",
+{
+"name": "Plates to cut",
+"kind": "face",
+"where": {
+"any": [
+{
+"in": "Top",
+"normal": {
+"along": "-z"
+}
+},
+{
+"in": "Front",
+"normal": {
+"along": "-y"
+}
+},
+{
+"in": "Back",
+"normal": {
+"along": "y"
+}
+},
+{
+"in": "Left",
+"normal": {
+"along": "-x"
+}
+},
+{
+"in": "Right",
+"normal": {
+"along": "x"
+}
+},
+{
+"in": "Ribs along",
+"normal": {
+"along": "-y"
+}
+},
+{
+"in": "Ribs across",
+"normal": {
+"along": "-x"
+}
+},
+{
+"in": "Feet",
+"normal": {
+"along": "-z"
+}
+}
+]
+}
+}
+],
+[
+"variable.set",
+{
+"name": "steel_modulus",
+"expr": "210 GPa"
+}
+],
+[
+"variable.set",
+{
+"name": "gravity",
+"expr": "9.80665 m / (1 s * 1 s)"
+}
+],
+[
+"variable.set",
+{
+"name": "support_span",
+"expr": "table_length - 2 * (plate + if(legs_on, leg_width / 2, 0 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "support_span_y",
+"expr": "table_width - 2 * (plate + if(legs_on, leg_width / 2, 0 mm))"
+}
+],
+[
+"variable.set",
+{
+"name": "section_x",
+"expr": "edge_x + round((table_length / 2 - edge_x) / hole_grid) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "section_y",
+"expr": "edge_y + round((table_width / 2 - edge_y) / hole_grid) * hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "skirt_hole_depth_sum",
+"expr": "side_rows * hole_grid / 2 + hole_grid * side_rows * (side_rows - 1) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "skirt_hole_depth2_sum",
+"expr": "side_rows * hole_grid * hole_grid / 4 + hole_grid * hole_grid * side_rows * (side_rows - 1) / 2 + hole_grid * hole_grid * (side_rows - 1) * side_rows * (2 * side_rows - 1) / 6"
+}
+],
+[
+"variable.set",
+{
+"name": "web_count_x",
+"expr": "2 + ribs_along"
+}
+],
+[
+"variable.set",
+{
+"name": "area_x",
+"expr": "(table_width - hole_rows * bore) * plate + web_count_x * plate * rib_depth - 2 * side_rows * bore * plate"
+}
+],
+[
+"variable.set",
+{
+"name": "first_moment_x",
+"expr": "(table_width - hole_rows * bore) * plate * plate / 2 + web_count_x * plate * rib_depth * (plate + rib_depth / 2) - 2 * bore * plate * skirt_hole_depth_sum"
+}
+],
+[
+"variable.set",
+{
+"name": "second_moment_x",
+"expr": "(table_width - hole_rows * bore) * plate^3 / 3 + web_count_x * plate * ((plate + rib_depth)^3 - plate^3) / 3 - 2 * bore * plate * skirt_hole_depth2_sum - 2 * side_rows * plate * bore^3 / 12"
+}
+],
+[
+"variable.set",
+{
+"name": "section_i_x",
+"expr": "second_moment_x - first_moment_x * first_moment_x / area_x"
+}
+],
+[
+"variable.set",
+{
+"name": "web_count_y",
+"expr": "2 + ribs_across"
+}
+],
+[
+"variable.set",
+{
+"name": "area_y",
+"expr": "(table_length - hole_columns * bore) * plate + web_count_y * plate * rib_depth - 2 * side_rows * bore * plate"
+}
+],
+[
+"variable.set",
+{
+"name": "first_moment_y",
+"expr": "(table_length - hole_columns * bore) * plate * plate / 2 + web_count_y * plate * rib_depth * (plate + rib_depth / 2) - 2 * bore * plate * skirt_hole_depth_sum"
+}
+],
+[
+"variable.set",
+{
+"name": "second_moment_y",
+"expr": "(table_length - hole_columns * bore) * plate^3 / 3 + web_count_y * plate * ((plate + rib_depth)^3 - plate^3) / 3 - 2 * bore * plate * skirt_hole_depth2_sum - 2 * side_rows * plate * bore^3 / 12"
+}
+],
+[
+"variable.set",
+{
+"name": "section_i_y",
+"expr": "second_moment_y - first_moment_y * first_moment_y / area_y"
+}
+],
+[
+"variable.set",
+{
+"name": "sag_limit",
+"expr": "max(0.15 mm, max(support_span, support_span_y) / 10000)"
+}
+],
+[
+"variable.set",
+{
+"name": "sag_formula_max_load",
+"expr": "sag_limit * 48 * steel_modulus * min(section_i_x / support_span^3, section_i_y / support_span_y^3) / gravity"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_area",
+"expr": "4 * leg_wall * (leg_width - leg_wall) - (4 - pi) * (leg_outer_radius^2 - leg_inner_radius^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_i_sharp",
+"expr": "(leg_width^4 - (leg_width - 2 * leg_wall)^4) / 12"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_i",
+"expr": "leg_i_sharp * leg_area / (leg_width^2 - (leg_width - 2 * leg_wall)^2)"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_buckling_length",
+"expr": "if(frame_on, 0.7 * (leg_length - rail_height + foot_height + plate), 2 * leg_length)"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_euler",
+"expr": "pi^2 * steel_modulus * leg_i / leg_buckling_length^2"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_yield",
+"expr": "leg_area * 235 MPa"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_weld_strength",
+"expr": "360 MPa / (sqrt(3) * 0.8 * 1.25)"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_weld_capacity",
+"expr": "2 * rib_depth * 0.7 * leg_wall * leg_weld_strength"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_stud_capacity",
+"expr": "hole_systems[block_system].stud_area * 1 mm * 1 mm * 235 MPa"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_rating_force",
+"expr": "hole_systems[block_system].leg_rating * gravity"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_capacity",
+"expr": "min(min(leg_euler, leg_yield, leg_weld_capacity, foot_stud_capacity) / 3, leg_rating_force)"
+}
+],
+[
+"variable.set",
+{
+"name": "box_mass_estimate",
+"expr": "7850 kg / (1 m * 1 m * 1 m) * (table_length * table_width * plate + 2 * (table_length + table_width) * rib_depth * plate + ribs_along * table_length * rib_depth * plate + ribs_across * table_width * rib_depth * plate)"
+}
+],
+[
+"variable.set",
+{
+"name": "self_mass_estimate",
+"expr": "box_mass_estimate + 7850 kg / (1 m * 1 m * 1 m) * (if(legs_on, 4 * leg_length * leg_area, 0 mm^3) + if(frame_on, 2 * (rail_length_x + rail_length_y) * leg_area, 0 mm^3))"
+}
+],
+[
+"variable.set",
+{
+"name": "load_max_by_legs",
+"expr": "if(legs_on, 4 * leg_capacity / gravity, 4 * hole_systems[block_system].leg_rating) - self_mass_estimate"
+}
+],
+[
+"variable.set",
+{
+"name": "design_load_max",
+"expr": "floor(min(0.97 * sag_formula_max_load - 0.625 * box_mass_estimate, load_max_by_legs) / (10 kg)) * 10 kg"
+}
+],
+[
+"variable.set",
+{
+"name": "panel_span",
+"expr": "min(rib_step_x, rib_step_y) - plate"
+}
+],
+[
+"variable.set",
+{
+"name": "ligament",
+"expr": "(hole_grid - bore) / hole_grid"
+}
+],
+[
+"variable.set",
+{
+"name": "panel_point_load",
+"expr": "100 kg"
+}
+],
+[
+"variable.set",
+{
+"name": "push_force",
+"expr": "1000 N"
+}
+],
+[
+"variable.set",
+{
+"name": "rail_rise",
+"expr": "rail_height - foot_height - plate"
+}
+],
+[
+"variable.set",
+{
+"name": "upper_leg",
+"expr": "leg_length - rail_rise"
+}
+],
+[
+"variable.measure",
+{
+"name": "table_mass",
+"measure": "mass",
+"of": {
+"kind": "body",
+"where": {
+"set": "Steel"
+}
+},
+"label": "Mass of the table",
+"unit": "kg"
+}
+],
+[
+"variable.measure",
+{
+"name": "box_mass",
+"measure": "mass",
+"of": {
+"kind": "body",
+"where": {
+"set": "Table box"
+}
+},
+"label": "Mass of the top and its box",
+"unit": "kg"
+}
+],
+[
+"variable.measure",
+{
+"name": "section_inertia_x",
+"measure": "sectionInertia",
+"of": {
+"kind": "body",
+"where": {
+"set": "Table box"
+}
+},
+"plane": {
+"point": [
+"section_x",
+"0 mm",
+"0 mm"
+],
+"normal": [
+1,
+0,
+0
+]
+},
+"xAxis": [
+0,
+1,
+0
+],
+"about": "x"
+}
+],
+[
+"variable.measure",
+{
+"name": "holes_in_top",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Top",
+"hole": true,
+"radius": "bore / 2"
+}
+},
+"label": "Holes in the top"
+}
+],
+[
+"variable.measure",
+{
+"name": "holes_in_sides",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"any": [
+{
+"in": "Front"
+},
+{
+"in": "Back"
+},
+{
+"in": "Left"
+},
+{
+"in": "Right"
+}
+],
+"hole": true,
+"radius": "bore / 2"
+}
+},
+"label": "Holes in the sides"
+}
+],
+[
+"variable.measure",
+{
+"name": "front_tab_band",
+"measure": "sectionArea",
+"of": "Front",
+"plane": {
+"point": [
+"0 mm",
+"0 mm",
+"-(plate + tab_recess) / 2"
+],
+"normal": [
+0,
+0,
+1
+]
+}
+}
+],
+[
+"variable.measure",
+{
+"name": "left_tab_band",
+"measure": "sectionArea",
+"of": "Left",
+"plane": {
+"point": [
+"0 mm",
+"0 mm",
+"-(plate + tab_recess) / 2"
+],
+"normal": [
+0,
+0,
+1
+]
+}
+}
+],
+[
+"variable.output",
+{
+"name": "design_force",
+"expr": "design_load * gravity",
+"label": "Design load as a force",
+"unit": "kN"
+}
+],
+[
+"variable.output",
+{
+"name": "sag_long",
+"expr": "(design_force + 0.625 * box_mass * gravity) * support_span^3 / (48 * steel_modulus * section_inertia_x)",
+"label": "Sag at the centre, load and own weight, along the length (estimate)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "sag_short",
+"expr": "(design_force + 0.625 * box_mass * gravity) * support_span_y^3 / (48 * steel_modulus * section_i_y)",
+"label": "Sag at the centre, load and own weight, across the width (estimate)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "own_weight_sag",
+"expr": "5 * box_mass * gravity * support_span^3 / (384 * steel_modulus * section_inertia_x)",
+"label": "Sag from the table's own weight alone, along the length (estimate)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "panel_sag",
+"expr": "0.18 * panel_point_load * gravity * panel_span^2 / (steel_modulus * plate^3 * ligament)",
+"label": "Local plate sag under 100 kg between ribs (estimate)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "leg_load_each",
+"expr": "(table_mass + design_load) * gravity / 4",
+"label": "Load per leg",
+"unit": "kN"
+}
+],
+[
+"variable.output",
+{
+"name": "leg_capacity_each",
+"expr": "leg_capacity",
+"label": "Leg capacity (least of the rating and of buckling, yield, seams and stud, each divided by 3; estimate)",
+"unit": "kN"
+}
+],
+[
+"variable.output",
+{
+"name": "sway_under_push",
+"expr": "if(legs_on, push_force * (if(frame_on, (upper_leg^3 + rail_rise^3) / (12 * steel_modulus * leg_i), leg_length^3 / (12 * steel_modulus * leg_i))), 0 mm)",
+"label": "Sideways sway under a 1 kN push (estimate)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "tipping_push",
+"expr": "table_mass * gravity * (table_width / 2 - if(legs_on, plate + leg_width / 2 - foot_pad_radius, 0 mm)) / working_height",
+"label": "Sideways push at the working height that tips the empty table over its feet",
+"unit": "N"
+}
+],
+[
+"variable.output",
+{
+"name": "leg_cut_length",
+"expr": "leg_length",
+"label": "Leg length (saw list)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "rail_cut_long",
+"expr": "if(frame_on, rail_length_x, 0 mm)",
+"label": "Long rail length (saw list)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "rail_cut_short",
+"expr": "if(frame_on, rail_length_y, 0 mm)",
+"label": "Short rail length (saw list)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "fork_clearance",
+"expr": "if(frame_on, rail_height, 0 mm)",
+"label": "Fork clearance under the rails",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "ribs_count_across",
+"expr": "ribs_across",
+"label": "Ribs across (running over the width)"
+}
+],
+[
+"variable.output",
+{
+"name": "ribs_count_along",
+"expr": "ribs_along",
+"label": "Ribs along (running over the length)"
+}
+],
+[
+"variable.output",
+{
+"name": "largest_load",
+"expr": "design_load_max",
+"label": "Largest load the form allows",
+"unit": "kg"
+}
+],
+[
+"variable.output",
+{
+"name": "edge_tab_length",
+"expr": "2 * (front_tab_band + left_tab_band) / plate",
+"label": "Tabs along the four plate edges (weld length there, measured)",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "weld_share",
+"expr": "100 * edge_tab_length / (2 * (table_length + table_width))",
+"label": "Weld share of the plate edges (%)"
+}
+],
+[
+"variable.output",
+{
+"name": "total_weld_length",
+"expr": "edge_tab_length + 4 * corner_width + 4 * ribs_across * ribs_along * tab_length + 2 * (ribs_across + ribs_along) * rib_end_tab",
+"label": "Total weld length at the tabs",
+"unit": "m"
+}
+],
+[
+"assert.add",
+{
+"name": "no two parts overlap (front and left skirts, ribs, legs, rails, feet; back and right are mirrors)",
+"measure": "overlap",
+"of": {
+"kind": "body",
+"where": {
+"any": [
+{
+"name": "Front"
+},
+{
+"name": "Left"
+},
+{
+"name": "Ribs along"
+},
+{
+"name": "Ribs across"
+},
+{
+"name": "Legs"
+},
+{
+"name": "Rails long"
+},
+{
+"name": "Rails short"
+},
+{
+"name": "Feet"
+},
+{
+"name": "Foot nuts"
+}
+]
+}
+},
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "holes in the top: columns x rows, counted on the model",
+"measure": "value",
+"expr": "holes_in_top",
+"eq": "hole_columns * hole_rows"
+}
+],
+[
+"assert.add",
+{
+"name": "holes in the skirts: rows x perimeter, counted on the model",
+"measure": "value",
+"expr": "holes_in_sides",
+"eq": "2 * side_rows * (hole_columns + hole_rows)"
+}
+],
+[
+"variable.set",
+{
+"name": "expected_reliefs_top",
+"expr": "2 * (2 * tabs_x + 2 * tabs_y)"
+}
+],
+[
+"assert.add",
+{
+"name": "every notch of the top has its two round reliefs, at least the beam's kerf",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Top",
+"surface": "cylinder",
+"radius": {
+"min": "beam_kerf * 0.999",
+"max": "relief * 1.001"
+}
+}
+},
+"eq": "expected_reliefs_top + 8 * (ribs_across * ribs_along + ribs_along * ribs_across)"
+}
+],
+[
+"assert.add",
+{
+"name": "Front skirt: section through the tabs is tabs x tab length x plate",
+"measure": "value",
+"expr": "front_tab_band",
+"eq": "tabs_x * tab_length * plate",
+"tol": "1"
+}
+],
+[
+"assert.add",
+{
+"name": "Left skirt: section through the tabs is tabs x tab length x plate",
+"measure": "value",
+"expr": "left_tab_band",
+"eq": "tabs_y * tab_length * plate",
+"tol": "1"
+}
+],
+[
+"assert.add",
+{
+"name": "Plain contact along most of the edge (weld at most half of it)",
+"measure": "value",
+"expr": "weld_share",
+"max": "50"
+}
+],
+[
+"assert.add",
+{
+"name": "Skirt tabs stop the recess below the working surface",
+"measure": "boxMax",
+"of": "Front",
+"axis": "z",
+"eq": "-tab_recess",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Corner tabs stop the recess short of the skirt's outer face",
+"measure": "boxMin",
+"of": "Left",
+"axis": "y",
+"eq": "tab_recess",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Rib tabs stop the recess below the working surface",
+"measure": "boxMax",
+"of": "Ribs along",
+"axis": "z",
+"eq": "-tab_recess",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Rib end tabs stop the recess short of the skirt's outer face",
+"measure": "boxMin",
+"of": "Ribs along",
+"axis": "x",
+"eq": "tab_recess",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Nothing but the top reaches the working surface, even on the thinnest plate (3 %)",
+"measure": "boxMax",
+"of": {
+"kind": "body",
+"where": {
+"not": {
+"name": "Top"
+}
+}
+},
+"axis": "z",
+"max": "-0.03 * plate"
+}
+],
+[
+"assert.add",
+{
+"name": "Top's underside is at the plate thickness",
+"measure": "boxMin",
+"of": "Top",
+"axis": "z",
+"eq": "-plate",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "The skirt's top edge runs plain under the top (full length just below it)",
+"measure": "sectionArea",
+"of": "Front",
+"plane": {
+"point": [
+"0 mm",
+"0 mm",
+"-plate - 0.01 mm"
+],
+"normal": [
+0,
+0,
+1
+]
+},
+"eq": "table_length * plate",
+"tol": "1"
+}
+],
+[
+"assert.add",
+{
+"name": "A tab's flank keeps the tab clearance in its notch (locates along the edge)",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Front",
+"normal": {
+"along": "x"
+},
+"inside": [
+[
+"first_tab_x + tab_length / 2 - 0.5 mm",
+"-1 mm",
+"-plate - 1 mm"
+],
+[
+"first_tab_x + tab_length / 2 + 0.5 mm",
+"plate + 1 mm",
+"1 mm"
+]
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"in": "Top",
+"normal": {
+"along": "-x"
+},
+"inside": [
+[
+"first_tab_x + tab_length / 2 + tab_clearance - 0.5 mm",
+"-1 mm",
+"-plate - 1 mm"
+],
+[
+"first_tab_x + tab_length / 2 + tab_clearance + 0.5 mm",
+"plate + tab_clearance + 1 mm",
+"1 mm"
+]
+]
+}
+},
+"eq": "tab_clearance",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Front skirt's inner face is one plate in from the outside (locates in and out, with the top's notch depth in its volume)",
+"measure": "boxMax",
+"of": "Front",
+"axis": "y",
+"eq": "plate",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Top: first and last hole stand on the grid",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Top",
+"hole": true,
+"radius": "bore / 2",
+"any": [
+{
+"inside": [
+[
+"edge_x - (bore / 2 + 0.2 mm)",
+"edge_y - (bore / 2 + 0.2 mm)",
+"-plate - 1 mm"
+],
+[
+"edge_x + (bore / 2 + 0.2 mm)",
+"edge_y + (bore / 2 + 0.2 mm)",
+"1 mm"
+]
+]
+},
+{
+"inside": [
+[
+"edge_x + (hole_columns - 1) * hole_grid - (bore / 2 + 0.2 mm)",
+"edge_y + (hole_rows - 1) * hole_grid - (bore / 2 + 0.2 mm)",
+"-plate - 1 mm"
+],
+[
+"edge_x + (hole_columns - 1) * hole_grid + (bore / 2 + 0.2 mm)",
+"edge_y + (hole_rows - 1) * hole_grid + (bore / 2 + 0.2 mm)",
+"1 mm"
+]
+]
+}
+]
+}
+},
+"eq": "2"
+}
+],
+[
+"assert.add",
+{
+"name": "Front skirt: first and last hole stand on the grid",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Front",
+"hole": true,
+"radius": "bore / 2",
+"any": [
+{
+"inside": [
+[
+"edge_x - (bore / 2 + 0.2 mm)",
+"-1 mm",
+"-hole_grid / 2 - (bore / 2 + 0.2 mm)"
+],
+[
+"edge_x + (bore / 2 + 0.2 mm)",
+"plate + 1 mm",
+"-hole_grid / 2 + (bore / 2 + 0.2 mm)"
+]
+]
+},
+{
+"inside": [
+[
+"edge_x + (hole_columns - 1) * hole_grid - (bore / 2 + 0.2 mm)",
+"-1 mm",
+"-hole_grid / 2 - (side_rows - 1) * hole_grid - (bore / 2 + 0.2 mm)"
+],
+[
+"edge_x + (hole_columns - 1) * hole_grid + (bore / 2 + 0.2 mm)",
+"plate + 1 mm",
+"-hole_grid / 2 - (side_rows - 1) * hole_grid + (bore / 2 + 0.2 mm)"
+]
+]
+}
+]
+}
+},
+"eq": "2"
+}
+],
+[
+"assert.add",
+{
+"name": "Left skirt: first and last hole stand on the grid",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Left",
+"hole": true,
+"radius": "bore / 2",
+"any": [
+{
+"inside": [
+[
+"-1 mm",
+"edge_y - (bore / 2 + 0.2 mm)",
+"-hole_grid / 2 - (bore / 2 + 0.2 mm)"
+],
+[
+"plate + 1 mm",
+"edge_y + (bore / 2 + 0.2 mm)",
+"-hole_grid / 2 + (bore / 2 + 0.2 mm)"
+]
+]
+},
+{
+"inside": [
+[
+"-1 mm",
+"edge_y + (hole_rows - 1) * hole_grid - (bore / 2 + 0.2 mm)",
+"-hole_grid / 2 - (side_rows - 1) * hole_grid - (bore / 2 + 0.2 mm)"
+],
+[
+"plate + 1 mm",
+"edge_y + (hole_rows - 1) * hole_grid + (bore / 2 + 0.2 mm)",
+"-hole_grid / 2 - (side_rows - 1) * hole_grid + (bore / 2 + 0.2 mm)"
+]
+]
+}
+]
+}
+},
+"eq": "2"
+}
+],
+[
+"assert.add",
+{
+"name": "Foot plates have a hole of at least the plate thickness",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": {
+"in": "Feet",
+"hole": true,
+"radius": {
+"min": "plate / 2"
+}
+}
+},
+"eq": "4",
+"when": "legs_on"
+}
+],
+[
+"assert.add",
+{
+"name": "A left skirt tab's flank keeps the tab clearance in its notch",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Left",
+"normal": {
+"along": "y"
+},
+"inside": [
+[
+"-1 mm",
+"first_tab_y + tab_length / 2 - 0.5 mm",
+"-plate - 1 mm"
+],
+[
+"plate + 1 mm",
+"first_tab_y + tab_length / 2 + 0.5 mm",
+"1 mm"
+]
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"in": "Top",
+"normal": {
+"along": "-y"
+},
+"inside": [
+[
+"-1 mm",
+"first_tab_y + tab_length / 2 + tab_clearance - 0.5 mm",
+"-plate - 1 mm"
+],
+[
+"plate + tab_clearance + 1 mm",
+"first_tab_y + tab_length / 2 + tab_clearance + 0.5 mm",
+"1 mm"
+]
+]
+}
+},
+"eq": "tab_clearance",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "An across rib's tab keeps the clearance in its slot in the top",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Ribs across",
+"normal": {
+"along": "y"
+},
+"inside": [
+[
+"rib_x0 - plate / 2 - 1 mm",
+"rib_y0 + rib_tab_offset + tab_length / 2 - 0.5 mm",
+"-plate - 1 mm"
+],
+[
+"rib_x0 + plate / 2 + 1 mm",
+"rib_y0 + rib_tab_offset + tab_length / 2 + 0.5 mm",
+"1 mm"
+]
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"in": "Top",
+"normal": {
+"along": "-y"
+},
+"inside": [
+[
+"rib_x0 - plate / 2 - tab_clearance - 1 mm",
+"rib_y0 + rib_tab_offset + tab_length / 2 + tab_clearance - 0.5 mm",
+"-plate - 1 mm"
+],
+[
+"rib_x0 + plate / 2 + tab_clearance + 1 mm",
+"rib_y0 + rib_tab_offset + tab_length / 2 + tab_clearance + 0.5 mm",
+"1 mm"
+]
+]
+}
+},
+"eq": "tab_clearance",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "A right skirt tab's flank keeps the tab clearance in its notch",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Right",
+"normal": {
+"along": "y"
+},
+"inside": [
+[
+"table_length - plate - 1 mm",
+"first_tab_y + tab_length / 2 - 0.5 mm",
+"-plate - 1 mm"
+],
+[
+"table_length + 1 mm",
+"first_tab_y + tab_length / 2 + 0.5 mm",
+"1 mm"
+]
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"in": "Top",
+"normal": {
+"along": "-y"
+},
+"inside": [
+[
+"table_length - plate - tab_clearance - 1 mm",
+"first_tab_y + tab_length / 2 + tab_clearance - 0.5 mm",
+"-plate - 1 mm"
+],
+[
+"table_length + 1 mm",
+"first_tab_y + tab_length / 2 + tab_clearance + 0.5 mm",
+"1 mm"
+]
+]
+}
+},
+"eq": "tab_clearance",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "A back skirt tab's flank keeps the tab clearance in its notch",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Back",
+"normal": {
+"along": "x"
+},
+"inside": [
+[
+"first_tab_x + tab_length / 2 - 0.5 mm",
+"table_width - plate - 1 mm",
+"-plate - 1 mm"
+],
+[
+"first_tab_x + tab_length / 2 + 0.5 mm",
+"table_width + 1 mm",
+"1 mm"
+]
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"in": "Top",
+"normal": {
+"along": "-x"
+},
+"inside": [
+[
+"first_tab_x + tab_length / 2 + tab_clearance - 0.5 mm",
+"table_width - plate - tab_clearance - 1 mm",
+"-plate - 1 mm"
+],
+[
+"first_tab_x + tab_length / 2 + tab_clearance + 0.5 mm",
+"table_width + 1 mm",
+"1 mm"
+]
+]
+}
+},
+"eq": "tab_clearance",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Section of the box through a hole column matches the closed form within 3 %",
+"measure": "value",
+"expr": "section_inertia_x / section_i_x",
+"min": "0.97",
+"max": "1.03"
+}
+],
+[
+"assert.add",
+{
+"name": "Sag under the stated load within the flatness limit",
+"measure": "value",
+"expr": "max(sag_long, sag_short)",
+"max": "sag_limit"
+}
+],
+[
+"assert.add",
+{
+"name": "Each leg carries its share",
+"measure": "value",
+"expr": "(table_mass + design_load) * gravity / 4",
+"max": "leg_capacity",
+"when": "legs_on"
+}
+],
+[
+"assert.add",
+{
+"name": "A rib tab keeps the clearance in its slot in the top",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": {
+"in": "Ribs along",
+"normal": {
+"along": "x"
+},
+"inside": [
+[
+"rib_x0 + rib_tab_offset + tab_length / 2 - 0.5 mm",
+"rib_y0 - plate / 2 - 1 mm",
+"-plate - 1 mm"
+],
+[
+"rib_x0 + rib_tab_offset + tab_length / 2 + 0.5 mm",
+"rib_y0 + plate / 2 + 1 mm",
+"1 mm"
+]
+]
+}
+},
+"to": {
+"kind": "face",
+"where": {
+"in": "Top",
+"normal": {
+"along": "-x"
+},
+"inside": [
+[
+"rib_x0 + rib_tab_offset + tab_length / 2 + tab_clearance - 0.5 mm",
+"rib_y0 - plate / 2 - 1 mm",
+"-plate - 1 mm"
+],
+[
+"rib_x0 + rib_tab_offset + tab_length / 2 + tab_clearance + 0.5 mm",
+"rib_y0 + plate / 2 + 1 mm",
+"1 mm"
+]
+]
+}
+},
+"eq": "tab_clearance",
+"tol": "0.001"
+}
+],
+[
+"assert.add",
+{
+"name": "Ribs across stand far enough apart for the torch (rib depth plus nozzle, measured over the rib set)",
+"measure": "extent",
+"of": "Ribs across",
+"axis": "x",
+"min": "(ribs_across - 1) * (rib_depth + torch_nozzle_allowance + plate) + plate",
+"when": "ribs_across >= 2"
+}
+],
+[
+"assert.add",
+{
+"name": "Ribs along stand far enough apart for the torch",
+"measure": "extent",
+"of": "Ribs along",
+"axis": "y",
+"min": "(ribs_along - 1) * (rib_depth + torch_nozzle_allowance + plate) + plate",
+"when": "ribs_along >= 2"
+}
+],
+[
+"variable.set",
+{
+"name": "end_cell_needed",
+"expr": "plate + max(if(legs_on, leg_width + torch_gap, 0 mm), rib_depth + torch_nozzle_allowance)"
+}
+],
+[
+"assert.add",
+{
+"name": "End cell at x = 0 is wide enough for the torch",
+"measure": "boxMin",
+"of": "Ribs across",
+"axis": "x",
+"min": "end_cell_needed"
+}
+],
+[
+"assert.add",
+{
+"name": "End cell at x = length is wide enough for the torch",
+"measure": "boxMax",
+"of": "Ribs across",
+"axis": "x",
+"max": "table_length - end_cell_needed"
+}
+],
+[
+"assert.add",
+{
+"name": "End cell at y = 0 is wide enough for the torch",
+"measure": "boxMin",
+"of": "Ribs along",
+"axis": "y",
+"min": "end_cell_needed"
+}
+],
+[
+"assert.add",
+{
+"name": "End cell at y = width is wide enough for the torch",
+"measure": "boxMax",
+"of": "Ribs along",
+"axis": "y",
+"max": "table_width - end_cell_needed"
+}
+],
+[
+"assert.add",
+{
+"name": "Legs bear on the skirts and start at the plate (x)",
+"measure": "boxMin",
+"of": "Legs",
+"axis": "x",
+"eq": "plate",
+"tol": "0.001",
+"when": "legs_on"
+}
+],
+[
+"assert.add",
+{
+"name": "Legs bear on the skirts and start at the plate (y)",
+"measure": "boxMin",
+"of": "Legs",
+"axis": "y",
+"eq": "plate",
+"tol": "0.001",
+"when": "legs_on"
+}
+],
+[
+"assert.add",
+{
+"name": "Legs reach the underside of the top",
+"measure": "boxMax",
+"of": "Legs",
+"axis": "z",
+"eq": "-plate",
+"tol": "0.001",
+"when": "legs_on"
+}
+],
+[
+"assert.add",
+{
+"name": "Legs are as long as the cut list says",
+"measure": "extent",
+"of": "Legs",
+"axis": "z",
+"eq": "leg_length",
+"tol": "0.001",
+"when": "legs_on"
+}
+],
+[
+"assert.add",
+{
+"name": "Long rails are as long as the cut list says (between the legs)",
+"measure": "extent",
+"of": "Rails long",
+"axis": "x",
+"eq": "rail_length_x",
+"tol": "0.001",
+"when": "frame_on"
+}
+],
+[
+"assert.add",
+{
+"name": "The rails' underside stands at the fork clearance",
+"measure": "boxMin",
+"of": "Rails long",
+"axis": "z",
+"eq": "-working_height + rail_height",
+"tol": "0.001",
+"when": "frame_on"
+}
+],
+[
+"assert.add",
+{
+"name": "Plates fit a 3000 x 1500 sheet (length)",
+"measure": "extent",
+"of": "Top",
+"axis": "x",
+"max": "3000 mm + 0.001 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Plates fit a 3000 x 1500 sheet (width)",
+"measure": "extent",
+"of": "Top",
+"axis": "y",
+"max": "1500 mm + 0.001 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "top_notch_area_each",
+"expr": "(tab_length + 2 * tab_clearance) * (plate + tab_clearance) + pi * relief * relief"
+}
+],
+[
+"variable.set",
+{
+"name": "slot_area_each",
+"expr": "(tab_length + 2 * tab_clearance) * (plate + 2 * tab_clearance) + 2 * pi * relief * relief"
+}
+],
+[
+"variable.set",
+{
+"name": "top_slots",
+"expr": "4 * ribs_across * ribs_along"
+}
+],
+[
+"variable.set",
+{
+"name": "top_volume_formula",
+"expr": "plate * (table_length * table_width - hole_columns * hole_rows * pi * (bore / 2)^2 - 2 * (tabs_x + tabs_y) * top_notch_area_each - top_slots * slot_area_each) - top_chamfer * top_chamfer / 2 * (2 * table_length + 2 * table_width - 2 * (tabs_x + tabs_y) * (tab_length + 2 * tab_clearance)) + 4 * top_chamfer^3 / 3"
+}
+],
+[
+"assert.add",
+{
+"name": "Volume of the top plate matches its closed form",
+"measure": "volume",
+"of": "Top",
+"eq": "top_volume_formula",
+"tol": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "front_volume_formula",
+"expr": "plate * (table_length * (side_depth - tab_recess) - hole_columns * side_rows * pi * (bore / 2)^2 - (tabs_x - 1) * ((tab_step_x - tab_length) * (plate - tab_recess) + pi * relief * relief) - (first_tab_x - tab_length / 2) * (plate - tab_recess) - pi * relief * relief / 2 - (table_length - last_tab_x - tab_length / 2) * (plate - tab_recess) - pi * relief * relief / 2 - 2 * ((corner_width + 2 * tab_clearance) * (plate + tab_clearance) + pi * relief * relief) - ribs_across * ((rib_end_tab + 2 * tab_clearance) * (plate + 2 * tab_clearance) + 2 * pi * relief * relief))"
+}
+],
+[
+"assert.add",
+{
+"name": "Volume of the front skirt matches its closed form",
+"measure": "volume",
+"of": "Front",
+"eq": "front_volume_formula",
+"tol": "1"
+}
+],
+[
+"variable.publish",
+{
+"name": "block_system",
+"label": "Block system",
+"group": "Size",
+"order": 1,
+"kind": "choice",
+"choicesFrom": "hole_systems",
+"description": "The bore and hole grid your blocks and clamps fit: 16 mm on 50 mm or 100 mm, or 28 mm on 100 mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "table_length",
+"label": "Table length",
+"group": "Size",
+"order": 2,
+"unit": "mm",
+"min": "max(800 mm, (2 + 2 * max(0, ceil((rib_keepout - hole_grid / 2) / hole_grid - 0.5))) * hole_grid)",
+"max": "hole_systems[block_system].longest",
+"step": "50 mm",
+"description": "Length of the top. Holes are centred; the top stays within a 3000 by 1500 mm sheet"
+}
+],
+[
+"variable.publish",
+{
+"name": "table_width",
+"label": "Table width",
+"group": "Size",
+"order": 3,
+"unit": "mm",
+"min": "max(400 mm, working_height / 2, if(hole_grid < 100 mm && table_length > 1700 mm, 800 mm, 0 mm), (2 + 2 * max(0, ceil((rib_keepout - hole_grid / 2) / hole_grid - 0.5))) * hole_grid)",
+"max": "hole_systems[block_system].widest",
+"step": "50 mm",
+"description": "Width of the top; narrow tables are limited by the legs and ribs"
+}
+],
+[
+"variable.publish",
+{
+"name": "working_height",
+"label": "Working height",
+"group": "Base",
+"order": 1,
+"unit": "mm",
+"min": "650 mm",
+"max": "1000 mm",
+"step": "10 mm",
+"description": "Height of the working surface above the floor, with the levelling feet"
+}
+],
+[
+"variable.publish",
+{
+"name": "base_style",
+"label": "Base",
+"group": "Base",
+"order": 2,
+"kind": "choice",
+"choices": [
+"Top only (trestles)",
+"Four legs",
+"Legs and lower frame"
+],
+"description": "Only the box, four legs on levelling feet, or legs joined by rails near the floor"
+}
+],
+[
+"variable.publish",
+{
+"name": "leg_section",
+"label": "Leg section",
+"group": "Base",
+"order": 3,
+"kind": "choice",
+"choicesFrom": "leg_sections",
+"min": "if(plate > 20 mm, 3, 1)",
+"description": "Square hollow section of the legs and rails, EN 10219"
+}
+],
+[
+"variable.publish",
+{
+"name": "design_load",
+"label": "Design load",
+"group": "Strength",
+"order": 2,
+"unit": "kg",
+"min": "min(100 kg, design_load_max)",
+"max": "design_load_max",
+"step": "10 kg",
+"description": "Largest load you will put on the table as one lump at its centre. The form limits it to what keeps the sag, with its own weight, within the flatness limit and each leg, foot and weld within its rating"
+}
+],
+[
+"variable.publish",
+{
+"name": "tab_length",
+"label": "Tab length",
+"group": "Joints",
+"order": 1,
+"unit": "mm",
+"min": "max(20 mm, plate)",
+"max": "max(max(20 mm, plate), tab_length_max)",
+"step": "1 mm",
+"description": "Length of each weld tab along the edge. Between the tabs the plates meet in plain contact"
+}
+],
+[
+"variable.publish",
+{
+"name": "tab_pitch",
+"label": "Tab pitch",
+"group": "Joints",
+"order": 2,
+"unit": "mm",
+"min": "max(hole_grid, ceil(2 * tab_length / hole_grid) * hole_grid)",
+"max": "400 mm",
+"step": "50 mm",
+"description": "One tab every so far along the edge, rounded to the hole grid because tabs sit between the holes. The share of the edge that is weld is shown below"
+}
+],
+[
+"variable.publish",
+{
+"name": "tab_clearance",
+"label": "Tab clearance",
+"group": "Joints",
+"order": 3,
+"unit": "mm",
+"min": "0 mm",
+"max": "1 mm",
+"step": "0.05 mm",
+"description": "Gap per side between a tab and its slot. 0 is size on size: the tabs are knocked in"
+}
+],
+[
+"variable.publish",
+{
+"name": "tab_recess",
+"label": "Tab recess",
+"group": "Joints",
+"order": 4,
+"unit": "mm",
+"min": "ceil(0.03 * plate / (0.1 mm)) * 0.1 mm",
+"max": "plate / 2",
+"step": "0.1 mm",
+"description": "How far the end of a tab stops below the outer face of the plate it enters, so nothing stands proud even on plate 3 % under nominal. The weld fills it"
+}
+],
+[
+"variable.publish",
+{
+"name": "beam_kerf",
+"label": "Beam kerf",
+"group": "Joints",
+"order": 5,
+"unit": "mm",
+"min": "0.1 mm",
+"max": "1.2 mm",
+"step": "0.05 mm",
+"description": "Width of cut your laser leaves: the round reliefs in the corners of notches and slots are at least this radius. Export true size and let the cutter compensate"
+}
+],
+[
+"document.info",
+{
+"title": "Welding table",
+"description": "A fixture welding table you laser cut and MIG weld yourself. Choose the block system (16 mm or 28 mm holes on a 50 or 100 mm grid), the size and the base. The plates meet in plain contact, with one short recessed tab per pitch, so a weld lies below the datum faces and nothing stands proud; ribs are half-lapped and tab-and-slot located. The form limits the load to what keeps the sag within the flatness limit and the legs within their rating, and gives the mass measured on the model. Export: File > Export..., DXF or SVG, Sheet of set: Plates to cut; STEP for the whole table.",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"tags": [
+"welding",
+"fixture table",
+"steel",
+"laser",
+"tab and slot"
+]
+}
+],
+[
+"document.check",
+{}
+]
 ]

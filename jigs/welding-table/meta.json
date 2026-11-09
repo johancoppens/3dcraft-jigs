@@ -1,0 +1,87 @@
+{
+  "id": "welding-table",
+  "title": "Welding table",
+  "summary": "Size, grid, base and tabs: cut it, weld it",
+  "description": "A fixture welding table you laser cut and MIG weld yourself: 16 mm or 28 mm holes on a 50 or 100 mm grid, a perforated top on half-lapped ribs, perforated side plates, and a base of square tube. The plates meet in plain contact with one short recessed tab per pitch, so the welds lie below the datum faces and nothing stands proud. The form limits the load to what keeps the sag within the flatness limit; the mass, the weld share and the sway are measured or worked out from the model.",
+  "domain": "Welding, laser cutting",
+  "process": "Laser cut plate, tab and slot, MIG welded; square hollow section base",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Many coupled formulas and tab topology across parts, with process checks."
+  },
+  "standards": [
+    "Hole systems: System 16 (bore 16 mm, 50 mm grid, 11.5-13 mm plate, 100/150 mm sides) and System 28 (bore 28 mm, 100 mm grid, 24.5-27 mm plate, 200/300 mm sides) as compared on Siegmund's published page; a 16 mm bore on a 100 mm grid as listed by GPPH",
+    "EN 10219-2 cold formed square hollow sections (section formula; a supplier's table was read as a check, not the standard)",
+    "JASS 6 (via Kobelco): shortest tack bead 40 mm on plate over 6 mm, tack pitch about 400 mm or less"
+  ],
+  "materials": [
+    "S235 plate, 12 mm (16 mm systems) or 25 mm (28 mm system), EN 10025",
+    "Square hollow section EN 10219 (40x40x3 to 120x120x6), black powder coat",
+    "Levelling feet with M16 stud, stock part"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "zoom": 1.05,
+    "look": {
+      "rotation": 0
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/plates.dxf",
+      "set": "Plates to cut",
+      "width": "3000 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/plates.svg",
+      "set": "Plates to cut",
+      "width": "3000 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/welding-table.step"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/largest-plates.dxf",
+      "set": "Plates to cut",
+      "width": "3000 mm",
+      "values": {
+        "block_system": "System 28, 100 mm grid",
+        "table_length": "3000 mm",
+        "table_width": "1500 mm"
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 372,
+    "variables": 125,
+    "parameters": 12,
+    "features": 66,
+    "assertions": 44,
+    "warnings": 0,
+    "build_s": 11.92,
+    "load_s": 1.84,
+    "load_cpu_s": 4.99,
+    "file_bytes": 441150,
+    "range_points": 117,
+    "range_unproven": 0,
+    "range_mean_s": 0.77,
+    "range_worst_s": 3.88
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
