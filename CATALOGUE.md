@@ -172,7 +172,7 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Must be (the developer, 2026-11-08):** a full `build.json` from nothing; short discrete recessed tabs at every thickness,
   nothing standing proud, tab length and pitch on the form with the weld share as an output, about 20 to 30 % by default;
   rectangular, circular or triangular cutouts per pair of walls; mass, plate list and weld length for every shape, strength
-  only where the box is beam-like, section stiffness for all; no bolt holes, no choice per edge; at most 12 parameters.
+  never (no strength figures, section stiffness only); no bolt holes, no choice per edge; at most 12 parameters.
 - **Look:** dark steel, bright cut edges.
 
 ## Complex
