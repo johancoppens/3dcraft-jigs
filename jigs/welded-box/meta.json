@@ -1,0 +1,105 @@
+{
+  "id": "welded-box",
+  "title": "Welded plate box",
+  "summary": "a box, a cube or a beam, cut and welded straight",
+  "description": "A rectangular box, cube or beam of laser-cut steel plate from 3 mm up, to build machines from: short recessed tabs, a half-lapped egg-crate of ribs inside, and openings that follow each wall. Tab and slot from the laser hold it straight while it is welded.",
+  "domain": "Welding, machine building",
+  "process": "Laser cutting, then MIG welding",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Coupled formulas, ribs re-oriented by the shortest side, cross-body checks and kernel limits."
+  },
+  "standards": [
+    "EN 1993-1-8 §4.5.2(2): smallest fillet throat 3 mm (read in IDEA StatiCa's code-check article)",
+    "AISC Table J2.3: minimum effective throat 3 mm for plate to 6 mm (read in a summary at steelcalculator.app)",
+    "Forum thread on a tab-and-slot welding table, mig-welding.co.uk, posts 1, 11, 14: clearance and plate tolerance",
+    "SendCutSend, tab and slot article: clearance per side"
+  ],
+  "materials": [
+    "S235 structural steel plate"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -900,
+        -1000,
+        900
+      ],
+      "target": [
+        560,
+        130,
+        130
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "rotation": 270
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/top-bottom.dxf",
+      "set": "Cut: top and bottom (2 off)"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/front-back.dxf",
+      "set": "Cut: front and back (2 off)"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/left-right.dxf",
+      "set": "Cut: left and right (2 off)"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/ribs-first.dxf",
+      "set": "Cut: ribs, first family (one shape)"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/ribs-second.dxf",
+      "set": "Cut: ribs, second family (one shape)"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/box.step"
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 536,
+    "variables": 252,
+    "parameters": 12,
+    "features": 77,
+    "assertions": 62,
+    "warnings": 0,
+    "build_s": 37.87,
+    "load_s": 3.27,
+    "load_cpu_s": 4.47,
+    "file_bytes": 547328,
+    "range_points": 109,
+    "range_unproven": 0,
+    "range_mean_s": 0.8,
+    "range_worst_s": 3.94
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

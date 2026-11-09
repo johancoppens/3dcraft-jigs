@@ -1,6 +1,0 @@
-[
-["feature.block", {"name": "Outer", "size": ["500 mm", "100 mm", "150 mm"]}],
-["feature.block", {"name": "Inner", "size": ["502 mm", "94 mm", "142 mm"], "position": ["-1 mm", "3 mm", "4 mm"]}],
-["feature.boolean", {"name": "Box", "op": "subtract", "target": "Outer", "tool": "Inner"}],
-["measure.section", {"of": "Box", "plane": "yz", "offset": "250 mm"}]
-]

@@ -1,9 +1,0 @@
-[
-  ["file.open", {"path": "jigs/welded-beam/source.3dcraft"}],
-  ["document.info", {"title": "Welded beam",
-    "description": "A straight beam of any size, welded from laser-cut plate (1 to 10 mm, steel or aluminium) that locates itself by tab and slot: four walls, bulkheads and end plates, so the laser's flatness and accuracy carry over into a beam to build machines from (a CNC router's gantry and frame). Choose for each long edge which plate lies on which; tabs into thick plate stop short for a plug weld, tabs into thin plate go through to be fused; every slot has T-bone reliefs and every tab root a dogbone. The outputs give the section (measured on the model), weight, deflection, stresses, twist, plate buckling and the first natural frequency for the load you set. Export each plate with File > Export..., DXF or SVG, with the face sets \"Cut: ...\" (one per part: the plates may differ in thickness); STEP exports the whole beam.",
-    "author": "3DCraft Jigs", "licence": "CC-BY-4.0",
-    "url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/welded-beam",
-    "tags": ["welding", "beam", "steel", "aluminium", "laser", "tab and slot", "machine frame", "CNC"]}],
-  ["jig.export", {"path": "dist/welded-beam.3dcraftjig"}]
-]
