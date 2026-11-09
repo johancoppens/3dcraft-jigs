@@ -1,266 +1,279 @@
 # Jansen linkage leg
 
-A walking leg after the mechanism of Theo Jansen's *Strandbeesten* (beach animals), his kinetic artworks;
-"Strandbeest" is his name for them, so this Jig is called after the linkage. The file names keep the id
-`strandbeest-leg`. One crank and eleven bars,
-two of them rigid triangles, turn the crank's rotation into a foot path with a long, nearly flat stroke
-along the ground and a high return. Drag the **crank angle** and the leg walks: every joint is solved by
-formulas, and the foot's path is drawn in front of the leg (terracotta: the stance, slate blue: the
-swing). The flat parts are cut from sheet (or printed) and joined with bolts or rod. Licence: CC-BY-4.0.
+A walking leg after Theo Jansen's linkage, the mechanism of his *Strandbeesten* ("Strandbeest" is his name for his own
+works, so this Jig is called after the linkage; its id keeps the old name). A crank, four bars and two rigid triangles
+on a fixed frame turn a rotation into a long, nearly flat stroke along the ground and a high return. Ask for the hip
+height (the crank axle above the ground), the plywood you have and the brass rod for the pins, and the form gives you
+every part to laser cut, the rod to saw and the washers to buy. Drag the crank angle and the leg walks along the path
+of its own sole, drawn in terracotta where the foot is down and blue where it swings. One leg, or a pair half a turn
+apart that always has a foot down.
 
-| Parameter | Group | Default | Range |
-|---|---|---|---|
-| Crank length | Size | 15 mm | `crankMin` (8.5 to 12 mm, from the pin and the material) to 60 mm, step 0.5 mm |
-| Crank angle | Size | 0° | 0 to 360°, step 1° |
-| Legs | Size | 1 leg | 1 leg, or 2 legs half a turn apart on one axle |
-| Material | Parts | Birch plywood, laser-cut | table `sheets` |
-| Sheet thickness (`thick`) | Parts | 3 mm | the material's `tMin` (2 or 3 mm) to 6 mm |
-| Bar width | Parts | 9 mm | `wMin` = hole + 2 × web to `wMax` = 0.75 × crank |
-| Pins | Parts | M3 bolt | table `pins`: M3, M4, M5 bolts; 3, 4, 5 mm steel rod; 1/8 in brass rod |
-| Pin clearance | Parts | 0.2 mm | 0.05 to 0.6 mm |
-| Layer gap | Parts | 1 mm | 0.3 to 3 mm (a washer) |
+![A Jansen leg in birch and walnut plywood on brass pins, the path of its sole drawn below it](preview.png)
 
-The crank length sets the scale: every bar is Jansen's number times `crank / 15`. At the default 15 mm
-the bars are Jansen's numbers in millimetres and the leg is 135 mm tall (`legHeight`); a 25 cm leg needs a
-crank of about 28 mm. **Renamed (2026-10-30):** the sheet thickness was `t` and is `thick`: `t` is the name of 3DCraft's
-timeline (a plain number from 0 to 1 that motion is a formula of), and with a thickness holding the name
-this Jig could not be given a motion. Scripts that set `t` must set `thick` now. **Tables.** `sheets` gives each material's thinnest sheet and the least web
-of material round a pin hole (1.5 mm for sheet, 1.6 mm for printed parts, four 0.4 mm perimeters).
-`pins` gives the pin diameters.
+## What it shows
 
-## The linkage
+- **A drive parameter walks the linkage, by formulas only.** Every joint is a closed-form circle-circle intersection
+  of the crank angle (`variable.set`), written as angles: the crank pin A turns about the axle O; the hip triangle's
+  direction from the fixed pivot B is the direction of A from B plus the angle the triangle B-A-C has at B (law of
+  cosines); the knee E the same with the other sign; the foot triangle's direction from E follows from the triangle
+  D-E-F. Each part is drawn once at the origin (`sketch.path`, `sketch.circle`, `feature.extrude`) and placed by a
+  `feature.transform`: turned by its direction and moved to its first joint. No assembly, no solver: the form's
+  *Crank angle* slider runs it.
+- **The foot path is a formula curve.** The position of the foot's sole as a function of the crank angle, the whole
+  chain of intersections in one expression of `t`, is drawn by `sketch.curve` in four pieces and swept as a ribbon
+  (`feature.sweep`): the stance from where the foot drops into the lowest 15 % of its step to where it leaves it, and
+  the swing. Each piece starts at the path's lowest or highest point, where its tangent is level, so the ribbon's
+  section stands square to it. *Draw the foot path* switches it off.
+- **Searches in formulas.** Where the path is lowest, highest and longest and where it crosses the stance level has no
+  closed form, so the document finds them itself: parabolic steps (three samples, the vertex of their parabola, a finer
+  step) for the extremes, secant steps for the crossings. The lowest point sets the scale: the form asks the hip height,
+  the axle's height above the ground, and the crank is (hip height − half a bar width) / 6.1223, since the sole is half
+  a bar width below the centre of the foot's rounded tip.
+- **The tightest poses in closed form.** Every joint angle depends on the crank only through the distance from A to B,
+  so the linkage is most folded when the crank points at the pivot and most stretched when it points away. The joint
+  angles over the whole turn and the least gap between parts on one layer are worked out at those two poses, in closed
+  form, and the gap sets the range of the bar width.
+- **The form changes the structure.** *Legs* builds one leg or two back to back, the second half a turn on, with a pivot
+  rod and an axle through both (`when` on 22 features and 13 assertions). *Open triangles* cuts windows into the two
+  walnut triangles (`feature.boolean` subtract by `when`). The rod choice brings its DIN 125 washer from a table
+  (`table.set`, `choicesFrom`), and with it the layer pitch and every pin length.
+- **Cut sheets from named sets.** `set.define` by material and face direction: one sheet of every birch part, one of
+  the walnut triangles, true size, for two legs twice over. The set *Leg parts* is every part of the leg.
 
-Jansen's "holy numbers" (his units; the crank is m):
+A drawing of a Jansen leg is one size at one crank angle. This is every size from a desk toy to a garden walker, any
+plywood and rod, one leg or two, and it walks.
+
+## The real thing
+
+**The linkage.** Jansen's link lengths ("holy numbers"), in his units, with the crank m:
 
 | a | b | c | d | e | f | g | h | i | j | k | l | m |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 38.0 | 41.5 | 39.3 | 40.1 | 55.8 | 39.4 | 36.7 | 65.7 | 49.0 | 50.0 | 61.9 | 7.8 | 15.0 |
 
-The crank turns about the axle O at the origin; the fixed pivot B sits `a` to the side and `l` below it.
-x runs along the ground, z up, and the leg's layers stack towards the front (-y). With the crank angle θ
-(counter-clockwise seen from the front):
+Read in two sources that agree: the table in Wikipedia's [Jansen's linkage](https://en.wikipedia.org/wiki/Jansen%27s_linkage)
+(which does not say which bar is which) and Table 1 of J. Wang, *Durability-Aware Multi-Objective Optimization of the
+Jansen Linkage*, [arXiv:2606.22129](https://arxiv.org/abs/2606.22129) (2026). Its equations 1 to 3 give the topology
+used here. The bar letters are the paper's; its joints are named J1 to J5, the pivot G and the foot F, which here are A,
+C, D, E, F, the pivot B and the foot G. The crank axle O is at the origin, the pivot B at (-a, -l), the crank pin
+A = O + m (cos θ, sin θ); then C from A (bar j) and B (b), D from C (e) and B (d), E from A (bar k) and B (bar c), F from
+D (bar f) and E (g), and the foot G from F (h) and E (i). The hip triangle B-C-D (sides b, d, e) and the foot triangle
+E-F-G (g, h, i) are rigid plates. The crank turns counter-clockwise seen from the front, the foot then moves along +x on
+the ground, and the walker walks towards -x (to the left in the front view).
 
-```text
-A = O + m (cos θ, sin θ)       crank pin
-C = circ(A, j; B, b)           upper joint, above B
-D = circ(B, d; C, e)           outer corner of the hip triangle B C D (sides b, d, e)
-E = circ(A, k; B, c)           knee, below B
-F = circ(D, f; E, g)           upper corner of the foot triangle E F G (sides g, h, i)
-G = circ(F, h; E, i)           the foot
+Each intersection has two branches. This Jig uses the one Jansen drew, with the hip triangle standing above B and the
+foot below, which gives the flat-bottomed path his search was for. An own computation (Python, steps of 0.1 degree, not
+part of the Jig): with the other intersection for C and D the same equations give a share of 20.3 % in the lowest 15 %
+of the step and a stance 43.6 units long, close to Wang's Table 4 (0.202 and 43.3); on Jansen's branch they give
+61.6 % and the flat bottom. The paper does not say which branch it took.
+
+At any size the shape is the same. In crank radii: the centre of the foot's tip comes as low as 6.1223 below the axle,
+the foot travels 4.527 along the ground and lifts 1.497; it spends 61.6 % of the turn in the lowest 15 % of its step
+(Wang's definition of the stance). Since that is more than half a turn, two legs half a turn apart always have a foot
+down. The *step length* is the foot's travel relative to the leg, not how far a walker gets per turn: that depends on
+how many legs are down and how the body rides on them, which this Jig does not work out.
+
+The knee nearly folds: the bars k and c close to 8.65° at E when the crank points at the pivot (and the three closing
+joints, C between j and b, E between k and c, F between f and g, stay between 8.65° and 142.4° over the turn; other
+pairs of links, such as e and f at D, do pass through a straight line, which a pin joint does not mind). That is why a Jansen leg is fussy about bar k:
+Wang reports that 2 % on k already breaks the assembly, and the mutation test below with k at 62.5 units bears that out.
+
+**Layers.** No two parts that cross may share a layer. From the frame outwards:
+
+| Layer | Parts |
+|---|---|
+| 0 | front frame plate: the axle O, the pivot B and the mounting holes M and N |
+| 1 | crank, hip triangle, foot triangle |
+| 2 | bar j, bar c, spacer rings at D and F |
+| 3 | bar f, spacer rings at A and E |
+| 4 | bar k |
+
+Bars j and k pass right over the axle once a turn, so the crank, glued to the axle, is the axle's last layer and the
+drive goes behind the front frame. Three layers would do, but bar k then passes within 5.9 units of the pivot B and
+would run into the washer that holds bar c on B's end; k gets a layer of its own on top. The layering was chosen by an
+own search over every assignment (Python, a turn in steps of half a degree), then proven on the model as the Checks say.
+Where a pin crosses a layer without a part of its own, a birch spacer ring of the bar's width fills it, cut with the
+bars. Between two layers on every pin sits a DIN 125 washer, with 0.2 mm of end play.
+
+**The frame.** Two frame plates, the room for the drive apart, are joined by three spacer tubes (bore the hole, outside
+diameter the washer's): on the pivot rod B, glued into both plates, and on two bolts at M (two crank radii above the
+axle) and N (as high, four thirds of a crank radius further towards +x). M and N lie outside the space any moving part
+sweeps over the turn: bolt the module to your chassis there, with bolts of the rod's size and a DIN 125 washer under the
+head and under the nut (the outputs give the grip). The axle runs in both plates, so it cannot tilt; the crank is glued
+to its front end and a washer glued on behind the back plate keeps it from sliding out. Drive it by a pulley or gear on
+the axle between the plates (the outputs give the largest radius that clears the spacer tubes by 1 mm), from a motor or
+from a hand-cranked shaft on your chassis; to try the leg by hand, turn the crank itself. With two legs the second leg
+stands behind the back plate, mirrored, its crank half a turn on the same axle.
+
+**Pins.** Brass rod, sawn to the lengths in the outputs and deburred (the model chamfers the glued end by a tenth of the
+rod). Each pin is glued (cyanoacrylate or epoxy) into its lowest part: A into the crank, C and D into the hip triangle,
+E and F into the foot triangle, B into both frame plates, the axle into the crank. The other parts turn on it, and a
+washer glued onto the rod's front end, not to the part, keeps them on.
+
+**Washers.** DIN 125 form A, brass: bore, outside diameter and thickness 3.2 / 7 / 0.5 mm for 3 mm rod, 4.3 / 9 / 0.8
+for 4 mm, 5.3 / 10 / 1.0 for 5 mm, 6.4 / 12 / 1.6 for 6 mm (read from the DIN 125 table on
+[roymech.org](https://roymech.org/Useful_Tables/Screws/Din125.html)).
+
+**Laser cutting.** Birch plywood for the frame plates, crank, bars and rings; walnut plywood for the triangles; both of
+the thickness you measured. Every hole is drawn the kerf smaller than the rod plus the clearance, so the beam cuts it to
+size; the outlines are not offset, so the parts come out half a kerf smaller all round, which a linkage does not mind.
+The rules held over the whole range: a hole at least as wide as the sheet is thick; a web round every hole at least the
+rod diameter and the sheet thickness (the brief's edge distance, and the laser's smallest feature), after the kerf; the
+triangles' windows rounded by the sheet thickness and at least two sheet thicknesses across. Lay every bar with the face
+grain along its length: the sheet export lays the parts as they stand at the crank angle set, so turn the bars in your
+laser software (or use `cut.export`, below, which lays each part along its length). The laser-burnt edges are shown
+dark. Sand the faces lightly, wax them, and run the leg in by hand.
+
+**Proportions** (own judgement, not from a source). Bars at most 0.6 crank radii wide: wider, the parts crowd each other
+and the leg turns into paddles. Bar k at most 60 sheet thicknesses long: longer, a plywood bar flexes out of its plane.
+
+**Making it.** Cut both sheets; saw and deburr the rod; glue each pin into its lowest part, square to it (a scrap with a
+hole the same size makes a jig), and let it cure. Glue the pivot rod into both frame plates through its spacer tube,
+and bolt the box together at M and N through theirs.
+Stack the parts layer by layer with a washer between every two, glue the retaining washers on, and turn the crank by
+hand: nothing may rub.
+
+What the Jig does not do: strength. Plywood of 3 mm at the largest size the form allows for it (a hip height of 271 mm,
+bar k 180 mm long) makes a sculpture, not a vehicle: a walker that carries a load needs its bars and pins checked by
+whoever builds it.
+
+## Parameters
+
+| Group | Parameter | Range | What it changes |
+|---|---|---|---|
+| Walk | Crank angle | 0 to 360°, step 1° | Turns the crank: every joint and part follows. The foot is in mid-stance near 10°, the default, and lowest near 329°. |
+| Walk | Draw the foot path | yes or no | The ribbon of the sole's path. Switch it off before exporting the model as STEP or a mesh: it is a drawing, not a part. |
+| Size | Hip height | 100 to 271 mm at the defaults; the least follows from the rod, sheet, kerf, windows and the width cap, the most from 60 sheet thicknesses of bar k | The axle's height above the ground: the size of everything. |
+| Size | Legs | one leg; a pair, half a turn apart, back to back | The structure: a second leg behind the back plate, a pivot rod and an axle through both. |
+| Parts | Open triangles | yes or no | Windows in the two walnut triangles. |
+| Parts | Bar width | from the hole plus its kerf and two webs, to 0.6 crank radii and to what lets the parts on one layer pass with 1 mm to spare (9.32 to 14.01 mm at the defaults) | Every bar, ring and the rim round the triangles' pins; the frame's rim is a bar width. |
+| Stock | Plywood thickness | 2.5 mm to the hole (3.2 mm with 3 mm rod) | Layers, pitch, pins, the least size. |
+| Stock | Brass rod and washers | 3, 4, 5 or 6 mm with DIN 125 M3 to M6 washers | Holes, washers, pitch, webs. |
+| Stock | Hole clearance | 0.1 to 0.5 mm | How much larger a hole is cut than the rod. |
+| Stock | Laser kerf | 0 to the clearance less 0.05 mm | How much smaller the holes are drawn. |
+| Drive | Room for the drive | 10 to 60 mm | The gap between the frame plates for the pulley or gear, and the spacer tubes. |
+
+At the defaults (one leg, hip height 150 mm, 3 mm plywood, 3 mm rod, clearance 0.2 mm, kerf 0.12 mm, bars 10 mm, open
+triangles) the outputs read: crank radius 23.68 mm, step length 107.22 mm, step height 35.46 mm, stance 61.58 % of the
+turn, least gap between parts on one layer 10.92 mm (at the most folded pose), longest part 113.74 mm (the foot
+triangle); brass rod 14.7 mm for pins A and E, 11.0 mm for D and F, 7.3 mm for C, 34.0 mm for the pivot B and 30.3 mm
+for the axle, 123.0 mm in all; two M3 mounting bolts with a grip of 27.0 mm; three spacer tubes 20.0 mm long; a pulley
+or gear of up to 42.87 mm radius; 25 washers.
+
+## Checks
+
+45 assertions, 34 of them active for one leg and 43 for two:
+
+- **The bars close the linkage, measured.** The pins C, E and F sit centred in the far holes of bars j, k and f (the
+  distance from the rod's surface to the hole is half the clearance less half the kerf, within 0.001 mm): a bar of the
+  wrong length, a moved or a loosened hole fails it. The back leg's three the same with two legs. Every other hole of
+  every part is held by two measures together: a hole moved by more than its clearance makes the pin overlap the part,
+  and a hole of the wrong size changes the plywood volume, which must equal its closed form to a millionth.
+- **Nothing overlaps**: the 25 (or 41) parts, pins with their washers included, have no volume in common.
+- **Parts on one layer pass each other** by at least the running clearance of 1 mm, measured at the crank angle set:
+  the hip and foot triangles, bar c and the ring at D, bar f and the ring at E, and bar k and the washers on pins D and
+  F; and the back leg's three tight pairs with two legs.
+- **The three closing joints keep 8° to 172° between their two links over the whole turn**: C between j and b, E
+  between k and c, F between f and g (closed form at the most folded and the most stretched pose, which bound these
+  angles): the least is 8.65°, the knee E folded; the most 142.4°, at F stretched.
+- **The mounting bolts clear the leg**: each bolt at M and N, modelled with a head or nut and its washer as a cylinder of
+  the washer's diameter and the washer's thickness plus one bolt diameter high on both faces, keeps at least the 1 mm
+  running clearance from every moving part (measured at the crank angle set, with two legs from both). They come
+  nearest at 53° (M, bar j) and 56° (N, the crank); measured there, the least is 4.72 mm (M) and 13.70 mm (N) for the
+  smallest pair, and 11.00 and 24.75 mm at the defaults.
+- **Two derivations agree** (measured against an independent closed form): the foot triangle's lowest point and the hip
+  triangle's leftmost point are where the radical-line construction of the same joints puts the foot G and the corner D
+  (Wang's form of the intersection, with the branches chosen by side), within 0.001 mm.
+- **The hip height is the axle above the ground**: the foot's lowest point never goes below the hip height under the
+  axle, at the crank angle set (and the back foot's with two legs); the drawn path of the sole reaches exactly that
+  depth at its lowest point (0.001 mm).
+- **The drawn path is the foot's path**: its highest point is where the search found it (0.001 mm); its length is the
+  step the search found (within 0.005 mm plus 50 millionths of it, as closely as 3DCraft proves the box of a swept
+  spline); the stance pieces stay in the lowest 15 % of the step and the swing pieces above it, to within half the
+  line's width. The foot rises through that level at 7.1 and 4.0 of Jansen's units per radian (the line is 0.25
+  units wide each side), so this pins the stance's two ends to within 2.0° and 3.6° of crank, and the stance share to within 1.6 points; the share itself comes from the
+  secant search.
+- **The pair is half a turn apart**: the centre of mass of the two crank pins A lies on the axle (x and z, 0.001 mm).
+- **Laser**: the web round a hole (measured on a spacer ring) is at least the rod diameter and the sheet thickness after
+  the kerf; no wall of the foot triangle is thinner than the sheet (`thickness`).
+- **Counts**: 25 parts for one leg, 41 for two; 2 frame plates and 9 birch parts per leg, and 2 walnut triangles per leg,
+  on the cut sheets.
+- **Closed forms**: the birch parts' volume equals the sum of Steiner's rule for every bar, ring and frame plate
+  (outline area plus perimeter times the rim plus a disc, less the holes); the walnut triangles' volume equals Heron's
+  area with Steiner's rim, less the holes and the windows; both within a millionth.
+- **The rod list**: every rod, tube and bolt the outputs list (pins A and E, D and F, C, the pivot, the axle, the
+  spacer tubes, and the bolts' grip plus head and nut) is measured as long as the output says (0.001 mm).
+
+**Mutation tests** (each in a scratch copy of `build.json`, at the defaults unless said): bar k 1 % long fails the
+overlap, pin E's centring and the birch volume; C on the other branch fails pin F's centring and corner D; F on the
+other branch fails the foot's position, the overlap and the layer-1 clearance; bar f's far hole moved 0.1 mm fails the
+overlap and pin F's centring; bar j's far hole 0.1 mm larger fails pin C's centring and the birch volume; the hip
+triangle's hole D 0.1 mm larger fails the walnut volume; bar f moved to layer 2 fails the overlap; bars 0.75 mm wider
+than the range allows, at 192°, fail the layer-3 clearance; the lowest point searched from the other dip of the path
+(30°) and the stance ending 2° late both fail the stance check; the output for pins D and F 1 mm long fails their rod
+check (and the pivot's, which shares its formula); the axle's output 1 mm short fails the axle's; the D and F pins
+drawn 1 mm longer fail their rod check; two legs with the back crank at +170° fail both half-turn checks; bar k at
+62.5 units fails the joint-angle check, the ground checks and the stance check, and the sweep breaks; the bolt at N put
+back half a frame offset ahead of M (where an earlier build had it), at 312°, fails its clearance and the overlap.
+
+**Range.** `tools/jigs.py check` runs `check-range` over 101 points (the defaults, 64 corners, every choice and 32
+random points): all pass, none unproven. The assertions measure the leg at the crank angle set; at one setting of the
+form they prove that angle. Beyond the sampled points, a sweep by hand with `param.set` every 15° and at 11, 12, 191 and
+192° passed every assertion for: two legs at the smallest size (100 mm, bars 9.32 mm, solid triangles); two legs at the
+widest bars at 150 mm (14.01 mm) with 2.5 mm plywood, 0.5 mm clearance and 0.45 mm kerf; the largest pair, 6 mm rod and
+6.4 mm plywood (579 mm, bars 54.09 mm, 60 mm of drive room); and the largest single leg (271 mm, bars 25.32 mm, foot
+path off). The tightest gap between parts on one layer was 4.44 mm (the smallest pair, at 192°, next to the closed
+form's tightest pose at 191.6°). Over the whole range the width cap of 0.6 crank radii binds before the 1 mm clearance
+does: at the cap the parts on one layer keep 0.28 crank radii apart.
+
+## Export
+
+- **File › Export…, Sheet of set: *Cut sheet, birch plywood*** and **Sheet of set: *Cut sheet, walnut plywood***, DXF or
+  SVG. Every part at true size with its holes, each on its own layer, laid out as it stands at the crank angle set; give
+  the dialog your bed's width, and turn the bars to lay the grain along them in your laser software. The holes are
+  already drawn the kerf smaller: turn the laser software's kerf offset off. For two legs each sheet holds both legs'
+  parts.
+- **With an agent**: `cut.export {"path": "parts.svg", "width": "600 mm"}` with *Draw the foot path* off lays every
+  plywood part along its length (grain along the bar) and says how many of each to cut; birch and walnut parts share
+  that sheet, each on its own layer.
+- **STEP**: switch *Draw the foot path* off and export the model: what is left is the named set *Leg parts*, every
+  part of the leg.
+- The brass rod, spacer tubes, mounting bolts and washers are in the outputs.
+
+## Files
+
+- `build.json`: the source, a JSON list of 3DCraft commands.
+- `meta.json`, `formtest.md`, `preview.png`.
+- [`dist/strandbeest-leg.3dcraftjig`](../../dist/strandbeest-leg.3dcraftjig): the published Jig.
+
+## Rebuild
+
+```bash
+tools/jigs.py build strandbeest-leg
+tools/jigs.py render strandbeest-leg
+tools/jigs.py check strandbeest-leg
 ```
 
-`circ(P, r; Q, s)` is a closed-form circle-circle intersection: with `dd = |PQ|`,
-`al = (r² - s² + dd²) / (2 dd)` and `q = 1 - (al / r)²`, the point is `P + al u ± r sqrt(q) n`, `u` the
-unit vector from P to Q and `n` it turned by 90°. `q` is the square of the sine of the angle at P, so the
-circles meet while `q >= 0`. The sign picks the branch of Jansen's leg: C, F and G lie right of the
-line from the first centre to the second, D and E left of it. The branch is the same at every angle, so
-the leg never flips. These are the joint equations of Wang (2026), eq. 1-3,
-with the same letters.
+## Difficulty
 
-Each part is drawn once in its own frame (first pin at the origin, second pin along an axis) and placed by
-a transform: turned by `atan2` of the line between the two joints it joins and moved to the first. Its
-other holes land on their joints only when the linkage really closes, which the assertions measure.
+Not scored yet (the reviewer gives it).
 
-The model also works the leg out at 24 crank angles (every 15°) for the foot path and the gait:
+## Platform notes
 
-| Variable | What | At any size |
-|---|---|---|
-| `stride` | the foot path's length along the ground, one step per crank turn | 4.52 × crank (67.8 mm) |
-| `stepHeight` | how high the foot lifts | 1.48 × crank (22.2 mm) |
-| `stanceLength` | how far the foot moves over the 120° of crank round its lowest point | 3.07 × crank (46.0 mm) |
-| `flatness` | the height spread over those 120°, as a part of `stride` | 0.57 % |
-| `closeMin` | the least `q` of any joint at the 24 angles | 0.064 (the knee E, near its fold) |
-| `legHeight` | top of the hip triangle (or the frame) to the foot | 8.97 × crank (135 mm) |
-
-The foot moves forward (+x) on the ground while the crank turns counter-clockwise, so the walker walks
-towards -x. With three or more legs phased over the turn, a foot is always in its flat stance: that is why
-Jansen's beasts have so many.
-
-**Why the bar lengths are not parameters.** The knee E almost folds once a turn (`closeMin` 0.064): Wang
-(2026) reports that changing `k` by 2 % already breaks the assembly at some crank angles, and in this
-Jig's own sweep a change of 1 % to every bar at once (the corners of that box) already spoils the flat
-stance beyond 3 % of the stride. A form whose every point must give a working leg cannot offer the bars
-over a useful range, so they stay document variables (`Ja` to `Jm`): **Open for editing** to try your own
-numbers, and the assertions below tell you at once whether the leg still closes and walks flat.
-
-## Layers and assembly
-
-Seen from the front, from the frame outwards (the layer gap is a washer between layers):
-
-| Layer | Parts | Pins through it |
-|---|---|---|
-| 0 | frame plate (O, B and a mounting hole M) | axle O, pivot shaft B |
-| 1 | crank (O to A), hip triangle (B, C, D), foot triangle (E, F; the foot G has no pin) | O, A, B, C, D, E, F |
-| 2 | bar j (A to C), bar c (B to E) | A, B, C, D, E, F |
-| 3 | bar k (A to E), bar f (D to F) | A, D, E, F |
-
-Parts on one layer stay apart over the whole turn, and a pin passes only layers whose parts stay clear of
-it. `gen.py` checks that at every degree of crank before it writes `build.json` (`simulate()`): the
-closest pair is bar k and bar f, and the closest pin to a part it passes is E to bar f, both 13.25 ×
-crank / 15 between centre lines, so `wMax = 0.75 × crank` leaves at least 2 × crank / 15 (2 mm at the
-default). The assertions measure it on the model at the form's crank angle. The axle may not reach layers 2 and 3: bars j and
-k pass right over O once a turn, which is why the drive is behind the frame.
-
-1. Cut the parts: the named face set **Cut sheet**, `file.export {"path": "leg.svg", "set": "Cut sheet", "width": "400 mm"}`
-   (DXF works too), every flat part at true size with its pin holes (pin + clearance).
-2. Fix the crank to the axle so they turn together: glue, a D-flat with a set screw, or two nuts on a
-   threaded axle. Every other joint turns freely.
-3. Put the axle through the frame (from behind) and the crank; the pivot shaft through the frame, the hip
-   triangle and bar c.
-4. Build outwards layer by layer with a washer between layers. Pin lengths between the outer faces (add a
-   bolt's head and nut, or room for e-clips on rod):
-   - A, D, E, F: three layers, `2 (thick + gap) + thick` (11 mm at the defaults);
-   - C: two layers, `thick + gap + thick` (7 mm);
-   - B: frame to layer 2, `2 (thick + gap) + thick` (11 mm);
-   - O: the stub behind the frame (`dg = max(10 mm, 2 w)`, for a pulley, gear or crank handle) to the
-     crank's face (25 mm at the defaults).
-5. Tighten nuts until the joints turn without play (nylon lock nuts hold that setting), then turn the crank
-   by hand once round: nothing should rub or catch.
-
-**Two legs.** A second frame plate sits `dg` behind the first, held by spacers at B and M (with a bolt
-through M). The second leg is the same stack behind it, mirrored front to back, its crank half a turn
-round from the first on the same axle; the pivot shaft runs through both. Drive the axle with a pulley or
-gear between the frame plates. For a walker, mount several of these on one chassis with the cranks phased
-evenly over the turn.
-
-**3D printed.** Print every part flat; 0.3 to 0.4 mm of clearance suits most printers.
-
-## Assertions (checked at every regeneration)
-
-Measured on the model:
-- *No part overlaps another*: pins pass their holes, and nothing on one layer runs into another part.
-- *Pin X sits in its hole in part P*, for every pin and every part it joins (17): the clearance from the
-  pin to the part is at most half the clearance (plus 0.005 mm), and with no overlap that puts the pin
-  inside its hole. A part drawn from its bar length and turned to its joints has its far hole on the joint
-  only when the joints are where the bar says.
-- *Parts on one layer stay apart* (crank, hip and foot triangle; j and c; k and f): at least 0.5 mm.
-- *The leg runs free of its frame*: the front leg's box ends at least half the layer gap in front of the
-  frame's front face (measured exactly as a box). The second leg is the same stack behind the second
-  frame, from the same formulas mirrored; the overlap check covers it.
-- *Stance is flat*: the stance tube (the foot path over the 120° of crank round its lowest point) is at
-  most 3 % of `stride` high, plus the tube.
-- *Foot path as wide as the stride*: the path's measured width matches `stride`.
-- *Only the feet reach down to the ground*: everything but the foot triangles stays at least `stepHeight`
-  above the lowest point of the foot, so the leg clears the ground and steps over what the foot steps over.
-
-A formula check (a measured size compared with a bound that the formula sets):
-- *Linkage closes over the whole turn*: every joint's `q` is at least 0.01 (no joint flatter than about
-  6°) at all 24 sampled angles. Between the samples, `simulate()` in `gen.py` checks Jansen's leg at
-  every degree (least `q` 0.062).
-
-`check-range --deep` passes 92 of 92 points with seed 1 and 140 of 140 with 64 samples and seed 7. A sweep
-of the crank angle in 10° steps with two legs and the widest bars passes every assertion.
-
-## Sources
-
-- Theo Jansen, *The Great Pretender* (010 Publishers, Rotterdam, 2007; 2nd ed. 2014), and
-  [strandbeest.com](https://www.strandbeest.com): the Strandbeest, its leg and the "holy numbers" found by
-  his evolutionary search for a flat, long stride.
-- [Jansen's linkage](https://en.wikipedia.org/wiki/Jansen%27s_linkage), Wikipedia: the eleven numbers and
-  the crank, with the drawing of which bar joins which.
-- Jichao Wang, *Durability-Aware Multi-Objective Optimization of the Jansen Linkage: Trading Gait Quality
-  Against Joint Wear*, [arXiv:2606.22129](https://arxiv.org/abs/2606.22129) (2026): the forward kinematics
-  as two-circle intersections (eq. 1-3, Table 1, the same letters as here), and the sensitivity of `k`.
-  Its optimised link lengths (Table 5) were tried as a second variant, but with these joint equations
-  they do not close over the whole turn, so they are not offered.
-- The circle-circle intersection: any analytic geometry text (two circles meet where the radical line
-  cuts them).
-
-## Notes
-
-- The colours stay the same whatever the material (in 3DCraft a colour cannot follow a choice yet):
-  plywood bars, walnut triangles, a brass crank, a petrol frame, steel pins.
-- The foot path is drawn as the polyline through the 24 sampled foot positions. The foot passes exactly
-  through them; between them the true path lies up to 0.1 × crank (1.5 mm at the default) off the line,
-  most at the sharp turn at the front of the swing. The tube is thin (0.04 × crank) because a thicker one
-  cannot be mitred round that turn.
-- The cut sheet lays the parts out as they stand at the form's crank angle. Set the crank angle to taste
-  before exporting, or nest the parts in your laser software.
-
-## As an assembly
-
-This Jig works every joint out by hand, as circle intersections. `dist/strandbeest-leg.3dcraftasm` and
-`dist/strandbeest-walker.3dcraftasm` build the same leg again from parts, and 3DCraft's assembly solver
-finds the joints instead. `assembly/gen.py` writes the command batches that build them
-(`assembly/01-bar.json` to `05-strandbeest-walker.json`) and `assembly/check.json`;
-`scripts/asm.py all strandbeest-leg` builds and checks them. Both files are packed: they carry their parts
-and open anywhere.
-
-**Parts.** One bar (`bar.3dcraft`: 3 mm plywood, 9 mm wide, a hole for a 3 mm pin with 0.2 mm clearance at
-each end; its length between the holes, `len`, is a public parameter) and one pin (`pin.3dcraft`, 3 mm;
-`len` public too). Every link of the leg is an instance of the bar with its own length: the frame O-B
-(√(a² + l²)), the crank m, and the bars b to k. The two rigid triangles of the Jig (the hip B C D and the
-foot E F G) are three bars each, pinned at their corners: the solver closes them like every other loop. A
-pin goes through every joint, fixed to the rearmost part there (the axle O to the crank), from that part's
-back face to the front face of the foremost (the axle from 10 mm behind the frame).
-
-**The leg** (`leg.3dcraftasm`, built into `build/strandbeest/` and packed into the two files): the frame
-is fixed to the world (its axle hole on the world's y axis, the bar pointing at B), and a revolute joins
-the parts at every joint, sixteen in all. The parts start where the Jig's joints put them at crank angle
-0, rounded to the millimetre and to 5°, so the solver really assembles the leg. Nothing drives it: the
-crank can still turn (one degree of freedom).
-
-**Layers.** The parts lie in seven layers, from the frame towards the front (-y), 3 mm thick with 1 mm
-between them: 0 frame, 1 crank, 2 bars j, c and f, 3 bars b and g, 4 bars d and i, 5 bars k, e and h, 6 a
-second crank arm (the web). `gen.py` found this layering by search, with its own simulation of the leg at
-every 2° of crank: parts on one layer stay at least 1 mm apart, parts joined by a pin are on different
-layers, and no pin passes a part on a layer between its ends within 1 mm. Bars j and k pass right over the
-axle O once a turn, so no shaft can run through the leg: the crank pin A runs from the crank to the web,
-and crank, pin A and web make one crank throw (glue or key them, as the crank to the axle). The next leg is
-driven from the web.
-
-**One leg** (`strandbeest-leg.3dcraftasm`): the leg as a flexible subassembly (its own joints move in the
-parent), on a 20 mm drive shaft behind the frame, fixed to the leg's axle and turning about the world's y
-axis. The timeline t turns it once: the crank angle is `theta = theta0 + 360 deg * t` (`theta0` = 0,
-counter-clockwise seen from the front, as the Jig's), and the drive joint is set to `-theta` (it turns about
-+y). The foot is traced (`view.trace` of the foot pin's centre), and the trace written as SVG.
-
-**Four legs** (`strandbeest-walker.3dcraftasm`): four instances of the same leg as flexible
-subassemblies in a row along the axle, 43 mm apart, on one crankshaft: the drive shaft behind the first
-leg, and between two legs a 6 mm journal fixed to the web of one and to the axle of the next, a quarter
-turn on (the phase offsets). Every leg starts at crank angle 0; the solve at rest turns legs 2 to 4 a
-quarter, a half and three quarters of a turn on, and they stay on Jansen's branch (the feet show it).
-
-**Assertions** (at every regeneration, and over the motion):
-- *the foot is where the Jig's circle intersections put it*: the assembly carries the Jig's closed form
-  as its own variables (A, then C, D, E, F and G as circle intersections of the crank angle, the same
-  formulas and branches as the Jig's `kin`), and the foot pin's centre (the centroid of its section
-  across the pin) must lie within 0.001 mm of G; for each leg of the walker at its own phase;
-- *no part overlaps another* (one leg: every pair of its 22 bodies); in the walker, *the crankshaft runs
-  clear of every part* (the drive shaft and the journals against every body: 3DCraft measures at most 500
-  pairs at once, and each leg is the one checked alone).
-
-**Checked** (3DCraft 57ba7632, `scripts/asm.py check strandbeest-leg`, under a minute):
-- one leg: solved at rest with no degree of freedom left; over a whole turn, sampled at 73 moments (5°
-  apart; what happens between two samples is not seen), the foot is where the Jig's circle intersections
-  put it at every sample (largest miss 1.5e-6 mm) and no part overlaps another; the trace of the foot
-  (73 points) misses the Jig's path (the same closed form, computed by `scripts/asm.py` itself) by at most
-  1.5e-6 mm; it is closed, 148.9 mm long, 67.86 mm wide and 22.31 mm high (the Jig: stride 67.8 mm, step
-  height 22.2 mm);
-- four legs: solved at rest with no degree of freedom left; at 25 moments over a turn every foot is where
-  the circle intersections put it at its own phase (largest miss 9.2e-7 mm), and the crankshaft runs
-  clear of every part; each foot's trace (73 points) matches the closed form at its phase (0°, 90°, 180°,
-  270°) within 9.2e-7 mm.
-
-**Not modelled.** The crank, pin A and web are held together by a fixed mate, as a glued or keyed throw;
-the pins are fixed to one part each, where a real pin turns in every hole. The walker's legs stand side by
-side on one frame line, not on a chassis, and nothing touches the ground. The parts are the Jig's default
-material and sizes (3 mm sheet, 9 mm bars, 3 mm pins); the leg's crank is 15 mm, so its bars are Jansen's
-numbers in millimetres.
-
-**Found in 3DCraft** (building these): a flexible subassembly brings its own drivers into the parent,
-with the values they have in its own file. A leg whose crank its own file drives (tried: `joint.set` of
-its crank to 30°) cannot be turned by a parent: the parent's drive and the leg's driver contradict each
-other ("over-constrained: ... the driver of Drive.angle, the driver of JointO.angle"). So the leg file is
-undriven, and both the one-leg assembly and the walker drive it from outside; a leg file cannot both play
-its own motion and serve as a part of a machine.
-
-**Also missing in 3DCraft:**
-- No measure of a point's position for an assertion: the foot is measured as the centroid of the foot
-  pin's section across its middle.
-- An overlap assertion measures at most 500 pairs of bodies: the walker's legs are not checked against each
-  other (they stand 43 mm apart along the axle, and each is the leg checked alone).
-- `motion.check` on an assembly holds memory for every moment it measures, so `scripts/asm.py` runs it 17
-  moments at a time.
-- The world's axes have frames whose x axis is not stated: the drive joint's zero (180° about `world/y`)
-  was found by tracing the foot; the check against the closed form at every sample proves it right.
+- **No function or search in an expression** (J-xxx-expression-functions, J-xxx-extremum-of-a-formula). The foot's
+  position as a function of the crank is written out 35 times, 2.6 to 3.8 kB each, once per sample of the parabolic
+  and secant searches; the four curve pieces repeat the same formula again in `t`.
+- **A sweep along joined formula curves does not close** (proposed `J-xxx-sweep-joined-curves-open`): three pieces of
+  the foot path meeting end to end are refused as a closed path ("comes back 0.0036 from where it started"), so the
+  ribbon is four open sweeps, each starting where its tangent is level.
+- **The box of a swept spline is not proven to the tolerance** (proposed `J-xxx-sweep-extent-unproven`): a variable
+  cannot read the path's length, so the step length is the search's and an assertion holds the drawn path to it within
+  0.005 mm plus 50 millionths of the step (0.010 mm at the defaults).
+- **A wood pattern stays in the model's space** (proposed `J-xxx-pattern-stays-when-turned`): when a part is turned by
+  a transform its grain does not turn with it, so the grain of the bars and triangles runs at a slant and drifts through
+  them as the crank turns. Cosmetic.
+- **A sheet of a set lays faces as they stand** (F-162 covers the direction per part for `cut.export`): the export
+  dialog's sheet cannot lay a part along its length, so the README asks the maker to turn the bars; `cut.export` can, but
+  is not in the dialog and cannot split the two woods without naming bodies, which inactive bodies refuse (J-003).
+- **A STEP of a named set is refused** ("`set` is for a drawing"): the foot path's ribbons can only be kept out of the
+  model's STEP by switching them off.

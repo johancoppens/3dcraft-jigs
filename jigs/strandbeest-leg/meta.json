@@ -1,0 +1,122 @@
+{
+  "id": "strandbeest-leg",
+  "title": "Jansen linkage leg",
+  "summary": "a walking leg from your hip height, cut sheet and rod list",
+  "description": "Theo Jansen's walking linkage scaled to the hip height you ask: drag the crank and the leg walks along its drawn foot path. Laser-cut birch bars and walnut triangles on brass rod pins, one leg or a pair half a turn apart.",
+  "domain": "Mechanisms, laser cutting",
+  "process": "Laser cutting of birch and walnut plywood; brass rod pins cut to length, glued in one part each, with DIN 125 washers",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Closed-form kinematics and searches in formulas, formula-curve sweeps, a five-layer multi-body stack with coupled ranges and measured clearances, and a pair option that changes the structure."
+  },
+  "standards": [
+    "Theo Jansen's link lengths (the \"holy numbers\"), as tabled in Wikipedia's Jansen's linkage and in J. Wang, arXiv:2606.22129, Table 1 (topology from its equations 1 to 3)",
+    "DIN 125-1 A plain washers: bore, outside diameter and thickness for M3 to M6 (roymech.org table)"
+  ],
+  "materials": [
+    "Birch plywood, laser grade",
+    "Walnut plywood, laser grade",
+    "Brass rod, 3 to 6 mm",
+    "Brass washers, DIN 125 A"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.001
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -364,
+        -544,
+        123
+      ],
+      "target": [
+        -50,
+        -5,
+        -45
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 26
+    },
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/birch.svg",
+      "set": "Cut sheet, birch plywood",
+      "width": "600 mm",
+      "gap": "5 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/walnut.dxf",
+      "set": "Cut sheet, walnut plywood",
+      "width": "600 mm",
+      "gap": "5 mm"
+    },
+    {
+      "command": "cut.export",
+      "path": "exports/parts-along-x.svg",
+      "width": "600 mm",
+      "gap": "5 mm",
+      "values": {
+        "foot_path": 0
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/pair-birch.dxf",
+      "set": "Cut sheet, birch plywood",
+      "width": "600 mm",
+      "gap": "5 mm",
+      "values": {
+        "legs": 2,
+        "hip_height": "250 mm",
+        "sheet_thickness": "4 mm",
+        "pin_rod": 2,
+        "bar_width": "14 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/leg-parts.step",
+      "values": {
+        "foot_path": 0
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 540,
+    "variables": 266,
+    "parameters": 11,
+    "features": 95,
+    "assertions": 45,
+    "warnings": 0,
+    "build_s": 36.6,
+    "load_s": 3.57,
+    "load_cpu_s": 6.57,
+    "file_bytes": 479337,
+    "range_points": 101,
+    "range_unproven": 0,
+    "range_mean_s": 0.3,
+    "range_worst_s": 1.14
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
