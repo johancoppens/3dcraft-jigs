@@ -1,0 +1,126 @@
+{
+  "id": "sundial",
+  "title": "Sundial for your place",
+  "summary": "your place, your wall: brass on slate",
+  "description": "A horizontal garden dial or a vertical wall dial, also for a wall that does not face south, drawn for your latitude and longitude so that it reads the clock time of your zone: a brass plate and gnomon to laser cut and engrave, on a slate slab.",
+  "domain": "Laser cutting, engraving, astronomy",
+  "process": "Laser cutting of brass sheet (the parts drawn as the beam's path), or waterjet with the kerf set to 0 and the machine's compensation; engraving by fibre laser or rotary cutter, filled with black wax; silver-soldered gnomon; slate slab from a stone supplier",
+  "tier": "complex",
+  "difficulty": {
+    "score": 8,
+    "rationale": "Data-driven lines for any plane dial with a thick gnomon, shadow assertions built from vectors, the beam path with its kerf and a one-way registration across two exports."
+  },
+  "standards": [
+    "C. Sabanski, The Sundial Primer (mysundial.ca), pages Horizontal Sundial and Vertical Declining Sundial: X = atan(sin lat tan h); SH = asin(cos d cos lat); SD = atan(sin d / tan lat); X = atan(cos lat tan h / (cos d + sin d sin lat tan h)) (read)",
+    "British Sundial Society, How sundials work, part 4: two styles on a thick gnomon, the noon gap, the other style before 6 a.m. and after 6 p.m. (read)",
+    "Wikipedia, Schema for vertical declining dials (after Waugh, Sundials: Their Theory and Construction, pp. 78-79): SD, SH and DL with cot DL = cot D sin(latitude) (read; Waugh himself not read)",
+    "NOAA Global Monitoring Laboratory, General Solar Position Calculations: equation of time and time offset (read)",
+    "Wikipedia, Axial tilt: mean obliquity at J2000.0, 23 deg 26 min 21.406 s (read)",
+    "Wikidata P625 coordinates of the twelve cities (read 2026-11-09); their standard UTC offsets (CET +1, GMT 0, EST -5, JST +9) are common knowledge, not read",
+    "ISO 273 clearance holes, normal series: M4 4.5 mm, M5 5.5 mm, M6 6.6 mm (read from a chart labelled ISO 273, Albany County Fasteners)",
+    "Deutsches Kupferinstitut, CuZn37 data sheet (2005): density 8.44 g/cm3, expansion 19e-6 per K (read)"
+  ],
+  "materials": [
+    "Brass sheet CuZn37 (CW508L), 1.5 to 5 mm, for the dial plate and the gnomon (8.44 g/cm3)",
+    "Black engraving wax or paint for the lines",
+    "Silver solder (or soft solder indoors) for the gnomon's tabs",
+    "Slate slab (pedestal, 25 mm) or plaque (wall, 20 mm) with a 4 mm bevel",
+    "Two M4 brass screws with plugs (M5 in 5 mm sheet); four M6 screws for a wall plaque",
+    "Flexible adhesive to bed the plate"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -340,
+        -500,
+        370
+      ],
+      "target": [
+        0,
+        -12,
+        22
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 32
+    },
+    "look": {
+      "light": [
+        200,
+        70
+      ]
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet.svg",
+      "set": "Cut sheet"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/engraving.svg",
+      "set": "Engraving"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cut-sheet-kerf-0.2.dxf",
+      "set": "Cut sheet",
+      "values": {
+        "laser_kerf": "0.2 mm"
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/wall-cut-sheet.dxf",
+      "set": "Cut sheet",
+      "values": {
+        "dial_type": 2,
+        "wall_declination": "-30 deg",
+        "place": 10
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/wall-engraving.dxf",
+      "set": "Engraving",
+      "values": {
+        "dial_type": 2,
+        "wall_declination": "-30 deg",
+        "place": 10
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 561,
+    "variables": 365,
+    "parameters": 10,
+    "features": 25,
+    "assertions": 21,
+    "warnings": 0,
+    "build_s": 37.93,
+    "load_s": 4.47,
+    "load_cpu_s": 4.61,
+    "file_bytes": 879212,
+    "range_points": 111,
+    "range_unproven": 0,
+    "range_mean_s": 0.69,
+    "range_worst_s": 1.7
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
