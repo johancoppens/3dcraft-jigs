@@ -1,0 +1,125 @@
+{
+  "id": "drag-chain",
+  "title": "Cable drag chain",
+  "summary": "your cables and your travel, a chain to print",
+  "description": "A printable cable drag chain designed from what you know: the cable bundle, the machine's travel, the height of the moving end and the smallest bend the cable allows give the link size, pitch, link count and fixed point, by igus' published rules.",
+  "domain": "3D printing, CNC",
+  "process": "3D printing (FDM)",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "A rolling-polygon drive by formula, coupled snap and bend sizing, and neighbour-body proofs."
+  },
+  "standards": [
+    "igus e-chain terms and formulas (S/2 + K, K = R pi + 2T, SFLG = 2 x FLG)",
+    "igus Assembly the chain: filling rules (10 % clearance, min 1 mm lateral, min 2 mm height)",
+    "NFPA 79 (2007) bend radius rule as quoted by igus TechTalk",
+    "Bayer MaterialScience Snap-Fit Joints for Plastics: Tables 1 to 3 and Fig. 9",
+    "Prusament PETG and Fiberlogy Nylon PA12 data sheets (yield strain, modulus, density)"
+  ],
+  "materials": [
+    "PA12 nylon (or PETG) filament, 3D printed links, lids and end pieces",
+    "M3 or M4 screws for the end pieces"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        680,
+        -980,
+        640
+      ],
+      "target": [
+        545,
+        0,
+        100
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 24
+    },
+    "look": {
+      "rotation": 90
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/print-set.3mf",
+      "values": {
+        "show": 2
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/link.3mf",
+      "bodies": [
+        "Link"
+      ],
+      "values": {
+        "show": 2
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/lid.3mf",
+      "bodies": [
+        "Lid"
+      ],
+      "values": {
+        "show": 2
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/fixed-end.3mf",
+      "bodies": [
+        "Fixed end"
+      ],
+      "values": {
+        "show": 2
+      }
+    },
+    {
+      "command": "file.export",
+      "path": "exports/moving-end.3mf",
+      "bodies": [
+        "Moving end"
+      ],
+      "values": {
+        "show": 2
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 366,
+    "variables": 132,
+    "parameters": 12,
+    "features": 77,
+    "assertions": 71,
+    "warnings": 0,
+    "build_s": 44.58,
+    "load_s": 3.08,
+    "load_cpu_s": 4.74,
+    "file_bytes": 192957,
+    "range_points": 99,
+    "range_unproven": 0,
+    "range_mean_s": 0.66,
+    "range_worst_s": 2.95
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
