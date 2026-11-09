@@ -1,6 +1,6 @@
 # AGENTS.md: guide for AI agents working on the 3DCraft Jigs
 
-This repository holds **34 Jigs** for [3DCraft](https://github.com/johancoppens/3dcraft), the parametric CAD
+This repository holds **33 Jigs** for [3DCraft](https://github.com/johancoppens/3dcraft), the parametric CAD
 modeller built for AI. A Jig is a design whose driving variables are published as parameters: someone opens it,
 sets a form, and 3DCraft regenerates a new model and its manufacturing files. No AI and no code run. Together the
 Jigs show what that can do, across laser cutting, woodwork, sheet metal, welding, 3D printing, mechanisms,
@@ -94,6 +94,9 @@ log/ plan/              local only (gitignored): dev log, plans
   - Coatings (black oxide, paint, powder coat, anodising) render best as a dielectric layer (`metallic` 0).
   - Every measure on a complex body runs at every regeneration, and in a Jig at every change of the form. Measure
     what proves something.
+  - Every `variable.measure` and `variable.output` shows among the form's outputs, also one that only feeds an
+    assertion: keep such helpers few (one measure per thing proven, not one per face) and label them `Check: …`, so
+    the maker's outputs stay readable.
   - Standard values written from memory are often wrong: verify every value against a source and cite it.
   - Every number in the README is the model's (`output.list`, `assert.list`), and every claim is one the checks
     prove ("every length" when check-range tried 32 points is untrue).
@@ -150,7 +153,7 @@ Name the process; prove with assertions what can be proven, over the range:
 - Fillets and chamfers wherever the real object has them (the developer asks this explicitly): no blocky, untouched
   edges.
 - Materials from `material.preset`, tuned with `body.appearance` (colour, roughness); a colour and a density may
-  follow a choice. Keep to your Jig's line of the palette in `CATALOGUE.md`, so the 34 look different side by side.
+  follow a choice. Keep to your Jig's line of the palette in `CATALOGUE.md`, so the 33 look different side by side.
 - The defaults show the Jig at its best: the object as it will be used, assembled and upright, not its parts laid out.
   Flat parts for cutting are a named set that exports, not what the preview shows, unless an option asks for them.
 - Look at the preview at full size, and from two more angles and at two far points of the range, before you hand in.

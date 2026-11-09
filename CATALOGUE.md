@@ -1,4 +1,4 @@
-# Catalogue: the 34 Jigs
+# Catalogue: the 33 Jigs
 
 The brief for every Jig: what the real thing is, what the form asks, what it must show, its line of the palette, what
 it must prove, and its risks. For a Jig from the old collection, *Must improve* lists what was already seen to be
@@ -272,14 +272,11 @@ and `formtest.md` are new, the README follows AGENTS.md §6, the preview shows t
 - **Must improve:** a full `build.json` from nothing replaces `source.3dcraft` and `edits/`; names; preview deployed.
 - **Look:** anodised black frame, deep-blue cells, gold foil.
 
-### 34. Sea kayak · `sea-kayak` · boatbuilding · kept
-- **Must improve:** load 32 s against a budget of 4 s and 1.7 MB against 1 MB: decide what regenerates by option
-  (panels laid flat, hydrostatics), and let the coordinator grant an exception only for what cannot be simplified; 21
-  parameters to at most 12; the preview shows the kayak, not its panels.
-- **Look:** varnished okoume with a pale deck stripe.
-
 ## Removed from the old collection (2026-11-08)
 
 `key-tags`, `pot-knob`, `phone-stand`, `wavy-vase`, `wall-bracket`, `flatpack-stool`, `welded-table-frame`, `spur-gear`,
 `pillow-block`, `shelf-32mm`, `rack-panel`, `electronics-enclosure`, `screw-jar`, `print-in-place-hinge`: they only
 scaled a simple shape, or a stronger Jig or example already shows the same. They are in the git history.
+
+`sea-kayak` was dropped on 2026-11-09 (the developer): a stitch-and-glue kayak could not come near the load and size budgets
+without far more work than it would show. It is in the git history.
