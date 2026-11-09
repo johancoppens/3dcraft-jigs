@@ -1,0 +1,113 @@
+{
+  "id": "tuned-chimes",
+  "title": "Tuned chimes",
+  "summary": "a chime in tune before you cut it",
+  "description": "A wind chime of tubes, or a glockenspiel of bars, cut to pitch from the free-free beam formula: pick the scale and the stock you bought, get every length and node hole, a full-size cut-and-drill sheet, and a form that corrects itself from a tuner reading of your own test piece.",
+  "domain": "Metalwork, acoustics",
+  "process": "Tubes or flat bars cut and drilled by hand; oak disc turned or routed; laser or paper template for the cut sheet",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Coupled per-note beam physics with a fitted Timoshenko closed form, two instruments, a drive slider, a cut sheet and kernel limits over the range."
+  },
+  "standards": [
+    "Free-free beam first mode: Tom Irvine, Bending Frequencies of Bernoulli-Euler Beams, rev. W (2026), Table 1 and Appendix H (read): beta L = 4.73004, 22.373",
+    "Timoshenko correction, closed form fitted to and checked against a shooting-method solver; shear coefficient: Cowper (1966) as tabulated in Wikipedia, Timoshenko-Ehrenfest beam theory (read)",
+    "Lee Hite, Tubular Bell Chimes Do-It-Yourself Compendium (2022), read: 22.4 % node (p. 20 and p. 24), cut long and deburr (Step 3, p. 8), alignment and striker (Steps 13 and 17, p. 11), tuning caution (pp. 24 to 25)",
+    "EN 1999-1-1 section 3.2.5: aluminium E 70 000, G 27 000 N/mm2, 2 700 kg/m3 (read)",
+    "EN 1993-1-1 section 3.2.6 via eurocodeapplied.com: E 210 000 MPa, G 81 000 MPa (read)",
+    "Equal temperament, A4 = 440 Hz (the tuning reference, my statement)"
+  ],
+  "materials": [
+    "Aluminium tube (default 25 x 1.5 mm); or mild or stainless steel, brass, copper; or flat bar",
+    "Oak top disc and sail, turned walnut striker",
+    "Waxed linen cord, brass hanging ring"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        820,
+        -950,
+        410
+      ],
+      "target": [
+        0,
+        0,
+        -262
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 33
+    },
+    "look": {
+      "rotation": 180
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/cut-and-drill-sheet.svg",
+      "set": "Cut sheet",
+      "stroke": 0.25
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cut-and-drill-sheet.dxf",
+      "set": "Cut sheet"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/brass-eight-notes-sheet.svg",
+      "set": "Cut sheet",
+      "values": {
+        "material": 4,
+        "scale": 3,
+        "note_count": 8
+      },
+      "stroke": 0.25
+    },
+    {
+      "command": "file.export",
+      "path": "exports/glockenspiel-sheet.svg",
+      "set": "Cut sheet",
+      "values": {
+        "instrument": 2,
+        "note_count": 8,
+        "scale": 3
+      },
+      "stroke": 0.25
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 890,
+    "variables": 289,
+    "parameters": 12,
+    "features": 185,
+    "assertions": 79,
+    "warnings": 0,
+    "build_s": 108.31,
+    "load_s": 2.42,
+    "load_cpu_s": 5.81,
+    "file_bytes": 978023,
+    "range_points": 144,
+    "range_unproven": 0,
+    "range_mean_s": 2.09,
+    "range_worst_s": 7.78
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

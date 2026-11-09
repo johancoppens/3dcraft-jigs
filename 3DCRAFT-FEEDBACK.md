@@ -87,7 +87,7 @@ it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}
 - **What happens:** `jig.export {path}` writes `thumb.png` "as `file.save` draws it": one view, one flat look.
 - **What should happen:** the maker of any Jig can choose the view and the look of its picture, the same way `view.render`
   does, since a file manager or a gallery shows that picture first.
-- **Impact:** cosmetic. **Workaround:** `tools/jigs.py render` writes `dist/thumbs/<id>.png` for the gallery.
+- **Impact:** cosmetic. **Workaround:** `tools/jigs.py render` writes each Jig's `thumb.png` for the gallery.
 
 ## J-002: `measure.overlap` errors when a curve coincides with a circle
 

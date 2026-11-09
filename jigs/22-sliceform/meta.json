@@ -1,0 +1,99 @@
+{
+  "id": "sliceform",
+  "title": "Sliceform sculpture",
+  "summary": "a surface from a formula, two woods, half-lap slots",
+  "description": "A sculpture of two families of laser-cut plywood slices, birch one way and walnut the other, that slide into each other with half-lap slots and show a saddle, a ripple or a ball. Every slot meets its partner half way up its crossing, fitted to your two sheets as measured and to your laser's kerf.",
+  "domain": "Laser cutting, art, mathematics",
+  "process": "Laser cutting of birch and walnut plywood, assembled dry by half-lap slots",
+  "tier": "complex",
+  "difficulty": {
+    "score": 7,
+    "rationale": "Slicing a swept or sphere solid, comb sweeps that put every slot end at half its crossing, closed-form section and strip integrals, and plate limits across the range."
+  },
+  "standards": [
+    "EN 315 thickness tolerances of plywood (4 mm nominal: 3.5 to 4.3 mm), as given in the Handbook of Finnish Plywood (2002), Table 2-3",
+    "Handbook of Finnish Plywood (Finnish Forest Industries Federation, 2002), Table 3-1: birch plywood mean density 680 kg/m3"
+  ],
+  "materials": [
+    "Birch plywood, 1.5 to 6.5 mm (measured)",
+    "Walnut-faced plywood, 1.5 to 6.5 mm (measured)"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm",
+    "tolerance": 0.01
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        560,
+        -640,
+        520
+      ],
+      "target": [
+        0,
+        0,
+        95
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 32
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/birch.svg",
+      "set": "Cut sheet, birch",
+      "width": "600 mm",
+      "gap": "5 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/walnut.dxf",
+      "set": "Cut sheet, walnut",
+      "width": "600 mm",
+      "gap": "5 mm"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/ball-birch.svg",
+      "set": "Cut sheet, birch",
+      "width": "600 mm",
+      "values": {
+        "shape": 3,
+        "height": "290 mm",
+        "birch_slices": 6,
+        "walnut_slices": 6
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-09",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 233,
+    "variables": 109,
+    "parameters": 11,
+    "features": 62,
+    "assertions": 19,
+    "warnings": 0,
+    "build_s": 17.17,
+    "load_s": 0.96,
+    "load_cpu_s": 3.7,
+    "file_bytes": 352400,
+    "range_points": 99,
+    "range_unproven": 0,
+    "range_mean_s": 1.77,
+    "range_worst_s": 8.6
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

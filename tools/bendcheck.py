@@ -7,7 +7,7 @@ a fixed seed), with 3DCraft's sheetMetal.bendSequence and standard tooling.
 
 (defaults: 8 random points, 8 corners, seed 1: about 25 points; a point costs seconds to minutes).
 
-The parts to check are in jigs/<id>/press.json:
+The parts to check are in jigs/NN-<id>/press.json:
 
     {"die": "V", "parts": [{"part": "Base", "body": "Base", "prove": {"corner": 1}, "owed": "why"}]}
 
@@ -227,8 +227,11 @@ def main():
     ap.add_argument("--max-corners", type=int, default=8)
     ap.add_argument("--points", type=int, default=0, help="check only the first K points (0: all)")
     a = ap.parse_args()
-    jig = os.path.join(ROOT, "dist", a.id + ".3dcraftjig")
-    with open(os.path.join(ROOT, "jigs", a.id, "press.json")) as f:
+    folder = [d for d in os.listdir(os.path.join(ROOT, "jigs")) if d[2:3] == "-" and d[3:] == a.id]
+    if len(folder) != 1:
+        sys.exit("no single folder jigs/NN-%s/" % a.id)
+    jig = os.path.join(ROOT, "jigs", folder[0], a.id + ".3dcraftjig")
+    with open(os.path.join(ROOT, "jigs", folder[0], "press.json")) as f:
         press = json.load(f)
     sample = run(jig, [["document.sample", {"samples": a.samples, "seed": a.seed, "maxCorners": a.max_corners,
                                            "values": True, "timeLimitMs": None}]])[0]

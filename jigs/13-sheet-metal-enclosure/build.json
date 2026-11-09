@@ -1,0 +1,2777 @@
+[
+[
+"table.set",
+{
+"name": "materials",
+"key": "material",
+"columns": [
+"material",
+"density",
+"min_radius_thin",
+"min_radius_thick",
+"k_tight",
+"k_open",
+"red",
+"green",
+"blue"
+],
+"rows": [
+[
+"Steel DC01, powder coated",
+7850,
+1.0,
+1.0,
+0.38,
+0.43,
+56,
+62,
+68
+],
+[
+"Aluminium 5754 H111",
+2670,
+0.5,
+1.0,
+0.33,
+0.4,
+178,
+182,
+186
+],
+[
+"Stainless 304",
+7900,
+1.0,
+1.0,
+0.4,
+0.45,
+150,
+154,
+158
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "sheet_stock",
+"key": "sheet",
+"columns": [
+"sheet",
+{
+"name": "gauge",
+"unit": "mm"
+},
+{
+"name": "vee_plain",
+"unit": "mm"
+},
+{
+"name": "vee_stainless",
+"unit": "mm"
+},
+{
+"name": "radius_steel",
+"unit": "mm"
+},
+{
+"name": "radius_aluminium",
+"unit": "mm"
+},
+{
+"name": "radius_stainless",
+"unit": "mm"
+},
+{
+"name": "leg_plain",
+"unit": "mm"
+},
+{
+"name": "leg_stainless",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"1 mm",
+1.0,
+8,
+8,
+1.4,
+1.27,
+1.58,
+5.9,
+5.9
+],
+[
+"1.5 mm",
+1.5,
+10,
+10,
+1.65,
+1.47,
+1.9,
+7.5,
+7.6
+],
+[
+"2 mm",
+2.0,
+12,
+12,
+1.88,
+1.67,
+2.22,
+9.1,
+9.2
+],
+[
+"2.5 mm",
+2.5,
+16,
+16,
+2.41,
+2.11,
+2.94,
+12.0,
+12.1
+]
+]
+}
+],
+[
+"table.set",
+{
+"name": "fasteners",
+"key": "size",
+"columns": [
+"size",
+{
+"name": "shank_diameter",
+"unit": "mm"
+},
+{
+"name": "clearance_hole",
+"unit": "mm"
+},
+{
+"name": "nut_hole",
+"unit": "mm"
+},
+{
+"name": "nut_width",
+"unit": "mm"
+},
+{
+"name": "nut_height",
+"unit": "mm"
+},
+{
+"name": "nut_edge",
+"unit": "mm"
+},
+{
+"name": "head_diameter",
+"unit": "mm"
+},
+{
+"name": "head_height",
+"unit": "mm"
+}
+],
+"rows": [
+[
+"M3",
+3.0,
+3.4,
+4.22,
+6.35,
+1.5,
+4.8,
+5.6,
+2.4
+],
+[
+"M4",
+4.0,
+4.5,
+5.41,
+7.87,
+2.0,
+6.9,
+8.0,
+3.1
+]
+]
+}
+],
+[
+"variable.set",
+{
+"name": "board_width",
+"expr": "160 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "board_depth",
+"expr": "100 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "tallest_part",
+"expr": "25 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "board_count",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "standoff_height",
+"expr": "8 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "room_around",
+"expr": "10 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_inset",
+"expr": "4 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "material",
+"expr": "1"
+}
+],
+[
+"variable.set",
+{
+"name": "sheet_choice",
+"expr": "2"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_count",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_diameter",
+"expr": "12 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "vents",
+"expr": "3"
+}
+],
+[
+"variable.set",
+{
+"name": "board_thickness",
+"expr": "1.6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "stack_gap",
+"expr": "3 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "head_room",
+"expr": "2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_fit",
+"expr": "0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "sheet_thickness",
+"expr": "sheet_stock[sheet_choice].gauge"
+}
+],
+[
+"variable.set",
+{
+"name": "die_opening",
+"expr": "if(material == 3, sheet_stock[sheet_choice].vee_stainless, sheet_stock[sheet_choice].vee_plain)"
+}
+],
+[
+"variable.set",
+{
+"name": "leg_minimum",
+"expr": "if(material == 3, sheet_stock[sheet_choice].leg_stainless, sheet_stock[sheet_choice].leg_plain)"
+}
+],
+[
+"variable.set",
+{
+"name": "shop_radius",
+"expr": "if(material == 1, sheet_stock[sheet_choice].radius_steel, if(material == 2, sheet_stock[sheet_choice].radius_aluminium, sheet_stock[sheet_choice].radius_stainless))"
+}
+],
+[
+"variable.set",
+{
+"name": "minimum_radius",
+"expr": "if(sheet_thickness <= 1.5 mm, materials[material].min_radius_thin, materials[material].min_radius_thick) * sheet_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "inner_radius",
+"expr": "max(shop_radius, minimum_radius)"
+}
+],
+[
+"variable.set",
+{
+"name": "k_factor",
+"expr": "materials[material].k_tight + (materials[material].k_open - materials[material].k_tight) * max(0, min(1, (inner_radius / sheet_thickness - 0.5) / 1.5))"
+}
+],
+[
+"variable.set",
+{
+"name": "bend_allowance",
+"expr": "pi / 2 * (inner_radius + k_factor * sheet_thickness)"
+}
+],
+[
+"variable.set",
+{
+"name": "hole_edge_minimum",
+"expr": "max(2.5 * sheet_thickness + inner_radius, leg_minimum)"
+}
+],
+[
+"variable.set",
+{
+"name": "relief_size",
+"expr": "inner_radius + sheet_thickness + 0.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "fastener_row",
+"expr": "if(sheet_thickness >= 2 mm, 2, 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "shank_diameter",
+"expr": "fasteners[fastener_row].shank_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "clearance_hole",
+"expr": "fasteners[fastener_row].clearance_hole"
+}
+],
+[
+"variable.set",
+{
+"name": "mount_hole",
+"expr": "fasteners[1].clearance_hole"
+}
+],
+[
+"variable.set",
+{
+"name": "nut_hole",
+"expr": "fasteners[fastener_row].nut_hole"
+}
+],
+[
+"variable.set",
+{
+"name": "nut_height",
+"expr": "fasteners[fastener_row].nut_height"
+}
+],
+[
+"variable.set",
+{
+"name": "nut_width",
+"expr": "fasteners[fastener_row].nut_width"
+}
+],
+[
+"variable.set",
+{
+"name": "head_diameter",
+"expr": "fasteners[fastener_row].head_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "head_height",
+"expr": "fasteners[fastener_row].head_height"
+}
+],
+[
+"variable.set",
+{
+"name": "stack_pitch",
+"expr": "board_thickness + tallest_part + stack_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "content_height",
+"expr": "standoff_height + board_count * (board_thickness + tallest_part) + (board_count - 1) * stack_gap"
+}
+],
+[
+"variable.set",
+{
+"name": "room_used",
+"expr": "max(room_around, inner_radius + 1 mm, hole_edge_minimum + inner_radius + mount_hole / 2 - hole_inset)"
+}
+],
+[
+"variable.set",
+{
+"name": "inside_width",
+"expr": "board_width + 2 * room_used"
+}
+],
+[
+"variable.set",
+{
+"name": "inside_depth",
+"expr": "board_depth + 2 * room_used"
+}
+],
+[
+"variable.set",
+{
+"name": "return_length",
+"expr": "2 * hole_edge_minimum + nut_hole + 1 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "inside_height_floor",
+"expr": "sheet_thickness + 2 * inner_radius + max(2 * hole_edge_minimum + 6 mm, return_length + inner_radius + 10 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "inside_height",
+"expr": "max(content_height + head_room + nut_height + sheet_thickness, inside_height_floor)"
+}
+],
+[
+"variable.set",
+{
+"name": "floor_half_width",
+"expr": "inside_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "floor_half_depth",
+"expr": "inside_depth / 2 - inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "wall_length",
+"expr": "inside_height - sheet_thickness - 2 * inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "return_half_span",
+"expr": "floor_half_width - relief_size - max(2 mm, 2 * sheet_thickness)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_margin",
+"expr": "max(8 mm, hole_edge_minimum + inner_radius + clearance_hole)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_span",
+"expr": "2 * (return_half_span - screw_margin)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_count",
+"expr": "max(2, floor(screw_span / (100 mm)) + 2)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_step",
+"expr": "screw_span / (screw_count - 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "screw_y",
+"expr": "inside_depth / 2 - inner_radius - return_length / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_pitch",
+"expr": "connector_diameter + 14 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_x0",
+"expr": "-(max(connector_count, 1) - 1) * connector_pitch / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_flat_y",
+"expr": "floor_half_depth + bend_allowance + wall_length / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_row_limit",
+"expr": "2 * (floor_half_width - relief_size - hole_edge_minimum) - connector_diameter"
+}
+],
+[
+"variable.set",
+{
+"name": "connector_max",
+"expr": "max(0, min(8, floor(connector_row_limit / connector_pitch) + 1))"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_plane_z",
+"expr": "sheet_thickness + inside_height"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_half_width",
+"expr": "inside_width / 2 + cover_fit - inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_half_depth",
+"expr": "inside_depth / 2 + sheet_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "skirt_length",
+"expr": "cover_plane_z - inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "vent_width",
+"expr": "max(4 mm, 2 * sheet_thickness)"
+}
+],
+[
+"variable.set",
+{
+"name": "vent_pitch",
+"expr": "2 * vent_width + 2 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_zone",
+"expr": "2 * (cover_half_width - hole_edge_minimum) - vent_width"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_count",
+"expr": "max(1, floor(top_vent_zone / vent_pitch) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_x0",
+"expr": "-(top_vent_count - 1) * vent_pitch / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_half",
+"expr": "inside_depth / 2 - inner_radius - return_length - hole_edge_minimum"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vent_count",
+"expr": "max(1, floor((2 * (cover_half_depth - 2 * vent_width) - vent_width) / vent_pitch) + 1)"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vent_y0",
+"expr": "-(side_vent_count - 1) * vent_pitch / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vent_low",
+"expr": "sheet_thickness + 3 mm + vent_width / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vent_high",
+"expr": "min(side_vent_low + 28 mm, cover_plane_z - inner_radius - hole_edge_minimum - vent_width / 2 - 1 mm)"
+}
+],
+[
+"variable.set",
+{
+"name": "vent_bridge",
+"expr": "vent_pitch - vent_width"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_length",
+"expr": "2 * top_vent_half + vent_width"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_rows",
+"expr": "max(1, ceil((top_vent_length + vent_bridge) / (13 * vent_bridge + vent_width)))"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_outer",
+"expr": "(top_vent_length - (top_vent_rows - 1) * vent_bridge) / top_vent_rows"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_row_half",
+"expr": "(top_vent_outer - vent_width) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vent_y0",
+"expr": "-(top_vent_rows - 1) * (top_vent_outer + vent_bridge) / 2"
+}
+],
+[
+"variable.set",
+{
+"name": "top_vents_on",
+"expr": "if(vents >= 2, if(top_vent_half > 6 mm, if(top_vent_zone > 0 mm, 1, 0), 0), 0)"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vents_on",
+"expr": "if(vents == 3, if(side_vent_high > side_vent_low + 6 mm, 1, 0), 0)"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vent_flat_low",
+"expr": "cover_half_width + bend_allowance + (cover_plane_z - inner_radius - side_vent_low)"
+}
+],
+[
+"variable.set",
+{
+"name": "side_vent_flat_high",
+"expr": "cover_half_width + bend_allowance + (cover_plane_z - inner_radius - side_vent_high)"
+}
+],
+[
+"variable.set",
+{
+"name": "mount_x",
+"expr": "board_width / 2 - hole_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "mount_y",
+"expr": "board_depth / 2 - hole_inset"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_x",
+"expr": "mount_x - 11 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_y",
+"expr": "mount_y"
+}
+],
+[
+"sketch.create",
+{
+"name": "Chassis floor",
+"plane": "xy"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Chassis floor",
+"from": [
+"-floor_half_width",
+"-floor_half_depth"
+],
+"to": [
+"floor_half_width",
+"floor_half_depth"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Chassis floor",
+"center": [
+"mount_x",
+"mount_y"
+],
+"radius": "mount_hole / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Chassis floor",
+"entities": [
+"e10"
+],
+"count": "2",
+"step": [
+"-2 * mount_x",
+"0 mm"
+],
+"count2": "2",
+"step2": [
+"0 mm",
+"-2 * mount_y"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Return front",
+"plane": "xy"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Return front",
+"from": [
+"-return_half_span",
+"-(floor_half_depth + wall_length)"
+],
+"to": [
+"return_half_span",
+"-(floor_half_depth + wall_length + return_length)"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Return front",
+"center": [
+"-screw_span / 2",
+"-(floor_half_depth + wall_length + return_length / 2)"
+],
+"radius": "nut_hole / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Return front",
+"entities": [
+"e10"
+],
+"count": "screw_count",
+"step": [
+"screw_step",
+"0 mm"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Return back",
+"plane": "xy"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Return back",
+"from": [
+"-return_half_span",
+"(floor_half_depth + wall_length)"
+],
+"to": [
+"return_half_span",
+"(floor_half_depth + wall_length + return_length)"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Return back",
+"center": [
+"-screw_span / 2",
+"(floor_half_depth + wall_length + return_length / 2)"
+],
+"radius": "nut_hole / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Return back",
+"entities": [
+"e10"
+],
+"count": "screw_count",
+"step": [
+"screw_step",
+"0 mm"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Connector holes",
+"plane": "xy"
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Connector holes",
+"center": [
+"connector_x0",
+"-connector_flat_y"
+],
+"radius": "connector_diameter / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Connector holes",
+"entities": [
+"e2"
+],
+"count": "max(connector_count, 1)",
+"step": [
+"connector_pitch",
+"0 mm"
+]
+}
+],
+[
+"feature.when",
+{
+"feature": "Connector holes",
+"expr": "connector_count > 0"
+}
+],
+[
+"feature.sheetMetal",
+{
+"name": "Chassis",
+"sketch": "Chassis floor",
+"thickness": "sheet_thickness",
+"radius": "inner_radius",
+"kFactor": "k_factor",
+"bendRelief": {
+"shape": "round",
+"size": "relief_size"
+},
+"cutouts": [
+"Connector holes"
+],
+"flanges": [
+{
+"edge": "e5",
+"length": "wall_length",
+"angle": "90 deg"
+},
+{
+"edge": "e7",
+"length": "wall_length",
+"angle": "90 deg"
+},
+{
+"tip": 0,
+"outline": "Return front",
+"angle": "90 deg"
+},
+{
+"tip": 1,
+"outline": "Return back",
+"angle": "90 deg"
+}
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Cover top",
+"plane": "xy",
+"offset": "cover_plane_z"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Cover top",
+"from": [
+"-cover_half_width",
+"-cover_half_depth"
+],
+"to": [
+"cover_half_width",
+"cover_half_depth"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Cover top",
+"center": [
+"-screw_span / 2",
+"screw_y"
+],
+"radius": "clearance_hole / 2"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Cover top",
+"entities": [
+"e10"
+],
+"count": "screw_count",
+"step": [
+"screw_step",
+"0 mm"
+],
+"count2": "2",
+"step2": [
+"0 mm",
+"-2 * screw_y"
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Top vents",
+"plane": "xy",
+"offset": "cover_plane_z"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Top vents",
+"start": [
+"(top_vent_x0) + vent_width / 2",
+"(top_vent_y0) - (top_vent_row_half)"
+],
+"closed": false,
+"segments": [
+{
+"line": [
+"(top_vent_x0) + vent_width / 2",
+"(top_vent_y0) + (top_vent_row_half)"
+]
+},
+{
+"arc": [
+"(top_vent_x0) - vent_width / 2",
+"(top_vent_y0) + (top_vent_row_half)"
+],
+"center": [
+"top_vent_x0",
+"(top_vent_y0) + (top_vent_row_half)"
+]
+},
+{
+"line": [
+"(top_vent_x0) - vent_width / 2",
+"(top_vent_y0) - (top_vent_row_half)"
+]
+},
+{
+"arc": "start",
+"center": [
+"top_vent_x0",
+"(top_vent_y0) - (top_vent_row_half)"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Top vents",
+"entities": [
+"e3",
+"e6",
+"e8",
+"e10"
+],
+"count": "top_vent_count",
+"step": [
+"vent_pitch",
+"0 mm"
+],
+"count2": "top_vent_rows",
+"step2": [
+"0 mm",
+"top_vent_outer + vent_bridge"
+]
+}
+],
+[
+"feature.when",
+{
+"feature": "Top vents",
+"expr": "top_vents_on == 1"
+}
+],
+[
+"sketch.create",
+{
+"name": "Side vents",
+"plane": "xy",
+"offset": "cover_plane_z"
+}
+],
+[
+"sketch.path",
+{
+"sketch": "Side vents",
+"start": [
+"((side_vent_flat_low + side_vent_flat_high) / 2) - ((side_vent_flat_low - side_vent_flat_high) / 2)",
+"side_vent_y0 - vent_width / 2"
+],
+"closed": false,
+"segments": [
+{
+"line": [
+"((side_vent_flat_low + side_vent_flat_high) / 2) + ((side_vent_flat_low - side_vent_flat_high) / 2)",
+"side_vent_y0 - vent_width / 2"
+]
+},
+{
+"arc": [
+"((side_vent_flat_low + side_vent_flat_high) / 2) + ((side_vent_flat_low - side_vent_flat_high) / 2)",
+"side_vent_y0 + vent_width / 2"
+],
+"center": [
+"((side_vent_flat_low + side_vent_flat_high) / 2) + ((side_vent_flat_low - side_vent_flat_high) / 2)",
+"side_vent_y0"
+]
+},
+{
+"line": [
+"((side_vent_flat_low + side_vent_flat_high) / 2) - ((side_vent_flat_low - side_vent_flat_high) / 2)",
+"side_vent_y0 + vent_width / 2"
+]
+},
+{
+"arc": "start",
+"center": [
+"((side_vent_flat_low + side_vent_flat_high) / 2) - ((side_vent_flat_low - side_vent_flat_high) / 2)",
+"side_vent_y0"
+]
+}
+]
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Side vents",
+"entities": [
+"e3",
+"e6",
+"e8",
+"e10"
+],
+"count": "side_vent_count",
+"step": [
+"0 mm",
+"vent_pitch"
+],
+"count2": "2",
+"step2": [
+"-2 * ((side_vent_flat_low + side_vent_flat_high) / 2)",
+"0 mm"
+]
+}
+],
+[
+"feature.when",
+{
+"feature": "Side vents",
+"expr": "side_vents_on == 1"
+}
+],
+[
+"feature.sheetMetal",
+{
+"name": "Cover",
+"sketch": "Cover top",
+"thickness": "sheet_thickness",
+"radius": "inner_radius",
+"kFactor": "k_factor",
+"cutouts": [
+"Top vents",
+"Side vents"
+],
+"flanges": [
+{
+"edge": "e6",
+"length": "skirt_length",
+"angle": "90 deg",
+"direction": "down"
+},
+{
+"edge": "e8",
+"length": "skirt_length",
+"angle": "90 deg",
+"direction": "down"
+}
+]
+}
+],
+[
+"sketch.create",
+{
+"name": "Board outline",
+"plane": "xy",
+"offset": "sheet_thickness + standoff_height"
+}
+],
+[
+"sketch.rect",
+{
+"sketch": "Board outline",
+"from": [
+"-board_width / 2",
+"-board_depth / 2"
+],
+"to": [
+"board_width / 2",
+"board_depth / 2"
+]
+}
+],
+[
+"sketch.circle",
+{
+"sketch": "Board outline",
+"center": [
+"mount_x",
+"mount_y"
+],
+"radius": "1.6 mm"
+}
+],
+[
+"sketch.pattern",
+{
+"sketch": "Board outline",
+"entities": [
+"e10"
+],
+"count": "2",
+"step": [
+"-2 * mount_x",
+"0 mm"
+],
+"count2": "2",
+"step2": [
+"0 mm",
+"-2 * mount_y"
+]
+}
+],
+[
+"feature.extrude",
+{
+"sketch": "Board outline",
+"distance": "board_thickness",
+"name": "Board"
+}
+],
+[
+"feature.pattern",
+{
+"source": "Board",
+"count": "board_count",
+"step": [
+"0 mm",
+"0 mm",
+"stack_pitch"
+],
+"name": "Boards"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Tall part",
+"radius": "0.2 * min(board_width, board_depth)",
+"height": "tallest_part",
+"position": [
+"0 mm",
+"0 mm",
+"sheet_thickness + standoff_height + board_thickness"
+]
+}
+],
+[
+"feature.pattern",
+{
+"source": "Tall part",
+"count": "board_count",
+"step": [
+"0 mm",
+"0 mm",
+"stack_pitch"
+],
+"name": "Parts"
+}
+],
+[
+"variable.set",
+{
+"name": "return_underside_z",
+"expr": "cover_plane_z - sheet_thickness"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Standoff",
+"radius": "2.75 mm",
+"height": "standoff_height",
+"position": [
+"mount_x",
+"mount_y",
+"sheet_thickness"
+],
+"when": "standoff_height > 0 mm"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Standoff row",
+"source": "Standoff",
+"count": "2",
+"step": [
+"-2 * mount_x",
+"0 mm",
+"0 mm"
+],
+"when": "standoff_height > 0 mm"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Standoffs",
+"source": "Standoff row",
+"count": "2",
+"step": [
+"0 mm",
+"-2 * mount_y",
+"0 mm"
+],
+"when": "standoff_height > 0 mm"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Stack spacer",
+"radius": "2.75 mm",
+"height": "stack_pitch - board_thickness",
+"position": [
+"mount_x",
+"mount_y",
+"sheet_thickness + standoff_height + board_thickness"
+],
+"when": "board_count > 1"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Spacer row",
+"source": "Stack spacer",
+"count": "2",
+"step": [
+"-2 * mount_x",
+"0 mm",
+"0 mm"
+],
+"when": "board_count > 1"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Spacer rows",
+"source": "Spacer row",
+"count": "2",
+"step": [
+"0 mm",
+"-2 * mount_y",
+"0 mm"
+],
+"when": "board_count > 1"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Stack spacers",
+"source": "Spacer rows",
+"count": "board_count - 1",
+"step": [
+"0 mm",
+"0 mm",
+"stack_pitch"
+],
+"when": "board_count > 1"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Cover screw shank",
+"radius": "shank_diameter / 2",
+"height": "sheet_thickness * 2",
+"position": [
+"-screw_span / 2",
+"-screw_y",
+"return_underside_z"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Shank row",
+"source": "Cover screw shank",
+"count": "screw_count",
+"step": [
+"screw_step",
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Screw shanks",
+"source": "Shank row",
+"count": "2",
+"step": [
+"0 mm",
+"2 * screw_y",
+"0 mm"
+]
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Cover screw head blank",
+"radius": "head_diameter / 2",
+"height": "head_height",
+"position": [
+"-screw_span / 2",
+"-screw_y",
+"cover_plane_z + sheet_thickness"
+]
+}
+],
+[
+"feature.fillet",
+{
+"name": "Cover screw head",
+"edges": [
+[
+"Cover screw head blank:face(0)",
+"Cover screw head blank:face(2)"
+]
+],
+"radius": "0.45 * head_height"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Head row",
+"source": "Cover screw head",
+"count": "screw_count",
+"step": [
+"screw_step",
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Screw heads",
+"source": "Head row",
+"count": "2",
+"step": [
+"0 mm",
+"2 * screw_y",
+"0 mm"
+]
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Clinch nut",
+"radius": "nut_width / 2",
+"height": "nut_height",
+"position": [
+"-screw_span / 2",
+"-screw_y",
+"return_underside_z - nut_height"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Nut row",
+"source": "Clinch nut",
+"count": "screw_count",
+"step": [
+"screw_step",
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Clinch nuts",
+"source": "Nut row",
+"count": "2",
+"step": [
+"0 mm",
+"2 * screw_y",
+"0 mm"
+]
+}
+],
+[
+"variable.set",
+{
+"name": "foot_height",
+"expr": "6 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "foot_radius",
+"expr": "7 mm"
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Floor screw head",
+"radius": "fasteners[1].head_diameter / 2",
+"height": "fasteners[1].head_height",
+"position": [
+"mount_x",
+"mount_y",
+"-fasteners[1].head_height"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Floor screw row",
+"source": "Floor screw head",
+"count": "2",
+"step": [
+"-2 * mount_x",
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Floor screws",
+"source": "Floor screw row",
+"count": "2",
+"step": [
+"0 mm",
+"-2 * mount_y",
+"0 mm"
+]
+}
+],
+[
+"feature.cylinder",
+{
+"name": "Foot",
+"radius": "foot_radius",
+"height": "foot_height",
+"position": [
+"foot_x",
+"foot_y",
+"-foot_height"
+]
+}
+],
+[
+"feature.fillet",
+{
+"name": "Rubber foot",
+"edges": [
+[
+"Foot:face(0)",
+"Foot:face(1)"
+]
+],
+"radius": "1.5 mm"
+}
+],
+[
+"feature.pattern",
+{
+"name": "Foot row",
+"source": "Rubber foot",
+"count": "2",
+"step": [
+"-2 * foot_x",
+"0 mm",
+"0 mm"
+]
+}
+],
+[
+"feature.pattern",
+{
+"name": "Feet",
+"source": "Foot row",
+"count": "2",
+"step": [
+"0 mm",
+"-2 * foot_y",
+"0 mm"
+]
+}
+],
+[
+"body.appearance",
+{
+"body": "Chassis",
+"color": [
+"materials[material].red",
+"materials[material].green",
+"materials[material].blue"
+],
+"metallic": 0,
+"roughness": 0.68
+}
+],
+[
+"body.material",
+{
+"body": "Chassis",
+"name": "Sheet",
+"density": "materials[material].density kg/m^3"
+}
+],
+[
+"body.appearance",
+{
+"body": "Cover",
+"color": [
+"materials[material].red",
+"materials[material].green",
+"materials[material].blue"
+],
+"metallic": 0,
+"roughness": 0.68
+}
+],
+[
+"body.material",
+{
+"body": "Cover",
+"name": "Sheet",
+"density": "materials[material].density kg/m^3"
+}
+],
+[
+"body.appearance",
+{
+"body": "Boards",
+"color": "#1f6b3a",
+"metallic": 0,
+"roughness": 0.45
+}
+],
+[
+"body.appearance",
+{
+"body": "Parts",
+"color": "#20242b",
+"metallic": 0,
+"roughness": 0.35
+}
+],
+[
+"body.appearance",
+{
+"body": "Standoffs",
+"color": "#b8954a",
+"metallic": 0.85,
+"roughness": 0.32
+}
+],
+[
+"body.appearance",
+{
+"body": "Stack spacers",
+"color": "#b8954a",
+"metallic": 0.85,
+"roughness": 0.32
+}
+],
+[
+"body.appearance",
+{
+"body": "Screw shanks",
+"color": "#c7a24a",
+"metallic": 0.85,
+"roughness": 0.3
+}
+],
+[
+"body.appearance",
+{
+"body": "Screw heads",
+"color": "#c7a24a",
+"metallic": 0.85,
+"roughness": 0.3
+}
+],
+[
+"body.appearance",
+{
+"body": "Clinch nuts",
+"color": "#b4bac0",
+"metallic": 0.8,
+"roughness": 0.35
+}
+],
+[
+"body.appearance",
+{
+"body": "Feet",
+"color": "#1c1c1e",
+"metallic": 0,
+"roughness": 0.8
+}
+],
+[
+"body.appearance",
+{
+"body": "Floor screws",
+"color": "#c7a24a",
+"metallic": 0.85,
+"roughness": 0.3
+}
+],
+[
+"variable.set",
+{
+"name": "wall_reach",
+"expr": "inside_depth - inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "skirt_reach",
+"expr": "inside_width + 2 * cover_fit - inner_radius"
+}
+],
+[
+"variable.set",
+{
+"name": "press_wall_limit",
+"expr": "min(wall_reach - return_length - 9.2 mm, max(max(169.2 mm - wall_reach + 2 * inner_radius - sheet_thickness, 55.5 mm + inner_radius), wall_reach - return_length - 57.3 mm)) - 2.5 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "press_skirt_limit",
+"expr": "min(skirt_reach + inner_radius - 9.2 mm, max(169.2 mm - skirt_reach - sheet_thickness + inner_radius, skirt_reach + inner_radius - 57.3 mm)) - 2.5 mm - sheet_thickness"
+}
+],
+[
+"variable.set",
+{
+"name": "height_limit",
+"expr": "min(200 mm, min(press_wall_limit, press_skirt_limit))"
+}
+],
+[
+"variable.set",
+{
+"name": "stack_budget",
+"expr": "height_limit - head_room - nut_height - sheet_thickness - standoff_height"
+}
+],
+[
+"variable.set",
+{
+"name": "boards_the_press_brake_can_bend",
+"expr": "max(1, min(4, floor((stack_budget + stack_gap) / (board_thickness + 3 mm + stack_gap))))"
+}
+],
+[
+"variable.set",
+{
+"name": "tallest_part_the_press_brake_can_bend",
+"expr": "max(3 mm, (stack_budget - board_count * board_thickness - (board_count - 1) * stack_gap) / board_count)"
+}
+],
+[
+"variable.output",
+{
+"name": "outside_width",
+"expr": "inside_width + 2 * (cover_fit + sheet_thickness)",
+"label": "Outside width, without screw heads",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "outside_depth",
+"expr": "inside_depth + 2 * sheet_thickness",
+"label": "Outside depth",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "outside_height",
+"expr": "cover_plane_z + sheet_thickness + head_height + foot_height",
+"label": "Outside height, with feet and screw heads",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "total_mass",
+"measure": "mass",
+"of": [
+"Chassis",
+"Cover"
+],
+"label": "Mass of the two sheet parts",
+"unit": "kg"
+}
+],
+[
+"variable.output",
+{
+"name": "inside_height_used",
+"expr": "inside_height",
+"label": "Inside height of this case",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "inside_height_limit",
+"expr": "height_limit",
+"label": "Inside height the press brake can still bend here",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "bend_radius_used",
+"expr": "inner_radius",
+"label": "Inner bend radius used",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "bend_allowance_used",
+"expr": "bend_allowance",
+"label": "Bend allowance per 90 degree bend",
+"unit": "mm"
+}
+],
+[
+"variable.output",
+{
+"name": "vent_slots_cut",
+"expr": "top_vents_on * top_vent_count * top_vent_rows + 2 * side_vents_on * side_vent_count",
+"label": "Vent slots cut",
+"unit": null
+}
+],
+[
+"variable.output",
+{
+"name": "vee_die_used",
+"expr": "die_opening",
+"label": "V-die opening to use",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "chassis_blank_y",
+"measure": "flatExtent",
+"of": "Chassis",
+"axis": "y",
+"label": "Chassis blank, length over the walls",
+"unit": "mm"
+}
+],
+[
+"variable.measure",
+{
+"name": "cover_blank_x",
+"measure": "flatExtent",
+"of": "Cover",
+"axis": "x",
+"label": "Cover blank, width over the skirts",
+"unit": "mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Both parts bend on a press brake with a straight punch",
+"measure": "bendable",
+"of": [
+"Chassis",
+"Cover"
+],
+"punch": [
+[
+0,
+0
+],
+[
+6.0,
+6.213181881502143
+],
+[
+6.0,
+120
+],
+[
+40,
+120
+],
+[
+40,
+220
+],
+[
+-40,
+220
+],
+[
+-40,
+120
+],
+[
+-6.0,
+120
+],
+[
+-6.0,
+6.213181881502143
+]
+],
+"die": [
+[
+"-max(die_opening, 15 mm)",
+"0 mm"
+],
+[
+"-die_opening / 2",
+"0 mm"
+],
+[
+"0 mm",
+"-die_opening / 2 / 0.965688775"
+],
+[
+"die_opening / 2",
+"0 mm"
+],
+[
+"max(die_opening, 15 mm)",
+"0 mm"
+],
+[
+"max(die_opening, 15 mm)",
+"-60 mm"
+],
+[
+"-max(die_opening, 15 mm)",
+"-60 mm"
+]
+],
+"clearance": "0.5 mm",
+"maxWork": 20000,
+"is": true
+}
+],
+[
+"assert.add",
+{
+"name": "Bends at the material's minimum radius or more",
+"measure": "bendRadius",
+"min": "minimum_radius * 0.999"
+}
+],
+[
+"assert.add",
+{
+"name": "Every flange at least the shop's minimum leg",
+"measure": "flangeLength",
+"measured": "mould",
+"min": "leg_minimum"
+}
+],
+[
+"assert.add",
+{
+"name": "Holes at least the bend margin from a bend",
+"measure": "holeToBend",
+"min": "hole_edge_minimum * 0.999"
+}
+],
+[
+"assert.add",
+{
+"name": "Nothing overlaps",
+"measure": "overlap",
+"is": false
+}
+],
+[
+"assert.add",
+{
+"name": "Room around the board to the walls",
+"measure": "distance",
+"from": "Boards",
+"to": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Chassis"
+},
+{
+"any": [
+{
+"name": "*copy(0)/*face(2)"
+},
+{
+"name": "*copy(0)/*face(4)"
+}
+]
+}
+]
+},
+"min": "room_used - 0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Room around the board to the cover's sides",
+"measure": "distance",
+"from": "Boards",
+"to": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Cover"
+},
+{
+"any": [
+{
+"name": "*copy(1)/*face(2)"
+},
+{
+"name": "*copy(1)/*face(4)"
+}
+]
+}
+]
+},
+"eq": "room_used + cover_fit",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Tallest part at the height the form says",
+"measure": "boxMax",
+"of": "Parts",
+"axis": "z",
+"eq": "sheet_thickness + content_height",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Tallest part clears the cover",
+"measure": "clearance",
+"from": "Parts",
+"to": "Cover",
+"min": "head_room"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover rests on the return flanges",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Cover"
+},
+{
+"any": [
+{
+"name": "*copy(1)/*face(0)"
+}
+]
+}
+]
+},
+"to": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Chassis"
+},
+{
+"any": [
+{
+"name": "*copy(1)/*face(6)"
+},
+{
+"name": "*copy(1)/*face(8)"
+}
+]
+}
+]
+},
+"eq": "0 mm",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Screw clear in the cover's holes",
+"measure": "clearance",
+"from": "Screw shanks",
+"to": "Cover",
+"eq": "(clearance_hole - shank_diameter) / 2",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Screw lined up with the clinch nut holes",
+"measure": "clearance",
+"from": "Screw shanks",
+"to": "Chassis",
+"eq": "(nut_hole - shank_diameter) / 2",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Chassis flat length in closed form",
+"measure": "flatExtent",
+"of": "Chassis",
+"axis": "y",
+"eq": "2 * (floor_half_depth + wall_length + return_length + 2 * bend_allowance)",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover flat width in closed form",
+"measure": "flatExtent",
+"of": "Cover",
+"axis": "x",
+"eq": "2 * (cover_half_width + bend_allowance + skirt_length)",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover clears the chassis sides",
+"measure": "distance",
+"from": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Cover"
+},
+{
+"any": [
+{
+"name": "*copy(1)/*face(2)"
+},
+{
+"name": "*copy(1)/*face(4)"
+}
+]
+}
+]
+},
+"to": "Chassis",
+"eq": "cover_fit",
+"tol": "0.01 mm"
+}
+],
+[
+"variable.set",
+{
+"name": "cover_flat_area",
+"expr": "2 * cover_half_depth * (2 * cover_half_width + 2 * bend_allowance + 2 * skirt_length) - 2 * screw_count * pi * (clearance_hole / 2)^2 - if(top_vents_on == 1, top_vent_count * top_vent_rows * (pi * (vent_width / 2)^2 + vent_width * (top_vent_outer - vent_width)), 0 mm^2) - if(side_vents_on == 1, 2 * side_vent_count * (pi * (vent_width / 2)^2 + vent_width * (side_vent_flat_low - side_vent_flat_high)), 0 mm^2)"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover volume equals its flat pattern in closed form",
+"measure": "volume",
+"of": "Cover",
+"eq": "cover_flat_area * sheet_thickness + pi * sheet_thickness^2 * (0.5 - k_factor) * 2 * cover_half_depth",
+"tol": "1"
+}
+],
+[
+"assert.add",
+{
+"name": "Floor holes under the board's mounting holes",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Chassis"
+},
+{
+"surface": "cylinder"
+},
+{
+"axis": {
+"along": "z"
+}
+},
+{
+"radius": {
+"eq": "mount_hole / 2",
+"tol": "0.001 mm"
+}
+},
+{
+"any": [
+{
+"inside": [
+[
+"(mount_x) - mount_hole",
+"(mount_y) - mount_hole",
+"-1 mm"
+],
+[
+"(mount_x) + mount_hole",
+"(mount_y) + mount_hole",
+"sheet_thickness + 1 mm"
+]
+]
+},
+{
+"inside": [
+[
+"(mount_x) - mount_hole",
+"(-mount_y) - mount_hole",
+"-1 mm"
+],
+[
+"(mount_x) + mount_hole",
+"(-mount_y) + mount_hole",
+"sheet_thickness + 1 mm"
+]
+]
+},
+{
+"inside": [
+[
+"(-mount_x) - mount_hole",
+"(mount_y) - mount_hole",
+"-1 mm"
+],
+[
+"(-mount_x) + mount_hole",
+"(mount_y) + mount_hole",
+"sheet_thickness + 1 mm"
+]
+]
+},
+{
+"inside": [
+[
+"(-mount_x) - mount_hole",
+"(-mount_y) - mount_hole",
+"-1 mm"
+],
+[
+"(-mount_x) + mount_hole",
+"(-mount_y) + mount_hole",
+"sheet_thickness + 1 mm"
+]
+]
+}
+]
+}
+]
+},
+"eq": "4"
+}
+],
+[
+"assert.add",
+{
+"name": "Connector holes as asked, in the front wall",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Chassis"
+},
+{
+"surface": "cylinder"
+},
+{
+"axis": {
+"along": "y"
+}
+},
+{
+"radius": {
+"eq": "connector_diameter / 2",
+"tol": "0.001 mm"
+}
+},
+{
+"inside": [
+[
+"-inside_width",
+"-inside_depth / 2 - 2 * sheet_thickness",
+"0 mm"
+],
+[
+"inside_width",
+"-inside_depth / 2 + sheet_thickness",
+"inside_height - inner_radius - relief_size"
+]
+]
+}
+]
+},
+"eq": "connector_count"
+}
+],
+[
+"assert.add",
+{
+"name": "Feet stand at their height",
+"measure": "boxMin",
+"of": "Feet",
+"axis": "z",
+"eq": "-foot_height",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Floor screw heads clear of the bench",
+"measure": "boxMin",
+"of": "Floor screws",
+"axis": "z",
+"min": "-foot_height + 1 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Clinch nuts hang under the return flanges",
+"measure": "boxMin",
+"of": "Clinch nuts",
+"axis": "z",
+"eq": "return_underside_z - nut_height",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Tallest part below the clinch nuts by the head room",
+"measure": "boxMax",
+"of": "Parts",
+"axis": "z",
+"max": "return_underside_z - nut_height - head_room + 0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Chassis as deep as the walls say",
+"measure": "extent",
+"of": "Chassis",
+"axis": "y",
+"eq": "inside_depth + 2 * sheet_thickness",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover flush with the walls front and back",
+"measure": "extent",
+"of": "Cover",
+"axis": "y",
+"eq": "inside_depth + 2 * sheet_thickness",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Standoffs reach the board",
+"measure": "distance",
+"from": "Standoffs",
+"to": "Boards",
+"eq": "0 mm",
+"tol": "0.01 mm",
+"when": "standoff_height > 0 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Clinch nuts under the screws, across",
+"measure": "boxMax",
+"of": "Clinch nuts",
+"axis": "x",
+"eq": "screw_span / 2 + nut_width / 2",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Clinch nuts under the screws, front to back",
+"measure": "boxMax",
+"of": "Clinch nuts",
+"axis": "y",
+"eq": "screw_y + nut_width / 2",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Bend ends relieved",
+"measure": "relief",
+"is": true
+}
+],
+[
+"assert.add",
+{
+"name": "Boards spaced for the tallest part",
+"measure": "extent",
+"of": "Boards",
+"axis": "z",
+"eq": "(board_count - 1) * stack_pitch + board_thickness",
+"tol": "0.01 mm"
+}
+],
+[
+"assert.add",
+{
+"name": "Cover screws, one row over each return flange",
+"measure": "count",
+"of": {
+"kind": "face",
+"where": [
+{
+"madeBy": "Screw shanks"
+},
+{
+"surface": "cylinder"
+}
+]
+},
+"eq": "2 * screw_count"
+}
+],
+[
+"variable.publish",
+{
+"name": "board_width",
+"label": "Board width",
+"description": "The size across of what goes in it: a board, a power supply or a stack of them, as wide as the widest board",
+"group": "What goes in it",
+"order": 1,
+"min": "max(50 mm, inside_height_floor + sheet_thickness + inner_radius + 9 mm)",
+"max": "400 mm",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "board_depth",
+"label": "Board depth",
+"description": "Front to back, for the same board or supply. Thick sheet needs a deeper case, for the return flanges",
+"group": "What goes in it",
+"order": 2,
+"min": "max(40 mm, 2 * (return_length + inner_radius + 8 mm) - 4 mm, inside_height_floor + inner_radius + return_length + 11 mm)",
+"max": "300 mm",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "board_count",
+"label": "Boards in the stack",
+"description": "How many boards stack on spacers above the first. The press brake limits the height: see the tallest part",
+"group": "What goes in it",
+"order": 3,
+"kind": "integer",
+"min": "1",
+"max": "boards_the_press_brake_can_bend",
+"step": "1"
+}
+],
+[
+"variable.publish",
+{
+"name": "tallest_part",
+"label": "Tallest part on a board",
+"description": "Height of the tallest part above each board's top face; for a power supply on the floor, the supply's height. A straight punch limits the case's height: bending the second wall leans the first, with its return flange, over the punch and its clamp. The limit follows the depth and the room, and can rise or fall as they grow; the outputs give the inside height it still allows",
+"group": "What goes in it",
+"order": 4,
+"min": "3 mm",
+"max": "tallest_part_the_press_brake_can_bend",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "standoff_height",
+"label": "Standoff height",
+"description": "How far the first board stands above the floor; 0 for something screwed straight to it",
+"group": "What goes in it",
+"order": 5,
+"min": "0 mm",
+"max": "max(0 mm, min(30 mm, height_limit - head_room - nut_height - sheet_thickness - board_thickness - 3 mm))",
+"step": "1 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "hole_inset",
+"label": "Mounting holes from the edge",
+"description": "How far the four M3 mounting holes sit in from the board's edges",
+"group": "What goes in it",
+"order": 6,
+"min": "3 mm",
+"max": "min(20 mm, min(board_width, board_depth) / 2 - 22 mm)",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "room_around",
+"label": "Room around, at least",
+"description": "Clear space you want between the board and the walls and sides; the case gives more where thick sheet needs the floor holes further from a bend. More room makes the case deeper, which changes the height the press brake can bend",
+"group": "Fit",
+"order": 1,
+"min": "2 mm",
+"max": "60 mm",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "material",
+"label": "Material",
+"description": "Sets the die, the radius, K-factor and leg from the table",
+"group": "Sheet",
+"order": 1,
+"kind": "choice",
+"choicesFrom": "materials"
+}
+],
+[
+"variable.publish",
+{
+"name": "sheet_choice",
+"label": "Sheet thickness",
+"description": "Stock thickness; the fasteners and the die follow it",
+"group": "Sheet",
+"order": 2,
+"kind": "choice",
+"choicesFrom": "sheet_stock"
+}
+],
+[
+"variable.publish",
+{
+"name": "connector_count",
+"label": "Connector holes in the front",
+"description": "How many round connector holes across the front panel",
+"group": "Front panel and air",
+"order": 1,
+"kind": "integer",
+"min": "0",
+"max": "connector_max",
+"step": "1"
+}
+],
+[
+"variable.publish",
+{
+"name": "connector_diameter",
+"label": "Connector hole diameter",
+"description": "Diameter of each hole; the height of the panel limits it",
+"group": "Front panel and air",
+"order": 2,
+"min": "4 mm",
+"max": "min(28 mm, wall_length - 2 * hole_edge_minimum - 1 mm)",
+"step": "0.5 mm",
+"unit": "mm"
+}
+],
+[
+"variable.publish",
+{
+"name": "vents",
+"label": "Ventilation",
+"description": "None, slots in the top, or slots in the top and low in the sides for air to rise through",
+"group": "Front panel and air",
+"order": 3,
+"kind": "choice",
+"choices": [
+"None",
+"Top slots",
+"Top and side slots"
+]
+}
+],
+[
+"document.info",
+{
+"title": "Sheet-metal enclosure",
+"author": "3DCraft Jigs",
+"licence": "CC-BY-4.0",
+"description": "A two-part sheet-metal electronics case, sized from what goes in it: a board, a power supply or a stack of boards. A chassis (floor, front and back walls, return flanges with clinch nuts) and a cover (top and two sides), each laser cut and bent on a press brake from one sheet, in steel, aluminium or stainless at stock thicknesses. The bend radius, K-factor, die and minimum leg come from a shop's published bending table and the material's standard; bend order is proven at every form change. Export: file.export with sheetMetal for Chassis and Cover (or the menu's flat patterns of every part) writes DXF flat patterns with bend lines, no picking.",
+"url": "https://github.com/johancoppens/3dcraft-jigs/tree/main/jigs/13-sheet-metal-enclosure",
+"tags": [
+"sheet metal",
+"enclosure",
+"electronics",
+"press brake",
+"laser cutting",
+"flat pattern"
+]
+}
+],
+[
+"document.check",
+{}
+]
+]

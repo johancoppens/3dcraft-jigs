@@ -1,0 +1,104 @@
+{
+  "id": "sheet-metal-enclosure",
+  "title": "Sheet-metal enclosure",
+  "summary": "from the board's size to a chassis and cover, flat patterns and bend order",
+  "description": "A sheet-metal electronics case sized from what goes in it: a board, a power supply or a stack of them. Laser cut and bent from two sheets, a chassis and a cover, with the bend order proven at every change of the form.",
+  "domain": "Sheet metal, electronics",
+  "process": "Laser cutting and press-brake bending (air bending), clinch nuts pressed in, powder coating",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Two coupled press-brake parts, table-driven process data, ranges from tool geometry, bend order proven at every change."
+  },
+  "standards": [
+    "247TailorSteel bending guidelines: die width, leg length and inner radius per thickness for CRS CR4, AlMg3 5754 H111 and AISI304L 2B",
+    "EN 485-2 (as tabulated by Metallservice and color-metal.ro): minimum bend radius of EN AW-5754 H111",
+    "Outokumpu, Forming of stainless steel: minimum inner radius of austenitic grades, r/t = 1",
+    "Fabcon, Sheet Metal DFM Guidelines: hole-to-bend distance at least 2.5 t + r",
+    "PennEngineering PEM, self-clinching nuts types CLS and SP: hole size and centre-line-to-edge distance",
+    "ISO 273 clearance holes (medium series via a published clearance table; the standard not read)",
+    "ISO 7045 pan-head screw sizes (via distributors' listings; the standard not read)"
+  ],
+  "materials": [
+    "Cold-rolled steel DC01, 1 to 2.5 mm, powder coated",
+    "Aluminium EN AW-5754 H111, 1 to 2.5 mm",
+    "Stainless steel 304 (1.4301), 1 to 2.5 mm"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "view": "iso",
+    "zoom": 1.05,
+    "look": {
+      "rotation": 0
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/flat-patterns.dxf",
+      "sheetMetal": [
+        "Chassis",
+        "Cover"
+      ]
+    },
+    {
+      "command": "file.export",
+      "path": "exports/chassis.dxf",
+      "sheetMetal": "Chassis"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/cover.svg",
+      "sheetMetal": "Cover"
+    },
+    {
+      "command": "cut.list",
+      "format": "csv"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/stack-aluminium.dxf",
+      "sheetMetal": [
+        "Chassis",
+        "Cover"
+      ],
+      "values": {
+        "board_width": "280 mm",
+        "board_depth": "220 mm",
+        "board_count": 2,
+        "tallest_part": "30 mm",
+        "material": 2,
+        "sheet_choice": 3,
+        "vents": 2
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 231,
+    "variables": 97,
+    "parameters": 12,
+    "features": 38,
+    "assertions": 30,
+    "warnings": 0,
+    "build_s": 3.53,
+    "load_s": 0.44,
+    "load_cpu_s": 0.95,
+    "file_bytes": 132696,
+    "range_points": 104,
+    "range_unproven": 0,
+    "range_mean_s": 0.37,
+    "range_worst_s": 1.79
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}

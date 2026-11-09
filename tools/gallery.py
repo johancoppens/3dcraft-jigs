@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Writes the gallery of the built Jigs: DIST/index.html and DIST/thumbs/<id>.png.
+"""Writes the gallery of the built Jigs into the web folder that `tools/jigs.py site` fills: SITE/index.html.
 
-    python3 tools/gallery.py [DIST]        (default: dist next to this script)
+    python3 tools/gallery.py [SITE]        (default: site/ next to tools/; run through tools/jigs.py site)
 
 A .3dcraftjig is a stored ZIP holding manifest.json (the document, with its
 info and public parameters) and thumb.png; only the Python standard library
@@ -158,15 +158,15 @@ def card(jig_id, info, params, has_thumb):
 
 
 def main():
-    dist = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dist")
-    jigs = sorted(f for f in os.listdir(dist) if f.endswith(".3dcraftjig"))
-    os.makedirs(os.path.join(dist, "thumbs"), exist_ok=True)
+    site = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "site")
+    jigs = sorted(f for f in os.listdir(site) if f.endswith(".3dcraftjig"))
+    os.makedirs(os.path.join(site, "thumbs"), exist_ok=True)
     cards = []
     for name in jigs:
         jig_id = name[: -len(".3dcraftjig")]
-        info, params, thumb = read_jig(os.path.join(dist, name))
+        info, params, thumb = read_jig(os.path.join(site, name))
         # tools/jigs.py render writes the gallery's picture; the Jig's own thumbnail is the fallback.
-        picture = os.path.join(dist, "thumbs", jig_id + ".png")
+        picture = os.path.join(site, "thumbs", jig_id + ".png")
         if thumb and not os.path.exists(picture):
             with open(picture, "wb") as f:
                 f.write(thumb)
@@ -207,9 +207,9 @@ def main():
         "\n".join(cards),
         '<img src="%s" alt="" width="20" height="20">' % logo if logo else "",
     )
-    with open(os.path.join(dist, "index.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(site, "index.html"), "w", encoding="utf-8") as f:
         f.write(page)
-    print("wrote %s (%d Jigs)" % (os.path.join(dist, "index.html"), len(cards)))
+    print("wrote %s (%d Jigs)" % (os.path.join(site, "index.html"), len(cards)))
 
 
 if __name__ == "__main__":

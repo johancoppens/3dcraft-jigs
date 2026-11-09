@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Build, render and check the 3DCraft Jigs (AGENTS.md).
 
-  tools/jigs.py build    [ID ...]   jigs/ID/build.json -> dist/ID.3dcraftjig; document.check; stats into meta.json
-  tools/jigs.py render   [ID ...]   dist/ID.3dcraftjig -> jigs/ID/preview.png and dist/thumbs/ID.png
+  tools/jigs.py build    [ID ...]   jigs/NN-ID/build.json -> jigs/NN-ID/ID.3dcraftjig; document.check; stats
+                                    into meta.json
+  tools/jigs.py render   [ID ...]   ID.3dcraftjig -> preview.png and thumb.png in jigs/NN-ID/
   tools/jigs.py check    [ID ...]   rebuild in a scratch folder and check what AGENTS.md asks
                                     (--quick skips check-range and the bend sequence)
   tools/jigs.py coverage            the 3DCraft commands the Jigs use, and those none uses
   tools/jigs.py readme              rewrite the table in README.md from the meta.json files
-  tools/jigs.py gallery             write dist/index.html
+  tools/jigs.py site     [DIR]      write the web folder served under /jigs/ (default site/, not committed):
+                                    every ID.3dcraftjig, thumbs/ID.png and index.html, the gallery
 
+A Jig lives in jigs/NN-ID/, NN its place in CATALOGUE.md; the ID never carries the number.
 Without an ID: every Jig under jigs/. Every craft3d-cli run is capped in memory (systemd-run, when
 there is one) and in time. CRAFT3D_CLI names the binary (default: craft3d-cli on PATH); it must be
 the 3DCraft commit pinned in tools/pin.json. Exit code 0 when all passed.
@@ -30,7 +33,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 JIGS = ROOT / "jigs"
-DIST = ROOT / "dist"
+SITE = ROOT / "site"
+FOLDER = re.compile(r"^(\d\d)-([a-z0-9]+(?:-[a-z0-9]+)*)$")
 PIN = json.loads((ROOT / "tools" / "pin.json").read_text())
 
 # The gallery look (AGENTS.md, The preview). meta.json "preview" may change only the framing keys below.
@@ -125,11 +129,25 @@ def explain_failure(result, what):
 
 
 def jig_ids(given):
-    every = sorted(p.parent.name for p in JIGS.glob("*/build.json"))
+    """The Jigs' ids, in the order of their folders' numbers."""
+    every = [FOLDER.match(p.parent.name).group(2) for p in sorted(JIGS.glob("*/build.json"))
+             if FOLDER.match(p.parent.name)]
     for name in given:
         if name not in every:
-            die(f"no Jig {name} (jigs/{name}/build.json)")
+            die(f"no Jig {name} (jigs/NN-{name}/build.json)")
     return list(given) or every
+
+
+def jig_dir(jig):
+    """jigs/NN-<id>/: everything of one Jig."""
+    found = [p for p in JIGS.iterdir() if FOLDER.match(p.name) and FOLDER.match(p.name).group(2) == jig]
+    if len(found) != 1:
+        die(f"no single folder jigs/NN-{jig}/")
+    return found[0]
+
+
+def jig_file(jig):
+    return jig_dir(jig) / f"{jig}.3dcraftjig"
 
 
 def read_json(path):
@@ -140,7 +158,7 @@ def read_json(path):
 
 
 def write_meta(jig, meta):
-    (JIGS / jig / "meta.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
+    (jig_dir(jig) / "meta.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
 
 
 def step_id(step):
@@ -167,7 +185,7 @@ def manifest_bytes(path):
 def build_into(jig, scratch, meta):
     """Builds jigs/jig/build.json into scratch/jig.3dcraftjig. Returns (stats, document manifest, report)."""
     global _measured_at_load
-    source = JIGS / jig
+    source = jig_dir(jig)
     script = read_json(source / "build.json")
     if not isinstance(script, list) or not script:
         raise CheckError("build.json must be a non-empty JSON list of steps")
@@ -347,15 +365,14 @@ def prove_exports(jig, scratch, meta):
 
 def cmd_build(ids):
     failed = 0
-    DIST.mkdir(exist_ok=True)
     for jig in ids:
         try:
-            meta = read_json(JIGS / jig / "meta.json")
+            meta = read_json(jig_dir(jig) / "meta.json")
             with tempfile.TemporaryDirectory(prefix=f"build-{jig}-") as scratch:
                 scratch = Path(scratch)
                 stats, doc, _ = build_into(jig, scratch, meta)
-                errors, warnings = lint(jig, meta, doc, stats, read_json(JIGS / jig / "build.json"))
-                shutil.copyfile(scratch / f"{jig}.3dcraftjig", DIST / f"{jig}.3dcraftjig")
+                errors, warnings = lint(jig, meta, doc, stats, read_json(jig_dir(jig) / "build.json"))
+                shutil.copyfile(scratch / f"{jig}.3dcraftjig", jig_file(jig))
             meta["stats"] = {**meta.get("stats", {}), **stats}
             meta["craft3d"] = {"commit": PIN["commit"][:12], "format_version": doc.get("format_version")}
             write_meta(jig, meta)
@@ -386,8 +403,8 @@ def render_one(jig, meta, size, path):
             params.pop(key, None)
     params["look"] = look
     params["path"] = str(path)
-    result, seconds = run_cli(["run", DIST / f"{jig}.3dcraftjig", "--cmd", "view.render", "--params",
-                               json.dumps(params)], cwd=JIGS / jig, memory="4G", timeout=1800)
+    result, seconds = run_cli(["run", jig_file(jig), "--cmd", "view.render", "--params",
+                               json.dumps(params)], cwd=jig_dir(jig), memory="4G", timeout=1800)
     if result.returncode != 0:
         raise CheckError(explain_failure(result, "view.render failed"))
     return seconds
@@ -395,14 +412,13 @@ def render_one(jig, meta, size, path):
 
 def cmd_render(ids):
     failed = 0
-    (DIST / "thumbs").mkdir(parents=True, exist_ok=True)
     for jig in ids:
         try:
-            meta = read_json(JIGS / jig / "meta.json")
-            if not (DIST / f"{jig}.3dcraftjig").is_file():
-                raise CheckError(f"no dist/{jig}.3dcraftjig: run build first")
-            seconds = render_one(jig, meta, {}, JIGS / jig / "preview.png")
-            seconds += render_one(jig, meta, THUMB, DIST / "thumbs" / f"{jig}.png")
+            meta = read_json(jig_dir(jig) / "meta.json")
+            if not jig_file(jig).is_file():
+                raise CheckError(f"no {jig}.3dcraftjig: run build first")
+            seconds = render_one(jig, meta, {}, jig_dir(jig) / "preview.png")
+            seconds += render_one(jig, meta, THUMB, jig_dir(jig) / "thumb.png")
             print(f"{jig}: preview.png and thumbnail, {seconds:.0f} s")
         except CheckError as e:
             print(f"{jig}: FAILED: {e}")
@@ -434,7 +450,7 @@ def prove_range(jig, rebuilt, scratch):
 def cmd_check(ids, quick):
     failed = 0
     for jig in ids:
-        directory = JIGS / jig
+        directory = jig_dir(jig)
         problems, notes = [], []
         try:
             for name in REQUIRED_FILES:
@@ -442,7 +458,7 @@ def cmd_check(ids, quick):
                     problems.append(f"missing {name}")
             meta = read_json(directory / "meta.json")
             script = read_json(directory / "build.json")
-            committed = DIST / f"{jig}.3dcraftjig"
+            committed = jig_file(jig)
             with tempfile.TemporaryDirectory(prefix=f"check-{jig}-") as scratch:
                 scratch = Path(scratch)
                 stats, doc, _ = build_into(jig, scratch, meta)
@@ -451,11 +467,11 @@ def cmd_check(ids, quick):
                 notes += warnings
                 rebuilt = scratch / f"{jig}.3dcraftjig"
                 if not committed.is_file():
-                    problems.append(f"missing dist/{jig}.3dcraftjig: run build")
+                    problems.append(f"missing {jig}.3dcraftjig: run build")
                 elif manifest_bytes(committed) != manifest_bytes(rebuilt):
-                    problems.append(f"dist/{jig}.3dcraftjig is stale: run build")
-                if not (DIST / "thumbs" / f"{jig}.png").is_file():
-                    problems.append(f"missing dist/thumbs/{jig}.png: run render")
+                    problems.append(f"{jig}.3dcraftjig is stale: run build")
+                if not (directory / "thumb.png").is_file():
+                    problems.append("missing thumb.png: run render")
                 prove_exports(jig, scratch, meta)
                 if not quick:
                     found, said, range_stats = prove_range(jig, rebuilt, scratch)
@@ -515,8 +531,8 @@ def cmd_coverage():
     relevant = [c for c in every if not c.startswith(NOT_IN_SCOPE) and c not in NOT_MODELLING]
     used, users = Counter(), {}
     for jig in jig_ids([]):
-        script = read_json(JIGS / jig / "build.json")
-        meta = read_json(JIGS / jig / "meta.json")
+        script = read_json(jig_dir(jig) / "build.json")
+        meta = read_json(jig_dir(jig) / "meta.json")
         ids = {step_id(s) for s in script}
         ids |= {e.get("command", "file.export") for e in meta.get("exports", [])}
         ids |= {measure_command(step_params(s).get("measure")) for s in script
@@ -536,18 +552,17 @@ def cmd_readme():
     rows = []
     for jig in jig_ids([]):
         try:
-            meta = read_json(JIGS / jig / "meta.json")
+            meta = read_json(jig_dir(jig) / "meta.json")
         except CheckError:
             continue
         score = (meta.get("difficulty") or {}).get("score")
         if score is not None:  # the table shows reviewed Jigs only
-            rows.append((TIERS.index(meta.get("tier", "complex")), score, jig, meta))
-    rows.sort(key=lambda r: r[:3])
+            rows.append((jig_dir(jig).name, score, jig, meta))
     lines = ["| | Jig | Workshop | Difficulty | Licence |", "|---|---|---|---|---|"]
-    for _, score, jig, meta in rows:
+    for folder, score, jig, meta in rows:  # in the order of the folders' numbers
         title = meta.get("title", jig)
-        picture = f'<img src="dist/thumbs/{jig}.png" width="240" alt="{title}">'
-        lines.append(f"| {picture} | **[{title}](jigs/{jig}/)**<br>{meta.get('description', '')}"
+        picture = f'<img src="jigs/{folder}/thumb.png" width="240" alt="{title}">'
+        lines.append(f"| {picture} | **[{folder[:2]}. {title}](jigs/{folder}/)**<br>{meta.get('description', '')}"
                      f" | {meta.get('domain', '')} | {score}/10 | {meta.get('licence', '')} |")
     readme = ROOT / "README.md"
     text = readme.read_text()
@@ -560,13 +575,21 @@ def cmd_readme():
     return 0
 
 
-def cmd_gallery():
-    return subprocess.run([sys.executable, str(ROOT / "tools" / "gallery.py"), str(DIST)]).returncode
+def cmd_site(out):
+    """The flat web folder the 3DCraft site serves under /jigs/: ID.3dcraftjig, thumbs/ID.png, index.html."""
+    out = Path(out) if out else SITE
+    (out / "thumbs").mkdir(parents=True, exist_ok=True)
+    for jig in jig_ids([]):
+        if not jig_file(jig).is_file() or not (jig_dir(jig) / "thumb.png").is_file():
+            die(f"{jig}: run build and render first")
+        shutil.copyfile(jig_file(jig), out / f"{jig}.3dcraftjig")
+        shutil.copyfile(jig_dir(jig) / "thumb.png", out / "thumbs" / f"{jig}.png")
+    return subprocess.run([sys.executable, str(ROOT / "tools" / "gallery.py"), str(out)]).returncode
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("action", choices=("build", "render", "check", "coverage", "readme", "gallery"))
+    parser.add_argument("action", choices=("build", "render", "check", "coverage", "readme", "site"))
     parser.add_argument("ids", nargs="*")
     parser.add_argument("--quick", action="store_true", help="check: skip check-range and the bend sequence")
     args = parser.parse_args()
@@ -581,7 +604,9 @@ def main():
     elif args.action == "readme":
         failed = cmd_readme()
     else:
-        failed = cmd_gallery()
+        if len(args.ids) > 1:
+            die("site takes one folder")
+        failed = cmd_site(args.ids[0] if args.ids else None)
     sys.exit(1 if failed else 0)
 
 

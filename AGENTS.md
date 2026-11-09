@@ -39,31 +39,32 @@ cannot reach the bar is thrown away.
 
 ```text
 AGENTS.md README.md CATALOGUE.md 3DCRAFT-FEEDBACK.md ATTRIBUTION.md LICENSE
-tools/jigs.py           build, render, check, coverage, readme, gallery (python3, standard library only)
+tools/jigs.py           build, render, check, coverage, readme, site (python3, standard library only)
 tools/pin.json          the pinned 3DCraft commit and file format
 tools/bendcheck.py      proves sheet-metal parts bendable on a press brake (run by check when a Jig has press.json)
-tools/gallery.py        dist/index.html
+tools/gallery.py        the gallery page of the web folder (run by tools/jigs.py site)
 findings/<J-nnn>-<slug>/  minimal reproducers for 3DCRAFT-FEEDBACK.md
-jigs/<id>/              one directory per Jig, <id> kebab-case; the id never changes (it is the file's name and URL)
-dist/                   the published Jigs and dist/thumbs/, committed, so they work without building
-log/ plan/              local only (gitignored): dev log, plans
+jigs/NN-<id>/           everything of one Jig: NN its place in CATALOGUE.md, <id> kebab-case; the id never changes
+                        (it is the file's name and URL) and never carries the number
+site/ log/ plan/        local only (gitignored): the web folder tools/jigs.py site writes, dev log, plans
 ```
 
-| File in `jigs/<id>/` | What it is | Made by |
+| File in `jigs/NN-<id>/` | What it is | Made by |
 |---|---|---|
 | `build.json` | **The source**: a JSON list of `[command, params]` steps run in a new document, ending with `document.check`. No file paths, no `file.*` or `jig.*` steps: the tool saves and publishes. | hand |
 | `meta.json` | title, card summary, domain, tier, difficulty, standards, materials, licence, preview framing, exports | hand; `stats` and `craft3d` written by the tool |
 | `README.md`, `formtest.md` | the Jig's page and its form test (§6) | hand |
-| `preview.png` | the picture (§5) | `tools/jigs.py render` |
+| `<id>.3dcraftjig` | the published Jig, committed so it works without building | `tools/jigs.py build` |
+| `preview.png`, `thumb.png` | the picture (§5) and the gallery's | `tools/jigs.py render` |
 | `press.json` | sheet metal only: the parts `tools/bendcheck.py` must prove bendable | hand |
 | `make.py`, `data/` | only for input from outside or a search (§3) | hand |
 
 ## 3. Working with 3DCraft
 
 - **Build headless.** Edit `build.json`, then `tools/jigs.py build <id>`: it runs the script, refuses to publish
-  when `document.check` is not ok, writes `dist/<id>.3dcraftjig`, measures, and lints names, form and budgets. To look
-  around: `craft3d-cli run dist/<id>.3dcraftjig --cmd document.inspect`. To try the form:
-  `craft3d-cli run dist/<id>.3dcraftjig --cmd param.list`, `--cmd param.set --params '{"values": {...}}'`. To learn
+  when `document.check` is not ok, writes `jigs/NN-<id>/<id>.3dcraftjig`, measures, and lints names, form and budgets.
+  To look around: `craft3d-cli run jigs/NN-<id>/<id>.3dcraftjig --cmd document.inspect`. To try the form:
+  `craft3d-cli run jigs/NN-<id>/<id>.3dcraftjig --cmd param.list`, `--cmd param.set --params '{"values": {...}}'`. To learn
   a command: `craft3d-cli commands --filter <id>`. The user guide (`~/code/3dcraft/docs/guide/`, chapter 5 for Jigs)
   and its examples (`~/code/3dcraft/docs/examples/*.json`) show the idioms; read them, never edit them.
 - **Never use the session's 3DCraft MCP tools** (`mcp__craft3d__*`): they drive the developer's own window. Work
@@ -197,7 +198,7 @@ every change of the form.
 
 ## 5. The preview
 
-`tools/jigs.py render <id>`: 1600 × 1200 `jigs/<id>/preview.png` and 640 × 480 `dist/thumbs/<id>.png`, studio look,
+`tools/jigs.py render <id>`: 1600 × 1200 `preview.png` and 640 × 480 `thumb.png` in `jigs/NN-<id>/`, studio look,
 **Workshop** environment, **ACES** tone curve, **+0.5 stop**, plain background, CPU renderer, 8 frames accumulated: the
 same look as the examples. `meta.json` `preview` may set only the framing (`view`, `zoom`, `camera`, `projection`,
 `box`, and `look.light`, `look.rotation`; `look.reflections: false` only where the renderer's reflections smear a
@@ -269,7 +270,7 @@ fixed. Builders propose entries in their report and write the reproducer; the co
 |---|---|---|
 | **Coordinator** (main session) | Opus 5.5, xhigh | Owns this file, `CATALOGUE.md`, `README.md`, `3DCRAFT-FEEDBACK.md`, `tools/`; briefs agents; runs the review loop; commits (the only one who does); reports to the developer in Dutch. |
 | **Feasibility probe** | Opus 5.5, medium | Answers "can 3DCraft do X at the pin" with a minimal script, before a risky Jig is built. |
-| **Builder** | Opus 5.5; high (simple), xhigh (difficult, complex) | Owns `jigs/<id>/` only. Writes `build.json`, `meta.json`, `README.md`, `formtest.md`; builds, renders, checks itself against §4 and looks at the pictures before handing in; writes reproducers in `findings/`. Never commits. |
+| **Builder** | Opus 5.5; high (simple), xhigh (difficult, complex) | Owns `jigs/NN-<id>/` only. Writes `build.json`, `meta.json`, `README.md`, `formtest.md`; builds, renders, checks itself against §4 and looks at the pictures before handing in; writes reproducers in `findings/`. Never commits. |
 | **Reviewer** | Opus 5.5; high, xhigh for complex | Fresh, and reads the files, not the builder's report. Plays the trade's professional (telescope maker, cabinetmaker, sheet-metal shop, print farm, aeromodeller, loudspeaker builder) **and** a first-time user of the form. Rebuilds, renders two more views and two far points of the range, checks §4 point by point, gives the difficulty score. |
 | **Form tester** | Sonnet 5.5, medium (once Opus 5.5 if Sonnet fails, to tell a weak form from a weak model) | Fresh, gets only the Jig and `formtest.md`, fills the form, exports; the coordinator compares the result with the *Acceptance*. |
 
@@ -304,10 +305,12 @@ with an agent, the form and its range included.
 | 9–10 | class-A surfacing, data-driven geometry, large coupled multi-body designs, expert domain knowledge |
 
 Tiers roughly: simple 1–3, difficult 4–6, complex 7–10.
+The folders are numbered from the least to the most demanding (by score, then CATALOGUE.md's order), and
+CATALOGUE.md follows the same numbers; a new Jig takes the number its score gives it, and the coordinator renumbers.
 
 **Done, for one Jig:** `tools/jigs.py check <id>` passes · the preview is rendered at the pin and looked at · README,
 meta.json and formtest.md are complete and true · reviewer PASS, score in `meta.json` · form tested · feedback entries
-filed · committed by the coordinator and `tools/jigs.py readme` and `gallery` run.
+filed · committed by the coordinator and `tools/jigs.py readme` run.
 
 ## 9. Before a session ends
 

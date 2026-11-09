@@ -1,0 +1,100 @@
+{
+  "id": "gridfinity-bin",
+  "title": "Gridfinity bin",
+  "summary": "your compartments, printed to seat and stack",
+  "description": "A storage bin for the Gridfinity system: choose the grid size, the compartments, label tabs, scoops and base holes; it prints without supports and proves, with its fit gauges on, that it seats in a baseplate and stacks.",
+  "domain": "3D printing, workshop storage",
+  "process": "FDM 3D printing (PETG)",
+  "tier": "difficult",
+  "difficulty": {
+    "score": 6,
+    "rationale": "Lofted foot profiles, a swept lip, patterned compartments, formula-coupled ranges and cross-body fit gauges."
+  },
+  "standards": [
+    "Gridfinity (Zack Freedman, MIT): 42 x 42 x 7 mm grid, 41.5 mm bins, 6 x 2 mm magnets",
+    "gridfinity-unofficial/specification: block and baseplate profile drawings",
+    "kennetek/gridfinity-rebuilt-openscad (MIT) src/core/standard.scad: base, lip, hole and divider numbers"
+  ],
+  "materials": [
+    "PETG filament, 1.75 mm (density 1.27 g/cm3)",
+    "6 x 2 mm disc magnets (optional)",
+    "M3 screws (optional)"
+  ],
+  "licence": "CC-BY-4.0",
+  "new": {
+    "units": "mm"
+  },
+  "preview": {
+    "camera": {
+      "eye": [
+        -160,
+        222,
+        178
+      ],
+      "target": [
+        0,
+        0,
+        20
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "fovY": 25
+    },
+    "look": {
+      "rotation": 90,
+      "light": [
+        200,
+        80
+      ]
+    }
+  },
+  "exports": [
+    {
+      "command": "file.export",
+      "path": "exports/bin.3mf"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/bin.step"
+    },
+    {
+      "command": "file.export",
+      "path": "exports/wide-bin.3mf",
+      "values": {
+        "width_units": 5,
+        "depth_units": 2,
+        "compartments_across": 8,
+        "compartment_rows": 2,
+        "base_holes": 3
+      }
+    }
+  ],
+  "form_test": {
+    "date": "2026-11-08",
+    "model": "claude-sonnet-5-5",
+    "result": "pass"
+  },
+  "stats": {
+    "steps": 234,
+    "variables": 102,
+    "parameters": 11,
+    "features": 57,
+    "assertions": 27,
+    "warnings": 0,
+    "build_s": 5.37,
+    "load_s": 0.44,
+    "load_cpu_s": 1.45,
+    "file_bytes": 259411,
+    "range_points": 103,
+    "range_unproven": 0,
+    "range_mean_s": 0.62,
+    "range_worst_s": 3.13
+  },
+  "craft3d": {
+    "commit": "45233bdc84c4",
+    "format_version": 69
+  }
+}
