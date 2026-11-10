@@ -94,11 +94,11 @@
     "file_bytes": 258370,
     "range_points": 101,
     "range_unproven": 0,
-    "range_mean_s": 0.17,
-    "range_worst_s": 0.76
+    "range_mean_s": 0.09,
+    "range_worst_s": 0.18
   },
   "craft3d": {
-    "commit": "45233bdc84c4",
+    "commit": "843981c20577",
     "format_version": 69
   }
 }
