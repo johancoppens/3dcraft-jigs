@@ -28,7 +28,7 @@ cannot reach the bar is thrown away.
   repository is English: files, names inside the models, commit messages.
 - **3DCraft is pinned.** Every Jig is built and checked with one 3DCraft commit, recorded in
   [`tools/pin.json`](tools/pin.json): the installed `craft3d-cli`. `tools/jigs.py`
-  refuses any other build. Only the coordinator moves the pin, after rebuilding and checking every Jig.
+  refuses any other build, except the release named there ([README.md](README.md#building-and-checking)). Only the coordinator moves the pin, after rebuilding and checking every Jig.
 - **Do not change 3DCraft from here.** What 3DCraft gets wrong or lacks is *collected* in
   [`3DCRAFT-FEEDBACK.md`](3DCRAFT-FEEDBACK.md) (§7); the developer takes it to 3DCraft in one go. Do not build
   around a limit in silence.
@@ -248,7 +248,8 @@ notes* (links to `3DCRAFT-FEEDBACK.md` entries, if any); *Licence*. Every claim 
 }
 ```
 
-`summary` is the card's line (a few words). `exports` are proven by `check` in a scratch folder and are not committed:
+`summary` is the card's line (a few words). `standards` lists the standards and references the Jig is sized to: a
+standard where one applies, otherwise the paper, catalogue or product the page cites. `exports` are proven by `check` in a scratch folder and are not committed:
 paths start with `exports/`, `command` is `file.export`, `cut.export` or `cut.list` (a saw list: no path), `values` runs the export at other parameter
 values. `new` is optional (`file.new`'s params). `stats` and `craft3d` are written by the tool.
 
