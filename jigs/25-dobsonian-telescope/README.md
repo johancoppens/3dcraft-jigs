@@ -77,8 +77,8 @@ type ([Stellafane](https://stellafane.org/tm/dob/resources/bearnings.html)), on 
 
 A retainer, screwed to the outside of each side board, stands proud of the notch beside the bearing and stops the tube sliding sideways, on the model of Stellafane's retainers ("to prevent them from sliding side-to-side"). Here it is a board-thickness strip, 100 mm wide, set off the side board by a 1.5 mm hardboard shim, with 1 mm felt glued to its face where it rubs on the bearing, leaving a 0.5 mm running gap, as Stellafane's felt faces the bearing (its retainers are 1/4 inch plywood). The side load is real: at the defaults a push at the eyepiece of about 12.9 N turns the telescope in azimuth with the tube at 45 degrees, against about 11.5 N (μ W / cos 35°) of sideways friction on the altitude pads, and the retainer is what holds it.
 
-**What could not be checked.** The Teflon-on-laminate friction coefficient is **assumed 0.1**: I found no published figure I
-could verify. The friction torque model (`μ W R / cos θ` with `θ` the pad angle) is the friction of two pads at ±35 degrees
+**What could not be checked.** The Teflon-on-laminate friction coefficient is **assumed 0.1**: no published figure was found that
+could be verified. The friction torque model (`μ W R / cos θ` with `θ` the pad angle) is the friction of two pads at ±35 degrees
 supporting the tube's weight, the same form as Berry's in *Amateur Telescope Making*, vol. 8. The output for how much the
 eyepiece may change, and the friction assertion, hang on that assumption. Texereau and Kriege & Berry's book could not be consulted directly; what is
 used from them is only what is quoted above.
@@ -156,10 +156,10 @@ drawtube (touching, no overlap, so the knob shaft cannot cross the bore); drawtu
 **Use.** The eyepiece stays below your reach at its highest and above 450 mm at its lowest; the centre of mass of the whole telescope is inside
 its feet; the tip-over angle is at least 10 degrees; the Teflon meets 1 cm² per kg (0.9 of it for altitude, 0.85 for azimuth, since the pads are sized from a closed form and the mass is measured); the cut sheet holds the twelve parts.
 
-**How far it was tried.** `tools/jigs.py check` runs `check-range` (defaults, up to 64 corners of the box, every choice and 32 random points, 108 points): all 108 pass, none unproven. On the final build I also ran
-`check-range` with 256 corners and 220 random points: all 488 passed, none unproven. A grid of 480 combinations at the limits of the ranges (five mirror sizes, four tubes, three focusers, thin and thick mirror, fastest and slowest focal ratio, horizon and zenith) passed before one proof bound, on the clearance of the edge posts, was loosened; the balance offset there was at most 2.9 mm. The last revision (seats and felt) changed only the cell's pivot and the retainer's felt; it was checked with `tools/jigs.py check`. Grids run during the build found what sampling had missed and led to fixes: a tip-over of 9.7 degrees on a tall 300 mm f/7.2 (the floor and ground board now grow with the axis height), the focuser reaching the bearing discs on a short f/3.7 (the bearing now shrinks there), a set that dropped the primary from the whole-telescope mass, and vent holes under the pivot balls. These are samples: the claims hold at the points tried, not provably everywhere.
+**How far it was tried.** `tools/jigs.py check` runs `check-range` (defaults, up to 64 corners of the box, every choice and 32 random points, 108 points): all 108 pass, none unproven. On the final build `check-range` also
+ran with 256 corners and 220 random points: all 488 passed, none unproven. A grid (an unpublished check: its script is not in this repository) of 480 combinations at the limits of the ranges (five mirror sizes, four tubes, three focusers, thin and thick mirror, fastest and slowest focal ratio, horizon and zenith) passed before one proof bound, on the clearance of the edge posts, was loosened; the balance offset there was at most 2.9 mm. The last revision (seats and felt) changed only the cell's pivot and the retainer's felt; it was checked with `tools/jigs.py check`. Grids run during the build found what sampling had missed and led to fixes: a tip-over of 9.7 degrees on a tall 300 mm f/7.2 (the floor and ground board now grow with the axis height), the focuser reaching the bearing discs on a short f/3.7 (the bearing now shrinks there), a set that dropped the primary from the whole-telescope mass, and vent holes under the pivot balls. These are samples: the claims hold at the points tried, not provably everywhere.
 
-**Mutation tests.** In scratch copies I broke the geometry (and left the formulas alone) 48 ways: mirror moved or with the wrong curvature; secondary too small or misplaced; eyepiece and drawtube out of focus; focuser off its drawtube or moved along the tube; port moved; the knob shaft through the bore; wrong vane and pad counts; vanes short of the wall; bearing off the axis or oversize; a board too tall; the floor up into the swing; sides too close; pivot too low or off the balance point; wrong densities; a plate off its pads; a bolt hole off its bolt; a disc off its hub; a clip into the glass; pads off the feet or short of the floor; feet short of the board; retainers too far or too low; the felt off its bearing face; pivot balls over a vent hole, missing, off the centroid or in too shallow a seat; inner or outer pads moved off their triangle; a seat not drilled; a part missing from the cut sheet; finder, front ring and tube misplaced. Each one failed at least one assertion.
+**Mutation tests.** In scratch copies the geometry was broken (and the formulas left alone) 48 ways: mirror moved or with the wrong curvature; secondary too small or misplaced; eyepiece and drawtube out of focus; focuser off its drawtube or moved along the tube; port moved; the knob shaft through the bore; wrong vane and pad counts; vanes short of the wall; bearing off the axis or oversize; a board too tall; the floor up into the swing; sides too close; pivot too low or off the balance point; wrong densities; a plate off its pads; a bolt hole off its bolt; a disc off its hub; a clip into the glass; pads off the feet or short of the floor; feet short of the board; retainers too far or too low; the felt off its bearing face; pivot balls over a vent hole, missing, off the centroid or in too shallow a seat; inner or outer pads moved off their triangle; a seat not drilled; a part missing from the cut sheet; finder, front ring and tube misplaced. Each one failed at least one assertion.
 
 Tried by hand with `param.set`: a 2-inch eyepiece on the 1.25-inch focuser (refused, the eyepiece list stops at row 2); f/9 for a 1.0 m eye limit (refused, the most is about f/4.5 for the 200 mm mirror); a 1.0 m eye limit for a 400 mm mirror (refused, the limit's minimum is about 1.5 m); a 30 mm field on a fast 150 mm mirror (refused, about 9.5 mm is the most).
 
@@ -186,17 +186,17 @@ Tried by hand with `param.set`: a 2-inch eyepiece on the 1.25-inch focuser (refu
 
 8 out of 10: closed-form centre of mass over 20+ bodies checked by measure, swept clearance, many coupled range formulas, structure changing by choice.
 
-## Sources: read, secondary, and my own judgement
+## Sources: read, secondary, and judgement
 
 - **Read directly:** Lockwood's secondary tables and offset formula; Stellafane's OTA design (and its 1/8-inch wall), rocker box (and its retainers), ground board (pads over the feet) and bearing
   materials pages; Reiner Vogel's rocker page (35-degree pads, the 1 cm²/kg rule attributed to Berry and Kriege); Corning's data for
   Pyrex (2.23 g/cm³, read through a search result listing their sheet).
 - **Secondary only:** Sky & Telescope's offset `m/(4N)` (a search result; the page refused the fetch); the 70 % three-point rule (Lugt's
   cell notes and a forum citing Stellafane's cell tutorials, through search results; the Lugt page no longer loads); Berry's friction
-  model (a forum post quoting *ATM* vol. 8); the 680 kg/m³ of birch plywood (as `laser-box` cites the Handbook of Finnish Plywood; I did not read
-  that handbook).
+  model (a forum post quoting *ATM* vol. 8); the 680 kg/m³ of birch plywood (as `laser-box` cites the Handbook of Finnish Plywood; that handbook was
+  not read here).
 - **Not read:** Texereau, and Kriege & Berry's book itself.
-- **My own judgement or assumption:** friction coefficient 0.1; bearing size `1.3 D + 40 mm`; the nine-point ring radii and the retainer's size and 1 mm gap; the plywood thickness limit from the mirror (diameter / 20); PTFE 2200, POM 1410, laminate 1450,
+- **Judgement or assumption made for this Jig:** friction coefficient 0.1; bearing size `1.3 D + 40 mm`; the nine-point ring radii and the retainer's size and 1 mm gap; the plywood thickness limit from the mirror (diameter / 20); PTFE 2200, POM 1410, laminate 1450,
   rubber 1100 kg/m³ (common values, not looked up); the paper tube's 6 mm wall and 800 kg/m³; every row of the focuser, eyepiece and finder tables
   (typical figures, not a maker's); the 12 mm spring gap; the 10 mm swing margin on the sides.
 

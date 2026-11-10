@@ -166,7 +166,7 @@ Thick panels:
   The hidden fold of those panels lies flat; the set takes its faces.
 
 `tools/jigs.py check` runs `check-range`: 105 points (defaults, 64 of the 2 048 corners, every choice, 32 random), all
-passing, none unproven. Beyond the range check (`.scratch` scripts, not committed):
+passing, none unproven. Beyond the range check (unpublished checks: their scripts are not in this repository):
 
 - **Is the layer search enough?** `flatFoldable` searches within 3DCraft's work allowance, so its range limit is part of
   the Jig's. Asking it for every sheet in both orientations at the extreme margins and grids of 120 to 224 cells at 60, 70 and

@@ -123,7 +123,7 @@ tensioned for and loaded with its own load limit. Its outer cable changes bear t
 over-estimates the largest outer tension by 8 to 43 %, under-estimates the least by 5 to 15 N (the least closed-form value stays
 at least 21 N, so no cable goes slack), and the central rope's real increase is 10 to 35 N where the closed form allows the full
 69 to 137 N. At the default table at its 8 kg limit: largest outer tension 120 N solved against 135 N closed form, least 33.2 N
-against 26.0 N. The script is not committed; this is what it gave.
+against 26.0 N. This is an unpublished check: the script is not in this repository, and this is what it gave.
 
 **Sway.** Push across the hooks (their weak direction) at the top surface. The form's estimate is a closed solution of the
 sideways shift and the tilt together, with the outer cables' axial and tension stiffness, the central rope's tension stiffness

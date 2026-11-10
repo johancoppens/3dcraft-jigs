@@ -90,8 +90,8 @@ read: section 2 and the module drawings of Appendix A (pages A-2, A-3).
   - J1 rows lie 0.400 and 0.500 in from the edge, pins 1 to 32 from 0.250 in.
   - J2 rows lie 0.200 and 0.300 in from the edge, pins 0 to 19 from 1.050 in.
 
-Many CubeSat boards use the CubeSat Kit's H1/H2 headers instead (a vendor's bus, not this standard; I have not read its
-specification), so the connectors stand for the stack's bus and are not a pin-exact H1/H2.
+Many CubeSat boards use the CubeSat Kit's H1/H2 headers instead (a vendor's bus, not this standard; its specification
+was not read), so the connectors stand for the stack's bus and are not a pin-exact H1/H2.
 
 **The structure.** Everything follows from the PC/104 hole pattern. The two lower holes lie 1.5 mm inside the inner faces
 of 8.5 mm rails, so the frames reach into the rails' corners, and the rails stay L-shaped.
@@ -107,7 +107,7 @@ of 8.5 mm rails, so the frames reach into the rails' corners, and the rails stay
     runs 1.2 mm (k) down to the Ø2 shank. The real head is Ø3.5 to 3.8, its edge flat or rounded, but its cone, extended,
     still reaches Ø4.4 at the top face. A countersink of Ø3.8 would hold the cone 0.3 mm higher, the head proud of the rail
     face. In a Ø4.4 countersink the head sits flush or just below, the rail face stays the sliding surface (CDS 2.2.9),
-    and the 100.0 mm across the rails holds. (ISO 7046-1 refers to ISO 7721 for gauging the head, which I have not read.)
+    and the 100.0 mm across the rails holds. (ISO 7046-1 refers to ISO 7721 for gauging the head, which was not read.)
   - The countersink's rim stays 0.5 mm clear of the leg's 1 mm tip round and 1.6 mm clear of the corner round.
   - The end edges are broken 0.3 mm.
   - The rails come in two hands, two of each: the step's radius lies on one leg only. Rails (+X, +Y) and (−X, −Y) are
@@ -216,19 +216,19 @@ gold Kapton on its outer face) is screwed under the bottom frame round the camer
 rated 3200 mAh at 3.6 V (11.52 Wh). They lie along y on a PC/104 battery board, 4 to a layer, at 19.5 mm. CDS 2.1.5
 recommends at most 100 Wh per battery (the FAA carry-on limit); 8 cells give 92.2 Wh.
 
-**Sources of fastener sizes.** I read all three:
+**Sources of fastener sizes.** All three were read:
 
 - **Optimas' tapping-size table:** M2 close-fit clearance Ø2.2, M2 tap drill Ø1.6 and M3 tap drill Ø2.5.
 - **ISO 7046-1:2011**, dimensions according to its Table 1, read in the iTeh preview of the standard, for the M2
   countersunk head: dk theoretical max 4.4 mm,
-  actual 3.5 to 3.8 mm, k max 1.2 mm. Its footnote refers to ISO 7721 for the gauging, which I have not read.
+  actual 3.5 to 3.8 mm, k max 1.2 mm. Its footnote refers to ISO 7721 for the gauging, which was not read.
 - **ISO 7045:2011**, dimensions according to its Table 1 (iTeh preview), for the M2 pan head: dk max 4.0 mm, k max 1.60 mm.
 
 **Materials and masses.**
 
 - **Densities:** 6082-T6 at 2.70 g/cm³ (Smiths Advanced Metals, 6082 bar datasheet); FR4 at 1.85 (Ryertex Grade FR4
   sheet); stainless 304 at 8.00 (Smiths Advanced Metals, 304 sheet datasheet; it prints kg/m³ where g/cm³ is meant).
-- **My allowances, not from a source:** 70 g a populated PC/104 board with its connectors, 60 g for the battery board,
+- **Allowances made for this Jig, not from a source:** 70 g a populated PC/104 board with its connectors, 60 g for the battery board,
   90 g for the antenna module with its tapes.
 - **The payload** weighs what the form says.
 
@@ -369,8 +369,8 @@ Deployment 0, as the CDS asks; the others always, or when what they check is the
 
 **Over the range.** `tools/jigs.py check` runs `check-range`: the defaults, 64 corners of the box of the ranges, every
 choice and 32 random points from seed 1, 107 points, all passing; the slowest regenerates in 0.22 s. Nine
-coupled ranges are seen only in slivers that way, so I also scanned a grid through the form, setting it as a maker would
-(clamped into the ranges the form shows):
+coupled ranges are seen only in slivers that way, so a grid through the form was also scanned, setting it as a maker would
+(clamped into the ranges the form shows; an unpublished check: its script is not in this repository):
 
 - every form factor × payload kind × solar wings × Deployment 0, 30 and 100 % × the 2- and the 8-cell battery (clamped
   where 8 cells do not fit);
@@ -395,7 +395,7 @@ A heavy payload low in the bay pulls the centre of gravity out of Table 2 long b
 mass. With a long payload under a heavy stack, as in the form test (a 140 mm camera under five boards and eight cells),
 the mass binds instead: 3.96 kg.
 
-**Would they notice?** I broke a scratch copy of `build.json` thirty-three ways, built each, and read the assertions
+**Would they notice?** A scratch copy of `build.json` was broken thirty-three ways, each built, and the assertions read
 stowed (Deployment 0), with the wings half open (30 %) and deployed. Every break was caught:
 
 | Break | Caught by |

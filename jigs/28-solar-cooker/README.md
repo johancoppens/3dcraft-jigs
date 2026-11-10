@@ -84,24 +84,24 @@ the sun to keep every focal line in the pot* turns the measured margin, less hal
 2.7° at the defaults with the sun at 50°, 0.9° at 20°. That is the strict bound (every ray of a perfect petal ends
 inside the pot). The ranges keep it at least half a degree everywhere (the variable `least_aim`): the sun moves up to
 a quarter of a degree a minute, so a dish aimed true keeps every focal line in the pot for at least two minutes. That
-half degree is my own judgement of the least a cook can work with; it raises the least petal count (26 at the
+half degree is a judgement of the least a cook can work with; it raises the least petal count (26 at the
 defaults instead of 24) and lowers the largest dish for a narrow pot (1 300 mm for a 140 × 250 mm pot at f/D 0.5).
-My ray trace (below) shows that the pot still catches nearly all of the light well beyond the bound: at the defaults,
+A ray trace (below; an unpublished check) shows that the pot still catches nearly all of the light well beyond the bound: at the defaults,
 3.75° off (15 minutes without re-aiming) puts 99.9 % of it on the pot at 20° and all of it at 50°; for a 140 × 250 mm
 pot in its largest dish (1 300 mm, f/D 0.5, 36 petals) at 20° of sun, 2° off gives 99.4 % and 3.75° gives 92 %.
 
-The classic gore (centre line as long as the meridian, width the arc of the parallel) is not this outline: my
-independent script finds it 2.8 mm too long at the rim end with 24 petals and 11 mm with 12, so such petals would not
-lie along their neighbours' edges without forcing (my reading of that mismatch).
+The classic gore (centre line as long as the meridian, width the arc of the parallel) is not this outline: an
+independent script (unpublished) finds it 2.8 mm too long at the rim end with 24 petals and 11 mm with 12, so such petals would not
+lie along their neighbours' edges without forcing (a reading of that mismatch).
 
 **Sunlight on the pot.** Power = direct sunlight × specular reflectance × the aperture not shaded. The aperture less
 the hole in the middle (as wide as the pot's ring, inside the pot's shadow when the sun is high; larger only where the
 petal tips would get narrower than 20 mm) and the two axles' 30 mm strips is 0.714 m² at the defaults. At 900 W/m² of
 direct sun (the direct-normal reference spectrum of ASTM G173-03 integrates to 900.1 W/m², as the standard's published
-scope says; I have not read the standard) and 80 % specular reflectance that is 514 W onto the pot. This is sunlight
+scope says; the standard was not read) and 80 % specular reflectance that is 514 W onto the pot. This is sunlight
 reaching the pot, not cooking power: the pot's absorptance, its losses to wind and air, and the sky are not modelled.
 At low sun the level pot's shadow on the tilted dish reaches beyond the hole (by up to about 2 % of the aperture for a
-tall pot, my estimate); the power figure does not subtract that. Averaged over the disc the focal lines span, the light
+tall pot, an estimate); the power figure does not subtract that. Averaged over the disc the focal lines span, the light
 is about 50 times the direct sun at the defaults (the output *Light at the focal lines*); the range reaches about 120.
 
 **The mirror sheet.** Anodised aluminium mirror sheet of the MIRO-SUN kind: Alanod's *Solar Reflectors* brochure
@@ -247,7 +247,7 @@ Twenty-eight assertions, each measured on the model, most of them a single measu
   hanger, hub ring or petal is smaller than its plate is thick; the petal is no longer than the mirror sheet is wide
   (1 250 mm).
 
-**Would they notice?** I broke a scratch copy twenty-seven ways, one at a time, and each was caught by a failing
+**Would they notice?** A scratch copy was broken twenty-seven ways, one at a time, and each was caught by a failing
 assertion (none only leaves it unproven): the reviews' cases (the quadrant slot ending at 30° instead of 20°, the arm's
 bore 0.5 mm under the axle, the second petal set turned 1° on the axis, two hub pilots missing, the hoop rolled 5 mm
 too big, the quadrant's weld hole exactly the bar's size), a clamp knob 3 mm into the quadrant, the template drawn
@@ -273,7 +273,8 @@ cooking height of 650 mm and a pot 320 mm across but only 100 mm high. A scan of
 pot and focal ratio on their steps found none where the dish's range is empty or the fewest petals exceed 36; it found
 two before the pot's least height (a third of its diameter) was added.
 
-**Outside the model, by my own script** (not committed): the petal unfolded numerically triangle by triangle from the
+**Outside the model, by a script written for this Jig** (an unpublished check: the script is not in this
+repository): the petal unfolded numerically triangle by triangle from the
 3D strip between two meridians agrees with the template's closed form to 0.0000 mm, its area to 2e-9, its cut edge
 with the meridian's arc length (427.0745 mm) at four points of the range; the strip is developable to rounding. Rays
 from the sun's disc off the bent petals: all of 40 000 reach the pot with 24 petals (the earlier defaults) at 90°, 50°

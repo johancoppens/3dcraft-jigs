@@ -30,23 +30,23 @@ A drawing of a rack cabinet is one height and one depth. This one is yours, and 
 
 ## The real thing
 
-**The standard.** I have not read EIA-310-D or IEC 60297-3-100 (sold, not free); the numbers come from these published
-pages, which I did read:
+**The standard.** EIA-310-D and IEC 60297-3-100 were not read (sold, not free); the numbers come from these published
+pages, which were read:
 
 | What | Value used | Source |
 |---|---|---|
 | Rail hole centres | 465.1 mm (18 5/16 in, 18.312 in) | [Digital Loggers, Rack specifications](https://digital-loggers.com/rackspecs.html); [IBM: Rack installation specifications](https://www.ibm.com/docs/POWER9/p9had/p9had_oemrack.htm): 465 mm ± 1.6 mm |
 | Clear opening between rails | 450 mm minimum (17.72 in) | Digital Loggers, IBM |
-| Vertical pattern | 15.9, 15.9, 12.7 mm (5/8, 5/8, 1/2 in), 44.45 mm a unit, the unit's boundary in the middle of the 1/2 in gap, so holes at 6.35, 22.225 and 38.1 mm from the boundary (my arithmetic from those) | IBM, Digital Loggers |
+| Vertical pattern | 15.9, 15.9, 12.7 mm (5/8, 5/8, 1/2 in), 44.45 mm a unit, the unit's boundary in the middle of the 1/2 in gap, so holes at 6.35, 22.225 and 38.1 mm from the boundary (arithmetic from those) | IBM, Digital Loggers |
 | Square holes | 9.5 mm (± 0.1), for M6 cage nuts; round alternative 7.1 mm | IBM |
-| Panel width, height | 482.6 mm; 44.45 n - 0.8 mm (Wikipedia gives 44.45 n - 0.794 mm, uncited; 0.8 is the figure I use) | [Wikipedia, 19-inch rack](https://en.wikipedia.org/wiki/19-inch_rack) |
+| Panel width, height | 482.6 mm; 44.45 n - 0.8 mm (Wikipedia gives 44.45 n - 0.794 mm, uncited; 0.8 is the figure used) | [Wikipedia, 19-inch rack](https://en.wikipedia.org/wiki/19-inch_rack) |
 | Rack load | 20 kg per unit on average | IBM (its requirement for racks holding its servers) |
 
-The panel slots are 7.1 mm wide (the round hole's size) and 10 mm long, my choice for play sideways; 3.75 mm of metal
+The panel slots are 7.1 mm wide (the round hole's size) and 10 mm long, a choice made for play sideways; 3.75 mm of metal
 stays beside each slot at the panel's end.
 
 **Gear and depth.** The form asks for the gear's depth from its rack ears to its far end. The front rails stand 60 mm
-behind the side lips (room for handles and patch cords), the cable room behind the gear is at least 90 mm (my
+behind the side lips (room for handles and patch cords), the cable room behind the gear is at least 90 mm (a
 judgement), and the cabinet depth is that sum, rounded up to 5 mm. A cabinet of 600 mm (wall) or 800 mm (floor) at most.
 
 **The parts, and how the load gets to the wall.** Sides of one flat sheet with a front lip (one bend), a lid and a pan
@@ -87,9 +87,9 @@ it would need a CH of about 32 mm.
 | Aluminium 5754 H111, 2 mm | 12 mm | 1.67 mm (uses 2.0) | 9.1 mm |
 | Stainless 304, 1.5 mm | 10 mm | 1.90 mm | 7.6 mm |
 
-Its tables list CRS, AlMg3 EN AW 5754 H111 and AISI 304; taking CRS for DC01 is my reading (cold-rolled soft steel of
+Its tables list CRS, AlMg3 EN AW 5754 H111 and AISI 304; taking CRS for DC01 is a reading made for this Jig (cold-rolled soft steel of
 EN 10130 type). Minimum bend radii and the K-factor rule are those of the [`sheet-metal-enclosure`](../13-sheet-metal-enclosure/README.md)
-Jig, whose README lists the sources I did not re-read (R = t for DC01 up to 2.5 mm, secondary; EN 485-2 factors for
+Jig, whose README lists the sources, not re-read here (R = t for DC01 up to 2.5 mm, secondary; EN 485-2 factors for
 5754 via two secondary tables; Outokumpu for 304; the METU handout for K). Holes keep the larger of 2.5 t + R and the
 shop's shortest leg from a bend (247TailorSteel on holes over 5 mm within the leg; 2.5 t + r is AGENTS.md's rule, from Fabcon as cited in the enclosure's README, not re-read).
 
@@ -109,15 +109,15 @@ moment as a pull. They sit in plain holes, so a 24 mm washer bears on an intact 
 pivot, take shear on their shank at the keyhole's end and almost no pull. `Pull on each upper wall anchor` and `Shear
 on each of the four wall anchors` are live outputs, and their labels say who must check the anchors. What limits them is not the bolt but the
 sheet around it: the back plate bends locally, so the form takes a plate clamped around the fixing at the nearest
-folded edge as its model (my simplification: stress `σ = 3 F / (π t²) · (1 − r²/a²)`, with the washer's radius and
+folded edge as its model (a simplification: stress `σ = 3 F / (π t²) · (1 − r²/a²)`, with the washer's radius and
 the distance to the fold, kept to 2/3 of the sheet's proof stress). This is a judgement and the conservative part of
 the number: compare EN 1993-1-3's pull-through of a screw head, which for these 24 mm washers and 1.5 mm sheet is about
 7.8 kN (read in a reproduction, not the standard), an order of magnitude more. The gear mass the form allows is the
 lowest of the rail rule of 20 kg per unit (IBM's), the fixing rule at 95 %, and a cap per sheet (on the wall 100 kg for
 1.5 mm steel, 150 kg for 2 mm, 80 kg for 2 mm aluminium, 120 kg for 1.5 mm stainless; on the floor 150, 250, 150 and 200
-kg, my judgement: commercial 9 and 12 U wall cabinets of 1.2 to 1.5 mm sheet are rated about 60 kg, Intellinet's data
+kg, a judgement: commercial 9 and 12 U wall cabinets of 1.2 to 1.5 mm sheet are rated about 60 kg, Intellinet's data
 sheets, and 100 kg for Digitus's). DC01's proof stress is taken at 140 MPa, the lower end of the range in EN 10130 listings (the same
-for the assumed value of the table I found; 5754 H111 at 80 MPa and 1.4301 at 230 MPa, EN 10088-2 listings).
+for the assumed value of the table found; 5754 H111 at 80 MPa and 1.4301 at 230 MPa, EN 10088-2 listings).
 
 The wall itself is out of the model. The anchor you choose must be rated, from its maker's data for your wall, for the
 pull and the shear the form shows, and someone competent should check it. A wall anchor in a hollow block is a very
@@ -212,8 +212,8 @@ scan by hand ran the door through nine angles from 0 to 110 degrees, on every sh
 hinge sides (216 points), and 70 random combinations of the other parameters; every gear mass was also tried at its
 maximum at the corners of the wall range (20 points). Nothing failed. The range check and scans cover those points, not every combination.
 
-**Would they notice?** I broke a scratch copy twenty-two ways and every break was caught. The K-factor of the side and
-the cam's offset were caught only after I added the checks for them. The breaks: the cam's face a sheet thickness out,
+**Would they notice?** A scratch copy was broken twenty-two ways and every break was caught. The K-factor of the side and
+the cam's offset were caught only after the checks for them were added. The breaks: the cam's face a sheet thickness out,
 the cam's offset 2 mm short, the lock on the hinge side, the door's swing allowance too small, the keyholes moved to the
 top, the hole centres 1 mm off, the unit height, the first
 hole, the lip narrowed so the ears could not pass, the opening reduced, the door's pin hole moved, the cam short of the

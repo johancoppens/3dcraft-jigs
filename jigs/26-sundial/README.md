@@ -237,7 +237,7 @@ Beyond it, during the build:
   `cut.export` mirrored on every wall dial (the kerf is now in the bodies); and `check-range` then found the style and
   tab checks counting both ends of a rounded beam-path corner at kerfs of 0.03 mm (the corners are now mitred). The
   scans now draw the kerf at random from 0 to 0.2 mm.
-- *An independent check of the exported files*, by a script not committed: at 24 points (all twelve cities, the corners of
+- *An independent check of the exported files* (an unpublished check: its script is not in this repository): at 24 points (all twelve cities, the corners of
   latitude and longitude, walls at ±50° and at the northern limit, 180 to 400 mm, both kinds of time) it exports the sets
   *Engraving* and *Cut sheet* and matches every straight edge of the engraving against the shadow construction above,
   computed again in the script with a dense sweep of the sun's declination through the year, and against the Sundial

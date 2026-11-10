@@ -86,7 +86,7 @@ the model. The comb is tilted by an angle β about the drum's axis: the pin's le
 rides onto the pin's top surface at the lift a, and stays there until the pin's trailing corner has passed it, when it
 drops off and rings. With β ≈ overlap/a − a/(2(R + h)), the tip sits at θ = acos((R + h − overlap) cos β / (R + h)) − β
 past the comb's plane and a = (R + h) sin θ / cos β. These are worked out here from a point on a circle meeting a line
-(my own derivation, checked against the model's numbers; no reference). The model does not bend the tooth, so at the
+(a derivation made for this Jig, checked against the model's numbers; no reference). The model does not bend the tooth, so at the
 angle where a pin is at the comb it passes through the tip: a CAD part does not deflect. *Beat at the comb* in the
 form is the number of the beat that the crank has reached.
 
@@ -150,7 +150,7 @@ teeth, so turn on your slicer's elephant-foot compensation there.
 sheet or more, as a laser likes. Buy spring-steel strip hardened and tempered (C75S+QT / 1.1248 in tempered condition, Rm
 1200 to 1900 MPa according to material-listing sites, a secondary source); an annealed or merely hard-rolled strip
 (Matthey's extra hard is 930 MPa minimum) will set. The limit in the form (450 MPa at the root of the shortest tooth) is
-about a third of that, my own judgement given the sharp root corners: laser cutting also heats the slot ends and can
+about a third of that, a judgement given the sharp root corners: laser cutting also heats the slot ends and can
 soften a small zone there, so round the root corners with a fine file or needle-file and check the first tooth for
 cracking. A wire-EDM or water-jet comb would avoid that; a local shop will say what it can do. The slot ends have a
 small inner corner the laser's kerf rounds.
@@ -219,7 +219,7 @@ The Jig carries 68 assertions; those that do not apply at a point are inactive t
   pin's stress in a backward stop stays under 80 % of the printed PETG's 47 MPa (formula; it sets the form's least crank
   turns per tune).
 - **Strength.** Root stress of the shortest tooth under the comb's limit (450 MPa for hardened spring steel, 17 MPa PETG,
-  21 MPa PLA: my own margins on the sources in *The real thing*) and the pin's root stress under 25 MPa (a printed PETG
+  21 MPa PLA: margins chosen for this Jig on the sources in *The real thing*) and the pin's root stress under 25 MPa (a printed PETG
   pin; the data sheet gives 47 MPa in the printed direction, and at the defaults the pin sees 5.5 MPa; these are formulas,
   and the form's limits keep them true: they guard the arithmetic, not the print).
 - **Machine and print.** Laser slot at least the sheet (or 0.8 mm printed), walls at least 1.2 mm

@@ -20,14 +20,14 @@ mesh at every angle, not only at zero.
   module and the motor (the sun must hold the motor shaft, the planet a bearing, the motor plate's spigot must clear the
   motor's screw heads), and the most planets from all of these (where neighbouring planets would come closer than 1 mm,
   worked out for 4, 5 and 6 planets with their own tooth counts). The reduction and housing limits are worked out for the
-  worst tooth step of any planet count, so a planet count the form offers never makes them invalid. A sweep of 168 272
+  worst tooth step of any planet count, so a planet count the form offers never makes them invalid. A sweep (an unpublished check: its script is not in this repository) of 168 272
   combinations of the form (motor, module, reduction on its 0.1 grid, housing in 1 mm steps, every planet count offered,
   the extremes of backlash and clearance) found no empty range and no wall, fit or plate below its limit.
 - **Involute gears drawn once, as arcs.** Each gear is one tooth repeated by `sketch.pattern` with `chain` and `angle`
   into one closed profile and extruded once: each flank is three circular arcs through seven points of its involute,
   evenly spaced in roll angle, each arc's centre the circle through its three points worked out by formula; then a
   short radial foot, a root fillet arc and the tip and root arcs. The arcs leave the involute by at most 1.8 µm anywhere
-  in the form's range (our own calculation; the worst is a 14-tooth sun at module 2), far less than a printer holds,
+  in the form's range (a calculation made for this Jig; the worst is a 14-tooth sun at module 2), far less than a printer holds,
   and the faces stay cylinders, which keeps the Jig light (Platform notes). Bores, pockets and bolt holes are circles
   in the same sketches. The Jig is created at a linear tolerance of 0.01 mm (`file.new`, `meta.json` `new`).
 - **Profile shift and ring-tip limits from the books.** Sun, planet and ring are shifted together (`sun_shift`, planet and
@@ -94,7 +94,7 @@ flank. Below the involute each tooth has a short radial foot and a fillet of 0.3
 root circle: smaller than the rack's 0.38 m, so it stays below the mating tip's path. A real generated tooth has a
 trochoidal fillet instead; this one is simpler and printable. Each involute flank is drawn as three circular arcs, each
 through three of seven points of the involute taken at even steps of the roll angle t (x = rb (cos(φ + t) + t sin(φ + t)),
-y = rb (sin(φ + t) − t cos(φ + t))): by our own calculation over all 1 312 tooth sets the form can make, they stay
+y = rb (sin(φ + t) − t cos(φ + t))): by a calculation made for this Jig over all 1 312 tooth sets the form can make, they stay
 within 1.8 µm of the involute on the sun (a 14-tooth sun at module 2), 1.6 µm on a planet and 0.2 µm on the ring.
 
 **Undercut and shift.** The limit is z = 2 / sin²α = 17.1 teeth (KHK eq. 3.7). A sun with fewer teeth takes the shift x_s
@@ -116,7 +116,7 @@ sits at φk = (k − 1) 360° / N plus the carrier angle and is turned past φk 
 sun's angle; the ring is turned half a ring pitch when Zp is even. Planets 2 to 6 are five copies of planet 1, each placed
 by its own copy of that formula with k written in (a pattern cannot read its instance number: J-011); planet 1 is
 measured on both flanks against sun and ring, planets 2 to 6 together on both flanks against the ring. An independent
-program (exact outlines as dense polygons, placed by these formulas, boundaries compared) found the normal flank gap
+program (an unpublished check: exact outlines as dense polygons, placed by these formulas, boundaries compared) found the normal flank gap
 equal to backlash · cos α / 2 within ±0.003 mm at 73 drive angles for 6 tooth sets and at 12 random angles for 14
 random points of the form; on the model the gaps measure 0.0688 to 0.0698 mm in the Closed view at the defaults,
 against the 0.0705 mm designed.

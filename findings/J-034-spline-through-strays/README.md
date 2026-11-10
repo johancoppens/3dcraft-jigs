@@ -8,7 +8,7 @@ twice: as a live `sketch.spline` through eight points of the involute, evenly sp
 polar angle of roll angle 0.57 is cast through each (`measure.ray`). The curve is met at 15.14277 mm, the involute's
 own radius there; the spline at 15.16171 mm, 0.019 mm further out (about 0.009 mm normal to the flank). A clamped
 cubic B-spline interpolating the same eight points (chord-length or uniform parameters, averaged knots) stays within
-0.0006 mm of the involute everywhere (our own calculation). With five points the live spline strays 0.031 mm, with six
+0.0006 mm of the involute everywhere (a calculation made for the Jig). With five points the live spline strays 0.031 mm, with six
 0.018 mm (normal distance, rays every few hundredths of a radian), against 0.003 mm for a cubic interpolant of five.
 
 **Should:** a spline through points as close to a smooth curve through them as a standard cubic interpolant, or the

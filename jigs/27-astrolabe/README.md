@@ -57,7 +57,7 @@ counted from the prime vertical; the closed forms above are those formulas rearr
 available to read; the paper above is the source used. The obliquity 23.4393° is the mean obliquity at J2000.0, 23°26′21.448″, as given in
 Wikipedia's *Axial tilt* from the Astronomical Almanac (a secondary source).
 
-**Own check.** A separate script, not committed, projects the points of the celestial sphere directly: it turns altitude and azimuth into
+**Own check.** A separate script (an unpublished check: it is not in this repository) projects the points of the celestial sphere directly: it turns altitude and azimuth into
 declination and hour angle at the latitude, and maps them with r = r_e·tan(45° − δ/2) and the hour angle to the plane, without using any of the
 circle formulas above. Against the sketch circles of the model at latitudes 25, 40, 52 and 65 the worst differences are 0.0000003 mm for almucantars and
 0.0006 mm for azimuths, each run for both altitude steps; a second script projects the catalogue's right ascension and declination directly

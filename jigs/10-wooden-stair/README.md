@@ -49,8 +49,8 @@ structural engineer must verify.
   art. 4.20 ([text](https://inview.nl/openCitation/idf94aba0d5fda4135bd0c03bfdc0e5a7b/besluit-bouwwerken-leefomgeving-artikel-4-20)).
   IPLO ([Trappen Bbl](https://iplo.nl/regelgeving/regels-voor-activiteiten/technische-bouwactiviteit/rijksregels-bouwactiviteit/trappen-bbl/))
   says the stringers count in the width. Flemish *Gewestelijke stedenbouwkundige verordening toegankelijkheid* (Besluit
-  Vlaamse Regering of 5 June 2009, amended 18 February 2011), art. 20: for buildings open to the public. We found no
-  statutory stair dimensions for a private Belgian home, hence the third row, which has no legal force.
+  Vlaamse Regering of 5 June 2009, amended 18 February 2011), art. 20: for buildings open to the public. No
+  statutory stair dimensions were found for a private Belgian home, hence the third row, which has no legal force.
 - **Secondary sources only:** Blondel's rule (*Cours d'architecture*, 1675) is known here from web summaries, and the
   620 mm target is this Jig's choice inside the Flemish band. Bbl has no step rule; the band is applied to its row as a
   comfort limit, not a legal one.

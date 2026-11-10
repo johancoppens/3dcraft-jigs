@@ -44,7 +44,7 @@ print. The design is original; a drag chain as such is a generic type.
 | PETG: yield elongation 3.5 %, modulus 1.7 GPa, density 1.27 g/cm³ | [Prusament PETG data sheet](https://cdn.shopify.com/s/files/1/1745/6181/files/prusament-petg-v0-technical-data-sheet.pdf), v1.0, printed specimens, horizontal direction, read |
 | PA12: elongation at yield 5 %, modulus 1400 MPa, density 1.01 g/cm³ | [Fiberlogy Nylon PA12 data sheet](https://fiberlogy.com/app/uploads/2026/05/FIBERLOGY_NYLONPA12_TDS.pdf), May 2025, read. It does not say whether the specimens were printed |
 
-**My own judgement**, where no source gives the number: 0.9 of the yield strain for PA12 (Bayer's "almost to the yield point"),
+**Judgements made for this Jig**, where no source gives the number: 0.9 of the yield strain for PA12 (Bayer's "almost to the yield point"),
 friction 0.5 for both filaments (Bayer's PA figure, 0.30 to 0.40 on steel, times its factor of 1.5 for like on like; PETG is
 not in the table), the self-support estimate described below, the proportions of the link (pitch about twice the link height, at least six links in the bend, wall
 0.16 × inner height + 0.8 mm), the 100 mm limit on the inner width, and reading igus' 10 % as 10 % of the largest cable for
@@ -52,7 +52,7 @@ every gap. The inner height is the largest cable plus igus' clearance and nothin
 cables of 4 mm and up; below that igus' own 2 mm minimum gap makes it a little more (5 mm for a 3 mm cable).
 
 **How the rules are applied.** igus' bend radius R is taken to the hinge line, so that the clearance height is H = 2R + link
-height. That relation is my reading: the igus pages I read define H and R by name only. The Jig is stricter than igus on the
+height. That relation is a reading made for this Jig: the igus pages read define H and R by name only. The Jig is stricter than igus on the
 cable in two ways. A cable under tension lies against the inside of the bend, so the centre of the thickest cable, lying there,
 must be outside the cable's minimum radius. And a printed joint has play: the hinge clearance and the stop gap let each joint
 turn (stop gap + hinge clearance) / (link height / 2) past its nominal angle, so the radius the cable is checked against is the
@@ -66,7 +66,7 @@ front hinge, joined by a web. A bottom bridge is printed with the link; the oran
   pin is a cantilever from the end of the web, and Bayer's formula gives the strain. The root of that cantilever is rounded at
   0.6 of the wall thickness, the ratio Bayer's page 8 suggests, and the design keeps the nominal strain low enough that 1.6 times it
   (Bayer's Fig. 9 reads about 1.55 at that ratio, taken as 1.6) stays under the filament's yield strain. The pin is a stub of the tongue: the
-  force that would spread the cheeks acts through the same cone, so I expect a chain pulled hard to pop apart rather than break (not tested).
+  force that would spread the cheeks acts through the same cone, so a chain pulled hard is expected to pop apart rather than break (not tested).
 - **Stops.** In the plane of the cheek, the rear end of a link and the tip of the one before it have flat faces that meet at
   both limits: straight (the lower faces, so the upper run is held against sagging) and fully bent (the upper faces, which
   limit the bend). Both stops act only after the joint's play is taken up; that play is an output, and the bend and the
@@ -82,15 +82,15 @@ limits apply. Its sag, length² x joint play / (8 x pitch), stays under 45 % of 
 weight per length x length² / (8 x link height / 2), must not spread the cheeks off the pins: through the 45-degree cones each
 cheek sees half of that times (1 − μ)/(1 + μ) with μ taken as 0.2, against the force that springs the cheek, with a factor of
 safety of 1.65 in the limit and 1.5 in the assertion. Cables are weighed at an assumed 2 g/cm³ of their section, a ribbon at
-1.5 mm thick (my estimate; a heavier cable shortens the span). Beyond the limit a chain needs a guide trough, which this Jig does
+1.5 mm thick (an estimate; a heavier cable shortens the span). Beyond the limit a chain needs a guide trough, which this Jig does
 not design: raise the moving end, use larger links, or use a trough. The sag is shown in the form, and is what you should expect
 to see.
 
 **Printing.** Print the link upright on its bottom bridge, the end pieces on their feet, and the lid standing on its end, so
 that its section lies in the layers and the snap arms bend along the filament. Nothing needs support. The running faces, the
-cheek's inside and the tongue's outside, have a first-layer chamfer so that elephant foot does not close the hinge gap. I would use a 0.4 mm
+cheek's inside and the tongue's outside, have a first-layer chamfer so that elephant foot does not close the hinge gap. Suggested: a 0.4 mm
 nozzle, 0.2 mm layers and walls filled solid, and a slicer's bed adhesion setting of your choice. PLA is not offered: the
-sources above give no snap figure for it, and I judge it too brittle for a part that is sprung and flexed.
+sources above give no snap figure for it, and it is judged too brittle for a part that is sprung and flexed.
 
 **Assembly.** Bolt the fixed end down with its hinge line at the middle of the travel (the form gives the hole position), and
 screw the moving end to the carriage. Press each tongue into the cheeks of the link before it, one side at a time: the form

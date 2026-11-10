@@ -116,7 +116,8 @@ Round the base ring the two hands alternate. On the 2V every second hub is hand 
 counter-clockwise seen from above from an all-C base hub, the next hub is hand 2, the one after it hand 1, then the next
 all-C hub.
 
-**This table was computed outside the document** (a script run once on the same subdivision) and copied here; nothing in
+**This table was computed outside the document** (a script run once on the same subdivision, not in this
+repository) and copied here; nothing in
 the Jig produces or checks it row by row. AGENTS.md §3 wants what a Jig decides to live in the document, and 3DCraft
 has no way to show a per-hub table in the form. The form computes and shows only the smallest and largest fin angle of
 the dome you set. Tack the fins with a protractor or a printed disc, and check them by dry-assembling a ring of struts

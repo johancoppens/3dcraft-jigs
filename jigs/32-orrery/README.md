@@ -110,7 +110,7 @@ point where the line of action touches the other gear's base circle) and for its
 between the tip circles over the base pitch (IIT Kharagpur, *Design of Machine Elements*, ch. 8, which asks at least
 1.2). Backlash 0.1 module. The module is at least 1.5 mm so that the narrowest tooth space (at the root) is at least the
 1 mm sheet thickness (the AGENTS.md rule for slots; SendCutSend's study guide for fibre lasers asks half the thickness for
-holes and bridges, and every tip land is kept at least that). By our own rule a gear's tip diameter is at most 160 times
+holes and bridges, and every tip land is kept at least that). By this Jig's own rule a gear's tip diameter is at most 160 times
 the sheet it is cut from (160 mm in 1 mm brass), so that it stays flat and true: the module's most follows from the
 largest gear of the trains (1.5 mm for all the planets; up to 2.5 mm for small trains).
 
@@ -130,7 +130,7 @@ and D of Mercury, then Venus, and so on out. Every part that floats is located b
 bush stands on the bush below it (the first on the plinth), and each tube stands on the gear D of the tube inside it
 (Mercury's on the plinth); the gears A are soldered to the input arbor at heights set by their own spacer stack. So B and
 A are set by two different stacks, and their errors add, as do C's and D's: keep the two gears of each mesh within 0.2 mm
-of level (a straight edge across both faces; our own limit, a fifth of the 1 mm face), shimming with a thin washer where
+of level (a straight edge across both faces; this Jig's own limit, a fifth of the 1 mm face), shimming with a thin washer where
 they are not. A brass bridge on three pillars just outside the gears holds the tops of the arbors and the outermost tube:
 a bar west to east over the centre post and the lay arbor, and an arm out over the input arbor. The crank sits on the
 bridge; the lowest arm or carrier is 40 mm above the crank knob's top. Every arm is lower than the arms inside it, so no

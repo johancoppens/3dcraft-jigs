@@ -40,7 +40,7 @@ front and back panels, so connectors stay on the chassis when the cover comes of
 the sides. There are no welded or closed corners to dress: the cover's edges are flush with the walls' outer faces and
 the cover slides down over the open sides with 0.5 mm of clearance a side. Air comes in low through the side slots and
 leaves through the top. Long top slots are cut into rows with bridges between them, so no strip between two slots is
-longer than 12 webs (72 mm in thin sheet, my judgement of what stays flat). The old version of this Jig put the connectors on the lid and could not prove its base
+longer than 12 webs (72 mm in thin sheet, a judgement of what stays flat). The old version of this Jig put the connectors on the lid and could not prove its base
 bendable; this one puts them on the chassis and proves both parts everywhere the form lets you go.
 
 **Making it, in order.**
@@ -49,7 +49,7 @@ bendable; this one puts them on the chassis and proves both parts everywhere the
 2. Chassis: bend the two return flanges first, on the flat.
 3. Press the clinch nuts into the return flanges from the underside now, the flange held in the press. Not before the
    return bends: at the hole-to-bend distances used here, a nut already in place would meet the punch's flank as the
-   flange comes up (my reading of the tool geometry, not modelled). Not after the walls: the walls would be in the way.
+   flange comes up (a reading of the tool geometry, not modelled). Not after the walls: the walls would be in the way.
    On a large blank the rest of the sheet hangs far below the anvil, so ask the shop how it holds it (an offset anvil,
    or pressing the nuts after the walls with one).
 4. Bend the two walls, one after the other. The second wall is the one the height limit below is about.
@@ -81,7 +81,7 @@ someone competent: the powder coat insulates, and neither the Jig nor its checks
 
 Read from [247TailorSteel, *Bending guidelines*](https://www.247tailorsteel.com/en/bending-guidelines): groove width,
 leg length ("the minimum overlay of the sheet on the mold") and internal radius of a 90 degree bend. The shop lists
-CRS CR4, AlMg3 EN AW 5754 H111 and AISI304L 2B. It does not name DC01; taking CRS CR4 for DC01 is my reading (both are
+CRS CR4, AlMg3 EN AW 5754 H111 and AISI304L 2B. It does not name DC01; taking CRS CR4 for DC01 is a reading made for this Jig (both are
 cold-rolled soft steels of EN 10130 type). It has no aluminium at 0.8 or 1.25 mm, so those are left out. 3 mm is left
 out because 3 mm stainless, with its 15 mm leg, leaves no wall height a straight punch can bend at some depths.
 
@@ -94,8 +94,8 @@ out because 3 mm stainless, with its 15 mm leg, leaves no wall height a straight
   the rule sets R = t, 2.0 and 2.5 mm, about 0.1 mm more than 1.88 and 2.41 mm.
 - **EN AW-5754 H111.** EN 485-2's minimum radius factors for a 90 degree bend, as tabulated by
   [Metallservice](https://www.metallservice.ch/msm/msm-home/services/metall-lexion/mechanische-kennwerte-f%C3%BCr-walzblankes-aluminium-halbzeug.pdf)
-  and [color-metal.ro](https://color-metal.ro/en/determining-minimum-bending-radius) (both secondary; I have not read
-  the standard): 0.5 t up to 1.5 mm, 1.0 t above. At 2 and 2.5 mm that exceeds the shop's radius (2.0 against 1.67,
+  and [color-metal.ro](https://color-metal.ro/en/determining-minimum-bending-radius) (both secondary; the standard was not
+  read): 0.5 t up to 1.5 mm, 1.0 t above. At 2 and 2.5 mm that exceeds the shop's radius (2.0 against 1.67,
   2.5 against 2.11) and the Jig uses it, so the shop needs a punch with that nose.
 - **Stainless 304.** [Outokumpu, *Forming of stainless steel*](https://www.outokumpu.com/expertise/stainless-basics/forming):
   "For austenitic and ferritic stainless steel this ratio is 1". The shop's radii are all above that.
@@ -105,7 +105,7 @@ out because 3 mm stainless, with its 15 mm leg, leaves no wall height a straight
 headed "Generic K-Factors": 0.33 / 0.38 / 0.40 for soft / medium / hard material up to r = t, 0.40 / 0.43 / 0.45 from
 t to 3 t. Reading soft as the aluminium, medium as the steel and hard as the stainless is mine (the handout heads soft
 "Aluminum" and medium and hard "Steel"). The table gives bands with an edge at r = t, where K would jump (0.43 to 0.38 for steel at 2 mm). The Jig interpolates in
-r/t between the band middles (r/t 0.5 and 2), so it follows the table there and has no jump: that is my treatment, not the
+r/t between the band middles (r/t 0.5 and 2), so it follows the table there and has no jump: that is this Jig's treatment, not the
 handout's. K moves with the shop's tooling
 and the flat pattern is only as true as this number. The form has no K input: a shop with its own bend deduction re-unfolds
 the part from the bend lines and the allowances the form reports, or changes the table in `build.json`.
@@ -127,11 +127,11 @@ read; CLS-M3-2 and SP-M3-1 and SP-M4-1 from distributors' listings). Pick the sh
 PEM's bulletin. The return flanges always leave more than that distance. The heads and the nuts are drawn from these
 listings (pan head 5.6 × 2.4 mm M3, 8 × 3.1 mm M4; distributors differ on the M3's diameter, 5.6 or 6 mm) and only
 for looks and clearance. The standoffs (M3, 5.5 mm), rubber feet (14 mm, 6 mm high) and board thickness (1.6 mm) are
-my choices, not from a source. Densities (7850, 2670, 7900 kg/m³) are nominal: only the mass output uses them.
+choices made for this Jig, not from a source. Densities (7850, 2670, 7900 kg/m³) are nominal: only the mass output uses them.
 
 **Look.** Anthracite powder coat (RAL 7016) on the steel, a matt natural tone for the aluminium, a lighter grey for the
 stainless. Brass screws and standoffs, and a green board and a dark part to show through the slots. Preview at
-`look.rotation` 0, the most neutral of the four rotations I tried; the warm workshop light still tints the front wall.
+`look.rotation` 0, the most neutral of the four rotations tried; the warm workshop light still tints the front wall.
 
 ## Parameters
 
@@ -167,9 +167,10 @@ min(F − L − 9.2, max(169.2 − F + 2 R − t, 55.5 + R, F − L − 57.3)) �
 
 The first term keeps the return's tip beside the punch. The three inside the `max` keep it out of the clamp's corner:
 the bend stays below the clamp, or the return flange passes the corner, or it stays beside it. The same reasoning limits
-the cover's skirts. I derived this from the stroke and then checked it against the model: a scan of 49 combinations of
+the cover's skirts. This was derived from the stroke and then checked against the model: a scan (an unpublished check: its script is not
+in this repository) of 49 combinations of
 thickness, material and depth in steps of 4 mm of height found no case where the formula allows a failing height, and it
-sits within one step of the true boundary. At most 200 mm: my judgement, since the 220 mm tool has no ram above it in the
+sits within one step of the true boundary. At most 200 mm: a judgement, since the 220 mm tool has no ram above it in the
 model and a real press brake does. The wall also has a floor: `L + R + 10 mm` of wall (the wall's own return must clear the punch as it is bent).
 
 The limit is not a simple "deeper is better": for 1.5 mm steel the tallest part may be 51 mm at a board depth of 80, 40 mm
@@ -178,7 +179,7 @@ at 100 to 110, 63 mm at 140, and 123 mm at depth 100 with 60 mm of room. At the 
 the inside height of this case and the height the press brake still allows. The ram of a real press brake is wider than
 the 80 mm clamp and is not modelled, so the 200 mm cap covers only the clamp's height, not a ram above it.
 A taller case at this depth needs other
-tooling; the one gooseneck outline I tried at the pin did worse than the straight punch, so the Jig does not offer it.
+tooling; the one gooseneck outline tried at the pin did worse than the straight punch, so the Jig does not offer it.
 
 ## Checks
 
@@ -197,7 +198,7 @@ Thirty assertions, each measured on the model:
 - **Counts and places:** four floor holes exactly under the board's mounting holes; the connector count, in the front
   wall; the cover screws; the feet at their height and the floor screw heads above their soles; the clinch nuts under the return flanges; chassis and cover each as deep as the walls, so the cover ends flush.
 
-**Would they notice?** I broke a scratch copy nineteen ways, one at a time, and each was caught: K-factor changed on
+**Would they notice?** A scratch copy was broken nineteen ways, one at a time, and each was caught: K-factor changed on
 either part, cover screw holes moved 1.5 mm, nut holes moved 2 mm, floor holes moved, connector holes on the back wall
 or moved to a bend, a wall length off by 2 mm, the bend radius at 60 %, the cover 1 mm too wide, the stack pitch off,
 a foot put over a floor screw, slot counts wrong, the inside height without room for the nuts, the cover 3 mm short at each end, a standoff too short, a clinch nut moved 3 mm. The side vent slots

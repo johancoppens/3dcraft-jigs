@@ -49,7 +49,7 @@ Wikipedia's *Timoshenko-Ehrenfest beam theory*; G from the table below). Solved 
 `L = sqrt((sqrt(C^2 r^4 + 4 L_EB^4) - C r^2) / 2)`.
 
 **Independent recomputation.** A shooting-method solver of the Timoshenko free-free beam (the two coupled equations
-with their free-end conditions; written for this Jig, not committed, `verify.py` in the builder's scratch folder), at
+with their free-end conditions; written for this Jig, an unpublished check: its script is not in this repository), at
 the Jig's cut lengths, for the default 25 x 1.5 mm aluminium chime:
 
 | Note | Target Hz | Cut mm | Solver Hz | Error (cents) |
@@ -72,14 +72,14 @@ and density. A real tube differs:
   is half of that spread); the pitch follows the square root of E, so the band becomes cents as the form's output
   *Pitch spread*: about 13 cents for aluminium, 21 for mild steel, 28 for stainless, 43 for brass and 76 for copper
   (where the sources disagree most, 110 to 132 GPa). Density adds a little.
-- **Wall tolerance.** A 0.1 mm thicker wall on 25 x 1.5 mm changes the radius of gyration by 0.4 %, 7 cents (my
+- **Wall tolerance.** A 0.1 mm thicker wall on 25 x 1.5 mm changes the radius of gyration by 0.4 %, 7 cents (an
   estimate of a normal tolerance, not from a standard).
 - **The tube's section** is not circular everywhere; Hite warns of tubes that beat between two close frequencies, and
   of a tuner that may not hear the note a chime sounds because of its non-harmonic overtones (Compendium, pp. 21, 24 to 25).
 - **A cut end and a drilled hole** shift the pitch a little more, which is not modelled.
 
 So before trimming a good aluminium tube is likely within about 10 to 20 cents of its note, copper perhaps 80
-(my estimate from the spread of published moduli, not a measurement: I have no measured comparison of a real tube
+(an estimate from the spread of published moduli, not a measurement: there is no measured comparison of a real tube
 to this calculation). The rounding error shown for each note on the form is only the error of rounding the cut to 0.5 mm, against the
 Jig's closed form; the solver above adds up to 2.9 cents (A5).
 
@@ -164,9 +164,9 @@ of stock.
 | Mild steel (S235, conduit) | 210 | 81 | 7850 | +/-2.4 % | EN 1993-1-1 section 3.2.6 via eurocodeapplied.com (read) |
 | Stainless steel 1.4301 | 197 | 77 | 7950 | +/-3.3 % | AZoM, Grade 304 properties page (read: E 190 to 203, G 74 to 81 GPa, density 7.85 to 8.06) |
 | Brass CuZn37 | 110 | 41 | 8440 | +/-5 % | CW508L data sheet (read: 8.44 g/cm3, E 110 000 N/mm2); G from nu = 0.34 |
-| Copper Cu-DHP | 121 | 45 | 8930 | +/-9 % | Hite's table 16 Msi; KME TECU 132 GPa (from a search listing): my midpoint; G from nu = 0.34 |
+| Copper Cu-DHP | 121 | 45 | 8930 | +/-9 % | Hite's table 16 Msi; KME TECU 132 GPa (from a search listing): their midpoint; G from nu = 0.34 |
 
-The bands are my reading of the published spread for each group, not tolerances from a standard.
+The bands are a reading of the published spread for each group, not tolerances from a standard.
 
 **Sail.** A flat plate in a wind: drag F = 1/2 rho v^2 Cd A, Cd 1.17 (the figure Wikipedia's drag coefficient article
 gives for a square plate; it marks it "citation needed", and an alternative of 1.28 is listed: an estimate). Striker and
@@ -189,9 +189,9 @@ left out (they move the balance point by about a tenth of a millimetre).
 3.2.5, Hite's compendium (PDF updated 5/9/2022: support at 22.4 %, pp. 20 and 24; cut about 1/8 inch long and
 chamfer, p. 8; alignment and striker, Steps 13 and 17, p. 11; beating and tuner caution, pp. 21, 24 to 25), the CW508L
 brass sheet, AZoM's stainless data, eurocodeapplied.com for EN 1993-1-1. Read through a search listing only: KME's TECU
-copper figure. From Wikipedia (the Timoshenko table, 1.17 and 1.28 for a plate): secondary, as the text says. My own: the
+copper figure. From Wikipedia (the Timoshenko table, 1.17 and 1.28 for a plate): secondary, as the text says. Judgements made for this Jig: the
 stiffness bands, the wall tolerance, the sail sizing, the three numbers for hanging, and the Jig's closed form, which was
-checked against a solver written for this Jig (not against a published solution).
+checked against a solver written for this Jig (an unpublished check, not against a published solution).
 
 ## Checks
 
@@ -247,7 +247,7 @@ Hite on overtones).
 
 `build.json` (the source), `meta.json`, `formtest.md`, `preview.png`, and `tuned-chimes.3dcraftjig`,
 `thumb.png` from the tool. The Jig carries the font of the strips' text, Noto Sans Regular, under the SIL Open Font
-License 1.1: [`NotoSans-OFL.txt`](NotoSans-OFL.txt). The Python scratch files are not committed (AGENTS.md section 3).
+License 1.1: [`NotoSans-OFL.txt`](NotoSans-OFL.txt). The Python scripts of the unpublished checks are not committed (AGENTS.md section 3).
 
 ## Rebuild
 
