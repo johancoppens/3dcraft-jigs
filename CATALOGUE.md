@@ -1,5 +1,9 @@
 # Catalogue: the 33 Jigs
 
+> **About this file.** The briefs the AI agents built the Jigs from, as written in November 2026: "the coordinator"
+> is the agent session that briefed them, and a *Probe* a feasibility test run before a risky Jig was built; what
+> the probes found 3DCraft doing wrong is in [`3DCRAFT-FEEDBACK.md`](3DCRAFT-FEEDBACK.md).
+
 The brief for every Jig: what the real thing is, what the form asks, what it must show, its line of the palette, what
 it must prove, and its risks. For a Jig from the old collection, *Must improve* lists what was already seen to be
 wrong; it is a floor, not the whole job (AGENTS.md: no Jig is grandfathered). Sizes named here are starting points: the
