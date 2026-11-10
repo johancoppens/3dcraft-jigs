@@ -2,8 +2,10 @@ MIT License
 
 Copyright (c) 2026 Johan Coppens
 
-This licence covers the code in this repository: the tools under `tools/` and the
-reproducers under `findings/` (the scripts and the files they run). The Jigs, their
+This licence covers the code in this repository: the tools under `tools/`, the
+reproducers under `findings/` (the scripts and the files they run) and the `make.py`
+scripts of the Jigs that have one (`jigs/27-astrolabe/`, `jigs/29-music-box/`,
+`jigs/32-orrery/`). The Jigs, their
 pages, pictures and the other text are under CC BY 4.0 (LICENSE-CC-BY-4.0.md), and
 the GT2 pulley under CC BY-SA 4.0 (LICENSE-CC-BY-SA-4.0.md).
 

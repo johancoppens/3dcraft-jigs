@@ -103,8 +103,8 @@ takes hours. Where `systemd-run` exists, every run is capped in memory.
 ## Licence
 
 The Jigs and what is written and drawn about them (their pages and pictures, `AGENTS.md`, `CATALOGUE.md`, the
-feedback) are under **CC BY 4.0** ([`LICENSE-CC-BY-4.0.md`](LICENSE-CC-BY-4.0.md)); the code, the tools under `tools/`
-and the reproducers under `findings/`, is MIT ([`LICENSE`](LICENSE)). One Jig differs: `gt2-pulley` adapts the GT2
+feedback) are under **CC BY 4.0** ([`LICENSE-CC-BY-4.0.md`](LICENSE-CC-BY-4.0.md)); the code, the tools under `tools/`,
+the reproducers under `findings/` and the `make.py` scripts of three Jigs, is MIT ([`LICENSE`](LICENSE)). One Jig differs: `gt2-pulley` adapts the GT2
 tooth outline of droftarts' *Parametric Pulley - lots of tooth profiles*
 ([thingiverse.com/thing:16627](https://www.thingiverse.com/thing:16627)), licensed Creative Commons
 Attribution-ShareAlike as its page states (the page names no version), and is therefore shared under

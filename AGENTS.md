@@ -41,7 +41,7 @@ cannot reach the bar is thrown away.
   files.
 - **Licence.** The Jigs are CC-BY-4.0 unless a source requires otherwise (`gt2-pulley` is CC-BY-SA-4.0); the
   licence is in `document.info` and `meta.json`, and the texts are CC BY 4.0 too
-  ([`LICENSE-CC-BY-4.0.md`](LICENSE-CC-BY-4.0.md)). The code, the tools and the reproducers under `findings/`, is MIT.
+  ([`LICENSE-CC-BY-4.0.md`](LICENSE-CC-BY-4.0.md)). The code, the tools, the reproducers under `findings/` and a Jig's `make.py`, is MIT.
   Data from elsewhere (a star catalogue, a tune)
   needs a licence that allows it and a row in [`ATTRIBUTION.md`](ATTRIBUTION.md).
 

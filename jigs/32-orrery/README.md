@@ -315,4 +315,5 @@ and a parallel motion, and coupled ranges proven over the range.
 
 ## Licence
 
-[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence). `make.py` is code, under
+MIT ([`LICENSE`](../../LICENSE)).
