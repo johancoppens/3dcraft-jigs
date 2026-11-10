@@ -8,7 +8,7 @@
                                     (--quick skips check-range and the bend sequence)
   tools/jigs.py coverage            the 3DCraft commands the Jigs use, and those none uses
   tools/jigs.py readme              rewrite the table in README.md from the meta.json files
-  tools/jigs.py site     [DIR]      write the web folder served under /jigs/ (default site/, not committed):
+  tools/jigs.py site     [DIR]      write a local web folder of the Jigs (default site/, not committed):
                                     every ID.3dcraftjig, thumbs/ID.png and index.html, the gallery
 
 A Jig lives in jigs/NN-ID/, NN its place in CATALOGUE.md; the ID never carries the number.
@@ -576,7 +576,7 @@ def cmd_readme():
 
 
 def cmd_site(out):
-    """The flat web folder the 3DCraft site serves under /jigs/: ID.3dcraftjig, thumbs/ID.png, index.html."""
+    """A flat web folder of the Jigs: ID.3dcraftjig, thumbs/ID.png, index.html (tools/gallery.py: its addresses)."""
     out = Path(out) if out else SITE
     (out / "thumbs").mkdir(parents=True, exist_ok=True)
     for jig in jig_ids([]):

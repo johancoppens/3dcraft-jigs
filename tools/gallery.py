@@ -5,9 +5,16 @@
 
 A .3dcraftjig is a stored ZIP holding manifest.json (the document, with its
 info and public parameters) and thumb.png; only the Python standard library
-is used. The page is plain HTML and CSS (no JavaScript), meant to be served
-under /jigs/ next to the 3DCraft web build at /3dcraft/: each card opens its
-Jig in the web build (../3dcraft/?open=/jigs/<id>.3dcraftjig) or downloads it.
+is used. The page is plain HTML and CSS (no JavaScript), a local gallery of
+the Jigs: each card opens its Jig in the 3DCraft web build or downloads it.
+Two settings say where they are, as environment variables:
+
+    CRAFT3D_APP_URL     the web build (default https://3dcraft.dev/app/)
+    CRAFT3D_JIGS_PATH   where the site serves the .3dcraftjig files, on the web
+                        build's own host (default /examples/jigs/)
+
+A card opens CRAFT3D_APP_URL?open=CRAFT3D_JIGS_PATH<id>.3dcraftjig: the web
+build opens only files from its own host.
 The colours are 3DCraft's own (its Mission theme: warm greys, amber for what
 acts, indigo for information), and the logo, tools/assets/craft3d-logo.png
 (the app's icon), is written into the page.
@@ -20,6 +27,8 @@ import sys
 import zipfile
 
 SPDX = "https://spdx.org/licenses/%s.html"
+APP_URL = os.environ.get("CRAFT3D_APP_URL", "https://3dcraft.dev/app/")
+JIGS_PATH = os.environ.get("CRAFT3D_JIGS_PATH", "/examples/jigs/")
 
 
 def read_jig(path):
@@ -126,7 +135,7 @@ def card(jig_id, info, params, has_thumb):
     title = info.get("title") or jig_id
     licence = info.get("licence") or ""
     author = info.get("author") or ""
-    opener = "../3dcraft/?open=/jigs/%s.3dcraftjig" % e(jig_id)
+    opener = e("%s?open=%s%s.3dcraftjig" % (APP_URL, JIGS_PATH, jig_id))
     parts = ['<article class="card">']
     if has_thumb:
         parts.append('<a class="shot" href="%s" tabindex="-1" aria-hidden="true">'

@@ -63,8 +63,9 @@ result as an ordinary `.3dcraft` model; the Jig file itself is never changed. **
 copy if you want to change the design itself.
 
 **Web.** The 3DCraft web build opens a Jig served from the same site:
-`https://example.org/3dcraft/?open=/jigs/<id>.3dcraftjig`. The gallery page (`index.html` of the web folder, see
-*Hosting*) links every Jig that way, and offers the file for download. In the browser the model follows a parameter when you let go of it.
+`https://3dcraft.dev/app/?open=/examples/jigs/<id>.3dcraftjig`. The gallery at
+[3dcraft.dev/examples](https://3dcraft.dev/examples/) links every Jig that way, beside the examples and the
+assemblies, and offers the file for download. In the browser the model follows a parameter when you let go of it.
 
 **Agents and scripts.** `param.list` lists the parameters, `param.set {"values": {...}}` sets several at once
 (out-of-range values are refused with the range), for instance:
@@ -84,7 +85,7 @@ You need `craft3d-cli` from 3DCraft, the commit named in [`tools/pin.json`](tool
 tools/jigs.py build [id ...]     # jigs/NN-<id>/build.json to <id>.3dcraftjig beside it, with its stats
 tools/jigs.py render [id ...]    # preview.png and thumb.png in jigs/NN-<id>/
 tools/jigs.py check [id ...]     # rebuild, lint, exports, check-range and the bend sequence
-tools/jigs.py site [dir]         # the web folder (default site/, not committed): every Jig, its picture, the gallery
+tools/jigs.py site [dir]         # a local web folder (default site/, not committed): every Jig, its picture, a gallery
 ```
 
 `check` runs `craft3d-cli check-range` with a fixed seed: the defaults, the corners of the parameter ranges, every
@@ -92,21 +93,6 @@ choice and random points, each regenerated from nothing and checked as `document
 published when every point passes.
 
 Every `<id>.3dcraftjig` is committed, so the Jigs can be used without building them.
-
-## Hosting
-
-The Jigs are served next to the 3DCraft web build on the same host, so the web build can open them (it only opens
-same-origin files):
-
-```text
-https://example.org/3dcraft/                 the 3DCraft web build
-https://example.org/jigs/                    the folder `tools/jigs.py site` writes
-https://example.org/jigs/index.html          the gallery
-https://example.org/jigs/<id>.3dcraftjig     a Jig; the gallery opens it with ../3dcraft/?open=/jigs/<id>.3dcraftjig
-https://example.org/jigs/thumbs/<id>.png     its picture
-```
-
-Serve `.3dcraftjig` as `application/x-craft3d-jig` (or `application/zip`).
 
 ## Licences
 
