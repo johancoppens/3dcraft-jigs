@@ -201,8 +201,8 @@ tools/jigs.py check drag-chain
 
 - A pattern instance has no index to read a formula with ([J-011](../../3DCRAFT-FEEDBACK.md)): the chain is three patterns (lower
   run, bend, upper run) rather than one pattern placed by a function of the link's number.
-- `measure.thickness` reads about zero where a 45-degree hole meets a flat face, an acute rim (compare F-020 in
-  `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`): the walls are asserted one by one instead.
+- `measure.thickness` reads about zero where a 45-degree hole meets a flat face, an acute rim (compare the examples'
+  [F-020](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-020)): the walls are asserted one by one instead.
 - A named set cannot name what a mesh export writes
   ([findings/J-045-3d-export-set](../../findings/J-045-3d-export-set/repro.json)), and `file.export` also writes
   hidden bodies ([findings/J-045-3d-export-set](../../findings/J-045-3d-export-set/hidden-body.json)): so the

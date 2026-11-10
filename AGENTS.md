@@ -19,7 +19,7 @@ cannot reach the bar is thrown away.
 - **Language.** The developer writes in Dutch: answer in Dutch. Everything that lands in this
   repository is English: files, names inside the models, commit messages.
 - **3DCraft is pinned.** Every Jig is built and checked with one 3DCraft commit, recorded in
-  [`tools/pin.json`](tools/pin.json): the installed `craft3d-cli` (`~/.local/bin/craft3d-cli`). `tools/jigs.py`
+  [`tools/pin.json`](tools/pin.json): the installed `craft3d-cli`. `tools/jigs.py`
   refuses any other build. Only the coordinator moves the pin, after rebuilding and checking every Jig.
 - **Do not change 3DCraft from here.** What 3DCraft gets wrong or lacks is *collected* in
   [`3DCRAFT-FEEDBACK.md`](3DCRAFT-FEEDBACK.md) (§7); the developer takes it to 3DCraft in one go. Do not build
@@ -65,11 +65,12 @@ site/ log/ plan/        local only (gitignored): the web folder tools/jigs.py si
   when `document.check` is not ok, writes `jigs/NN-<id>/<id>.3dcraftjig`, measures, and lints names, form and budgets.
   To look around: `craft3d-cli run jigs/NN-<id>/<id>.3dcraftjig --cmd document.inspect`. To try the form:
   `craft3d-cli run jigs/NN-<id>/<id>.3dcraftjig --cmd param.list`, `--cmd param.set --params '{"values": {...}}'`. To learn
-  a command: `craft3d-cli commands --filter <id>`. The user guide (`~/code/3dcraft/docs/guide/`, chapter 5 for Jigs)
-  and its examples (`~/code/3dcraft/docs/examples/*.json`) show the idioms; read them, never edit them.
+  a command: `craft3d-cli commands --filter <id>`. The [user guide](https://3dcraft.dev/guide/) (its chapter on Jigs)
+  and its examples ([`docs/examples/*.json`](https://github.com/johancoppens/3dcraft/tree/main/docs/examples) in
+  3DCraft's repository) show the idioms; read them, never edit them.
 - **Never use the session's 3DCraft MCP tools** (`mcp__craft3d__*`): they drive the developer's own window. Work
   through `craft3d-cli`; its commands are the same ones MCP runs.
-- **Memory and time.** The developer's laptop has crashed on runaway processes. `tools/jigs.py` caps every run; by
+- **Memory and time.** Runaway processes have crashed the reference machine. `tools/jigs.py` caps every run; by
   hand, always `systemd-run --user --scope -q -p MemoryMax=3G -p MemorySwapMax=0 timeout 900 craft3d-cli …`. Exit
   137 means the cap was hit: that is a finding, never a reason to raise the cap. When several agents work at once, the
   coordinator sets a shared slice (`systemctl --user set-property --runtime jigs.slice MemoryMax=8G
@@ -161,7 +162,7 @@ Name the process; prove with assertions what can be proven, over the range:
 
 ### 4.5 Light
 Loading means opening the `.3dcraftjig` and regenerating it; the tool measures it (`stats.load_s`, `craft3d-cli
-info`, the least of two openings). Budgets on the developer's laptop: **simple ≤ 1 s, difficult ≤ 2 s, complex ≤ 4 s**,
+info`, the least of two openings). Budgets on a reference machine: **simple ≤ 1 s, difficult ≤ 2 s, complex ≤ 4 s**,
 file ≤ 1 MB, CPU time (all threads, `stats.load_cpu_s`) at most 3 × the load budget, since the web build is
 single-threaded. A Jig is regenerated at every change of the form, so **the slowest point of the range is at most
 3 × the load budget** (`stats.range_worst_s`). A timing taken while the machine is busy (load average over half its
@@ -259,7 +260,7 @@ Collect, never fix. [`3DCRAFT-FEEDBACK.md`](3DCRAFT-FEEDBACK.md) has four kinds:
 
 Each entry: id (`J-001` …, so as not to clash with the examples' `F-nnn`), kind, title, the Jig it was found in, the
 3DCraft commit, what happens and what should happen, the reproducer, the impact on the Jig (blocked, workaround used,
-cosmetic) and the workaround. Check `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md` first and cite an `F-nnn` that already
+cosmetic) and the workaround. Check the examples' [`3DCRAFT-FEEDBACK.md`](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md) first and cite an `F-nnn` that already
 covers it. A Jig that works around something links its entry from its README, so it can be improved once 3DCraft is
 fixed. Builders propose entries in their report and write the reproducer; the coordinator numbers them and edits
 `3DCRAFT-FEEDBACK.md`.

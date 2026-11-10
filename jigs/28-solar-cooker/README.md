@@ -321,7 +321,7 @@ tools/jigs.py check solar-cooker
   two interleaved patterns ([J-062](../../findings/J-062-circular-pattern-touching-cost/README.md)):
   the workaround is the two interleaved petal sets, so the petal count is even.
 - `sketch.curve` fits a parabola as a cubic of 35 control points ([J-066](../../findings/J-066-formula-curve-fit-size/README.md),
-  see F-010 in `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`): the petals are drawn as exact quadratic splines.
+  see the examples' [F-010](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-010)): the petals are drawn as exact quadratic splines.
 - A box or extent of a freeform body can be "not proven closely enough" (F-122): the template's length is measured
   between its straight ends, the dish's swing over the fork by `volumeBelow`, and whether the petal sets meet at
   their seams by a probe sphere rather than the sets' boxes.
@@ -336,8 +336,8 @@ tools/jigs.py check solar-cooker
   ([J-058](../../findings/J-058-check-outputs-on-form/README.md)): the checks measure inside the
   assertions instead, so all 32 outputs are for the maker.
 - A whole-model STEP or 3MF holds hidden bodies too
-  ([J-045](../../findings/J-045-3d-export-set/hidden-body.json); see F-161 in
-  `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`): the four helpers are small or inside the pot except the petal as
+  ([J-045](../../findings/J-045-3d-export-set/hidden-body.json); see the examples'
+  [F-161](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-161)): the four helpers are small or inside the pot except the petal as
   built, and the STEP of the real parts lists its bodies.
 - `cut.list` prints the tilted hub ring's thickness as 3.0000000000001705
   ([J-042](../../findings/J-042-cut-list-thickness-noise/README.md)): cosmetic.

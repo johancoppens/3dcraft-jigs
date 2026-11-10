@@ -222,7 +222,8 @@ tools/jigs.py check cycloidal-drive
 The preview is rendered without reflections (`look.reflections: false`): with them, the flat cut faces carried pale blotches.
 
 - A chamfer cannot go round the disc's lobes: `chain` refuses a run of spline edges where the convexity changes, "not yet
-  where one of the faces changes" (the family of F-075 and F-158 in `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`). So the
+  where one of the faces changes" (the family of the examples' [F-075](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-075) and
+  [F-158](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-158)). So the
   disc has no first-layer chamfer and the README asks for elephant-foot compensation in the slicer.
 - Booleans refuse near-tangent cuts at a coarse tolerance, "between half and twice the tolerance" (F-137). At 0.01 mm the
   cutaway's planes could graze a hole. The static planes therefore run midway between ring pins and the cut in the output

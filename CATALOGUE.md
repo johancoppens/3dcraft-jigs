@@ -279,5 +279,5 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 `pillow-block`, `shelf-32mm`, `rack-panel`, `electronics-enclosure`, `screw-jar`, `print-in-place-hinge`: they only
 scaled a simple shape, or a stronger Jig or example already shows the same. They are in the git history.
 
-`sea-kayak` was dropped on 2026-11-09 (the developer): a stitch-and-glue kayak could not come near the load and size budgets
+`sea-kayak` was dropped on 2026-11-09 (by the developer): a stitch-and-glue kayak could not come near the load and size budgets
 without far more work than it would show. It is in the git history.

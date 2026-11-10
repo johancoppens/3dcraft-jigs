@@ -2,7 +2,7 @@
 
 What building the Jigs found in 3DCraft: bugs, missing capabilities, performance and agent friction (AGENTS.md §7).
 Collected here, never fixed from this repository. Ids are `J-nnn`; an entry that the examples already reported cites its
-`F-nnn` in `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`. Each entry was reproduced at the pin, 3DCraft `45233bdc`, unless
+`F-nnn` in the examples' [`3DCRAFT-FEEDBACK.md`](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md). Each entry was reproduced at the pin, 3DCraft `45233bdc`, unless
 it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}' --script findings/J-nnn-<slug>/repro.json`.
 
 **Status (2026-11-10):** the Jigs are built and checked on 3DCraft `843981c2` (the same command line as `45233bdc`; only

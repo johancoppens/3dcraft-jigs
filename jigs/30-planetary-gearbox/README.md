@@ -319,8 +319,8 @@ steel pins and bearings read neutral grey; the renderer's reflections are on and
   keep the faces cylinders: about 3 s of CPU to open.
 - A chamfer could not follow a chain of tooth flanks when they were splines: `feature.chamfer` with `chain` on the
   bed-side edge of a gear was refused ("the distance does not fit on a face somewhere along it") even at 0.2 mm
-  ([finding](../../findings/J-047-chamfer-freeform-rim/tooth-chain.json); the family of F-075 and F-158 in
-  `~/code/3dcraft-examples/3DCRAFT-FEEDBACK.md`). The planets' tip chamfer is therefore a revolved cone cut
+  ([finding](../../findings/J-047-chamfer-freeform-rim/tooth-chain.json); the family of the examples'
+  [F-075](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-075) and [F-158](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-158)). The planets' tip chamfer is therefore a revolved cone cut
   ([finding](../../findings/J-064-cone-cut-across-teeth-cost/repro.json) on its cost with spline flanks), built on print
   plate 6 only, and on the planets only: the assembled views show the gears without it.
 - `measure.clearance` between meshing gears proves a lower bound that depends on where the body stands
