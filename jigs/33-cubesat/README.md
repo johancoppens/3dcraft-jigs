@@ -484,6 +484,9 @@ tools/jigs.py render cubesat
 tools/jigs.py check cubesat
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10: a closed-form mass and centre-of-gravity budget of every part through a rotating drive, form

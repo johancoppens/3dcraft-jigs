@@ -312,6 +312,9 @@ tools/jigs.py render solar-cooker
 tools/jigs.py check solar-cooker
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10: exact developable petals from quadratic splines with a closed-form cut template, optical ranges coupled to the pot, the sun's image and the aiming margin, a drive that tilts the dish about its focus, and single-measure proofs across bodies.

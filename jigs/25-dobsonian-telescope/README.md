@@ -182,6 +182,9 @@ Tried by hand with `param.set`: a 2-inch eyepiece on the 1.25-inch focuser (refu
 
 `tools/jigs.py build dobsonian-telescope`, `render`, `check`.
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10: closed-form centre of mass over 20+ bodies checked by measure, swept clearance, many coupled range formulas, structure changing by choice.

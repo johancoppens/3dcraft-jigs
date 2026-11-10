@@ -154,6 +154,9 @@ tools/jigs.py render gt2-pulley
 tools/jigs.py check gt2-pulley
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10: a three-part build, coupled ranges and process-driven topology.

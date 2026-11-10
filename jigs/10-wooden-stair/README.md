@@ -177,6 +177,9 @@ tools/jigs.py render wooden-stair
 tools/jigs.py check wooden-stair
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10. Formula-driven topology, coupled housings and a rule table, sweeps, no freeform.

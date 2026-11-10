@@ -247,6 +247,9 @@ tools/jigs.py render rack-cabinet
 tools/jigs.py check rack-cabinet
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10. Seven press-brake parts, a hinged door with a cam lock driven by its angle, coupled statics limits and process checks across bodies.

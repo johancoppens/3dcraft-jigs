@@ -257,6 +257,9 @@ tools/jigs.py render tuned-chimes
 tools/jigs.py check tuned-chimes
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10: coupled per-note beam physics with a fitted Timoshenko closed form, two instruments, a drive slider, a cut

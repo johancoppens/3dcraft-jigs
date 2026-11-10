@@ -213,6 +213,9 @@ tools/jigs.py render cycloidal-drive
 tools/jigs.py check cycloidal-drive
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10. A formula-driven trochoid, a loft, multi-body kinematics and coupled ranges at kernel limits.

@@ -150,6 +150,9 @@ tools/jigs.py render gridfinity-bin
 tools/jigs.py check gridfinity-bin
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10: lofted foot profiles, a swept lip, patterned compartments, formula-coupled ranges and cross-body fit gauges.

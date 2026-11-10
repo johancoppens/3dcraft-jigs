@@ -170,6 +170,9 @@ tools/jigs.py render loudspeaker-box
 tools/jigs.py check loudspeaker-box
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10: coupled Thiele-Small physics, ranges by formula, a measured cavity gauge and two joint topologies.

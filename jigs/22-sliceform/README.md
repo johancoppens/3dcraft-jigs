@@ -214,6 +214,9 @@ tools/jigs.py render sliceform
 tools/jigs.py check sliceform
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10: slicing a swept or sphere solid, comb sweeps that put every slot end at half its crossing, closed-form section and strip integrals, and plate limits across the range.

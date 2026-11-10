@@ -282,6 +282,9 @@ tools/jigs.py render tensegrity-table
 tools/jigs.py check tensegrity-table
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10. Coupled statics in formulas, slanted revolves, count-driven topology, multi-body booleans.

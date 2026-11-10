@@ -250,6 +250,9 @@ tools/jigs.py render welding-table
 tools/jigs.py check welding-table
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10. Many coupled formulas and tab topology across parts, with process checks.

@@ -151,6 +151,9 @@ tools/jigs.py render polyhedron-net
 tools/jigs.py check polyhedron-net
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 5 out of 10: folds driven by a parameter, a per-solid net table with hand-derived coordinates and tab hinges, topology by

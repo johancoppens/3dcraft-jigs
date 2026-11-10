@@ -171,6 +171,9 @@ tools/jigs.py render keyboard-plate
 tools/jigs.py check keyboard-plate
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 5 out of 10: counts change topology across coupled multi-body booleans and kerf offsets, all on planar plates.

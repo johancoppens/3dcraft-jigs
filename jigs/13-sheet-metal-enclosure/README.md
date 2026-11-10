@@ -239,6 +239,9 @@ tools/jigs.py render sheet-metal-enclosure
 tools/jigs.py check sheet-metal-enclosure
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10. Two coupled press-brake parts, table-driven process data, ranges from tool geometry, bend order proven at every change.

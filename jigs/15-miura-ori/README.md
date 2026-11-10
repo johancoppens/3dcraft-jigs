@@ -239,6 +239,9 @@ tools/jigs.py check miura-ori
 
 The picture sets the camera and the light direction (`meta.json`, `preview`); no other framing keys.
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10: count-driven fold topology with coupled closed-form kinematics and thick panels; 3DCraft does the folding.

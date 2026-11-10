@@ -193,6 +193,9 @@ tools/jigs.py render drag-chain
 tools/jigs.py check drag-chain
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10. A rolling-polygon drive by formula, coupled snap and bend sizing, and neighbour-body proofs.

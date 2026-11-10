@@ -130,6 +130,9 @@ tools/jigs.py render rc-wing
 tools/jigs.py check rc-wing
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10: formula airfoil, ruled lofts, rib pattern booleans and coupled range formulas over one wing.

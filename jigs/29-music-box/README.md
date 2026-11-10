@@ -267,6 +267,9 @@ tools/jigs.py render music-box
 tools/jigs.py check music-box
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10. Data-driven wrapped pins, a tuned comb, a closed-form pluck and many coupled formulas across bodies over a wide range.

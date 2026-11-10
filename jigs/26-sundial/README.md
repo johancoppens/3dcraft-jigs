@@ -309,6 +309,9 @@ tools/jigs.py render sundial
 tools/jigs.py check sundial
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10: data-driven lines for any plane dial with a thick gnomon, shadow assertions built from vectors, the beam path with its kerf and a one-way registration across two exports.

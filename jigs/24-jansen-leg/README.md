@@ -254,6 +254,9 @@ tools/jigs.py render jansen-leg
 tools/jigs.py check jansen-leg
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10: closed-form kinematics and searches in formulas, formula-curve sweeps, a five-layer multi-body stack with coupled ranges and measured clearances, and a pair option that changes the structure.

@@ -205,6 +205,9 @@ tools/jigs.py render geodesic-dome
 tools/jigs.py check geodesic-dome
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 7 out of 10. Frequency-dependent topology with hand-derived 3D placements and coupled limits over many bodies.

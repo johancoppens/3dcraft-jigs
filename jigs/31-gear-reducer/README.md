@@ -309,6 +309,9 @@ tools/jigs.py render gear-reducer
 tools/jigs.py check gear-reducer
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10, the reviewer's score: a sizing in three passes over standard tables, involute gears

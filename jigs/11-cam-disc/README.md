@@ -160,6 +160,9 @@ tools/jigs.py render cam-disc
 tools/jigs.py check cam-disc
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 6 out of 10: a piecewise formula curve with a normal offset, closed-form and iterated limits as coupled ranges, and a follower driven by a slider.

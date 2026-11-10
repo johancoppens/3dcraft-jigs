@@ -188,6 +188,9 @@ tools/jigs.py render joint-drawer
 tools/jigs.py check joint-drawer
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 5 out of 10: multi-body booleans, sketch patterns whose count changes the topology, table-driven layout and closed-form volumes.

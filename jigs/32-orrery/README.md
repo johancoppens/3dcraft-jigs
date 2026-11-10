@@ -295,6 +295,9 @@ python3 tools/jigs.py render orrery
 python3 tools/jigs.py check orrery
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10 (the reviewer): a data-driven search, involute geometry from formulas, a drive parameter through two stages

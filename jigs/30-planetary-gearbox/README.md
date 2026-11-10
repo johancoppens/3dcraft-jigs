@@ -300,6 +300,9 @@ tools/jigs.py render planetary-gearbox
 tools/jigs.py check planetary-gearbox
 ```
 
+The tool needs the 3DCraft build this repository is pinned to: see
+[Building and checking](../../README.md#building-and-checking) in the README.
+
 ## Difficulty
 
 8 out of 10: involute flanks drawn as formula arcs, internal-gear interference limits, ranges coupled across the form, closed-form tooth areas, meshes measured under a drive angle, and six print plates.
