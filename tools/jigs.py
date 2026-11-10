@@ -9,12 +9,14 @@
   tools/jigs.py coverage            the 3DCraft commands the Jigs use, and those none uses
   tools/jigs.py readme              rewrite the table in README.md from the meta.json files
   tools/jigs.py site     [DIR]      write a local web folder of the Jigs (default site/, not committed):
-                                    every ID.3dcraftjig, thumbs/ID.png and index.html, the gallery
+                                    every ID.3dcraftjig, thumbs/ID.png and index.html, the gallery; the
+                                    files of an earlier run whose Jig is gone are removed
 
 A Jig lives in jigs/NN-ID/, NN its place in CATALOGUE.md; the ID never carries the number.
 Without an ID: every Jig under jigs/. Every craft3d-cli run is capped in memory (systemd-run, when
-there is one) and in time. CRAFT3D_CLI names the binary (default: craft3d-cli on PATH); it must be
-the 3DCraft commit pinned in tools/pin.json. Exit code 0 when all passed.
+there is one) and in time. CRAFT3D_CLI names the binary (default: craft3d-cli on PATH); by what its
+--version reports, it must be the 3DCraft commit pinned in tools/pin.json, or the release named there,
+with the pinned file format. Linux and macOS only. Exit code 0 when all passed.
 """
 
 import argparse
@@ -74,7 +76,11 @@ VARIABLE_NAME = re.compile(r"^[a-z][a-z0-9]*(_[a-z0-9]+)*$")
 TABLE_START = "<!-- jigs:start -->"
 TABLE_END = "<!-- jigs:end -->"
 
+# What `craft3d-cli --version` prints: the program, the version, the commit when the build knows it, the file format.
+VERSION_LINE = re.compile(r"^craft3d-cli (?P<version>\S+) \((?:(?P<commit>[0-9A-Za-z]+), )?format (?P<format>[0-9]+)\)$")
+
 _cli = None
+_build = None  # (version, commit or None, format) of _cli
 _measured_at_load = 0.0  # the 1-minute load average when the last load time was measured
 
 
@@ -87,21 +93,64 @@ def die(message):
     sys.exit(2)
 
 
+def version_of(path):
+    """What `craft3d-cli --version` prints, and what it says: (line, (version, commit or None, format) or None).
+    The line is `craft3d-cli 0.1.0 (8c8383e9c89a, format 69)`; a build that does not know its commit leaves it out."""
+    try:
+        result = subprocess.run([path, "--version"], capture_output=True, text=True, timeout=120)
+    except (OSError, subprocess.SubprocessError) as e:
+        return str(e), None
+    lines = result.stdout.strip().splitlines()
+    line = lines[-1].strip() if lines else (result.stderr.strip() or f"exit code {result.returncode}")
+    match = VERSION_LINE.match(line)
+    if result.returncode != 0 or not match:
+        return line, None
+    return line, (match["version"], match["commit"], int(match["format"]))
+
+
+def pinned(build):
+    """How a build meets tools/pin.json: "commit" when it is the pinned commit (the check the Jigs were built with),
+    "release" when it reports itself as the pinned release, or None; either way with the pinned file format.
+    `--version` marks nothing else that tells a release build from a development build of the same version."""
+    version, commit, file_format = build
+    if file_format != PIN["format_version"]:
+        return None
+    pin = PIN["commit"].lower()
+    if commit and len(commit) >= 12 and (pin.startswith(commit.lower()) or commit.lower().startswith(pin)):
+        return "commit"
+    if PIN.get("release") and version == PIN["release"]:
+        return "release"
+    return None
+
+
 def cli():
-    """The craft3d-cli binary, checked once against the pinned commit."""
-    global _cli
+    """The craft3d-cli binary, checked once against tools/pin.json by what its --version reports."""
+    global _cli, _build
     if _cli is None:
         path = os.environ.get("CRAFT3D_CLI") or shutil.which("craft3d-cli")
         if not path or not os.access(path, os.X_OK):
-            die("craft3d-cli not found: put it on PATH or set CRAFT3D_CLI")
-        # The binary carries the commit it was built from (for bug reports; --version prints it too).
-        if PIN["commit"][:12].encode() not in Path(path).read_bytes():
-            die(f"{path} is not 3DCraft {PIN['commit'][:12]}, the build this repository is pinned to "
-                "(tools/pin.json): the committed Jigs and their checks are what that build produces, "
-                "and another build may write other bytes. Install that build (README.md, Building and "
-                "checking); the committed .3dcraftjig files open without it")
-        _cli = path
+            die("craft3d-cli not found: put it on PATH or set CRAFT3D_CLI (README.md, Building and checking)")
+        line, build = version_of(path)
+        how = pinned(build) if build else None
+        if how is None:
+            release = f" or the release {PIN['release']}" if PIN.get("release") else ""
+            die(f"{path} reports {line!r}, not 3DCraft {PIN['commit'][:12]}{release} with file format "
+                f"{PIN['format_version']}, the build this repository is pinned to (tools/pin.json): the committed "
+                "Jigs and their checks are what that build produces, and another build may write other bytes. "
+                "Install that build (README.md, Building and checking); the committed .3dcraftjig files open "
+                "without it")
+        if how == "release":
+            print(f"note: {line}: accepted as 3DCraft {PIN['release']}, the release in tools/pin.json, but it is "
+                  f"not the pinned commit {PIN['commit'][:12]}: if its Jigs differ in bytes, check reports them "
+                  "as stale", file=sys.stderr)
+        _cli, _build = path, build
     return _cli
+
+
+def built_with(file_format):
+    """meta.json's `craft3d`: the build that wrote the files, as its --version reports it."""
+    version, commit, _ = _build
+    return {"commit": commit[:12] if commit else None, "version": version, "format_version": file_format}
 
 
 def run_cli(args, cwd, memory="3G", timeout=900):
@@ -376,7 +425,7 @@ def cmd_build(ids):
                 errors, warnings = lint(jig, meta, doc, stats, read_json(jig_dir(jig) / "build.json"))
                 shutil.copyfile(scratch / f"{jig}.3dcraftjig", jig_file(jig))
             meta["stats"] = {**meta.get("stats", {}), **stats}
-            meta["craft3d"] = {"commit": PIN["commit"][:12], "format_version": doc.get("format_version")}
+            meta["craft3d"] = built_with(doc.get("format_version"))
             write_meta(jig, meta)
             for w in warnings:
                 print(f"{jig}: warning: {w}")
@@ -577,13 +626,37 @@ def cmd_readme():
     return 0
 
 
+SITE_TITLE = "<title>3DCraft Jigs</title>"  # what tools/gallery.py writes into index.html
+
+
+def stale_site_files(out, jigs):
+    """The files of an earlier `site` run in out that are no longer Jigs: ID.3dcraftjig and thumbs/ID.png whose ID is
+    not in jigs. Only in a folder this tool filled (its index.html is the gallery page): anything else is left alone."""
+    try:
+        if SITE_TITLE not in (out / "index.html").read_text(encoding="utf-8", errors="replace"):
+            return []
+    except OSError:
+        return []
+    keep = set(jigs)
+    stale = [p for p in out.glob("*.3dcraftjig") if p.is_file() and p.stem not in keep]
+    stale += [p for p in (out / "thumbs").glob("*.png") if p.is_file() and p.stem not in keep]
+    return sorted(stale)
+
+
 def cmd_site(out):
-    """A flat web folder of the Jigs: ID.3dcraftjig, thumbs/ID.png, index.html (tools/gallery.py: its addresses)."""
+    """A flat web folder of the Jigs: ID.3dcraftjig, thumbs/ID.png, index.html (tools/gallery.py: its addresses).
+    A Jig file or picture left by an earlier run whose Jig is gone (renamed or removed) is deleted, so the gallery
+    shows only the Jigs there are; nothing else in the folder is touched."""
     out = Path(out) if out else SITE
-    (out / "thumbs").mkdir(parents=True, exist_ok=True)
-    for jig in jig_ids([]):
+    jigs = jig_ids([])
+    for jig in jigs:
         if not jig_file(jig).is_file() or not (jig_dir(jig) / "thumb.png").is_file():
             die(f"{jig}: run build and render first")
+    for path in stale_site_files(out, jigs):
+        path.unlink()
+        print(f"removed {path}: no longer a Jig", flush=True)
+    (out / "thumbs").mkdir(parents=True, exist_ok=True)
+    for jig in jigs:
         shutil.copyfile(jig_file(jig), out / f"{jig}.3dcraftjig")
         shutil.copyfile(jig_dir(jig) / "thumb.png", out / "thumbs" / f"{jig}.png")
     return subprocess.run([sys.executable, str(ROOT / "tools" / "gallery.py"), str(out)]).returncode

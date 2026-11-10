@@ -1,6 +1,7 @@
 {
   "commit": "843981c2057773455bf641828f808fd4ea4b9ddd",
+  "release": "0.1.0",
   "format_version": 69,
   "date": "2026-11-10",
-  "note": "The 3DCraft commit every Jig is built and checked with (its full gate passed). Move it only as the coordinator, after rebuilding and checking every Jig."
+  "note": "The 3DCraft commit every Jig is built and checked with, and the release whose build the tools accept as well when it reports this file format (README.md, Building and checking). Moved only after every Jig is rebuilt and checked at the new commit."
 }
