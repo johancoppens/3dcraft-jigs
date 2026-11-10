@@ -229,7 +229,7 @@ The Jig carries 68 assertions; those that do not apply at a point are inactive t
   bed at z = 0, none overlap, and the parts fit a 250 mm bed.
 
 `tools/jigs.py check` runs `check-range`: 103 points (the defaults, up to 64 corners, every choice and 32 random points
-from seed 1), all passing, none unproven; the slowest took 5.2 s on a busy machine. A grid of drum diameters from 41 to
+from seed 1), all passing, none unproven; the slowest took 0.39 s (`meta.json`). A grid of drum diameters from 41 to
 90 mm in 1 mm steps for all three tunes, with the crank turns the form clamps into range, was tried by hand: every diameter
 the form accepts builds and passes, and the 28 it refuses are Ode to Joy below 63 mm and Twinkle below 47 mm. The crank was turned
 through a full turn in 30° steps: the arm is clear of the drum axle everywhere, 2.0 mm at its closest (90°). By hand with

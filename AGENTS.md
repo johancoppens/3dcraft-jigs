@@ -102,7 +102,8 @@ site/ log/ plan/        local only (gitignored): the web folder tools/jigs.py si
   - A feature's body cannot be measured once a later feature has taken it: measure the final body, and split it
     with planes (`volumeBelow`) or outputs (`variable.measure`) for closed-form checks.
   - Units in `tol` are expressions: `0.01 mm^3` means (0.01 mm)³; write the plain number `0.01` (the document's unit).
-  - `body.appearance` replaces the whole appearance: give every field, or set them all in `material.preset`.
+  - `body.appearance` changes only the fields it is given (since 3DCraft `150f0015`, F-005); `material.preset` sets
+    them all.
   - Coatings (black oxide, paint, powder coat, anodising) render best as a dielectric layer (`metallic` 0).
   - Every measure on a complex body runs at every regeneration, and in a Jig at every change of the form. Measure
     what proves something.

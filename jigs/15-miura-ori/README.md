@@ -216,7 +216,7 @@ The fold exports flat whatever its angle.
   in document order, not numbered; see *The real thing*. The set holds the panels as the laser draws them, kerf included.
 - A shape for a laser cutter to mark is the same as the above with a low-power layer for the creases.
 
-A whole-model STEP or 3MF also holds the hidden flat body *Panels as drawn*: export the fold's crease pattern or the set *Panels cut sheet*, not the whole model. In the export dialog give the sheet width for *Panels cut sheet* (600 mm, say), or the 108 panels lie in one long row.
+A whole-model STEP or 3MF also holds the hidden flat body *Panels as drawn*: export the fold's crease pattern or the set *Panels cut sheet*, not the whole model. In the export dialog give the sheet width for *Panels cut sheet* (600 mm, say), or the panels (80 at the defaults) lie in one long row.
 
 ## Files
 

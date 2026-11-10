@@ -41,7 +41,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 - **Look:** coloured card, one colour per face family.
 - **Proves:** V − E + F = 2 from the table; the enclosed volume (`cavity` on the sheet) against the closed form, within
   0.1 % near closure.
-- **Probe (2026-11-08, `.scratch/probes/polyhedron-net/`):** feasible for all five solids, 0.03 s per regeneration. One
+- **Probe (2026-11-08):** feasible for all five solids, 0.03 s per regeneration. One
   sketch per solid (polyline outline, construction creases), one `feature.fold` per solid with `when`, the angle
   `min(fold_pct, 99.99) / 100 * solids[solid].fold`, table with `choicesFrom`. Exactly 100 % is refused (free edges
   that meet: report it), so the form's 100 % is capped at 99.99 % and the README says so. Tabs that fold with the faces
@@ -58,7 +58,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 - **Proves:** cutout size and pitch; key count from rows and columns; web between cutouts; screw posts clear the switches.
 
 ### 05. Laser-cut box · `laser-box` · laser cutting · kept (rebuilt with compartments: tier difficult, coordinator 2026-11-08)
-- **Real thing:** a finger-jointed box with a loose lid. Named in 3DCraft's guide chapter 5: the id stays.
+- **Real thing:** a finger-jointed box with a loose lid. Named in the chapter on Jigs of 3DCraft's guide: the id stays.
 - **Form:** outside or inside size, sheet thickness, finger width, kerf, divider, lid.
 - **Must improve:** 0 assertions today (finger counts odd, fit of the lid, smallest finger ≥ the sheet, inner volume in
   closed form); 13 parameters to review; variable names; a nicer look than one colour per panel (real plywood, burnt
@@ -66,7 +66,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 - **Look:** birch plywood, dark laser-burnt edges.
 
 ### 06. GT2 pulley · `gt2-pulley` · 3D printing · kept · CC-BY-SA-4.0
-- **Real thing:** a GT2 timing pulley. Named in 3DCraft's guide chapter 5: the id stays; the tooth outline's licence
+- **Real thing:** a GT2 timing pulley. Named in the chapter on Jigs of 3DCraft's guide: the id stays; the tooth outline's licence
   and attribution stay.
 - **Form:** teeth, belt width, bore type and size; hub, flanges and set screws as options.
 - **Must improve:** 14 parameters, too many for a pulley (at most 10); 1 assertion today (pitch diameter = teeth × 2 mm
@@ -157,7 +157,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 - **Risks:** feature count at 3V: load budget.
 
 ### 19. Welding table · `welding-table` · welding, laser cutting · kept
-- Named in 3DCraft's guide chapter 5: the id stays.
+- Named in the chapter on Jigs of 3DCraft's guide: the id stays.
 - **Must improve:** names; load 1 s fine, measure at the largest table; steel look; mass and hole counts as outputs.
 - **Look:** bare steel top, black frame.
 
@@ -189,7 +189,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
   for the cut sheet; aerodynamic outputs: wing area, aspect ratio, wing loading, stall speed.
 - **Look:** balsa skeleton, blue film on half of the wing (an option).
 - **Proves:** area and MAC in closed form; rib count; spar slot fits the stock; airfoil thickness against the NACA formula.
-- **Probe (2026-11-08, `.scratch/probes/rc-wing/`):** feasible. One closed `sketch.curve` (t from -1 to 1, x/c = t²,
+- **Probe (2026-11-08):** feasible. One closed `sketch.curve` (t from -1 to 1, x/c = t²,
   coefficient -0.1036 closes the trailing edge), a ruled `feature.loft`, `document.setTolerance` 0.01 mm (at 1e-6 the
   spline takes 29 s to load). Use the 40-step route: a `feature.pattern` of plates intersected with the loft, 1.6 s at
   12 ribs, 5.2 s at 30: default about 12 ribs, range to about 20 unless the worst point stays in budget. The cut sheet is
@@ -225,7 +225,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 - **Look:** polished brass, deep engraving.
 - **Proves:** projected radius of the equator and the tropics against the closed form; horizon position against the
   latitude; the rete's stars inside the rim; smallest engraved gap ≥ the tool.
-- **Probe (2026-11-08, `.scratch/probes/astrolabe/`):** feasible. Real grooves in one plate take 22 s, over budget; with
+- **Probe (2026-11-08):** feasible. Real grooves in one plate take 22 s, over budget; with
   the numerals and ticks on a separate limb body they take 3.9 s (slowest point 4.5 s, 716 KB, 485 steps): use that, so
   the instrument looks engraved, with grooves wide enough to read (0.4 mm barely shows at 900 px). Clipping is closed
   form: `acos(clamp(...))` end angles, almucantars as two half-arcs from the bottom point, azimuths ending at
@@ -245,7 +245,7 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
 - **Shows:** data in a table drives pins; the comb's teeth tuned by the cantilever formula; a slider turns the drum.
 - **Look:** cherry case, brass drum, spring-steel comb.
 - **Proves:** every pin on a note the comb has, timing per beat, no pin clash, teeth lengths against the formula.
-- **Probe (2026-11-08, `.scratch/probes/music-box/`):** feasible: 3 tunes, 175 notes, 18 tracks, 64 beats, comb and crank
+- **Probe (2026-11-08):** feasible: 3 tunes, 175 notes, 18 tracks, 64 beats, comb and crank
   in 221 steps, 731 KB, 0.15 s to open, slowest range point 0.1 s. Tables `tunes` and `notes` (tune, beat, track); per
   tune one sketch of one `sketch.rect` per note, corners read from the table, x within ±πR; `feature.extrude` with
   `wrap` on the drum and `when: tune == k`, joined with the same `when`; `feature.transform` by the crank. Comb: one

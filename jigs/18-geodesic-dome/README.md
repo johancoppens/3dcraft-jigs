@@ -216,7 +216,7 @@ tools/jigs.py check geodesic-dome
 - `feature.transform` takes an axis and an angle, not a target frame: placing a body along two directions means writing
   the matrix-to-axis-angle conversion by hand. Each strut placement carries nine helper variables for it
   ([J-052](../../3DCRAFT-FEEDBACK.md#j-052-featuretransform-cannot-place-a-body-by-a-target-frame)).
-- There is no assertion that a body is in one piece ([F-068](../../../3dcraft-examples/3DCRAFT-FEEDBACK.md)): the master
+- There is no assertion that a body is in one piece (the examples' [F-068](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-068)): the master
   strut's faces are counted instead (24, or 22 where the kerf is wide enough to remove the cut-back end), and a measured
   length catches anything that sticks out.
 - A bolt hole that the kerf cuts in two is reported as one face

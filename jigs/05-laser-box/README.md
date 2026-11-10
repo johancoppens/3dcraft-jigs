@@ -150,7 +150,7 @@ tools/jigs.py check laser-box
 - A `pattern`'s colours take no expressions, unlike `color`: the veneer cannot follow a choice of material, so
   the Jig stays birch plywood only (J-009, `findings/J-009-pattern-colours-from-a-table/`).
 
-From the showcase model of 3DCraft's `plan/laserbox.md` (2026-10-16), redone.
+From a showcase model made for 3DCraft (2026-10-16), redone.
 
 ## Licence
 

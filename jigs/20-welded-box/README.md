@@ -77,7 +77,7 @@ Mutation test in a scratch copy, 17 of 17 caught: a tab proud or too deep, a nar
 
 The smallest walls, by a scan of 485 combinations (twelve box sizes from 100 mm, every plate thickness the form allows, every opening, no ribs, one rib and the most ribs allowed): all build, all assertions pass, every shape asked for has at least one opening.
 
-`tools/jigs.py check` runs `check-range`: 109 points (the defaults, 64 corners, every choice, 32 random from seed 1), all passing, none unproven; slowest 3.23 s, mean 0.77 s, load 3.27 s and 4.47 s of CPU, on a machine at load average 35 (budget for a complex Jig: load 4 s, CPU 12 s, slowest point 12 s). A second run from seed 7, 137 points, passed too.
+`tools/jigs.py check` runs `check-range`: 109 points (the defaults, 64 corners, every choice, 32 random from seed 1), all passing, none unproven; slowest 0.92 s, mean 0.22 s, load 0.87 s and 2.61 s of CPU (`meta.json`; budget for a complex Jig: load 4 s, CPU 12 s, slowest point 12 s). A second run from seed 7, 137 points, passed too.
 
 Not checked by any assertion: the weld as made, the plate's real thickness against the clearance, anything after welding, and what the box will do once it is bolted to something.
 
