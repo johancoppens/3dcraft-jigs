@@ -14,10 +14,12 @@ Collected here, never fixed from this repository. Ids are `J-nnn`; an entry that
 it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}' --script findings/J-nnn-<slug>/repro.json`.
 
 **Status (2026-11-10):** the Jigs are built and checked on 3DCraft `dc449d5a` (the same command line as `150f0015`; only
-the window changed). 3DCraft's session triaged all 71 entries with the developer: J-020 (a warning), J-021 (the summary says
-distance is between surfaces), J-022, J-042, J-008, J-003 and J-026 (a feature switched off is skipped in a list of bodies),
-J-040 (a face colour wins), J-045 and J-046 (hidden bodies left out of 3D exports and the cut list) are being fixed for R1,
-J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 with J-014).
+the window changed). Before 3DCraft 0.1.0 was released, 3DCraft's session triaged all 71 entries with the developer:
+J-020 (a warning), J-021 (the summary says distance is between surfaces), J-022, J-042, J-008, J-003 and J-026 (a feature
+switched off is skipped in a list of bodies), J-040 (a face colour wins), J-045 and J-046 (hidden bodies left out of 3D
+exports and the cut list) were chosen to be fixed for R1, the milestone that became 0.1.0, J-028 if it stayed small; the
+rest was ordered for after it (J-018 first, J-015 with J-014). This file does not record which of them 0.1.0 fixed: an
+entry's reproducer shows whether it still holds in your version.
 
 ## Index
 
