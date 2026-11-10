@@ -3,7 +3,7 @@
 Found in sliceform at 3DCraft 150f0015. A loft through seven closed `sketch.curve` sections (rounded squares,
 each turned further up the height) is cut by fill sheets in the planes x = c (`feature.pattern`,
 `feature.boolean` intersect), slotted by an extruded comb, and each section plated with `feature.plate`
-(`side: mid`). Some of these plates fail: "faces: along F37:between[...](0): the edge across a corner could not
+(`side: mid`). Some of these plates fail: "faces: along `F37:between[...](0)`: the edge across a corner could not
 be traced within a quarter of the tolerance in 4096 points: the spline through them is still 0.084789 off". The
 faces are valid sheets (the sheet body checks valid, and the neighbouring slices plate); the failing corner is
 where the slice's side meets its flat foot or rim.
