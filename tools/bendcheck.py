@@ -48,15 +48,18 @@ shorter). It says nothing of tools longer than the longest bend: a one-piece die
 machine can meet a part past a bend's ends where these tools clear. Tools longer than a bend are what make a box's last bends collide with its standing ends:
 3DCraft takes one tool length for every bend (see the README of each Jig).
 
-Uses only the Python standard library; CRAFT3D_CLI or craft3d-cli on PATH.
+Uses only the Python standard library; CRAFT3D_CLI or craft3d-cli on PATH. Every craft3d-cli run goes through
+tools/jigs.py's run_cli: the build pinned in tools/pin.json, capped in memory (3G; 4G for the sample and the bend
+sequences) and in time (900 s a run; 3600 s for the sample), as every other run of the tools.
 """
 import argparse
 import json
 import math
 import os
-import shutil
-import subprocess
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import jigs  # noqa: E402  tools/jigs.py beside this file: the pin check and the capped runner (run_cli)
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 TIP = math.tan(math.radians(44.0))        # an 88-degree tip: flanks 44 degrees off the y axis
@@ -88,21 +91,21 @@ def die(v):
             (-half, -60.0)]
 
 
-def cli():
-    c = os.environ.get("CRAFT3D_CLI") or shutil.which("craft3d-cli")
-    if not c or not os.access(c, os.X_OK):
-        sys.exit("craft3d-cli not found: put it on PATH or set CRAFT3D_CLI")
-    return c
+HEAVY = {"memory": "4G"}                   # the bend-sequence search, like check-range and render
+SAMPLE = {"memory": "4G", "timeout": 3600}  # document.sample over the ranges, like check-range
 
 
-def run(jig, cmds, keep_going=False):
-    """Runs the commands on the Jig (nothing saved); returns one result per command (with keep_going a
-    command that fails gives {"failed": id, "error": text} and the rest still run)."""
-    args = [cli(), "run", jig] + (["--keep-going"] if keep_going else [])
+def run(jig, cmds, keep_going=False, memory="3G", timeout=900):
+    """Runs the commands on the Jig (nothing saved), capped as every run of the tools is (jigs.run_cli); returns one
+    result per command (with keep_going a command that fails gives {"failed": id, "error": text} and the rest still
+    run). A run killed at the memory cap or the timeout raises, keep_going or not."""
+    args = ["run", jig] + (["--keep-going"] if keep_going else [])
     cmds = [["jig.edit", {}]] + cmds          # an editable copy: the check adds measures to it
     for cmd, params in cmds:
         args += ["--cmd", cmd, "--params", json.dumps(params)]
-    out = subprocess.run(args, capture_output=True, text=True)
+    out, _ = jigs.run_cli(args, cwd=jigs.ROOT, memory=memory, timeout=timeout)
+    if out.returncode in (124, 137, -9):
+        raise RuntimeError(jigs.explain_failure(out, "craft3d-cli (memory cap %s, timeout %d s)" % (memory, timeout)))
     if out.returncode != 0 and not keep_going:
         raise RuntimeError("craft3d-cli failed: %s" % (out.stderr.strip() or out.stdout.strip())[-2000:])
     lines = [json.loads(l) for l in out.stdout.splitlines() if l.strip().startswith("{")]
@@ -163,7 +166,7 @@ def sequence(jig, values, part, punch, v, length):
     try:
         return run(jig, [["param.set", {"values": values}],
                          ["sheetMetal.bendSequence", {"feature": part, "punch": poly(punch), "die": poly(die(v)),
-                                                      "length": length, "clearance": CLEARANCE}]])[1]
+                                                      "length": length, "clearance": CLEARANCE}]], **HEAVY)[1]
     except RuntimeError as e:
         return {"error": str(e).split("sheetMetal.bendSequence: ")[-1]}
 
@@ -234,7 +237,7 @@ def main():
     with open(os.path.join(ROOT, "jigs", folder[0], "press.json")) as f:
         press = json.load(f)
     sample = run(jig, [["document.sample", {"samples": a.samples, "seed": a.seed, "maxCorners": a.max_corners,
-                                           "values": True, "timeLimitMs": None}]])[0]
+                                           "values": True, "timeLimitMs": None}]], **SAMPLE)[0]
     points = sample["points"]
     if a.points:
         points = points[:a.points]
