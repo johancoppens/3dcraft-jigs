@@ -48,7 +48,7 @@ cannot reach the bar is thrown away.
 ## 2. Layout
 
 ```text
-AGENTS.md README.md CATALOGUE.md 3DCRAFT-FEEDBACK.md ATTRIBUTION.md LICENSE
+AGENTS.md README.md CATALOGUE.md 3DCRAFT-FEEDBACK.md ATTRIBUTION.md LICENSE LICENSE-CC-BY-4.0.md LICENSE-CC-BY-SA-4.0.md
 tools/jigs.py           build, render, check, coverage, readme, site (python3, standard library only)
 tools/pin.json          the pinned 3DCraft commit and file format
 tools/bendcheck.py      proves sheet-metal parts bendable on a press brake (run by check when a Jig has press.json)
