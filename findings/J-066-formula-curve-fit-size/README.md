@@ -1,6 +1,6 @@
 # A formula curve that a low-degree spline draws exactly is fitted with dozens of cubic points
 
-Found in solar-cooker at 3DCraft 45233bdc. Performance; see the examples' [F-010](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-010)
+Found in solar-cooker at 3DCraft 150f0015. Performance; see the examples' [F-010](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md#f-010)
 (formula curves fit many control points).
 
 `sketch.curve` with `x = t^2 / (4 * focal)`, `y = t` (a parabola, a polynomial of degree 2) is fitted as a cubic

@@ -1,6 +1,6 @@
 # face.appearance on a feature is lost when the body goes through feature.boolean or feature.transform
 
-Found in dobsonian-telescope at 3DCraft 45233bdc. A tube's inner wall is given a colour with `face.appearance` right after
+Found in dobsonian-telescope at 3DCraft 150f0015. A tube's inner wall is given a colour with `face.appearance` right after
 its extrude; a port is then cut with `feature.boolean` and the tube moved with `feature.transform`. The inner wall renders
 in the body's colour instead (the tube comes out white inside, with `face.png` showing it). Giving the same colour on the
 transformed feature's name (`Tube:copy(0)/F2:side(e4)`) keeps it. It should survive, or the command should refuse or

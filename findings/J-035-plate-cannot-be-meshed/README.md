@@ -1,6 +1,6 @@
 # A valid plate is refused: "face 0 cannot be tessellated: its loops do not bound a region"
 
-Found in sliceform at 3DCraft 45233bdc, by `check-range`. One slice of a sliceform ball (a sphere section,
+Found in sliceform at 3DCraft 150f0015, by `check-range`. One slice of a sliceform ball (a sphere section,
 1.5 mm thick, slotted by twelve 1.5 mm slots from the top down to the sphere's centre) fails in `feature.plate`:
 "thickness: the plate cannot be meshed to see whether it passes through itself (face 0 cannot be tessellated: its
 loops do not bound a region: the boundary crosses itself in parameter space)". The section face it is made from

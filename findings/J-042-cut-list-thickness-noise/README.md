@@ -1,6 +1,6 @@
 # `cut.list` prints a turned plate's thickness with rounding noise
 
-Found in solar-cooker at 3DCraft 45233bdc. Bug (cosmetic).
+Found in solar-cooker at 3DCraft 150f0015. Bug (cosmetic).
 
 A 3 mm plate turned by 40° (`feature.transform`) is listed as `3.000000000000014` mm thick; in the solar cooker the
 tilted hub ring is listed as `3.0000000000001705`. A shop reads the thickness to choose the sheet, and a csv with such

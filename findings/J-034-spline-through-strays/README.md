@@ -1,6 +1,6 @@
 # A spline through points strays between them far more than a cubic interpolant does
 
-Found in planetary-gearbox at 3DCraft 45233bdc. Bug (or a weak fit).
+Found in planetary-gearbox at 3DCraft 150f0015. Bug (or a weak fit).
 
 `repro.json` draws one involute flank of a 14-tooth, module 2 gear (base radius 13.155697 mm, roll angle 0 to 0.745)
 twice: as a live `sketch.spline` through eight points of the involute, evenly spaced in the roll angle, and as a

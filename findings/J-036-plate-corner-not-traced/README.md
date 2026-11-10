@@ -1,6 +1,6 @@
 # `feature.plate` refuses some valid sections of a twisted loft: "the edge across a corner could not be traced"
 
-Found in sliceform at 3DCraft 45233bdc. A loft through seven closed `sketch.curve` sections (rounded squares,
+Found in sliceform at 3DCraft 150f0015. A loft through seven closed `sketch.curve` sections (rounded squares,
 each turned further up the height) is cut by fill sheets in the planes x = c (`feature.pattern`,
 `feature.boolean` intersect), slotted by an extruded comb, and each section plated with `feature.plate`
 (`side: mid`). Some of these plates fail: "faces: along F37:between[...](0): the edge across a corner could not

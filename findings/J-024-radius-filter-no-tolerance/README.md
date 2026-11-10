@@ -1,6 +1,6 @@
 # A sketch arc's radius drifts after re-solves, and a `radius: {min}` filter has no tolerance to absorb it
 
-Found in cubesat at 3DCraft 45233bdc. Bug (or missing tolerance).
+Found in cubesat at 3DCraft 150f0015. Bug (or missing tolerance).
 
 The CubeSat rail is an extruded L section whose three outer corners are arcs of radius `rail_edge_radius` = 1 mm,
 drawn with `sketch.path` (centres and ends given by expressions). CDS 2.2.7 asks for rail edges rounded to at least

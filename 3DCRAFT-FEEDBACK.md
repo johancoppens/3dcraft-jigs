@@ -2,10 +2,10 @@
 
 What building the Jigs found in 3DCraft: bugs, missing capabilities, performance and agent friction (AGENTS.md §7).
 Collected here, never fixed from this repository. Ids are `J-nnn`; an entry that the examples already reported cites its
-`F-nnn` in the examples' [`3DCRAFT-FEEDBACK.md`](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md). Each entry was reproduced at the pin, 3DCraft `45233bdc`, unless
+`F-nnn` in the examples' [`3DCRAFT-FEEDBACK.md`](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md). Each entry was reproduced at the pin, 3DCraft `150f0015`, unless
 it says otherwise. A reproducer runs with `craft3d-cli run --new '{"units":"mm"}' --script findings/J-nnn-<slug>/repro.json`.
 
-**Status (2026-11-10):** the Jigs are built and checked on 3DCraft `843981c2` (the same command line as `45233bdc`; only
+**Status (2026-11-10):** the Jigs are built and checked on 3DCraft `dc449d5a` (the same command line as `150f0015`; only
 the window changed). 3DCraft's session triaged all 71 entries with the developer: J-020 (a warning), J-021 (the summary says
 distance is between surfaces), J-022, J-042, J-008, J-003 and J-026 (a feature switched off is skipped in a list of bodies),
 J-040 (a face colour wins), J-045 and J-046 (hidden bodies left out of 3D exports and the cut list) are being fixed for R1,

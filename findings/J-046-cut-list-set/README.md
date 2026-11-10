@@ -1,6 +1,6 @@
 # `cut.list` and `cut.export` cannot be given a named set, so every rod and tube in a design lands on the cut sheet
 
-Found in orrery at 3DCraft 45233bdc. Missing capability (see J-003 and J-010).
+Found in orrery at 3DCraft 150f0015. Missing capability (see J-003 and J-010).
 
 In `repro.json` a 1 mm plate is the part to laser cut and a 1/8 in rod is bought stock. `cut.list` lists the rod as
 a plate 60 mm thick (a cylinder is a prism along its axis), so `cut.export` draws it on the sheet. The way to leave it

@@ -1,6 +1,6 @@
 # `cut.export` cannot be told which face of a plate is its front, so a plate facing −y comes out mirrored
 
-Found in sundial (review) at 3DCraft 45233bdc. Missing capability, or a bug in the choice of face.
+Found in sundial (review) at 3DCraft 150f0015. Missing capability, or a bug in the choice of face.
 
 A plate standing upright with its front towards −y (a wall plate, a sign) is extruded from a datum plane through
 [0, 0, 0], [50, 0, 0], [0, 0, 50]; its hole lies at x = +30 seen from the front. `file.export` of the set *Front*
@@ -21,7 +21,7 @@ Run: `craft3d-cli run --new '{"units":"mm"}' --script repro.json` and compare `f
 
 # A set of back faces exports mirrored, so a part with chamfered front edges has no true outline to export
 
-Found in sundial (review) at 3DCraft 45233bdc. Missing capability.
+Found in sundial (review) at 3DCraft 150f0015. Missing capability.
 
 A plate standing upright with its front towards −y is extruded from a datum plane through [0, 0, 0], [50, 0, 0],
 [0, 0, 50], with a hole at x = +30 seen from the front. `file.export` of the set *Front* (its end cap) draws the hole at

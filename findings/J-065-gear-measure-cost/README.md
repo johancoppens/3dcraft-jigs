@@ -1,6 +1,6 @@
 # Measuring a flat gear costs about 1.5 ms per tooth, far more than building it
 
-Found in orrery at 3DCraft 45233bdc. Performance.
+Found in orrery at 3DCraft 150f0015. Performance.
 
 `repro.json` draws one gear of 120 teeth (four segments a tooth: root arc, flank, tip arc, flank), extruded 1 mm, and
 measures its volume. On the developer's machine (shared, load average about 30): building and opening it without

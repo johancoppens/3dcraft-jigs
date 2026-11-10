@@ -1,6 +1,6 @@
 # Electrical units (V, A, W, h, mAh, Wh) are not known to expressions
 
-Found in cubesat at 3DCraft 45233bdc. Missing capability. `frequency.json` shows the same for Hz (loudspeaker-box, tuned-chimes).
+Found in cubesat at 3DCraft 150f0015. Missing capability. `frequency.json` shows the same for Hz (loudspeaker-box, tuned-chimes).
 
 A mass budget or a power budget is written in volts, amperes, watts and watt-hours: a solar cell's maximum-power voltage
 and current (2.411 V, 0.499 A), a battery cell's charge (3200 mAh) and energy (11.52 Wh). `variable.set` refuses `V`, `A`,

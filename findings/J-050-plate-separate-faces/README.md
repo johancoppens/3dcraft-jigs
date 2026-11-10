@@ -1,6 +1,6 @@
 # `feature.plate` refuses a sheet of separate faces
 
-Found in sliceform at 3DCraft 45233bdc. A fill sheet repeated by `feature.pattern` and intersected with a solid
+Found in sliceform at 3DCraft 150f0015. A fill sheet repeated by `feature.pattern` and intersected with a solid
 gives the solid's sections, one face per pattern instance, in one body. Giving all of them to one
 `feature.plate` is refused: "faces: the faces do not hang together across shared edges: plate each piece apart".
 

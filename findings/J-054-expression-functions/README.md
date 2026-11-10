@@ -1,6 +1,6 @@
 # An expression cannot define a function, so a formula used per instance is written once per instance
 
-Found in sundial at 3DCraft 45233bdc. Missing capability.
+Found in sundial at 3DCraft 150f0015. Missing capability.
 
 A design that applies one formula to many inputs (the hour lines of a dial, the teeth of a gear, the stars of a
 catalogue, the rungs of a ladder) has to write the formula again for every input: `hour_09`, `hour_10`, `hour_11`

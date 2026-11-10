@@ -1,6 +1,6 @@
 # An output used only by assertions cannot be kept off the form's outputs
 
-Found in solar-cooker at 3DCraft 45233bdc. Missing capability (agent and user friction).
+Found in solar-cooker at 3DCraft 150f0015. Missing capability (agent and user friction).
 
 An assertion that combines several measures (a distance and a box side, a focus found from two rings) needs each
 measure as an output (`variable.measure`), and every output is listed with the form's results (`output.list`, the

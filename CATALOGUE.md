@@ -6,7 +6,7 @@ wrong; it is a floor, not the whole job (AGENTS.md: no Jig is grandfathered). Si
 builder verifies every number against the standard or source and cites it.
 
 A builder may improve a brief (a better standard, a better parameter), but changes its domain, its main techniques or
-its palette line only with the coordinator. Baseline load times are the old files at 3DCraft `f4b0813c`.
+its palette line only with the coordinator. Baseline load times are the old files at 3DCraft `cc90d757`.
 
 For every Jig from the old collection: `build.json` is rewritten by hand or from the old one into a minimal script that
 meets AGENTS.md (descriptive variable names, no `gen.py`, tables and patterns instead of repeated steps), `meta.json`

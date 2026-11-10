@@ -1,6 +1,6 @@
 # `distance` reports the gap to the surface for a body or face that lies inside another body
 
-Found in solar-cooker at 3DCraft 45233bdc. Bug (or a definition the command's summary does not state).
+Found in solar-cooker at 3DCraft 150f0015. Bug (or a definition the command's summary does not state).
 
 A 20 × 20 × 4 mm block lying wholly inside a 100 × 100 × 10 mm plate is reported at `distance` 3 mm from the plate,
 and so is its top face, although the two share their whole volume. A body that pokes through the plate's surface is at

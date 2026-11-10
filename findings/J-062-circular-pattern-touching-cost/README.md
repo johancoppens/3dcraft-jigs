@@ -1,6 +1,6 @@
 # A circular pattern of freeform plates that meet edge to edge is joined at a cost, with no way to keep them apart
 
-Found in solar-cooker at 3DCraft 45233bdc. Performance and missing capability.
+Found in solar-cooker at 3DCraft 150f0015. Performance and missing capability.
 
 `repro.json` patterns one petal (a parabolic strip, two quadratic-spline faces, cut by a wedge) 24 times round the
 axis; each petal's cut faces lie on its neighbours'. `feature.pattern` joins them ("instances that touch or overlap are

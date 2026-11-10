@@ -17,7 +17,7 @@ Can it be done?
 
 ## Acceptance
 
-Values from the model at 3DCraft 45233bdc (worked out with `param.set` and the outputs).
+Values from the model at 3DCraft 150f0015 (worked out with `param.set` and the outputs).
 
 - **The form:** planets Mercury to Jupiter, Moon on, year 2019, day of the year 73 (14 March), arms set in 2026, laser
   kerf 0, largest period error 0.10 % or less (any value the form allows down to its least, 0.03 %), span of the orbits
