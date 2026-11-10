@@ -58,15 +58,14 @@ form test (`formtest.md`). The number is only the folder's; the id, the file's n
 
 **Desktop.** Install 3DCraft 0.1.0 or later from [3dcraft.dev](https://3dcraft.dev/) (the installers are also on
 [its release page](https://github.com/johancoppens/3dcraft/releases)) and open a `.3dcraftjig` file (File › Open, or
-double-click it once 3DCraft is installed). It opens on its
-**Parameters** tab: drag or type the values; the model follows. A value outside a parameter's range is clamped and the
-form says so. Then **File › Export…** (STL, 3MF or STEP for a part; DXF or SVG for a cut sheet). **Save** saves the
+double-click it once 3DCraft is installed). It opens on its **Parameters** tab: drag or type the values; the model
+follows. A value outside a parameter's range is clamped and the form says so. Then **File › Export…** (STL, 3MF or STEP for a part; DXF or SVG for a cut sheet). **Save** saves the
 result as an ordinary `.3dcraft` model; the Jig file itself is never changed. **Open for editing** makes an editable
 copy if you want to change the design itself.
 
 **Web.** Nothing to install: the 3DCraft web build opens a Jig served from the same site:
 `https://3dcraft.dev/app/?open=/examples/jigs/<id>.3dcraftjig`. The gallery at
-[3dcraft.dev/examples](https://3dcraft.dev/examples/) links every Jig that way, beside the examples and the
+[3dcraft.dev/examples](https://3dcraft.dev/examples/#jigs) links every Jig that way, beside the examples and the
 assemblies, and offers the file for download. In the browser the model follows a parameter when you let go of it.
 
 **Agents and scripts.** `param.list` lists the parameters, `param.set {"values": {...}}` sets several at once
