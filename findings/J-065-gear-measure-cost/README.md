@@ -3,7 +3,7 @@
 Found in orrery at 3DCraft 150f0015. Performance.
 
 `repro.json` draws one gear of 120 teeth (four segments a tooth: root arc, flank, tip arc, flank), extruded 1 mm, and
-measures its volume. On the developer's machine (shared, load average about 30): building and opening it without
+measures its volume. On a busy reference machine (load average about 30): building and opening it without
 measures takes 0.05 s of CPU for eight such gears; `craft3d-cli info` of the same eight (volume, area, centroid of
 each body) takes 1.4 to 1.9 s of CPU; with circular-arc flanks instead of lines, 2.2 s. A `volume` assertion on them
 costs the same again (2.2 s for eight gears, 3.9 s for the orrery's 31). The body is a prism: its volume is the

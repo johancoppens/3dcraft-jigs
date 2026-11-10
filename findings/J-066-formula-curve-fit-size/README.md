@@ -8,7 +8,7 @@ B-spline of 35 control points at a document tolerance of 0.01 mm and 48 at the d
 1e-6 mm either way, although a quadratic B-spline of 3 control points is the parabola exactly. Twelve strips
 extruded from two such curves and patterned cost 0.91 s of CPU to open (0.40 s wall); the same strips from
 `sketch.spline` of degree 2 with the exact control points cost 0.16 s (0.17 s wall), 5.7 times less, with the same
-volume and area to 1e-8. Measured at a load average of 38 on 14 CPUs.
+volume and area to 1e-8. Measured on a busy reference machine (load average 38).
 
 **Should:** a formula that is a polynomial in t (or a rational one) is drawn as the exact B-spline of its degree, or
 the fit stops at the document's tolerance rather than far below it.

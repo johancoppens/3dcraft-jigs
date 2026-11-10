@@ -6,7 +6,7 @@ Found in solar-cooker at 3DCraft 150f0015. Performance and missing capability.
 axis; each petal's cut faces lie on its neighbours'. `feature.pattern` joins them ("instances that touch or overlap are
 joined into one piece"): one shell of 96 faces, the 48 shared cut faces gone, 2.8 s wall and 6.2 s of CPU to open.
 The same petals as two interleaved patterns of 12 (every other petal, then the petals between, as two bodies) open in
-2.4 s wall and 3.4 s of CPU. Measured at a load average of 41 on 14 CPUs. In an earlier probe (petals from formula curves,
+2.4 s wall and 3.4 s of CPU. Measured on a busy reference machine (load average 41). In an earlier probe (petals from formula curves,
 not in the reproducer) a single pattern with 1 mm gaps between the petals still took 1.8 times as long as the
 interleaved pair, so much of the time is the search for touching instances, not only the union.
 
