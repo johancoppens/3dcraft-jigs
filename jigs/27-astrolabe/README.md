@@ -185,7 +185,8 @@ Forty-seven assertions: 44 active at the defaults, 39 in the export mode with th
 - `make.py`: writes the `stars` table into `build.json` from the committed catalogue extract, with the place of each pointer's root, its boss and its key letter.
 - `data/bright-stars.tsv`: the 36 stars from the Yale Bright Star Catalogue: HR number, name (IAU), Bayer designation, V magnitude, J2000 position.
 - `meta.json`, `formtest.md`, `preview.png`.
-- [`astrolabe.3dcraftjig`](astrolabe.3dcraftjig): the published Jig.
+- [`astrolabe.3dcraftjig`](astrolabe.3dcraftjig): the published Jig. It carries the font of the lettering, Noto Sans
+  Regular, under the SIL Open Font License 1.1: [`NotoSans-OFL.txt`](NotoSans-OFL.txt).
 
 ## Rebuild
 
@@ -211,4 +212,5 @@ tools/jigs.py check astrolabe
 
 ## Licence
 
-[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence). The embedded font keeps
+its own licence (*Files*).

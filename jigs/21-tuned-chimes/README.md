@@ -185,8 +185,8 @@ would hang about 2 degrees off level. The bridle meets at the ring over the cent
 centre at the defaults); tie the three cords so the ring sits there. The light striker and sail hang at the centre and are
 left out (they move the balance point by about a tenth of a millimetre).
 
-**Sources, and what each is.** Read in full or at the place cited: Irvine's beam notes, EN 1999-1-1 (a copy of the
-2007 text, clause 3.2.5), Hite's compendium (PDF updated 5/9/2022: support at 22.4 %, pp. 20 and 24; cut about 1/8 inch long and
+**Sources, and what each is.** Read in full or at the place cited: Irvine's beam notes, EN 1999-1-1:2007, clause
+3.2.5, Hite's compendium (PDF updated 5/9/2022: support at 22.4 %, pp. 20 and 24; cut about 1/8 inch long and
 chamfer, p. 8; alignment and striker, Steps 13 and 17, p. 11; beating and tuner caution, pp. 21, 24 to 25), the CW508L
 brass sheet, AZoM's stainless data, eurocodeapplied.com for EN 1993-1-1. Read through a search listing only: KME's TECU
 copper figure. From Wikipedia (the Timoshenko table, 1.17 and 1.28 for a plate): secondary, as the text says. My own: the
@@ -246,7 +246,8 @@ Hite on overtones).
 ## Files
 
 `build.json` (the source), `meta.json`, `formtest.md`, `preview.png`, and `tuned-chimes.3dcraftjig`,
-`thumb.png` from the tool. The Python scratch files are not committed (AGENTS.md section 3).
+`thumb.png` from the tool. The Jig carries the font of the strips' text, Noto Sans Regular, under the SIL Open Font
+License 1.1: [`NotoSans-OFL.txt`](NotoSans-OFL.txt). The Python scratch files are not committed (AGENTS.md section 3).
 
 ## Rebuild
 
@@ -280,4 +281,5 @@ sheet and kernel limits over the range.
 
 ## Licence
 
-[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence). The embedded font keeps
+its own licence (*Files*).

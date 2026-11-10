@@ -73,9 +73,10 @@ the other toothed ends stay square, also when machined, because that chamfer cos
 pulley flips to print hub up as soon as the hub is narrower than the flange beside it. 1 270 kg/m³.
 
 **Tooth outline.** The GT2 2 mm belt tooth outline (21 points) comes from droftarts' *Parametric Pulley - lots of tooth
-profiles* ([thingiverse.com/thing:16627](https://www.thingiverse.com/thing:16627), January 2012), licensed
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). This Jig adapts it and is shared under the same
-licence. Changes: the points below the chord are left out, the chord's distance from the centre is computed from the
+profiles* ([thingiverse.com/thing:16627](https://www.thingiverse.com/thing:16627), 2012), licensed Creative Commons
+Attribution-ShareAlike, as its page states (the page names no version). This Jig adapts it and is shared under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), a later version of the same licence, which the licence
+allows for an adaptation. Changes: the points below the chord are left out, the chord's distance from the centre is computed from the
 outline's own end points so the grooves meet the land arcs exactly, and a spline runs through the points instead of
 straight segments.
 

@@ -219,9 +219,10 @@ recommends at most 100 Wh per battery (the FAA carry-on limit); 8 cells give 92.
 **Sources of fastener sizes.** I read all three:
 
 - **Optimas' tapping-size table:** M2 close-fit clearance Ø2.2, M2 tap drill Ø1.6 and M3 tap drill Ø2.5.
-- **ISO 7046-1:2011 Table 1** (the iTeh preview of the standard), for the M2 countersunk head: dk theoretical max 4.4 mm,
+- **ISO 7046-1:2011**, dimensions according to its Table 1, read in the iTeh preview of the standard, for the M2
+  countersunk head: dk theoretical max 4.4 mm,
   actual 3.5 to 3.8 mm, k max 1.2 mm. Its footnote refers to ISO 7721 for the gauging, which I have not read.
-- **ISO 7045:2011 Table 1** (iTeh preview), for the M2 pan head: dk max 4.0 mm, k max 1.60 mm.
+- **ISO 7045:2011**, dimensions according to its Table 1 (iTeh preview), for the M2 pan head: dk max 4.0 mm, k max 1.60 mm.
 
 **Materials and masses.**
 
