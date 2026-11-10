@@ -56,13 +56,15 @@ form test (`formtest.md`). The number is only the folder's; the id, the file's n
 
 ## Using a Jig
 
-**Desktop.** Open a `.3dcraftjig` file (File › Open, or double-click it once 3DCraft is installed). It opens on its
+**Desktop.** Install 3DCraft 0.1.0 or later from [3dcraft.dev](https://3dcraft.dev/) (the installers are also on
+[its release page](https://github.com/johancoppens/3dcraft/releases)) and open a `.3dcraftjig` file (File › Open, or
+double-click it once 3DCraft is installed). It opens on its
 **Parameters** tab: drag or type the values; the model follows. A value outside a parameter's range is clamped and the
 form says so. Then **File › Export…** (STL, 3MF or STEP for a part; DXF or SVG for a cut sheet). **Save** saves the
 result as an ordinary `.3dcraft` model; the Jig file itself is never changed. **Open for editing** makes an editable
 copy if you want to change the design itself.
 
-**Web.** The 3DCraft web build opens a Jig served from the same site:
+**Web.** Nothing to install: the 3DCraft web build opens a Jig served from the same site:
 `https://3dcraft.dev/app/?open=/examples/jigs/<id>.3dcraftjig`. The gallery at
 [3dcraft.dev/examples](https://3dcraft.dev/examples/) links every Jig that way, beside the examples and the
 assemblies, and offers the file for download. In the browser the model follows a parameter when you let go of it.
@@ -78,27 +80,51 @@ craft3d-cli run jigs/05-laser-box/laser-box.3dcraftjig \
 
 ## Building and checking
 
-Every `<id>.3dcraftjig` is committed, so the Jigs open and work in 3DCraft without building anything.
+Every `<id>.3dcraftjig` is committed, so the Jigs open and work in 3DCraft 0.1.0 or later without building anything.
 
-The tool that made and checked them, `tools/jigs.py` (Python 3, standard library only, on Linux or macOS), needs the
-exact 3DCraft build this repository is pinned to, the commit in [`tools/pin.json`](tools/pin.json), and refuses any
-other: it compares what it rebuilds byte for byte with the committed files, which only that build reproduces. When
-the repository is released the pin is the 3DCraft 0.1.0 release itself, so the `craft3d-cli` that its installer puts
-on your `PATH` runs it (or name the binary in `CRAFT3D_CLI`).
+**The command line.** Every installer of 3DCraft has `craft3d-cli`. The Linux tarball's `install.sh` puts it in
+`~/.local/bin` and the Windows installer puts it on your `PATH`; on macOS and with the AppImage you reach it as
+[the install chapter of 3DCraft's guide](https://3dcraft.dev/guide/0.1/install) says: on macOS a link to
+`/Applications/3DCraft.app/Contents/MacOS/craft3d-cli` on your `PATH`, with the AppImage a link named `craft3d-cli`
+that points at it. Instead of `PATH`, `CRAFT3D_CLI` may name the binary (or that link).
+
+**The tool.** `tools/jigs.py` (Python 3, standard library only) made and checked every Jig. It runs on Linux and
+macOS, not on Windows. It needs the 3DCraft build this repository is pinned to, as `craft3d-cli --version` reports
+it: the commit in [`tools/pin.json`](tools/pin.json), or the release named there (0.1.0) with the file format named
+there (69), so the installed 3DCraft 0.1.0 runs it. It refuses any other build, because it compares the document
+inside each rebuilt `.3dcraftjig` (its `manifest.json`) byte for byte with the committed one, and another build may
+write other bytes. `--version` names the version, the commit and the file format, and nothing in it tells the
+released 0.1.0 from a development build that still carries the same version number: the tool accepts both, and with
+a build that is not the pinned commit, `check` may report Jigs as stale that differ only in their bytes.
+
+To rebuild and check one Jig with the installed 3DCraft 0.1.0:
 
 ```sh
+craft3d-cli --version                  # craft3d-cli 0.1.0 (<commit>, format 69)
+tools/jigs.py check --quick laser-box  # rebuild in a scratch folder, compare the document, lint, run the exports there
+tools/jigs.py check laser-box          # the same, plus check-range and, for sheet metal, the bend sequence
 tools/jigs.py build laser-box          # jigs/NN-<id>/build.json to <id>.3dcraftjig beside it; rewrites meta.json
-tools/jigs.py check --quick laser-box  # rebuild in a scratch folder, lint, exports
-tools/jigs.py check laser-box          # the same, plus check-range and the bend sequence
 tools/jigs.py render laser-box         # preview.png and thumb.png in jigs/NN-<id>/
 tools/jigs.py site [dir]               # a local web folder (default site/, not committed): every Jig, its picture, a gallery
 ```
 
-`check` runs `craft3d-cli check-range` with a fixed seed: the defaults, the corners of the parameter ranges, every
-choice and random points, each regenerated from nothing and checked as `document.check` checks it. A Jig is only
-published when every point passes. `build` and `check` rewrite the `stats` (timings measured on your machine) and
-`craft3d` fields of the Jig's `meta.json`. Give `check` an id: without one it rebuilds and checks all 33 Jigs, which
-takes hours. Where `systemd-run` exists, every run is capped in memory.
+`check` runs `craft3d-cli check-range` with a fixed seed: the defaults, up to 64 corners of the parameter ranges,
+every choice and 32 random points, each regenerated from nothing and checked as `document.check` checks it. A Jig is
+only published when every point passes. `build` rewrites the Jig's `.3dcraftjig` and the `stats` (timings measured
+on your machine) and `craft3d` (the build that wrote it) fields of its `meta.json`. `check` writes the exports in its
+scratch folder only, and without `--quick` it writes the range's figures into `stats` (`range_points`,
+`range_unproven`, `range_mean_s`, `range_worst_s`) when they changed, and nothing else; `git diff` shows what changed.
+Give `check` an id: without one it rebuilds and checks all 33 Jigs, which takes hours. Where `systemd-run` exists,
+every run is capped in memory. `site` also removes, from a folder it wrote before, the files of Jigs that are gone.
+
+## Problems and feedback
+
+A problem with a Jig (a wrong size, a check that fails, a form that accepts what it should refuse, a page that says
+what the Jig does not do): open an issue in [this repository](https://github.com/johancoppens/3dcraft-jigs/issues).
+A problem with 3DCraft itself: [3DCraft's issues](https://github.com/johancoppens/3dcraft/issues).
+
+[`3DCRAFT-FEEDBACK.md`](3DCRAFT-FEEDBACK.md) is the dated record of what 3DCraft got wrong or could not yet do while
+the Jigs were built, each bug with a reproducer under `findings/`; it is not a list of the known issues of a release.
 
 ## Licence
 
