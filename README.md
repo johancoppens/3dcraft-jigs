@@ -78,21 +78,27 @@ craft3d-cli run jigs/05-laser-box/laser-box.3dcraftjig \
 
 ## Building and checking
 
-You need `craft3d-cli` from 3DCraft, the commit named in [`tools/pin.json`](tools/pin.json), on `PATH` or in
-`CRAFT3D_CLI`.
+Every `<id>.3dcraftjig` is committed, so the Jigs open and work in 3DCraft without building anything.
+
+The tool that made and checked them, `tools/jigs.py` (Python 3, standard library only, on Linux or macOS), needs the
+exact 3DCraft build this repository is pinned to, the commit in [`tools/pin.json`](tools/pin.json), and refuses any
+other: it compares what it rebuilds byte for byte with the committed files, which only that build reproduces. When
+the repository is released the pin is the 3DCraft 0.1.0 release itself, so the `craft3d-cli` that its installer puts
+on your `PATH` runs it (or name the binary in `CRAFT3D_CLI`).
 
 ```sh
-tools/jigs.py build [id ...]     # jigs/NN-<id>/build.json to <id>.3dcraftjig beside it, with its stats
-tools/jigs.py render [id ...]    # preview.png and thumb.png in jigs/NN-<id>/
-tools/jigs.py check [id ...]     # rebuild, lint, exports, check-range and the bend sequence
-tools/jigs.py site [dir]         # a local web folder (default site/, not committed): every Jig, its picture, a gallery
+tools/jigs.py build laser-box          # jigs/NN-<id>/build.json to <id>.3dcraftjig beside it; rewrites meta.json
+tools/jigs.py check --quick laser-box  # rebuild in a scratch folder, lint, exports
+tools/jigs.py check laser-box          # the same, plus check-range and the bend sequence
+tools/jigs.py render laser-box         # preview.png and thumb.png in jigs/NN-<id>/
+tools/jigs.py site [dir]               # a local web folder (default site/, not committed): every Jig, its picture, a gallery
 ```
 
 `check` runs `craft3d-cli check-range` with a fixed seed: the defaults, the corners of the parameter ranges, every
 choice and random points, each regenerated from nothing and checked as `document.check` checks it. A Jig is only
-published when every point passes.
-
-Every `<id>.3dcraftjig` is committed, so the Jigs can be used without building them.
+published when every point passes. `build` and `check` rewrite the `stats` (timings measured on your machine) and
+`craft3d` fields of the Jig's `meta.json`. Give `check` an id: without one it rebuilds and checks all 33 Jigs, which
+takes hours. Where `systemd-run` exists, every run is capped in memory.
 
 ## Licence
 

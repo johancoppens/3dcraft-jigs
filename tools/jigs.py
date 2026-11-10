@@ -94,10 +94,12 @@ def cli():
         path = os.environ.get("CRAFT3D_CLI") or shutil.which("craft3d-cli")
         if not path or not os.access(path, os.X_OK):
             die("craft3d-cli not found: put it on PATH or set CRAFT3D_CLI")
-        # The binary carries the commit it was built from, but may not print it.
+        # The binary carries the commit it was built from (for bug reports; --version prints it too).
         if PIN["commit"][:12].encode() not in Path(path).read_bytes():
-            die(f"{path} is not 3DCraft {PIN['commit'][:12]} (tools/pin.json): install that build "
-                "or ask the coordinator to move the pin")
+            die(f"{path} is not 3DCraft {PIN['commit'][:12]}, the build this repository is pinned to "
+                "(tools/pin.json): the committed Jigs and their checks are what that build produces, "
+                "and another build may write other bytes. Install that build (README.md, Building and "
+                "checking); the committed .3dcraftjig files open without it")
         _cli = path
     return _cli
 
