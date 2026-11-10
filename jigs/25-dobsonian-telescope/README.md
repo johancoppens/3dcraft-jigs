@@ -34,7 +34,7 @@ against it. Drag the *altitude* slider and the tube swings from the horizon to t
 
 **Optics.** For a fully lit field of diameter `f` at the focal plane, the minor axis of the flat is
 `m = f (1 − L/F) + D L/F`, with `D` the mirror, `F` the focal length, and `L` the distance from the flat to the focal plane
-along the light path. This reproduces Mike Lockwood's [secondary sizing
+along the light path. This agrees with Mike Lockwood's [secondary sizing
 tables](https://www.loptics.com/ATM/diagonals.html) (10-inch f/5 at 10 inches out, 0.5-inch field: 2.40 inches; 8-inch f/6
 at 8 inches: 1.75 inches). Lockwood recommends a 0.5-inch field for general use and 0.25 inch for strictly planetary work;
 the default here is 13 mm. The offset of the flat, away from the focuser and towards the primary, is
