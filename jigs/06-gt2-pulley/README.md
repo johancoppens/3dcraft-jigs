@@ -173,4 +173,5 @@ tools/jigs.py check gt2-pulley
 ## Licence
 
 [CC BY-SA 4.0](../../LICENSE-CC-BY-SA-4.0.md), because the tooth outline comes from a source licensed
-Creative Commons Attribution-ShareAlike (*Tooth outline*); credit line in the [README](../../README.md#licence).
+Creative Commons Attribution-ShareAlike (*Tooth outline*); its credit line, which names droftarts' source, is in
+[`LICENSE-CC-BY-SA-4.0.md`](../../LICENSE-CC-BY-SA-4.0.md).
