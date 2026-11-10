@@ -186,3 +186,7 @@ tools/jigs.py check loudspeaker-box
 - The driver's profile is drawn so that the basket arms land on a flat ring on the frame: a basket arm crossing the rim where the frame's
   cone meets its cylinder made a face the kernel could not tessellate at some depths (it reported the boundary crossing itself).
 - Every arc in the driver and port profiles is given by a centre written as a formula: an arc given by a through-point loses its centre when its points come close to collinear, and a long session of extreme values left one document unrecoverable ([J-033](../../3DCRAFT-FEEDBACK.md#j-033-a-sketch-arc-given-by-a-through-point-loses-its-centre-when-it-flips-or-flattens-and-can-leave-a-document-unrecoverable-see-f-112-f-113), [repro and the broken file](../../findings/J-033-sketch-arc-centre-escapes/)).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

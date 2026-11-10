@@ -515,3 +515,7 @@ ranges derived from it, and fastener, hinge and CDS process checks across about 
   [`findings/J-071-extent-of-faces`](../../findings/J-071-extent-of-faces/repro.json)). The countersink's diameter and depth
   could not be read from its cone face. The rail's screw heads are drawn instead, and their overlap with the rail is
   measured, which proves more: diameter, depth, angle and position at once.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

@@ -202,3 +202,7 @@ tools/jigs.py check joint-drawer
   (related to F-141; [`findings/J-023-split-face-counts-as-one/repro.json`](../../findings/J-023-split-face-counts-as-one/repro.json)).
 - A `feature.extrude` with `cut` leaves the extrusion with an automatic name (F-002), so the cutters and booleans are
   named in two steps.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

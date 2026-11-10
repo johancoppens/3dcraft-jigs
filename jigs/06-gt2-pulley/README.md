@@ -3,8 +3,7 @@
 A timing pulley for 2 mm GT2 belts from what you have on the bench: the belt width, the shaft and how you will make
 it. Flanges, face width and set screws follow the Gates design rules, and one choice turns the same pulley from a
 black-anodised machined part with bright hobbed teeth and two pressed-on flanges into a one-piece PETG print, lying in
-its print orientation with a printable flange and captive nuts. Licence: **CC-BY-SA-4.0**, because the tooth outline
-comes from a CC-BY-SA source (see *Tooth outline*).
+its print orientation with a printable flange and captive nuts.
 
 ![GT2 pulley, 20 teeth, black anodised with bright teeth](preview.png)
 
@@ -169,3 +168,8 @@ tools/jigs.py check gt2-pulley
   cannot switch a body between a bright metal and a plastic look: this Jig makes the toothed rim as two extrusions that
   differ only in appearance, one on per process
   ([repro](../../findings/J-053-appearance-numbers-not-expressions/repro.json)).
+
+## Licence
+
+[CC BY-SA 4.0](../../LICENSE-CC-BY-SA-4.0.md), because the tooth outline comes from a source licensed
+Creative Commons Attribution-ShareAlike (*Tooth outline*); credit line in the [README](../../README.md#licence).

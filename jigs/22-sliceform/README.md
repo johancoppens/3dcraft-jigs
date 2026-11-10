@@ -245,3 +245,7 @@ tools/jigs.py check sliceform
   foot (a sounder sculpture too: every slice stands); the kerf also ends at 0.3 mm (this Jig's judgement of the
   most a CO2 laser burns away in plywood). [J-035](../../3DCRAFT-FEEDBACK.md#j-035-featureplate-refuses-a-valid-section-face-0-cannot-be-tessellated),
   [`findings/J-035-plate-cannot-be-meshed/`](../../findings/J-035-plate-cannot-be-meshed/).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

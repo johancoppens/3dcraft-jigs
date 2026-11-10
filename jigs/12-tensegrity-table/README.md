@@ -297,3 +297,7 @@ tools/jigs.py check tensegrity-table
   ([finding](../../findings/J-028-when-alternatives-share-source/repro.json)).
 - A `feature.boolean` of a cutter whose end cap falls exactly on a face can fail at some parameter values, within the
   tolerance: the rod bore cutter runs 3 mm past the arm to stay clear of it.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

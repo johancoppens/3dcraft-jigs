@@ -200,3 +200,7 @@ Entries in `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
 - A rectangle or text in a sketch cannot be switched off by a formula: zero size is refused
   ([repro](../../findings/J-006-sketch-entity-when/repro.json)). The Plank plan draws an absent batten or partition as
   a 0.01 mm speck with a label of that size, the workaround.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

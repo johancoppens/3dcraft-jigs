@@ -172,3 +172,7 @@ tools/jigs.py check cam-disc
 - **Extremum of a formula.** 3DCraft has no maximum of a formula over an interval, so the peaks are sampled in about 150 variables, and a
   body's `boxMax` on the spline curve is an unknown output (F-057): [J-055](../../3DCRAFT-FEEDBACK.md#j-055-no-maximum-minimum-or-root-of-a-formula-over-an-interval).
 - Expressions stop at 4096 bytes (F-011), which the sampled expressions come close to.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

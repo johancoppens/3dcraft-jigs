@@ -345,3 +345,7 @@ tools/jigs.py check sundial
 - **Face names in queries need globs or feature ids** (F-134): the assertions find the slot walls as `*side(*offset(e18))`
   and the lines as `*:side(e77)` made by *Line marks*; the slate's bevel names `Slate slab:startCap(...)`, which feature
   parameters accept.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

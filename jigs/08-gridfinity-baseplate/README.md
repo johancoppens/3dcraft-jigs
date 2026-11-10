@@ -199,3 +199,7 @@ Entries in `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
   [the fast form](../../findings/J-061-subtract-many-lump-tool/repro-small-tools.json)): 1.9 s against 0.66 s, 4.6 s of CPU
   against 2.0 s, for 196 cells in 16 pieces. So this Jig cuts every piece with its own pattern, at a cost of three more
   features per piece.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

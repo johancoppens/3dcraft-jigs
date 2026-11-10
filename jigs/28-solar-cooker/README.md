@@ -341,3 +341,7 @@ tools/jigs.py check solar-cooker
   built, and the STEP of the real parts lists its bodies.
 - `cut.list` prints the tilted hub ring's thickness as 3.0000000000001705
   ([J-042](../../findings/J-042-cut-list-thickness-noise/README.md)): cosmetic.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

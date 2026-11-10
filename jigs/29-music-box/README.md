@@ -287,3 +287,7 @@ tools/jigs.py check music-box
 - What an assertion measures may not exceed 16 384 bytes ([J-069](../../3DCRAFT-FEEDBACK.md#j-069-expressions-are-capped-at-different-sizes-in-different-places)), so the check that every pin stands on its note
   and beat is split into two or three assertions per tune.
 - `feature.extrude`'s tool of a join or cut keeps an automatic name (`Extrude6`): the tool warns about them.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

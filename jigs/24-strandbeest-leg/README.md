@@ -277,3 +277,7 @@ tools/jigs.py check strandbeest-leg
   is not in the dialog and cannot split the two woods without naming bodies, which inactive bodies refuse (J-003).
 - **A STEP of a named set is refused** ("`set` is for a drawing"): the foot path's ribbons can only be kept out of the
   model's STEP by switching them off.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

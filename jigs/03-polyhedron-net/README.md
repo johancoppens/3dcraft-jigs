@@ -178,3 +178,7 @@ Entries in `3DCRAFT-FEEDBACK.md` (J-014, J-015, J-022, J-037, J-038), each with 
 - Already filed: `F-105` (`distance` refuses sheets, so a seam gap cannot be measured; the closure is proven by
   `cavity`), `F-171` (`face.appearance` refuses a feature switched off by `when`; the script sets `solid` to each value
   while colouring that solid's faces), `F-059` (an assertion is measured only at the current values).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

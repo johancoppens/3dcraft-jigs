@@ -151,3 +151,7 @@ tools/jigs.py check laser-box
   the Jig stays birch plywood only (J-009, `findings/J-009-pattern-colours-from-a-table/`).
 
 From the showcase model of 3DCraft's `plan/laserbox.md` (2026-10-16), redone.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

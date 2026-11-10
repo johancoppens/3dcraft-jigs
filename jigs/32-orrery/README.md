@@ -312,3 +312,7 @@ and a parallel motion, and coupled ranges proven over the range.
 - J-011 (a pattern instance has no index) and [J-054](../../3DCRAFT-FEEDBACK.md#j-054-an-expression-cannot-define-a-function-or-a-local-name) (an expression cannot define a function): each gear has its own
   sketch and about 25 variables of the same formulas with its own tooth count (12 to 33 gears, about 750 variables);
   the three idlers are one drawing placed three times (`feature.transform` with `keep`).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

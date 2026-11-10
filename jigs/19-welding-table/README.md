@@ -267,3 +267,7 @@ tools/jigs.py check welding-table
   countersink pattern subtracted as cones ([J-049](../../3DCRAFT-FEEDBACK.md#j-049-hole-rims-of-a-varying-count-cannot-be-chamfered-cheaply-and-a-countersunk-plate-is-no-plate-to-cutlist-see-f-086-f-088))
   costs more than 1 s of CPU on 384 holes and makes the plate unreadable by `cut.list`. The holes stay as cut and are
   deburred by hand; the outer edge of the top is chamfered (a frustum, see above).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

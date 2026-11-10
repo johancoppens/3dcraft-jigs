@@ -260,3 +260,7 @@ An output has a label but no description ([J-059](../../3DCRAFT-FEEDBACK.md#j-05
 so the statement that a competent person must check the wall anchors is carried by the outputs' labels and the
 Mounting and Gear mass descriptions.
 A flat pattern's DXF edge split is known (the examples' F-051).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

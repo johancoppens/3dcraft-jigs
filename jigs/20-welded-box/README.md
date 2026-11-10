@@ -3,8 +3,7 @@
 A rectangular box, cube or beam of laser-cut steel plate, from 3 mm up and up to 3000 mm each way, as a building block for
 machines, where a standard profile falls short. Six plates meet in plain contact along their edges, short tabs with their
 ends recessed below the mating face hold the weld, an egg-crate of half-lapped ribs slides inside, and openings of four
-kinds follow each wall. Tab and slot from the laser hold the box straight and square while it is welded. Licence:
-CC-BY-4.0.
+kinds follow each wall. Tab and slot from the laser hold the box straight and square while it is welded.
 
 ![A welded plate box with rounded openings on top, a truss of triangles in the front and a round opening at the end](preview.png)
 
@@ -107,3 +106,7 @@ tools/jigs.py check welded-box
 - `measure.overlap` cannot always tell touching plates apart at zero clearance, through `param.set` ([reproducer](../../findings/J-025-overlap-touching-plates/repro.json), in the family of F-130): the overlap checks are off at 0 clearance.
 - `measure.section` treats plates that only touch as separate open sections, so the torsion of a welded box cannot be confirmed on the model (it also failed to mesh on a 2 m x 100 mm beam, while a 3 m cube measured); GJ is therefore a formula and an upper bound.
 - A face colour cannot follow a choice (F-171), so cut edges are not picked out. The tool of a `feature.extrude` with `cut` cannot be named, so the build warns about those names.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

@@ -212,3 +212,7 @@ tools/jigs.py check drag-chain
 - `clearance` between the lid and the link reported 0.07 mm (`measure.clearance` even "clear") where `overlap` found 13.5 mm³ in
   common ([findings/J-018-clearance-clear-on-overlap](../../findings/J-018-clearance-clear-on-overlap/repro.json), not minimal: a
   mutant of this Jig with its lid seat raised 0.5 mm): the lid's fit is asserted with `overlap` as well.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

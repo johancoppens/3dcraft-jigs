@@ -210,3 +210,7 @@ Tried by hand with `param.set`: a 2-inch eyepiece on the 1.25-inch focuser (refu
 - A chamfer on a plate breaks `cut.list` (J-004): the boards keep square edges.
 - A curvature assertion's `at` takes plain numbers only ([J-070](../../3DCRAFT-FEEDBACK.md#j-070-a-curvature-assertions-at-takes-plain-numbers-only-see-f-094)), so the mirror's curvature is measured on an
   unmoved construction copy at the origin.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

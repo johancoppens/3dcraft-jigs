@@ -163,3 +163,7 @@ Entry [J-045](../../3DCRAFT-FEEDBACK.md#j-045-a-3d-export-cannot-be-given-a-name
   ([repro](../../findings/J-045-3d-export-set/hidden-body.json)). Related to F-161 in 3DCraft Examples' feedback list
   (hidden helper bodies in the cut list). Workaround: the gauges are built only when *Show fit gauges* is on, so the default
   export is one printable bin.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

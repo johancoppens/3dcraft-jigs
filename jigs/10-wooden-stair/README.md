@@ -197,3 +197,7 @@ Entries in `3DCRAFT-FEEDBACK.md`, each with a reproducer in `findings/`:
   the pitch.
 - `cut.list` reads the bullnosed landing nosing as an 820 mm-thick plate (J-004) and treads in a pattern as no plates (J-010),
   so the outputs give the sizes instead of a saw list. A sketch entity cannot be switched off by a formula (J-006).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

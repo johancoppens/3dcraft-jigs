@@ -253,3 +253,7 @@ The picture sets the camera and the light direction (`meta.json`, `preview`); no
   100 it lies in the sketch's plane.
 - [J-067](../../3DCRAFT-FEEDBACK.md#j-067-the-flat-fold-layer-order-search-gives-up-on-larger-miura-grids): the layer-order search of `flatFoldable` runs out of
   work on larger Miura grids at steep angles; the Jig keeps to 14 × 16 and to 70 degrees above 144 cells to stay within its allowance.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

@@ -94,12 +94,18 @@ published when every point passes.
 
 Every `<id>.3dcraftjig` is committed, so the Jigs can be used without building them.
 
-## Licences
+## Licence
 
-- The tools: MIT ([LICENSE](LICENSE)).
-- Each Jig carries its own licence in its document info (an SPDX id), shown in the gallery and in its README. The
-  default is **CC-BY-4.0**, unless a source requires otherwise.
-- `gt2-pulley` uses the GT2 tooth outline of droftarts' *Parametric Pulley - lots of tooth profiles*
-  ([thingiverse.com/thing:16627](https://www.thingiverse.com/thing:16627)), licensed
-  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); that Jig is therefore shared under
-  **CC-BY-SA-4.0**, with attribution to droftarts. Other sources are in [ATTRIBUTION.md](ATTRIBUTION.md).
+The Jigs and what is written and drawn about them (their pages and pictures, `AGENTS.md`, `CATALOGUE.md`, the
+feedback) are under **CC BY 4.0** ([`LICENSE-CC-BY-4.0.md`](LICENSE-CC-BY-4.0.md)); the code, the tools under `tools/`
+and the reproducers under `findings/`, is MIT ([`LICENSE`](LICENSE)). One Jig differs: `gt2-pulley` adapts the GT2
+tooth outline of droftarts' *Parametric Pulley - lots of tooth profiles*
+([thingiverse.com/thing:16627](https://www.thingiverse.com/thing:16627)), licensed Creative Commons
+Attribution-ShareAlike as its page states (the page names no version), and is therefore shared under
+**CC BY-SA 4.0** ([`LICENSE-CC-BY-SA-4.0.md`](LICENSE-CC-BY-SA-4.0.md)), with attribution to droftarts. Each Jig
+carries its licence in its document information (an SPDX id), and it is shown in the table above, in the gallery and
+on the Jig's page. Credit a Jig as:
+
+> "Laser-cut box" by Johan Coppens, from the 3DCraft Jigs (CC BY 4.0), https://github.com/johancoppens/3dcraft-jigs
+
+with its title and licence. Other sources, and the products Jigs are sized after: [`ATTRIBUTION.md`](ATTRIBUTION.md).

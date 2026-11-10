@@ -277,3 +277,7 @@ sheet and kernel limits over the range.
 - **The sail is built at the origin and then placed.** Its edge round was refused at some heights when drawn in place (a boolean "partly on and partly off a face boundary"), at 5 of the first 46 points of the range check; drawn around the origin and moved by `feature.transform` it never failed. A literal copy of the same outline at the same height passed, so no reproducer was found.
 - The feature `Extrude1` is the tool of the disc's hole cut and keeps its automatic name. The frame's pin holes are cut by
   the pins themselves (`feature.boolean` with `keepTool`), so they have no tool of their own.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

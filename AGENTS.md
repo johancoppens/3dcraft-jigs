@@ -40,7 +40,9 @@ cannot reach the bar is thrown away.
   are credited; a brand's specific design, logo or name is not. Text uses 3DCraft's bundled fonts; never commit font
   files.
 - **Licence.** The Jigs are CC-BY-4.0 unless a source requires otherwise (`gt2-pulley` is CC-BY-SA-4.0); the
-  licence is in `document.info` and `meta.json`. The tools are MIT. Data from elsewhere (a star catalogue, a tune)
+  licence is in `document.info` and `meta.json`, and the texts are CC BY 4.0 too
+  ([`LICENSE-CC-BY-4.0.md`](LICENSE-CC-BY-4.0.md)). The code, the tools and the reproducers under `findings/`, is MIT.
+  Data from elsewhere (a star catalogue, a tune)
   needs a licence that allows it and a row in [`ATTRIBUTION.md`](ATTRIBUTION.md).
 
 ## 2. Layout
@@ -220,7 +222,7 @@ techniques, command ids in backticks, and what the form does that a static model
 process, material, how to make it: print settings, cut and bend order, finish); *Parameters* (groups, ranges, what
 each changes); *Checks* (the assertions in words, what the range check covers, what it does not); *Export* (what to
 send to which machine); *Files*; *Rebuild*; *Difficulty* (the reviewer's score out of 10 and one line why); *Platform
-notes* (links to `3DCRAFT-FEEDBACK.md` entries, if any). Every claim must be true of the model.
+notes* (links to `3DCRAFT-FEEDBACK.md` entries, if any); *Licence*. Every claim must be true of the model.
 
 **`meta.json`**:
 

@@ -222,3 +222,7 @@ tools/jigs.py check geodesic-dome
 - A bolt hole that the kerf cuts in two is reported as one face
   ([J-023](../../3DCRAFT-FEEDBACK.md#j-023-a-face-cut-in-two-by-a-boolean-counts-as-one-face-see-f-141)): the bolt-hole count
   assertion counts one face per hole.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

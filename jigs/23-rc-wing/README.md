@@ -142,3 +142,7 @@ tools/jigs.py check rc-wing
 - New entries proposed from this Jig: `sketch.line` and `sketch.point` coordinate expressions stop at 1000 characters while `sketch.curve` and variables take longer ones (`findings/J-069-expression-size-caps`). Between bodies that come close and nearly tangent the Jig proves the gap with `measure.clearance` rather than `measure.overlap`, which was slow on such a pair while it was built.
 - The film is modelled 0.5 mm off the frame (real film is far thinner) so that it does not fight with the frame in the render; `Film` is a picture of the covering, not a part with a thickness to cut.
 - Sharp edges and flat ends of the plates stay as cut: the real ribs and strips are sanded by the builder, which is not modelled.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

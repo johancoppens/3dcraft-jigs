@@ -334,3 +334,7 @@ steel pins and bearings read neutral grey; the renderer's reflections are on and
   copies, each with the planet formula for its k.
 - `variable.measure` takes no `when`, so an output measured only in one view would be measured in every view
   ([finding](../../findings/J-057-variable-measure-no-when/repro.json)); the measured gaps are assertions, not outputs.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

@@ -188,3 +188,7 @@ tools/jigs.py check keyboard-plate
   the thin walls are proven by distances from a screw hole to the plate's edge instead.
 - A slit between strips cannot be reported by the kernel: the Jig excludes it by the border's range and proves it
   with a section along each thumb column.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

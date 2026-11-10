@@ -230,3 +230,7 @@ The preview is rendered without reflections (`look.reflections: false`): with th
   is turned with it, so no plane comes within 0.08 mm of tangent to any hole over the range.
 - A mesh export takes body names, never a named set ([finding](../../findings/J-045-3d-export-set/repro.json)):
   the printed parts are the whole of the print layout, so *The model* exports just them.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

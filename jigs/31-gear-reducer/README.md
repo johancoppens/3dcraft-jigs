@@ -352,3 +352,7 @@ images of the other wheel.
   are arcs and planes), but the teeth's ends are left square: a chamfer along a chain of tooth flanks is refused
   ([finding](../../findings/J-047-chamfer-freeform-rim/tooth-chain.json), from the planetary gearbox). The machine shop
   deburrs them as usual.
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).

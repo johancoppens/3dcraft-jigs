@@ -208,3 +208,7 @@ tools/jigs.py check astrolabe
 - **Dark engraving** comes from dark bodies, not from the colour of a cut's faces (F-025).
 - **File size.** The font is stored in the document, 332 KB of the file's 977 KB (F-037); with it the limb carries one set of numerals.
 - **Engraved lines as closed slots.** A stroke along an open curve is not available (J-017): each azimuth is a closed profile; a named set cannot hold a sketch for single-stroke engraving (J-007).
+
+## Licence
+
+[CC BY 4.0](../../LICENSE-CC-BY-4.0.md); credit line in the [README](../../README.md#licence).
