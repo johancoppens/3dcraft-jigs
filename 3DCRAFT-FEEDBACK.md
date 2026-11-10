@@ -1,5 +1,13 @@
 # 3DCraft feedback from the Jigs
 
+> **About this file.** While the Jigs were built, everything 3DCraft got wrong or could not yet do was written
+> down here rather than worked around in silence: bugs, each with a minimal reproducer under `findings/`, missing
+> capabilities, performance with numbers, and friction for an agent that drives 3DCraft through its commands. It
+> is a dated record against the 3DCraft commits named below, not a list of known issues of the current release.
+> Entries fixed since say so in their status line, "R1" is the milestone that became 3DCraft 0.1.0, and "3DCraft's
+> session" is the agent session that works on 3DCraft itself. To see whether an entry still holds in your version,
+> run its reproducer with `craft3d-cli run --new '{"units":"mm"}' --script findings/<id>/repro.json`.
+
 What building the Jigs found in 3DCraft: bugs, missing capabilities, performance and agent friction (AGENTS.md §7).
 Collected here, never fixed from this repository. Ids are `J-nnn`; an entry that the examples already reported cites its
 `F-nnn` in the examples' [`3DCRAFT-FEEDBACK.md`](https://github.com/johancoppens/3dcraft-examples/blob/main/3DCRAFT-FEEDBACK.md). Each entry was reproduced at the pin, 3DCraft `150f0015`, unless

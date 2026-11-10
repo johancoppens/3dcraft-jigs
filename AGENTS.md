@@ -1,5 +1,13 @@
 # AGENTS.md: guide for AI agents working on the 3DCraft Jigs
 
+> **About this file.** This is the working brief that the AI agents followed while they built, rebuilt and
+> reviewed these 33 Jigs in November 2026. It is published as it was used, so you can see how each Jig was made,
+> proven over its range and form-tested. It is addressed to those agents: "the developer" is 3DCraft's author,
+> "the coordinator" is the agent session that briefed the others and made every commit, and §8 names the AI models
+> and effort levels that did the work. The memory caps and the timings "on a reference machine" describe that
+> workshop, and `log/`, `plan/`, `.scratch/` and `site/` were local folders that are not in this repository. To use
+> a Jig you need only [README.md](README.md); the bar in §4 is also the bar a contribution is held to.
+
 This repository holds **33 Jigs** for [3DCraft](https://github.com/johancoppens/3dcraft), the parametric CAD
 modeller built for AI. A Jig is a design whose driving variables are published as parameters: someone opens it,
 sets a form, and 3DCraft regenerates a new model and its manufacturing files. No AI and no code run. Together the
@@ -25,8 +33,8 @@ cannot reach the bar is thrown away.
   [`3DCRAFT-FEEDBACK.md`](3DCRAFT-FEEDBACK.md) (§7); the developer takes it to 3DCraft in one go. Do not build
   around a limit in silence.
 - **Jigs only: no assemblies.** No `assembly.*`, `instance.*`, `mate.*`, `joint.*`, `coupling.*` or motion
-  commands: assemblies get a repository of their own later (the last ones are at the git tag
-  `assemblies-format-58`). A mechanism moves in a Jig through a **drive parameter**: a published angle or position
+  commands: assemblies have a repository of their own,
+  [3dcraft-assemblies-examples](https://github.com/johancoppens/3dcraft-assemblies-examples). A mechanism moves in a Jig through a **drive parameter**: a published angle or position
   that places its parts by formulas, so the form's slider runs it (§4.1).
 - **Original designs.** Generic types (a Dobsonian mount, a Gridfinity-compatible bin, a Jansen linkage) are fine and
   are credited; a brand's specific design, logo or name is not. Text uses 3DCraft's bundled fonts; never commit font
@@ -280,7 +288,7 @@ README, not a real Jig by §4.1), **SHOULD** or **NIT**, each with its evidence 
 standard, a point of the range), and the difficulty score with one line why. Builder and reviewer loop until no MUST is
 open; the same reviewer is continued for the re-review.
 
-**What reviews keep finding** (eleven Jigs so far; look for these yourself before handing in, it saves a round):
+**What reviews keep finding** (over the 33 Jigs; look for these yourself before handing in, it saves a round):
 - An assertion that restates a formula instead of measuring the model: do a mutation test (break the geometry in a scratch
   copy) and see that an assertion notices. A loosened fit, a moved hole, a wrong ratio must fail something.
 - A failure inside the published range that sampling missed: an unmakeable slit or a thin web, a model that does not build
