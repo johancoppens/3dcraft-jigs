@@ -1,4 +1,4 @@
-# Form test: strandbeest-leg
+# Form test: jansen-leg
 
 "I am building a small wind-walker for the garden, in the spirit of Theo Jansen's beach animals. I want to start with
 one walking module: two legs on one crank axle, working against each other, so that one foot is always on the ground.

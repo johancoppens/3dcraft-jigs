@@ -49,11 +49,11 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 | J-024 | Bug | A sketch arc's radius drifts below its value after re-solves, and `radius: {min}` has no tolerance | cubesat | The bound is written 0.001 mm under the standard's. |
 | J-025 | Bug | `overlap` cannot decide plates that touch at zero clearance after `param.set` (see F-130) | welded-box | The overlap checks are off at 0 clearance. |
 | J-026 | Bug | `overlap` errors on a feature switched off by `when` instead of skipping it | rack-cabinet, wooden-stair | The bodies are given by a query, or the assertion is split. |
-| J-027 | Bug (proof weakness) | The extent of a swept body is not proven to the tolerance, and a sweep's path length cannot be read (see F-117, F-122) | strandbeest-leg | The step length is checked within 0.005 mm plus 50 millionths of it. |
+| J-027 | Bug (proof weakness) | The extent of a swept body is not proven to the tolerance, and a sweep's path length cannot be read (see F-117, F-122) | jansen-leg | The step length is checked within 0.005 mm plus 50 millionths of it. |
 | J-028 | Bug | A feature switched off by `when` still takes its source body, so alternatives cannot share a source | tensegrity-table | One chain of features per alternative. |
 | J-029 | Bug | A fillet cannot be added while the bodies it joins are switched off | gear-reducer | The build switches the option on while it adds the round. |
 | J-030 | Bug | Chamfering the rim of a rectangular opening is refused (see F-033) | tuned-chimes | The opening stays square-edged. |
-| J-031 | Bug | A closed path of formula-curve pieces that meet end to end is refused for a sweep | strandbeest-leg | Four open sweeps instead of one closed one. |
+| J-031 | Bug | A closed path of formula-curve pieces that meet end to end is refused for a sweep | jansen-leg | Four open sweeps instead of one closed one. |
 | J-032 | Bug | Joining two sweeps that start from one section sketch fails at the shared end (see F-113) | wooden-stair | The rail's returned ends are separate bodies. |
 | J-033 | Bug | A sketch arc given by a through-point loses its centre when it flips or flattens, and can leave a document unrecoverable (see F-112, F-113) | loudspeaker-box | Every arc is given by a centre written as a formula. |
 | J-034 | Bug | A spline through points strays between them far more than a cubic interpolant | planetary-gearbox, gear-reducer | Flanks are circular arcs. |
@@ -63,7 +63,7 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 | J-038 | Bug (suspected) | Glue tabs folded with a net are refused near closure | polyhedron-net | Tabs on the flat pattern only. |
 | J-039 | Bug | A cut by thirteen rows of text is refused for memory, after 28 s and 2.5 GB (see F-034) | tuned-chimes | Lettering as holes in the strips, not pockets. |
 | J-040 | Bug | A face colour given on a feature is hidden when the body's colour is given on a later feature | dobsonian-telescope, cubesat | Face colours are given on the final feature's face names. |
-| J-041 | Bug | A material pattern stays in the model's space when its body is turned (see F-083) | strandbeest-leg | Cosmetic: the grain runs at a slant. |
+| J-041 | Bug | A material pattern stays in the model's space when its body is turned (see F-083) | jansen-leg | Cosmetic: the grain runs at a slant. |
 | J-042 | Bug (cosmetic) | `cut.list` prints a turned plate's thickness with rounding noise | solar-cooker | The csv shows 3.0000000000001705. |
 | J-043 | Missing capability | A flat face or a plate cannot be exported as seen from a chosen side (see F-086) | sundial | Kerf in the bodies; edges left square. |
 | J-044 | Missing capability | A named set exports each face in its own place on the sheet, not where it lies (see F-142) | astrolabe, sundial, tuned-chimes, wooden-stair | Engravings drawn as one face; marks placed by hand. |
@@ -76,8 +76,8 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 | J-051 | Missing capability | A body folded flat cannot be built on or moved | miura-ori | At 100 % the folded pack is not levelled. |
 | J-052 | Missing capability | `feature.transform` cannot place a body by a target frame | geodesic-dome | Nine helper variables per placement. |
 | J-053 | Missing capability | `metallic`, `roughness` and `transmission` take numbers only, so a material look cannot follow a choice | keyboard-plate, gt2-pulley, rack-cabinet, sheet-metal-enclosure, dobsonian-telescope | Materials differ in colour only, or a body per look. |
-| J-054 | Missing capability | An expression cannot define a function or a local name | sundial, strandbeest-leg, orrery | Formulas written out per instance. |
-| J-055 | Missing capability | No maximum, minimum or root of a formula over an interval | cam-disc, strandbeest-leg | Peaks sampled; searches written out. |
+| J-054 | Missing capability | An expression cannot define a function or a local name | sundial, jansen-leg, orrery | Formulas written out per instance. |
+| J-055 | Missing capability | No maximum, minimum or root of a formula over an interval | cam-disc, jansen-leg | Peaks sampled; searches written out. |
 | J-056 | Missing capability | No frequency or electrical units: Hz, V, A, W, h, mAh, Wh (see F-106) | loudspeaker-box, tuned-chimes, cubesat | Plain numbers with the unit in the label. |
 | J-057 | Missing capability | `variable.measure` takes no `when` | planetary-gearbox, cubesat | Measured gaps are assertions, not outputs. |
 | J-058 | Missing capability | An output used only by assertions cannot be kept off the form | solar-cooker | Checks measure inside the assertions. |
@@ -280,7 +280,7 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 
 ## J-027: The extent of a swept body is not proven to the tolerance, and a sweep's path length cannot be read (see F-117, F-122)
 
-- **Kind:** bug (proof weakness). **Jig:** strandbeest-leg.
+- **Kind:** bug (proof weakness). **Jig:** jansen-leg.
 - **What happens, and what should:** The `extent` along x of a ribbon swept along a formula path is found as 82.0108 mm with at most 82.0109 mm, 1.4e-4 mm apart at a tolerance of 1e-6 mm, so the output is unknown. The sweep reports its path's length (82.94 mm), but no variable or output can read it.
 - **Reproducer:** `findings/J-027-sweep-extent-unproven/repro.json`
 - **Workaround and impact:** The step length is the search's, and an assertion holds the drawn path to it within 0.005 mm plus 50 millionths of the step (0.010 mm at the defaults).
@@ -308,7 +308,7 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 
 ## J-031: A closed path of formula-curve pieces that meet end to end is refused for a sweep
 
-- **Kind:** bug. **Jig:** strandbeest-leg.
+- **Kind:** bug. **Jig:** jansen-leg.
 - **What happens, and what should:** Three `sketch.curve` pieces of one smooth planar formula, sharing their end points and each fitted within 5e-7 mm, are refused as a sweep path: "the profile comes back 0.0000276 from where it started". A planar closed path of tangent pieces should sweep closed, the fits' small tangent errors absorbed.
 - **Reproducer:** `findings/J-031-sweep-joined-curves-open/repro.json`
 - **Workaround and impact:** The ribbon is four open sweeps, each starting where its tangent is level.
@@ -378,7 +378,7 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 
 ## J-041: A material pattern stays in the model's space when its body is turned (see F-083)
 
-- **Kind:** bug. **Jig:** strandbeest-leg.
+- **Kind:** bug. **Jig:** jansen-leg.
 - **What happens, and what should:** A walnut bar turned 60 deg by `feature.transform` keeps the grain of the unturned bar, so it runs across the part (`grain.png`). A transform should carry the pattern's frame with the body.
 - **Reproducer:** `findings/J-041-pattern-stays-when-turned/repro.json`
 - **Workaround and impact:** None: the grain of the turning bars runs at a slant and drifts as the crank turns.
@@ -469,17 +469,17 @@ J-028 if it stays small; the rest is ordered for after R1 (J-018 first, J-015 wi
 
 ## J-054: An expression cannot define a function or a local name
 
-- **Kind:** missing capability. **Jig:** sundial, strandbeest-leg, orrery.
+- **Kind:** missing capability. **Jig:** sundial, jansen-leg, orrery.
 - **What happens, and what should:** `hour_line(k) = ...` is refused ("invalid character '('"), and an expression has no `let`, so one formula applied to many inputs is written once per input, and a sub-expression used twice is written twice. With a pattern index (J-011) one formula would draw every instance.
 - **Reproducer:** `findings/J-054-expression-functions/repro.json` (the last step is refused)
-- **Workaround and impact:** The sundial writes its formulas per hour (204 of its 363 variables); the strandbeest writes the foot's position 35 times, 2.6 to 3.8 kB each; the orrery gives each gear about 25 variables of the same formulas.
+- **Workaround and impact:** The sundial writes its formulas per hour (204 of its 363 variables); the Jansen leg writes the foot's position 35 times, 2.6 to 3.8 kB each; the orrery gives each gear about 25 variables of the same formulas.
 
 ## J-055: No maximum, minimum or root of a formula over an interval
 
-- **Kind:** missing capability. **Jig:** cam-disc, strandbeest-leg.
+- **Kind:** missing capability. **Jig:** cam-disc, jansen-leg.
 - **What happens, and what should:** A design limit is often the extreme of a formula (a cam's pressure angle, a linkage's stride). There is no `max` or root of a formula over an interval, and a body's `boxMax` on the plotted curve is an unknown output (found 30.47367 mm, at most 30.47506 mm; compare F-057).
 - **Reproducer:** `findings/J-055-extremum-of-a-formula/repro.json`
-- **Workaround and impact:** The cam samples its peaks in about 150 variables; the strandbeest writes out parabolic and secant searches.
+- **Workaround and impact:** The cam samples its peaks in about 150 variables; the Jansen leg writes out parabolic and secant searches.
 
 ## J-056: No frequency or electrical units: Hz, V, A, W, h, mAh, Wh (see F-106)
 

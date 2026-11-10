@@ -244,14 +244,14 @@ does: at the cap the parts on one layer keep 0.28 crank radii apart.
 
 - `build.json`: the source, a JSON list of 3DCraft commands.
 - `meta.json`, `formtest.md`, `preview.png`.
-- [`strandbeest-leg.3dcraftjig`](strandbeest-leg.3dcraftjig): the published Jig.
+- [`jansen-leg.3dcraftjig`](jansen-leg.3dcraftjig): the published Jig.
 
 ## Rebuild
 
 ```bash
-tools/jigs.py build strandbeest-leg
-tools/jigs.py render strandbeest-leg
-tools/jigs.py check strandbeest-leg
+tools/jigs.py build jansen-leg
+tools/jigs.py render jansen-leg
+tools/jigs.py check jansen-leg
 ```
 
 ## Difficulty

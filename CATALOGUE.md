@@ -197,9 +197,10 @@ order the catalogue was first written. No Jig ended in the simple tier: the simp
   `cut.export` accepts is exactly what AGENTS.md §3 rules out; report the gap (per-instance formulas in a pattern; a
   pattern of separate plates in `cut.list`) with the probe's reproducer.
 
-### 24. Jansen linkage leg · `strandbeest-leg` · mechanisms · kept
+### 24. Jansen linkage leg · `jansen-leg` · mechanisms · kept
 - **Must improve:** names; a drive angle at the top of the form; foot path drawn; a pair of legs as an option; assembly
-  removed. The title stays "Jansen linkage": the name "Strandbeest" is Theo Jansen's; the id stays.
+  removed. The title stays "Jansen linkage": the name "Strandbeest" is Theo Jansen's, so the id
+  became `jansen-leg` (2026-11-10).
 - **Look:** plywood bars, walnut triangles, brass pins.
 
 ### 25. Dobsonian telescope · `dobsonian-telescope` · woodwork, optics · new
