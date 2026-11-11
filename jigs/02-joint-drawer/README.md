@@ -154,7 +154,7 @@ The 21 assertions, all passing at the defaults:
 - Width and height on the model equal the opening less the clearances, and the top gap covers the season's swelling.
 
 `tools/jigs.py check` runs `check-range`: 106 points (defaults, 64 corners, every choice, 32 random), all passing, none
-unproven, slowest 0.09 s (`meta.json`). Combinations meant to break it, tried by hand with `param.set`: the top gap below the swelling
+unproven, slowest 0.05 s (`meta.json`). Combinations meant to break it, tried by hand with `param.set`: the top gap below the swelling
 is refused, a side thinner than the size allows is refused, a pull past 75 or a front under 20 mm is refused, and changing
 the height or timber under a too-small gap is refused unless it is set together (the form clamps it instead); the smallest
 even-layout drawer in softwood, the smallest half-blind and the smallest box-jointed one pass.

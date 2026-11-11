@@ -232,7 +232,7 @@ its gears span.
   so does the Earth's carrier (0.87 mm).
 
 **Over the range.** `tools/jigs.py check` runs `check-range` (the defaults, 64 corners of the box of the
-ranges, every choice, 32 random points from seed 1): 102 points pass, none unproven, the slowest in 0.24 s (0.16 s on
+ranges, every choice, 32 random points from seed 1): 102 points pass, none unproven, the slowest in 0.22 s (0.16 s on
 average, `meta.json`). Because ten parameters give 1 024 corners, a grid was also run by hand (`param.set`, then `document.check`):
 every choice of planets and the Moon, the module at the least and the most the form then allows, small and large beads,
 each with the error and the span at both ends of their ranges (set in that order, as the ranges depend on each other),

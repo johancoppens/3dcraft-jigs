@@ -173,7 +173,7 @@ mm²); a bump of 0.5 mm in the saddle's profile (*Birch sections are the saddle'
 348 677 mm²). The reviewer found that half-slot-wide strips let a slot moved 0.8 to 1.5 mm pass, and that the
 ball had no position check; both are what the full-width strips now catch.
 
-`tools/jigs.py check` runs `check-range` (the defaults, 64 corners, every choice, 32 random points): 99 points, all passed, none unproven (after the fixes in Platform notes; slowest point 1.64 s, `meta.json`). That is a sample of the range, not every value. It does not
+`tools/jigs.py check` runs `check-range` (the defaults, 64 corners, every choice, 32 random points): 99 points, all passed, none unproven (after the fixes in Platform notes; slowest point 1.62 s, `meta.json`). That is a sample of the range, not every value. It does not
 check the fit of a real sheet in a real slot (cut two test slices first) nor the strength of the sculpture.
 
 ## Export

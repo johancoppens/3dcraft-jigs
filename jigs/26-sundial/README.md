@@ -220,8 +220,8 @@ and size found the narrowest gap between numerals 1.10 times the widest numeral 
 at 51° N turned 50° east, the clock 1.8 hours off the sun).
 
 **Range.** `tools/jigs.py check` runs `check-range`: 111 points (the defaults, 64 corners of the box of the ranges, every
-choice, 32 random from seed 1), all passing and none unproven; the slowest took 0.33 s and the mean 0.22 s
-(`meta.json`; budget for the slowest point 12 s). The opening time is the tool's, `stats.load_s` in `meta.json`: 0.97 s
+choice, 32 random from seed 1), all passing and none unproven; the slowest took 0.30 s and the mean 0.22 s
+(`meta.json`; budget for the slowest point 12 s). The opening time is the tool's, `stats.load_s` in `meta.json`: 1.29 s
 (budget 4 s). The file is 879 KB.
 Beyond it, during the build:
 

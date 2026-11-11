@@ -368,7 +368,7 @@ Deployment 0, as the CDS asks; the others always, or when what they check is the
     diameter. The standoff check above bounds it.
 
 **Over the range.** `tools/jigs.py check` runs `check-range`: the defaults, 64 corners of the box of the ranges, every
-choice and 32 random points from seed 1, 107 points, all passing; the slowest regenerates in 0.22 s. Nine
+choice and 32 random points from seed 1, 107 points, all passing; the slowest regenerates in 0.21 s. Nine
 coupled ranges are seen only in slivers that way, so a grid through the form was also scanned, setting it as a maker would
 (clamped into the ranges the form shows; an unpublished check: its script is not in this repository):
 

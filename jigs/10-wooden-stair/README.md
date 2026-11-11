@@ -142,7 +142,7 @@ opening of 1 500 mm, a width of 700 mm, a 30 mm tread at 1 300 mm wide, a thin s
 floor 2 200 mm, a 500 mm floor, and under the Flemish rule 3 300 mm floor to floor, a balustrade and a single rail.
 
 `tools/jigs.py check` runs `check-range`: 101 points (the defaults, the corners of the box of the ranges, every choice, 32
-random points from seed 1), all passing, none unproven; slowest point 0.18 s, mean 0.09 s, load 0.35 s (`meta.json`)
+random points from seed 1), all passing, none unproven; slowest point 0.11 s, mean 0.05 s, load 0.33 s (`meta.json`)
 (budget for a difficult Jig: load 2 s, slowest point 6 s).
 
 Not checked, by assertion or otherwise: anything beyond the dimensions in the table above, the strength of the joints and

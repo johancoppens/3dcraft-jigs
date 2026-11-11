@@ -259,7 +259,7 @@ of 85 mm radius, a short ground cross, 2 mm holes for the arms' bolts or the han
 
 **Range check.** `tools/jigs.py check` runs `check-range`: 97 points (the defaults, 64 of the 256
 corners of the box of the ranges and 32 random points from seed 1), all passing, none unproven; the slowest took
-0.84 s (`meta.json`). By hand with `param.set`: the sun from 20° to
+0.78 s (`meta.json`). By hand with `param.set`: the sun from 20° to
 90° at the defaults (the light's margin from 10.3 mm at 20° to 48.2 mm at 90°), and the extremes that each assertion
 lives on, each at 20° of sun with the fewest petals the form allows there, the margin against half the sun's image
 plus half a degree of aim: a 140 × 250 mm pot in its largest dish at f/D 0.5 (1 300 mm, 36 petals: 11.6 mm against

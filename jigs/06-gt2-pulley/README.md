@@ -124,7 +124,7 @@ of the check:
 
 The distances carry a margin of 0.01 mm because the sharpest cases sit exactly on the limit.
 
-`tools/jigs.py check` runs `check-range`: 111 points (the defaults, up to 64 corners, every choice, 32 random points), all passing, none unproven, slowest 3.1 s (`meta.json`). The ranges were also tried with `param.set` at about 180 combinations that could break
+`tools/jigs.py check` runs `check-range`: 111 points (the defaults, up to 64 corners, every choice, 32 random points), all passing, none unproven, slowest 1.3 s (`meta.json`). The ranges were also tried with `param.set` at about 180 combinations that could break
 them: machined and printed, every bore type, flanges and hub on and off, M2.5 to M4 screws, 6 and 15 mm belts, the
 fewest teeth (and 60 for part of the machined set), the smallest and largest shaft, the largest groove fit and the
 shortest hub; all passed. Earlier review found that

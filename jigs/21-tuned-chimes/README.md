@@ -223,7 +223,7 @@ striker height of 0.7 of the shortest tube (node margin: 0.076), the reading app
 the balance point or the ring moved (balance, ring), a frame pin hole left out (frame underside).
 
 `tools/jigs.py check` runs `check-range`: 144 points (the defaults, up to 64 corners of the box of the ranges, every other
-choice and 32 random points from seed 1), all pass, none unproven, the slowest 1.22 s (`meta.json`; budget 12 s). By hand with `param.set`: flat and sharp readings of 13 cents, the
+choice and 32 random points from seed 1), all pass, none unproven, the slowest 1.21 s (`meta.json`; budget 12 s). By hand with `param.set`: flat and sharp readings of 13 cents, the
 glockenspiel with 8 and 12 bars, and three 12 mm stainless tubes at 1 m/s (the sail at its cap, 70 x 99 mm, ringing at
 2.2 m/s). The closed form holds to 1.7 cents for L / r at 30 and above, as far as the sweep covers; the independent solver
 differs from the model by at most 3 cents for the default chime (closed form plus 0.5 mm rounding). The assertions prove the geometry is the formula's, not that the metal obeys it;

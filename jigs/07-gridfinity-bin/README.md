@@ -116,7 +116,7 @@ To keep them light on a large bin, the lip band, the first foot, the wall and th
 first unit, row or column; the others are pattern copies.
 
 `tools/jigs.py check` runs `check-range`: 103 points (the defaults, 64 corners of the box of the ranges, every choice and 32
-random points from seed 1), all passing, none unproven; the slowest regeneration takes 1.48 s (`meta.json`). Most corners
+random points from seed 1), all passing, none unproven; the slowest regeneration takes 0.74 s (`meta.json`). Most corners
 are not in that sample, so the combinations that should break the Jig were tried by hand with `param.set`. A label tab on a
 2-unit bin, the lip with a 2.4 mm wall, and more than 48 compartments are refused, with the range that applies. These pass
 with the gauges on: the largest bins the form allows (6 x 6 x 15 with 12 x 4 and 8 x 6 compartments, magnets and screws), 1 x
