@@ -83,17 +83,18 @@
     "features": 62,
     "assertions": 19,
     "warnings": 0,
-    "build_s": 17.17,
+    "build_s": 4.84,
     "load_s": 0.96,
     "load_cpu_s": 3.7,
     "file_bytes": 352400,
     "range_points": 99,
     "range_unproven": 0,
     "range_mean_s": 0.37,
-    "range_worst_s": 1.64
+    "range_worst_s": 1.62
   },
   "craft3d": {
-    "commit": "843981c20577",
+    "commit": "b99d70cfe19e",
+    "version": "0.1.0",
     "format_version": 69
   }
 }
