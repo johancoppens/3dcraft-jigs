@@ -95,6 +95,9 @@ inside each rebuilt `.3dcraftjig` (its `manifest.json`) byte for byte with the c
 write other bytes. `--version` names the version, the commit and the file format, and nothing in it tells the
 released 0.1.0 from a development build that still carries the same version number: the tool accepts both, and with
 a build that is not the pinned commit, `check` may report Jigs as stale that differ only in their bytes.
+The release 0.1.0 was cut a few commits after the pinned one (the program bundles files built at the pin, and its
+guide's pictures follow), and those commits change nothing in the engine or the command line, so a real 0.1.0
+reports another commit and is accepted as the release.
 
 To rebuild and check one Jig with the installed 3DCraft 0.1.0:
 
