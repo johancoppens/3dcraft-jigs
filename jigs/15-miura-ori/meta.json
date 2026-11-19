@@ -85,7 +85,7 @@
     "assertions": 22,
     "warnings": 0,
     "build_s": 0.27,
-    "load_s": 0.06,
+    "load_s": 0.05,
     "load_cpu_s": 0.06,
     "file_bytes": 84898,
     "range_points": 105,

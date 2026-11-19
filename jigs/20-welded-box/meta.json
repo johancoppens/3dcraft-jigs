@@ -89,14 +89,14 @@
     "features": 77,
     "assertions": 62,
     "warnings": 0,
-    "build_s": 15.14,
-    "load_s": 0.92,
-    "load_cpu_s": 2.35,
+    "build_s": 10.97,
+    "load_s": 0.79,
+    "load_cpu_s": 2.15,
     "file_bytes": 547331,
     "range_points": 109,
     "range_unproven": 0,
-    "range_mean_s": 0.25,
-    "range_worst_s": 1.46
+    "range_mean_s": 0.21,
+    "range_worst_s": 0.89
   },
   "craft3d": {
     "commit": "c7cab24f8953",

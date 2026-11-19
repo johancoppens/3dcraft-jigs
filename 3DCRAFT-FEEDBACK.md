@@ -633,9 +633,10 @@ between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-02
   in as separate bodies and the spar is proven clear of each)
 - **Workaround and impact:** None: the 8 points are listed in the Jig's `meta.json` `range_known`, granted for it, and
   its page says so under Checks. The check fails once a point passes, so the listing goes when 3DCraft is fixed. The
-  Jig opens about a tenth slower than with 0.1.3: 2.85 to 3.00 s against 2.54 to 2.83 s in 3DCraft's measurement for
-  the release (main at `0c8fc79a`; three runs each, back to back, the same reading commands), a ratio of 1.11, where the median of the 112
-  documents measured was 1.02; the cause was not traced.
+  Jig also opens slower than with 0.1.3, inside its budget: by `craft3d-cli info` on a quiet machine, five runs each
+  alternating, 2.30 to 2.60 s (5.8 to 6.5 s of CPU) against 1.78 to 1.96 s (4.9 to 5.4 s) for the 0.1.0 file on 0.1.3,
+  about 1.3 times; 3DCraft's own measurement for the release (main at `0c8fc79a`, three runs each with a set of reading
+  commands) found 1.11 times, where the median of the 112 documents it measured was 1.02. The cause was not traced.
 
 ## J-073: A wheel's clearance on its shaft cannot be measured where the keyway lies exactly on the shaft's axis
 
