@@ -63,6 +63,7 @@ site/ log/ plan/        local only (gitignored): the web folder tools/jigs.py si
 |---|---|---|
 | `build.json` | **The source**: a JSON list of `[command, params]` steps run in a new document, ending with `document.check`. No file paths, no `file.*` or `jig.*` steps: the tool saves and publishes. | hand |
 | `meta.json` | title, card summary, domain, tier, difficulty, standards, materials, licence, preview framing, exports | hand; `stats` and `craft3d` written by the tool |
+| `meta.json` `renewed` | `{"version", "note"}`: the release whose features the Jig was rebuilt to use, and what is new in it in a few words for the card (lower case, no full stop, no command names) | hand; set when a Jig is rebuilt to use a release's features, cleared never; the web site's gallery shows it |
 | `meta.json` `budget_exception` | the reason a Jig may load slower or weigh more than its tier's budget (§4.5) | granted by the coordinator, with the reason |
 | `meta.json` `range_known` | `{"reason", "found_by", "points": [{"values", "assertions", "problem", "feedback"}]}`: range points where a limit of 3DCraft keeps assertions from passing, each with the values `check-range` gives it, the assertions, the start of their error (`cannot be measured`) and the `J-nnn` entry; `found_by` names the range arguments, since other points can meet the limit too (§4.7) | granted by the coordinator, with the reason; `check` fails when a listed point passes, so the entry goes when 3DCraft is fixed |
 | `README.md`, `formtest.md` | the Jig's page and its form test (§6) | hand |

@@ -206,10 +206,14 @@ its gears span.
   each train's turns per year against the real body's.
 - **The gears mesh (measured).** No two stage-one gears overlap, nor two stage-two or Moon gears, nor a stage-one gear a
   stage-two gear: each mesh has its teeth in the other's spaces and every gear keeps to its layer. Each pair of a mesh is
-  measured to lie in one layer (the two gears together one sheet thick: 14 pairs and the Moon's five). The distance
-  between the input and lay arbors, and between the lay arbor and the centre post, is measured and must be the module
-  times half of Mercury's tooth sums (less a rod); *every pair of a stage has that stage's tooth sum*; for the Moon's
-  gears the Earth's spindle and the first idler pin are measured from the centre post against their tooth sums. Gear A of
+  measured to lie in one layer (the two gears together one sheet thick: 14 pairs and the Moon's five). The centre
+  distance between the input and lay arbors, and between the lay arbor and the centre post, is measured between their
+  axes (`between`, as a centre distance) and must be the module times half of Mercury's tooth sums, to 0.001 mm (81 and
+  87.75 mm at the defaults); *every pair of a stage has that stage's tooth sum*; for the Moon's gears the centre
+  distances from the centre post to the Earth's spindle and to the first idler pin are measured the same way against
+  their tooth sums. Measured between axes, they check the distance the gears mesh at itself, not a gap between rods
+  that also depends on the rods' diameters (the lay arbor or the first idler pin moved 0.01 mm, tried, fails them; the
+  lay arbor 0.1 mm thicker in its place does not). Gear A of
   Mercury and gear D of the Earth are measured against the closed-form area of their tooth outline (Green's theorem over
   the root, flank and tip arcs). The gears are counted (33 at the defaults).
 - **The Moon's train stands on something (measured).** Each idler and the Earth wheel stands on its washer, the washers
