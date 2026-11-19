@@ -99,6 +99,7 @@ entry's reproducer shows whether it still holds in your version.
 | J-070 | Agent friction | A curvature assertion's `at` takes plain numbers only (see F-094) | dobsonian-telescope | The curvature is measured on an unmoved copy. |
 | J-071 | Missing capability | `extent`, `boxMin` and `boxMax` measure bodies only, not faces | cubesat | The countersunk screw heads are drawn and their overlap with the rail is measured. |
 | J-072 | Bug | A clearance of bodies found 0.05 mm apart cannot be measured: the kernel's interference check stalls on them | rc-wing (rebuild 0.2.0) | 8 of 133 range points listed in `range_known`; nothing worked round. |
+| J-073 | Bug | A wheel's clearance on its shaft cannot be measured where the keyway lies exactly on the shaft's axis | gear-reducer (rebuild 0.2.0) | 1 of 104 range points listed in `range_known`; nothing worked round. |
 
 ## J-001: a Jig's thumbnail cannot be given a view or a look
 
@@ -619,3 +620,23 @@ entry's reproducer shows whether it still holds in your version.
   its page says so under Checks. The check fails once a point passes, so the listing goes when 3DCraft is fixed. The
   Jig also opened slower than with 0.1.3, side by side on the same busy machine (3.9 to 4.7 s against 3.0 to 3.5 s at
   its defaults); the cause was not traced.
+
+## J-073: A wheel's clearance on its shaft cannot be measured where the keyway lies exactly on the shaft's axis
+
+- **Kind:** bug (a known limitation of 3DCraft 0.2.0). **Jig:** gear-reducer. **3DCraft:** `c7cab24f` (0.2.0).
+- **What happens, and what should:** At one point of the Jig's range check (ratio 8, 1500 rpm, uniform load, 42CrMo4,
+  0.5 kW, a 10 mm wall, *Machined parts*), *Wheel 2 does not overlap the intermediate shaft* and *Wheel 4 does not
+  overlap the output shaft* (`clearance` at most 0.001 mm) cannot be measured: "an imprinted curve that does not fit
+  the edges it should coincide with (at the edge of tolerance)" and "a curve that is partly on and partly off a face
+  boundary (at the edge of tolerance)". Each wheel's bore sits on its seat by design, so the answer should be `touch`,
+  which 3DCraft 0.1.x gives at the same point. Since 0.2.0 a point held at a value is exactly that value, so the
+  keyway's slot is centred exactly on the shaft's axis; the shaft then has one more edge and vertex, and the contact
+  check cannot place a curve that lies exactly on that face's border. 3DCraft writes it up as owed: the release notes
+  of 0.2.0 (*Known limitations*) and `docs/design/booleans.md` › *Contact refused where a curve lies exactly on a
+  face's border* (2026-11-19, on 3DCraft's branch after 0.2.0), which says that a reduction to two bodies and one
+  command, made from this Jig, is kept in 3DCraft's workshop.
+- **Reproducer:** `findings/J-073-contact-curve-on-face-border/repro.json`, run with `--new
+  '{"units":"mm","tolerance":0.01}' --keep-going` (the Jig's script, then the point and the two clearances; its README
+  gives the same as one command on the published Jig)
+- **Workaround and impact:** None: the point is listed in the Jig's `meta.json` `range_known`, granted for it, and its
+  page says so under Checks. The check fails once the point passes, so the listing goes when 3DCraft is fixed.

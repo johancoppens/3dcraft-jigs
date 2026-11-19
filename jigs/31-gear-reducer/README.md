@@ -239,8 +239,9 @@ the wheels' seats; the formula checks run in every view. The fits are therefore 
   lifts the key into the hub, tried, fails it), nor the spacers the bearings. Each wheel bears on its shaft's collar
   with its rim and on its spacer with its hub, and each spacer on the bearing's inner ring, with no end play (wheel 4
   moved 3 mm along its shaft, wheel 2's spacer 3 mm short and wheel 4's hub 3 mm short, tried, fail them). Each pair of bearings lies on its shaft
-  seats and in its housing bores; the bearing bores lie m (z1 + z2) / 2 apart with the teeth counted, less the
-  bearings' radii, within 0.01 mm (a bore moved 0.5 mm, tried, fails it); wheel 2 clears the output shaft and pinion 3
+  seats and in its housing bores; the bearing bores' axes lie m (z1 + z2) / 2 apart with the teeth counted, measured
+  between the axes (`between`, as a centre distance: 132.5 and 177.5 mm at the defaults), within 0.01 mm (a bore
+  moved 0.05 mm, tried, fails it); wheel 2 clears the output shaft and pinion 3
   the input shaft by at least 5 mm; the wheels clear the housing by at least 9 mm (designed for 11 mm at an 8 mm wall;
   the measure's proven bound runs about 1 mm under what it finds on these faces). In *Closed* and *Machined parts* the
   shafts clear the end covers by at least 0.4 mm. In *Machined parts* each wheel's bore lies on its seat with no play
@@ -260,7 +261,14 @@ the wheels' seats; the formula checks run in every view. The fits are therefore 
   `measure.thickness` proves 0 on a drafted shell (F-020).
 
 **Range.** `tools/jigs.py check` runs `check-range` over the defaults, the corners of the box of the ranges, every
-choice and 32 random points; the result is in `meta.json` `stats`. By hand (`param.set`), these far points pass every
+choice and 32 random points; the result is in `meta.json` `stats`. Of its 104 points, 103 pass with 3DCraft 0.2.0.
+At the other one (a corner: ratio 8, 1500 rpm, uniform, 42CrMo4, 0.5 kW, 10 mm wall, *Machined parts*), *Wheel 2 does
+not overlap the intermediate shaft* and *Wheel 4 does not overlap the output shaft* cannot be measured: each wheel's
+bore sits on its seat, and where the shaft's keyway is centred exactly on its axis 3DCraft 0.2.0 cannot tell such a
+touch from an overlap. This is a known limitation of the release (its notes, *Known limitations*), owed in 3DCraft
+([J-073](../../3DCRAFT-FEEDBACK.md#j-073-a-wheels-clearance-on-its-shaft-cannot-be-measured-where-the-keyway-lies-exactly-on-the-shafts-axis));
+3DCraft 0.1.x answered *touch* there. The point is listed in `meta.json` (`range_known`), and the check fails if it
+passes one day or if any other point fails; other settings of the range can meet the same limit. By hand (`param.set`), these far points pass every
 assertion that applies: ratio 8 at 1500 rpm, uniform, 42CrMo4, 0.5 kW, 8 mm wall, in *Closed* and *Castings*; ratio 8
 at 500 rpm, heavy shocks, 42CrMo4, at its limit of 17.9 kW, with an 8 mm wall in *Closed* and a 16 mm wall in
 *Castings*; ratio 25 at 500 rpm, heavy shocks, C45, at its limit of 8.4 kW with a 16 mm wall, in *Closed* and
@@ -322,6 +330,9 @@ drawn by formulas and turned by one drive, a drafted and split casting round the
 The preview is rendered without reflections (`look.reflections: false`): with them the wheels' flat faces showed ghost
 images of the other wheel.
 
+- **A wheel on its shaft cannot be told from an overlap at one range point** ([J-073](../../3DCRAFT-FEEDBACK.md#j-073-a-wheels-clearance-on-its-shaft-cannot-be-measured-where-the-keyway-lies-exactly-on-the-shafts-axis)),
+  a known limitation of 3DCraft 0.2.0: see *Range* under Checks. The point is listed in `meta.json` (`range_known`);
+  nothing in the design works round it.
 - **Rounds where a boss meets a drafted wall.** A cylindrical boss meets a drafted wall in an ellipse, and rounding it
   together with the flange's junction is refused ("fillets of freeform edges that meet in a vertex are not built yet");
   rounding them one after another is refused too ([finding](../../findings/J-048-rounds-on-drafted-wall/repro.json)).

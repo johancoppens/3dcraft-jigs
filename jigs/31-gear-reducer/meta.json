@@ -92,6 +92,34 @@
     "model": "claude-sonnet-5-5",
     "result": "pass"
   },
+  "renewed": {
+    "version": "0.2.0",
+    "note": "the bearing bores checked between their axes"
+  },
+  "range_known": {
+    "reason": "A limit of 3DCraft 0.2.0, written up as owed in 3DCraft (the contact check where a curve lies exactly on a face's border; the interference check that stalls on these bodies), not a fault of the Jig; decided by the developer on 2026-11-19.",
+    "found_by": "tools/jigs.py check: craft3d-cli check-range --samples 32 --seed 1 --max-corners 64 (104 points: the defaults, 64 of the 256 corners, 7 choices, 32 random points); other settings of the range can meet the same limit",
+    "points": [
+      {
+        "values": {
+          "cast_wall": "10 mm",
+          "driven_machine": "1",
+          "gear_steel": "2",
+          "input_angle": "2862 deg",
+          "input_power": "0.5",
+          "input_speed": "1500",
+          "ratio_wanted": "8",
+          "show": "4"
+        },
+        "assertions": [
+          "Wheel 2 does not overlap the intermediate shaft (measured clearance)",
+          "Wheel 4 does not overlap the output shaft (measured clearance)"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-073"
+      }
+    ]
+  },
   "stats": {
     "steps": 1007,
     "variables": 530,
@@ -99,18 +127,18 @@
     "features": 139,
     "assertions": 71,
     "warnings": 0,
-    "build_s": 17.72,
-    "load_s": 1.75,
-    "load_cpu_s": 3.3,
-    "file_bytes": 686654,
+    "build_s": 24.02,
+    "load_s": 2.78,
+    "load_cpu_s": 3.77,
+    "file_bytes": 686147,
     "range_points": 104,
     "range_unproven": 0,
-    "range_mean_s": 0.99,
-    "range_worst_s": 2.08
+    "range_mean_s": 1.12,
+    "range_worst_s": 3.14
   },
   "craft3d": {
-    "commit": "b99d70cfe19e",
-    "version": "0.1.0",
-    "format_version": 69
+    "commit": "c7cab24f8953",
+    "version": "0.2.0",
+    "format_version": 77
   }
 }
