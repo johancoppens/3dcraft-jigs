@@ -56,7 +56,7 @@ form test (`formtest.md`). The number is only the folder's; the id, the file's n
 
 ## Using a Jig
 
-**Desktop.** Install 3DCraft 0.1.0 or later from [3dcraft.dev](https://3dcraft.dev/) (the installers are also on
+**Desktop.** Install 3DCraft 0.2.0 or later from [3dcraft.dev](https://3dcraft.dev/) (the installers are also on
 [its release page](https://github.com/johancoppens/3dcraft/releases)) and open a `.3dcraftjig` file (File › Open, or
 double-click it once 3DCraft is installed). It opens on its **Parameters** tab: drag or type the values; the model
 follows. A value outside a parameter's range is clamped and the form says so. Then **File › Export…** (STL, 3MF or STEP for a part; DXF or SVG for a cut sheet). **Save** saves the
@@ -79,7 +79,7 @@ craft3d-cli run jigs/05-laser-box/laser-box.3dcraftjig \
 
 ## Building and checking
 
-Every `<id>.3dcraftjig` is committed, so the Jigs open and work in 3DCraft 0.1.0 or later without building anything.
+Every `<id>.3dcraftjig` is committed, so the Jigs open and work in 3DCraft 0.2.0 or later without building anything.
 
 **The command line.** Every installer of 3DCraft has `craft3d-cli`. The Linux tarball's `install.sh` puts it in
 `~/.local/bin` and the Windows installer puts it on your `PATH`; on macOS and with the AppImage you reach it as
@@ -89,20 +89,19 @@ that points at it. Instead of `PATH`, `CRAFT3D_CLI` may name the binary (or that
 
 **The tool.** `tools/jigs.py` (Python 3, standard library only) made and checked every Jig. It runs on Linux and
 macOS, not on Windows. It needs the 3DCraft build this repository is pinned to, as `craft3d-cli --version` reports
-it: the commit in [`tools/pin.json`](tools/pin.json), or the release named there (0.1.0) with the file format named
-there (69), so the installed 3DCraft 0.1.0 runs it. It refuses any other build, because it compares the document
+it: the commit in [`tools/pin.json`](tools/pin.json), or the release named there (0.2.0) with the file format named
+there (77), so the installed 3DCraft 0.2.0 runs it. It refuses any other build, because it compares the document
 inside each rebuilt `.3dcraftjig` (its `manifest.json`) byte for byte with the committed one, and another build may
 write other bytes. `--version` names the version, the commit and the file format, and nothing in it tells the
-released 0.1.0 from a development build that still carries the same version number: the tool accepts both, and with
+released 0.2.0 from a development build that still carries the same version number: the tool accepts both, and with
 a build that is not the pinned commit, `check` may report Jigs as stale that differ only in their bytes.
-The release 0.1.0 was cut a few commits after the pinned one (the program bundles files built at the pin, and its
-guide's pictures follow), and those commits change nothing in the engine or the command line, so a real 0.1.0
-reports another commit and is accepted as the release.
+The pin is 3DCraft `c7cab24f`, the commit of the release 0.2.0; a released 0.2.0 that reports another commit is
+accepted as the release. Files saved at format 77 do not open in 3DCraft 0.1.x.
 
-To rebuild and check one Jig with the installed 3DCraft 0.1.0:
+To rebuild and check one Jig with the installed 3DCraft 0.2.0:
 
 ```sh
-craft3d-cli --version                  # craft3d-cli 0.1.0 (<commit>, format 69)
+craft3d-cli --version                  # craft3d-cli 0.2.0 (<commit>, format 77)
 tools/jigs.py check --quick laser-box  # rebuild in a scratch folder, compare the document, lint, run the exports there
 tools/jigs.py check laser-box          # the same, plus check-range and, for sheet metal, the bend sequence
 tools/jigs.py build laser-box          # jigs/NN-<id>/build.json to <id>.3dcraftjig beside it; rewrites meta.json

@@ -23,6 +23,15 @@ exports and the cut list) were chosen to be fixed for R1, the milestone that bec
 rest was ordered for after it (J-018 first, J-015 with J-014). This file does not record which of them 0.1.0 fixed: an
 entry's reproducer shows whether it still holds in your version.
 
+**Status (2026-11-19):** the pin moves to 3DCraft `c7cab24f`, the release 0.2.0 (file format 77). Every Jig is
+rebuilt there and passes its full check, the range, the exports and, for the two sheet-metal Jigs, the bend sequence,
+except at the range points two Jigs list under `range_known` in their `meta.json` (AGENTS.md section 4.7), granted
+for a limit of 3DCraft that the developer decided to carry: J-072 (rc-wing, 8 of 133 points) and J-073 (gear-reducer,
+1 of 104, a known limitation of the release). Every reproducer under `findings/` was run on 0.1.3 and 0.2.0: J-018,
+J-024, J-025 and J-035 are fixed, J-033 partly, J-034 is answered by a new option; every other reproducer answers as
+it did on 0.1.3. Three Jigs are rebuilt to use the release: the orrery and the gear reducer check centre distances
+between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-024). J-072 and J-073 are new.
+
 ## Index
 
 | Id | Kind | Title | Jig | Impact |
@@ -44,14 +53,14 @@ entry's reproducer shows whether it still holds in your version.
 | J-015 | Bug | `cavity` returns a number for an open sheet; distances between a sheet's faces cannot be measured (see F-105) | polyhedron-net | The cavity is asserted near closure only. |
 | J-016 | Bug | A `sketch.curve` whose ends meet when created stays closed for good | astrolabe | Two half-arcs. |
 | J-017 | Missing capability | Open curves cannot be given a stroke width | astrolabe | Closed slot profiles for each line. |
-| J-018 | Bug | `clearance` reports two bodies clear that `overlap` finds sharing 13.5 mm^3 | drag-chain | The lid's fit is asserted with `overlap` as well. |
+| J-018 | Bug | **Fixed in 0.2.0:** `clearance` reports two bodies clear that `overlap` finds sharing 13.5 mm^3 | drag-chain | The lid's fit is asserted with `overlap` as well. |
 | J-019 | Bug (proof weakness) | Distance and clearance assertions stop refining before they can decide their bound (see F-030) | gear-reducer, planetary-gearbox | Gaps between flanks are proven through outputs or one flank family at a time. |
 | J-020 | Bug | An assertion bound finer than the document's tolerance passes a value far outside it | music-box | Tight checks are counts, not bounds on lengths. |
 | J-021 | Bug | `distance` from a body lying inside another body is the gap to its surface, not 0 | solar-cooker | A sunk part is caught by another probe. |
 | J-022 | Bug | A named set of bodies as `of` works for `extent` but `area` says it names nothing | polyhedron-net | The set is given as a query. |
 | J-023 | Bug | A face cut in two by a boolean counts as one face (see F-141) | geodesic-dome, joint-drawer | Counts are taken of something else. |
-| J-024 | Bug | A sketch arc's radius drifts below its value after re-solves, and `radius: {min}` has no tolerance | cubesat | The bound is written 0.001 mm under the standard's. |
-| J-025 | Bug | `overlap` cannot decide plates that touch at zero clearance after `param.set` (see F-130) | welded-box | The overlap checks are off at 0 clearance. |
+| J-024 | Bug | **Fixed in 0.2.0:** A sketch arc's radius drifts below its value after re-solves, and `radius: {min}` has no tolerance | cubesat | The bound is written 0.001 mm under the standard's. |
+| J-025 | Bug | **Fixed in 0.2.0:** `overlap` cannot decide plates that touch at zero clearance after `param.set` (see F-130) | welded-box | The overlap checks are off at 0 clearance. |
 | J-026 | Bug | `overlap` errors on a feature switched off by `when` instead of skipping it | rack-cabinet, wooden-stair | The bodies are given by a query, or the assertion is split. |
 | J-027 | Bug (proof weakness) | The extent of a swept body is not proven to the tolerance, and a sweep's path length cannot be read (see F-117, F-122) | jansen-leg | The step length is checked within 0.005 mm plus 50 millionths of it. |
 | J-028 | Bug | A feature switched off by `when` still takes its source body, so alternatives cannot share a source | tensegrity-table | One chain of features per alternative. |
@@ -59,9 +68,9 @@ entry's reproducer shows whether it still holds in your version.
 | J-030 | Bug | Chamfering the rim of a rectangular opening is refused (see F-033) | tuned-chimes | The opening stays square-edged. |
 | J-031 | Bug | A closed path of formula-curve pieces that meet end to end is refused for a sweep | jansen-leg | Four open sweeps instead of one closed one. |
 | J-032 | Bug | Joining two sweeps that start from one section sketch fails at the shared end (see F-113) | wooden-stair | The rail's returned ends are separate bodies. |
-| J-033 | Bug | A sketch arc given by a through-point loses its centre when it flips or flattens, and can leave a document unrecoverable (see F-112, F-113) | loudspeaker-box | Every arc is given by a centre written as a formula. |
-| J-034 | Bug | A spline through points strays between them far more than a cubic interpolant | planetary-gearbox, gear-reducer | Flanks are circular arcs. |
-| J-035 | Bug | `feature.plate` refuses a valid section: "face 0 cannot be tessellated" | sliceform | The form's range is cut back. |
+| J-033 | Bug | **Partly fixed in 0.2.0:** A sketch arc given by a through-point loses its centre when it flips or flattens, and can leave a document unrecoverable (see F-112, F-113) | loudspeaker-box | Every arc is given by a centre written as a formula. |
+| J-034 | Bug | **Answered in 0.2.0 by `spacing: chord`:** A spline through points strays between them far more than a cubic interpolant | planetary-gearbox, gear-reducer | Flanks are circular arcs. |
+| J-035 | Bug | **Fixed in 0.2.0:** `feature.plate` refuses a valid section: "face 0 cannot be tessellated" | sliceform | The form's range is cut back. |
 | J-036 | Bug | `feature.plate` refuses some sections of a twisted loft: "the edge across a corner could not be traced" (see F-169) | sliceform | A shape was left out of the Jig. |
 | J-037 | Bug | A flat net reports facets that share only a vertex as touching, at one edge length | polyhedron-net | The form's values are whole millimetres. |
 | J-038 | Bug (suspected) | Glue tabs folded with a net are refused near closure | polyhedron-net | Tabs on the flat pattern only. |
@@ -227,6 +236,7 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** Between a chain link and its lid, `clearance` returns `clear`, 0.0707 mm found and at least 0.03 mm proven, while `overlap` of the same pair finds 13.5456 mm^3 in common. A clearance that is proven must mean the bodies do not meet.
 - **Reproducer:** `findings/J-018-clearance-clear-on-overlap/repro.json` (the Jig with its lid seat raised 0.5 mm, 374 steps, not minimal: 44 s on a busy machine; the last assertion is the `overlap`)
 - **Workaround and impact:** The lid's fit is asserted with `overlap` as well as `clearance`.
+- **Status:** fixed in 3DCraft 0.2.0 (`c7cab24f`): the reproducer's lid and link are now an overlap where 0.1.3 called them clear with 0.0707 mm found; the release notes' *A clearance could be reported as proven for parts that overlap* (2026-11-19). Since then a gap proven only to 0 asks the kernel, which is what J-072 meets.
 
 ## J-019: Distance and clearance assertions stop refining before they can decide their bound (see F-030)
 
@@ -269,6 +279,7 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** Three arc corners of radius 1 mm, drawn with `sketch.path` from expressions, are counted with `"radius": {"min": "1 mm"}`. As the sketch is re-solved at other widths and back, the count reads 3, 3, 2, 2, 1, 3, while each radius prints as 1.0: it drifts a few ulps under 1 mm, and `{min, max}` are compared exactly where `eq` gets a tolerance. A given radius should stay put, and range bounds should be matched within the document's tolerance.
 - **Reproducer:** `findings/J-024-radius-filter-no-tolerance/repro.json`
 - **Workaround and impact:** The bound is `0.999 mm`, as the Jig's README says.
+- **Status:** fixed in 3DCraft 0.2.0 (`c7cab24f`): the reproducer counts 3, 3, 3, 3, 3, 3 where 0.1.3 counted 3, 3, 2, 2, 1, 3 (held values exact after a re-solve; a `{min, max}` bound takes in a millionth of itself). The cubesat's bound is 1 mm since its rebuild (2026-11-19).
 
 ## J-025: `overlap` cannot decide plates that touch at zero clearance after `param.set` (see F-130)
 
@@ -276,6 +287,7 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** After a `param.set`, an `overlap` assertion between a web and a flange that touch errors "two points closer together than the tolerance can tell apart (at the edge of tolerance)". Touching plates should be told apart from overlapping ones.
 - **Reproducer:** `findings/J-025-overlap-touching-plates/repro.json` (173 steps of the Jig)
 - **Workaround and impact:** The overlap assertions are switched off at zero clearance.
+- **Status:** fixed in 3DCraft 0.2.0 (`c7cab24f`): after the `param.set` the overlap assertion passes, where 0.1.3 could not tell ("two points closer together than the tolerance can tell apart"). The welded box keeps its overlap checks off at zero clearance; that is unchanged (2026-11-19).
 
 ## J-026: `overlap` errors on a feature switched off by `when` instead of skipping it
 
@@ -332,6 +344,7 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** An arc from (0, 0) to (40, 0) through (20, bulge) builds at a bulge of 6 mm, but a change to -3 mm (the same arc reversed) is refused as a conflicting constraint, as is 0.0001 mm (`flip.json`, `repro.json`). `dead.3dcraft`, saved after a long session of `param.set` and at its default values, has the centre of such an arc at (-1784331, 803236) and its constraint conflicting; `document.check` finds no driver body, and the same values build in a new document. The solve should follow the values, not the last solved state.
 - **Reproducer:** `findings/J-033-sketch-arc-centre-escapes/` (`repro.json`, `flip.json`, `dead.3dcraft` with `--cmd sketch.inspect --params '{"sketch":"Driver cone profile"}'`)
 - **Workaround and impact:** Arcs by centres written as formulas.
+- **Status:** partly fixed in 3DCraft 0.2.0 (`c7cab24f`): the near-flat arc (0.0001 mm) builds, and `dead.3dcraft` opens with its arc's centre back in place and `document.check` ok; an arc whose point crosses to the other side of the line through its ends (-3 mm) is still refused, as the release notes say (draw it again through the point). The loudspeaker box keeps its arcs by centres (2026-11-19).
 
 ## J-034: A spline through points strays between them far more than a cubic interpolant
 
@@ -339,6 +352,7 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** A live `sketch.spline` through eight points of an involute meets a ray at 15.16171 mm where the involute is at 15.14277 mm, about 0.009 mm off normal to the flank; a clamped cubic interpolant of the same points stays within 0.0006 mm (the builder's own calculation). It should be as close as a standard cubic interpolant, or its parametrisation and end conditions documented.
 - **Reproducer:** `findings/J-034-spline-through-strays/repro.json`, run with `--new '{"units":"mm","tolerance":0.01}'`
 - **Workaround and impact:** Three circular arcs through seven involute points per flank (planetary gearbox); arcs with formula centres (gear-reducer, whose five-point splines varied the mesh gap by -20 to +9 %).
+- **Status:** answered in 3DCraft 0.2.0 by a new option: `sketch.spline {"live": true, "spacing": "chord"}` takes its points at chord-length parameters (through eight points of an involute flank, 0.00044 mm off where the default strays 0.0095 mm, the release notes' own figures). The default is unchanged, so the reproducer reads as before; the gear Jigs keep their arcs (2026-11-19).
 
 ## J-035: `feature.plate` refuses a valid section: "face 0 cannot be tessellated"
 
@@ -346,6 +360,7 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** One slice of a sliceform ball fails: "the plate cannot be meshed to see whether it passes through itself (face 0 cannot be tessellated: its loops do not bound a region)", though its outline exported is 13 arcs and 36 lines without a crossing, and other slice positions plate. It should mesh any valid plate, or say what in the face it cannot mesh.
 - **Reproducer:** `findings/J-035-plate-cannot-be-meshed/repro.json` (the Jig at the failing point, 235 steps; run with `--new '{"units":"mm","tolerance":0.01}'`; slice 11 fails, so four count and area assertions fail)
 - **Workaround and impact:** The ball's height is limited so that every slice reaches the flat foot, and the kerf range ends at 0.3 mm.
+- **Status:** fixed in 3DCraft 0.2.0 (`c7cab24f`): slice 11 plates, and the reproducer's assertions and `document.check` pass, where 0.1.3 could not mesh it. The sliceform's range is unchanged in this rebuild (2026-11-19).
 
 ## J-036: `feature.plate` refuses some sections of a twisted loft: "the edge across a corner could not be traced" (see F-169)
 
@@ -618,8 +633,9 @@ entry's reproducer shows whether it still holds in your version.
   in as separate bodies and the spar is proven clear of each)
 - **Workaround and impact:** None: the 8 points are listed in the Jig's `meta.json` `range_known`, granted for it, and
   its page says so under Checks. The check fails once a point passes, so the listing goes when 3DCraft is fixed. The
-  Jig also opened slower than with 0.1.3, side by side on the same busy machine (3.9 to 4.7 s against 3.0 to 3.5 s at
-  its defaults); the cause was not traced.
+  Jig opens about a tenth slower than with 0.1.3: 2.85 to 3.00 s against 2.54 to 2.83 s in 3DCraft's measurement for
+  the release (main at `0c8fc79a`; three runs each, back to back, the same reading commands), a ratio of 1.11, where the median of the 112
+  documents measured was 1.02; the cause was not traced.
 
 ## J-073: A wheel's clearance on its shaft cannot be measured where the keyway lies exactly on the shaft's axis
 
