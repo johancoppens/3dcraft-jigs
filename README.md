@@ -83,7 +83,7 @@ Every `<id>.3dcraftjig` is committed, so the Jigs open and work in 3DCraft 0.2.0
 
 **The command line.** Every installer of 3DCraft has `craft3d-cli`. The Linux tarball's `install.sh` puts it in
 `~/.local/bin` and the Windows installer puts it on your `PATH`; on macOS and with the AppImage you reach it as
-[the install chapter of 3DCraft's guide](https://3dcraft.dev/guide/0.1/install) says: on macOS a link to
+[the install chapter of 3DCraft's guide](https://3dcraft.dev/guide/0.2/install) says: on macOS a link to
 `/Applications/3DCraft.app/Contents/MacOS/craft3d-cli` on your `PATH`, with the AppImage a link named `craft3d-cli`
 that points at it. Instead of `PATH`, `CRAFT3D_CLI` may name the binary (or that link).
 
