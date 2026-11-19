@@ -116,7 +116,8 @@ only published when every point passes, or fails only where its `meta.json` list
 fails on any other failure and on a listed point that passes. `build` rewrites the Jig's `.3dcraftjig` and the `stats` (timings measured
 on your machine) and `craft3d` (the build that wrote it) fields of its `meta.json`. `check` writes the exports in its
 scratch folder only, and without `--quick` it writes the range's figures into `stats` (`range_points`,
-`range_unproven`, `range_mean_s`, `range_worst_s`) when they changed, and nothing else; `git diff` shows what changed.
+`range_unproven`, `range_mean_s`, `range_worst_s`, and for a Jig with `range_known` the points that fail as listed,
+`range_known_failed`) when they changed, and nothing else; `git diff` shows what changed.
 Give `check` an id: without one it rebuilds and checks all 33 Jigs, which takes hours. Where `systemd-run` exists,
 every run is capped in memory. `site` also removes, from a folder it wrote before, the files of Jigs that are gone.
 

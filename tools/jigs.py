@@ -489,7 +489,7 @@ def cmd_render(ids):
 
 
 def known_range_failures(known, report):
-    """meta.json's `range_known` held against check-range's report: (problems, notes).
+    """meta.json's `range_known` held against check-range's report: (problems, the feedback entries of the points).
 
     `range_known` carries a limit of 3DCraft at named points of the range (AGENTS.md section 4.7), granted by the
     coordinator: {"reason", "found_by", "points": [{"values", "assertions", "problem", "feedback"}]}. Every failing
@@ -535,10 +535,7 @@ def known_range_failures(known, report):
             # passes now or is no longer among the points tried (other ranges or arguments).
             problems.append(f"a point listed in range_known does not fail: it passes now or is no longer tried; "
                             f"remove it ({entry['feedback']}): {json.dumps(entry['values'])}")
-    notes = [] if problems else [
-        f"check-range: {len(failures)} point(s) fail only as range_known lists them "
-        f"({', '.join(sorted({e['feedback'] for e in listed}))}): {known['reason']}"]
-    return problems, notes
+    return problems, ", ".join(sorted({e["feedback"] for e in listed}))
 
 
 def prove_range(jig, rebuilt, scratch, meta):
@@ -555,16 +552,21 @@ def prove_range(jig, rebuilt, scratch, meta):
     stats = {"range_points": len(times), "range_unproven": report.get("unproven", 0),
              "range_mean_s": round(sum(times) / max(1, len(times)), 2), "range_worst_s": round(max(times or [0]), 2)}
     known = meta.get("range_known")
-    said = []
     if known is not None:
-        found, said = known_range_failures(known, report)
+        found, feedback = known_range_failures(known, report)
         if found:
             return [f"check-range: {report.get('failed')} of {len(times)} points failed"] + found, [], stats
+        # How many points fail as listed: recorded, so meta.json says it beside the points tried.
+        stats["range_known_failed"] = len(report.get("failures", []))
     elif not report.get("ok"):
         worst = json.dumps(report.get("failures", [])[:3], indent=1)[:2500]
         return [f"check-range: {report.get('failed')} of {len(times)} points failed\n{worst}"], [], stats
-    notes = [f"check-range passed: {len(times)} points in {seconds:.0f} s, slowest {stats['range_worst_s']} s, "
-             f"{stats['range_unproven']} with unproven assertions"] + said
+    listed = stats.get("range_known_failed", 0)
+    passed = (f"check-range passed: {len(times)} points" if not listed else
+              f"check-range: {len(times) - listed} of {len(times)} points passed")
+    notes = [f"{passed} in {seconds:.0f} s, slowest {stats['range_worst_s']} s, "
+             f"{stats['range_unproven']} with unproven assertions"
+             + (f"; {listed} fail only as range_known lists them ({feedback}): {known['reason']}" if listed else "")]
     return [], notes, stats
 
 
