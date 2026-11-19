@@ -281,8 +281,8 @@
     "file_bytes": 191767,
     "range_points": 133,
     "range_unproven": 0,
-    "range_mean_s": 1.09,
-    "range_worst_s": 3.05
+    "range_mean_s": 0.69,
+    "range_worst_s": 1.92
   },
   "craft3d": {
     "commit": "c7cab24f8953",
