@@ -1,7 +1,7 @@
 {
-  "commit": "b99d70cfe19ece1b584d9553445f2d287b110ea2",
-  "release": "0.1.0",
-  "format_version": 69,
-  "date": "2026-11-10",
+  "commit": "c7cab24f89532a6489a0b69a336c09e2df49a5d2",
+  "release": "0.2.0",
+  "format_version": 77,
+  "date": "2026-11-19",
   "note": "The 3DCraft commit every Jig is built and checked with, and the release whose build the tools accept as well when it reports this file format (README.md, Building and checking). Moved only after every Jig is rebuilt and checked at the new commit."
 }
