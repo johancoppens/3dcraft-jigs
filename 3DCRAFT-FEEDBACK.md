@@ -98,6 +98,7 @@ entry's reproducer shows whether it still holds in your version.
 | J-069 | Agent friction | Expressions are capped at different sizes in different places | rc-wing, music-box | Long formulas go through variables; one check split in three. |
 | J-070 | Agent friction | A curvature assertion's `at` takes plain numbers only (see F-094) | dobsonian-telescope | The curvature is measured on an unmoved copy. |
 | J-071 | Missing capability | `extent`, `boxMin` and `boxMax` measure bodies only, not faces | cubesat | The countersunk screw heads are drawn and their overlap with the rail is measured. |
+| J-072 | Bug | A clearance of bodies found 0.05 mm apart cannot be measured: the kernel's interference check stalls on them | rc-wing (rebuild 0.2.0) | 8 of 133 range points listed in `range_known`; nothing worked round. |
 
 ## J-001: a Jig's thumbnail cannot be given a view or a look
 
@@ -596,3 +597,25 @@ entry's reproducer shows whether it still holds in your version.
 - **What happens, and what should:** `measure: "extent"` with a face query as `of` (the cone of a countersink) is refused: "extent is of bodies; the subject names faces of `Countersunk`". The size of a face's box along an axis is the natural way to read a feature's size off the model: a countersink's diameter and depth, a pocket's length, a slot's width, a flange's height. Distances between faces cover some of these, but not the size of a single face.
 - **Reproducer:** `findings/J-071-extent-of-faces/repro.json` (a plate with a Ø2.2 hole countersunk to Ø4.4; both assertions should pass with 4.4 mm and 1.1 mm, both are refused)
 - **Workaround and impact:** The rail screws' heads (a 90° cone at the theoretical Ø4.4 of ISO 7046-1) are drawn flush with the rail face, and `overlap` proves they do not cut into the rail, which proves more than two extents would; the gap matters where no part can be drawn in the hole.
+
+## J-072: A clearance of bodies found 0.05 mm apart cannot be measured: the kernel's interference check stalls on them
+
+- **Kind:** bug (a limit of 3DCraft 0.2.0). **Jig:** rc-wing. **3DCraft:** `c7cab24f` (0.2.0).
+- **What happens, and what should:** At 8 of the 133 points of the Jig's range check, *Spars clear of the ribs*
+  (`clearance` of the spars and the ribs at least 0 mm) cannot be measured: "their nearest places found are 0.0499997457
+  mm apart, but only 0 mm is proven, within twice the tolerance, where the kernel tells clear from touch and overlap, and
+  it could not: boolean does not support this: marching an intersection curve stalled (the surfaces are nearly tangent
+  along it, or one of them has a crease)". The nearest places lie 0.05 mm apart at a slot floor (the glue gap) or 0.027
+  to 0.031 mm apart at a slot wall (the spar's fit), at a document tolerance of 0.01 mm; `measure.distance` finds the
+  same gap and proves 0. 3DCraft 0.1.x passed these points without proving the gap either: it took a gap found above
+  twice the tolerance as clear and never asked the kernel. Since 0.2.0 a gap proven only to 0 asks the kernel (the fix
+  of J-018), whose interference check cannot tell these bodies. A gap of 0.05 mm between plane faces should be proven,
+  or the interference check should answer.
+- **Reproducer:** `findings/J-072-clearance-interference-stalls/repro.json`, run with `--new
+  '{"units":"mm","tolerance":0.01}' --keep-going` (the Jig's script, then point 37 and the clearance; its README gives
+  the same as one command on the published Jig, and what was tried to make it smaller: written to STEP, the ribs come
+  in as separate bodies and the spar is proven clear of each)
+- **Workaround and impact:** None: the 8 points are listed in the Jig's `meta.json` `range_known`, granted for it, and
+  its page says so under Checks. The check fails once a point passes, so the listing goes when 3DCraft is fixed. The
+  Jig also opened slower than with 0.1.3, side by side on the same busy machine (3.9 to 4.7 s against 3.0 to 3.5 s at
+  its defaults); the cause was not traced.

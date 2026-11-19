@@ -94,6 +94,180 @@
     "model": "claude-sonnet-5-5",
     "result": "pass"
   },
+  "range_known": {
+    "reason": "A limit of 3DCraft 0.2.0, written up as owed in 3DCraft (the contact check where a curve lies exactly on a face's border; the interference check that stalls on these bodies), not a fault of the Jig; decided by the developer on 2026-11-19.",
+    "found_by": "tools/jigs.py check: craft3d-cli check-range --samples 32 --seed 1 --max-corners 64 (133 points: the defaults, 64 of the 4096 corners, 36 choices, 32 random points); other settings of the range can meet the same limit",
+    "points": [
+      {
+        "values": {
+          "camber_choice": "1",
+          "covering": "2",
+          "flying_weight": "4200 g",
+          "rib_count": "11",
+          "rib_sheet": "4 mm",
+          "root_chord": "167 mm",
+          "spar_choice": "6",
+          "sweep_angle": "29.999999999999996 deg",
+          "thickness_digits": "9",
+          "tip_chord": "113 mm",
+          "washout": "6 deg",
+          "wing_span": "2000 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "1",
+          "covering": "2",
+          "flying_weight": "3640 g",
+          "rib_count": "24",
+          "rib_sheet": "4 mm",
+          "root_chord": "167 mm",
+          "spar_choice": "6",
+          "sweep_angle": "0 deg",
+          "thickness_digits": "18",
+          "tip_chord": "76 mm",
+          "washout": "6 deg",
+          "wing_span": "2000 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "1",
+          "covering": "2",
+          "flying_weight": "12000 g",
+          "rib_count": "24",
+          "rib_sheet": "3 mm",
+          "root_chord": "400 mm",
+          "spar_choice": "1",
+          "sweep_angle": "0 deg",
+          "thickness_digits": "18",
+          "tip_chord": "400 mm",
+          "washout": "6 deg",
+          "wing_span": "2000 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "1",
+          "covering": "1",
+          "flying_weight": "4200 g",
+          "rib_count": "24",
+          "rib_sheet": "4 mm",
+          "root_chord": "167 mm",
+          "spar_choice": "6",
+          "sweep_angle": "29.999999999999996 deg",
+          "thickness_digits": "9",
+          "tip_chord": "113 mm",
+          "washout": "0 deg",
+          "wing_span": "2000 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "1",
+          "covering": "1",
+          "flying_weight": "510 g",
+          "rib_count": "11",
+          "rib_sheet": "3 mm",
+          "root_chord": "167 mm",
+          "spar_choice": "1",
+          "sweep_angle": "0 deg",
+          "thickness_digits": "15",
+          "tip_chord": "167 mm",
+          "washout": "6 deg",
+          "wing_span": "2000 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "2",
+          "covering": "2",
+          "flying_weight": "950 g",
+          "rib_count": "12",
+          "rib_sheet": "3 mm",
+          "root_chord": "200 mm",
+          "spar_choice": "3",
+          "sweep_angle": "6 deg",
+          "thickness_digits": "12",
+          "tip_chord": "130 mm",
+          "washout": "2 deg",
+          "wing_span": "1200 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "7",
+          "covering": "2",
+          "flying_weight": "2720 g",
+          "rib_count": "18",
+          "rib_sheet": "1.5 mm",
+          "root_chord": "309 mm",
+          "spar_choice": "3",
+          "sweep_angle": "27 deg",
+          "thickness_digits": "9",
+          "tip_chord": "193 mm",
+          "washout": "2.5 deg",
+          "wing_span": "1620 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      },
+      {
+        "values": {
+          "camber_choice": "17",
+          "covering": "2",
+          "flying_weight": "2360 g",
+          "rib_count": "20",
+          "rib_sheet": "1.5 mm",
+          "root_chord": "167 mm",
+          "spar_choice": "1",
+          "sweep_angle": "21 deg",
+          "thickness_digits": "18",
+          "tip_chord": "107 mm",
+          "washout": "4.5 deg",
+          "wing_span": "1180 mm"
+        },
+        "assertions": [
+          "Spars clear of the ribs"
+        ],
+        "problem": "cannot be measured",
+        "feedback": "J-072"
+      }
+    ]
+  },
   "stats": {
     "steps": 253,
     "variables": 91,
@@ -101,18 +275,18 @@
     "features": 57,
     "assertions": 23,
     "warnings": 0,
-    "build_s": 3.95,
-    "load_s": 1.56,
-    "load_cpu_s": 6.06,
+    "build_s": 6.1,
+    "load_s": 3.71,
+    "load_cpu_s": 8.21,
     "file_bytes": 191767,
     "range_points": 133,
     "range_unproven": 0,
-    "range_mean_s": 0.71,
-    "range_worst_s": 1.94
+    "range_mean_s": 1.09,
+    "range_worst_s": 3.05
   },
   "craft3d": {
-    "commit": "b99d70cfe19e",
-    "version": "0.1.0",
-    "format_version": 69
+    "commit": "c7cab24f8953",
+    "version": "0.2.0",
+    "format_version": 77
   }
 }
