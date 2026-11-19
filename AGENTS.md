@@ -63,6 +63,8 @@ site/ log/ plan/        local only (gitignored): the web folder tools/jigs.py si
 |---|---|---|
 | `build.json` | **The source**: a JSON list of `[command, params]` steps run in a new document, ending with `document.check`. No file paths, no `file.*` or `jig.*` steps: the tool saves and publishes. | hand |
 | `meta.json` | title, card summary, domain, tier, difficulty, standards, materials, licence, preview framing, exports | hand; `stats` and `craft3d` written by the tool |
+| `meta.json` `budget_exception` | the reason a Jig may load slower or weigh more than its tier's budget (§4.5) | granted by the coordinator, with the reason |
+| `meta.json` `range_known` | `{"reason", "found_by", "points": [{"values", "assertions", "problem", "feedback"}]}`: range points where a limit of 3DCraft keeps assertions from passing, each with the values `check-range` gives it, the assertions, the start of their error (`cannot be measured`) and the `J-nnn` entry; `found_by` names the range arguments, since other points can meet the limit too (§4.7) | granted by the coordinator, with the reason; `check` fails when a listed point passes, so the entry goes when 3DCraft is fixed |
 | `README.md`, `formtest.md` | the Jig's page and its form test (§6) | hand |
 | `<id>.3dcraftjig` | the published Jig, committed so it works without building | `tools/jigs.py build` |
 | `preview.png`, `thumb.png` | the picture (§5) and the gallery's | `tools/jigs.py render` |
@@ -201,7 +203,10 @@ End with assertions that make the Jig prove itself, at every point: at least one
 measure (volume, area, capacity, mass, a section property), the counts that matter, and the process checks of §4.3;
 never fewer than three. Outputs carry the numbers a maker wants. `tools/jigs.py check` runs `check-range` (the
 defaults, at most 64 corners of the box of the ranges, every choice, 32 random points from seed 1): every point passes, and any unproven assertion is
-explained in the README. A claim about the range must be one those points support. **A passing range check is not the proof:** with many
+explained in the README. The one exception is a limit of 3DCraft at named points, which only the coordinator grants
+(`meta.json` `range_known`, beside `budget_exception`): each point with its values, the assertions it fails, the kind of
+error and the feedback entry, said under *Checks* on the Jig's page; the check fails on any other failure, on a point
+not listed, and on a listed point that passes, so the list goes when 3DCraft can measure it. A claim about the range must be one those points support. **A passing range check is not the proof:** with many
 parameters it sees a sliver of the box. For every assertion that can fail, work out which combination breaks it, make
 the published ranges exclude it by formula (or let the assertion be the refusal the form shows), and try that combination
 by hand with `param.set`. An assertion that compares a formula with itself proves nothing: remove it. An assertion measured on the

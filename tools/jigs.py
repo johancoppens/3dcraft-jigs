@@ -5,7 +5,8 @@
                                     into meta.json
   tools/jigs.py render   [ID ...]   ID.3dcraftjig -> preview.png and thumb.png in jigs/NN-ID/
   tools/jigs.py check    [ID ...]   rebuild in a scratch folder and check what AGENTS.md asks
-                                    (--quick skips check-range and the bend sequence)
+                                    (--quick skips check-range and the bend sequence); range points that
+                                    meta.json lists under range_known must fail exactly as listed
   tools/jigs.py coverage            the 3DCraft commands the Jigs use, and those none uses
   tools/jigs.py readme              rewrite the table in README.md from the meta.json files
   tools/jigs.py site     [DIR]      write a local web folder of the Jigs (default site/, not committed):
@@ -487,7 +488,60 @@ def cmd_render(ids):
     return failed
 
 
-def prove_range(jig, rebuilt, scratch):
+def known_range_failures(known, report):
+    """meta.json's `range_known` held against check-range's report: (problems, notes).
+
+    `range_known` carries a limit of 3DCraft at named points of the range (AGENTS.md section 4.7), granted by the
+    coordinator: {"reason", "found_by", "points": [{"values", "assertions", "problem", "feedback"}]}. Every failing
+    point must be listed with the values check-range gives it, and fail only by the assertions listed, each with an
+    error that begins with `problem`; every listed point must be tried and must fail so by every assertion listed. A
+    listed point or assertion that passes, a point that fails otherwise and a failing point not listed are problems,
+    so the list cannot outlive the limit nor hide anything else."""
+    problems, listed = [], []
+    if not isinstance(known, dict) or not known.get("reason") or not isinstance(known.get("points"), list):
+        return ["meta.json: range_known needs a reason and a list of points"], []
+    for entry in known["points"]:
+        ok = (isinstance(entry, dict) and isinstance(entry.get("values"), dict) and entry.get("assertions")
+              and isinstance(entry.get("assertions"), list) and entry.get("problem") and entry.get("feedback"))
+        if not ok:
+            return ["meta.json: every range_known point needs values, assertions, problem and feedback"], []
+        listed.append(entry)
+    if report.get("truncated"):
+        return ["check-range's failures were truncated: range_known cannot be held to them"], []
+    failures = report.get("failures", [])
+    for failure in failures:
+        values = failure.get("values")
+        entry = next((e for e in listed if e["values"] == values), None)
+        if entry is None:
+            problems.append("check-range: a point not in range_known failed\n"
+                            + json.dumps(failure, indent=1)[:2500])
+            continue
+        failing = {}
+        for problem in failure.get("problems", []):
+            name, text = problem.get("assertion"), problem.get("problem") or ""
+            if name in entry["assertions"] and text.startswith(entry["problem"]):
+                failing[name] = True
+            else:
+                problems.append(f"check-range: point {failure.get('index')}, listed in range_known, fails otherwise: "
+                                f"{name}: {text[:400]}")
+        for name in entry["assertions"]:
+            if name not in failing:
+                problems.append(f"check-range: point {failure.get('index')} no longer fails {name!r} with "
+                                f"{entry['problem']!r}: remove it from range_known ({entry['feedback']})")
+    failed_values = [f.get("values") for f in failures]
+    for entry in listed:
+        if entry["values"] not in failed_values:
+            # check-range's report gives the values of failing points only: a listed point that does not fail either
+            # passes now or is no longer among the points tried (other ranges or arguments).
+            problems.append(f"a point listed in range_known does not fail: it passes now or is no longer tried; "
+                            f"remove it ({entry['feedback']}): {json.dumps(entry['values'])}")
+    notes = [] if problems else [
+        f"check-range: {len(failures)} point(s) fail only as range_known lists them "
+        f"({', '.join(sorted({e['feedback'] for e in listed}))}): {known['reason']}"]
+    return problems, notes
+
+
+def prove_range(jig, rebuilt, scratch, meta):
     """check-range at the fixed seed. Returns (problems, notes, range stats)."""
     report_path = scratch / "range.json"
     result, seconds = run_cli(["check-range", rebuilt, "--samples", RANGE_SAMPLES, "--seed", 1,
@@ -500,11 +554,17 @@ def prove_range(jig, rebuilt, scratch):
     times = [(p.get("ms") or 0) / 1000 for p in report.get("points", [])]  # a point that cannot be set has ms null
     stats = {"range_points": len(times), "range_unproven": report.get("unproven", 0),
              "range_mean_s": round(sum(times) / max(1, len(times)), 2), "range_worst_s": round(max(times or [0]), 2)}
-    if not report.get("ok"):
+    known = meta.get("range_known")
+    said = []
+    if known is not None:
+        found, said = known_range_failures(known, report)
+        if found:
+            return [f"check-range: {report.get('failed')} of {len(times)} points failed"] + found, [], stats
+    elif not report.get("ok"):
         worst = json.dumps(report.get("failures", [])[:3], indent=1)[:2500]
         return [f"check-range: {report.get('failed')} of {len(times)} points failed\n{worst}"], [], stats
     notes = [f"check-range passed: {len(times)} points in {seconds:.0f} s, slowest {stats['range_worst_s']} s, "
-             f"{stats['range_unproven']} with unproven assertions"]
+             f"{stats['range_unproven']} with unproven assertions"] + said
     return [], notes, stats
 
 
@@ -535,7 +595,7 @@ def cmd_check(ids, quick):
                     problems.append("missing thumb.png: run render")
                 prove_exports(jig, scratch, meta)
                 if not quick:
-                    found, said, range_stats = prove_range(jig, rebuilt, scratch)
+                    found, said, range_stats = prove_range(jig, rebuilt, scratch, meta)
                     problems += found
                     notes += said
                     if range_stats:

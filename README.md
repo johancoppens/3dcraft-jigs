@@ -112,7 +112,9 @@ tools/jigs.py site [dir]               # a local web folder (default site/, not 
 
 `check` runs `craft3d-cli check-range` with a fixed seed: the defaults, up to 64 corners of the parameter ranges,
 every choice and 32 random points, each regenerated from nothing and checked as `document.check` checks it. A Jig is
-only published when every point passes. `build` rewrites the Jig's `.3dcraftjig` and the `stats` (timings measured
+only published when every point passes, or fails only where its `meta.json` lists a limit of 3DCraft under
+`range_known` (the points, the assertions, the error and the feedback entry, said on the Jig's page): `check` then
+fails on any other failure and on a listed point that passes. `build` rewrites the Jig's `.3dcraftjig` and the `stats` (timings measured
 on your machine) and `craft3d` (the build that wrote it) fields of its `meta.json`. `check` writes the exports in its
 scratch folder only, and without `--quick` it writes the range's figures into `stats` (`range_points`,
 `range_unproven`, `range_mean_s`, `range_worst_s`) when they changed, and nothing else; `git diff` shows what changed.
