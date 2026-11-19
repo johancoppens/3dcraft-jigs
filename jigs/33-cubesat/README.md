@@ -305,7 +305,7 @@ Deployment 0, as the CDS asks; the others always, or when what they check is the
 - **CDS envelope:**
   - the four rails span the form factor's width, height and length within 0.01 mm (App. B);
   - the rail is at least 8.5 mm wide on its +X face and on its +Y face (2.2.5);
-  - it has exactly three rounded edges of 1 mm or more (2.2.7; counted down to 0.999 mm, see Platform notes);
+  - it has exactly three rounded edges of 1 mm or more (2.2.7; a rail rounded 0.9995 mm, tried, fails it);
   - the standoff contact at the −Z end (rail end and frame boss, bore and edge breaks taken out) is at least
     6.5 × 6.5 mm (2.2.8);
   - the frame's bosses stand 0.5 to 7.0 mm proud of its end face, the standoff of the drawings (measured as the
@@ -496,10 +496,11 @@ ranges derived from it, and fastener, hinge and CDS process checks across about 
 
 - **No electrical units** ([J-056](../../3DCRAFT-FEEDBACK.md), [`findings/J-056-frequency-electrical-units`](../../findings/J-056-frequency-electrical-units/repro.json)). V, A, W and h are not known, so the radio frequency is a plain number of MHz. Power
   and energy are plain numbers too, with the unit in the output's label.
-- **A sketch arc's radius drifts after re-solves, and a `radius: {min}` filter has no tolerance** ([J-024](../../3DCRAFT-FEEDBACK.md),
-  [`findings/J-024-radius-filter-no-tolerance`](../../findings/J-024-radius-filter-no-tolerance/repro.json)). After 6U →
-  1U the rail's 1 mm edges measured a few ulps under 1 mm and dropped out of the CDS 2.2.7 count. The bound is
-  `1 mm - 0.001 mm`.
+- **A sketch arc's radius drifted after re-solves, and a `radius: {min}` filter had no tolerance** ([J-024](../../3DCRAFT-FEEDBACK.md),
+  [`findings/J-024-radius-filter-no-tolerance`](../../findings/J-024-radius-filter-no-tolerance/repro.json)). With
+  3DCraft 0.1.x, after 6U → 1U the rail's 1 mm edges measured a few ulps under 1 mm and dropped out of the CDS 2.2.7
+  count, so the bound was `1 mm - 0.001 mm`. Since 3DCraft 0.2.0 a point held at a value is exactly that value after a
+  re-solve and a `{min, max}` bound takes in rounding, so the bound is the CDS's own 1 mm.
 - **A named set cannot pick the bodies of a STEP export** ([J-045](../../3DCRAFT-FEEDBACK.md), [`findings/J-045-3d-export-set`](../../findings/J-045-3d-export-set/repro.json),
   found for 3MF in another Jig; it holds for STEP as well: *`set` is for a drawing … the other formats hold every body*).
   The export names the bodies; the set *Machined parts* is there for the window's selection.

@@ -104,6 +104,10 @@
     "model": "claude-sonnet-5-5",
     "result": "pass"
   },
+  "renewed": {
+    "version": "0.2.0",
+    "note": "the rail's rounded edges counted at 1 mm"
+  },
   "stats": {
     "steps": 755,
     "variables": 294,
@@ -111,18 +115,18 @@
     "features": 176,
     "assertions": 69,
     "warnings": 0,
-    "build_s": 8.64,
-    "load_s": 1.03,
-    "load_cpu_s": 2.18,
-    "file_bytes": 514565,
+    "build_s": 11.0,
+    "load_s": 1.45,
+    "load_cpu_s": 2.74,
+    "file_bytes": 514554,
     "range_points": 107,
     "range_unproven": 0,
-    "range_mean_s": 0.18,
-    "range_worst_s": 0.21
+    "range_mean_s": 0.2,
+    "range_worst_s": 0.44
   },
   "craft3d": {
-    "commit": "b99d70cfe19e",
-    "version": "0.1.0",
-    "format_version": 69
+    "commit": "c7cab24f8953",
+    "version": "0.2.0",
+    "format_version": 77
   }
 }
