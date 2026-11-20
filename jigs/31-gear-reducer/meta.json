@@ -97,7 +97,7 @@
     "note": "the bearing bores checked between their axes"
   },
   "range_known": {
-    "reason": "A limit of 3DCraft 0.2.0, written up as owed in 3DCraft (the contact check where a curve lies exactly on a face's border; the interference check that stalls on these bodies), not a fault of the Jig; decided by the developer on 2026-11-19.",
+    "reason": "A known limitation of 3DCraft 0.2.0, written up there as owed (the contact check where a curve lies exactly on a face's border; here each keyway lies exactly on its shaft's axis), not a fault of the Jig: each wheel's bore sits on its seat by design, and 0.1.x answered touch. Decided by the developer on 2026-11-19.",
     "found_by": "tools/jigs.py check: craft3d-cli check-range --samples 32 --seed 1 --max-corners 64 (104 points: the defaults, 64 of the 256 corners, 7 choices, 32 random points); other settings of the range can meet the same limit",
     "points": [
       {
@@ -115,7 +115,7 @@
           "Wheel 2 does not overlap the intermediate shaft (measured clearance)",
           "Wheel 4 does not overlap the output shaft (measured clearance)"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-073"
       }
     ]
@@ -133,8 +133,9 @@
     "file_bytes": 686147,
     "range_points": 104,
     "range_unproven": 0,
-    "range_mean_s": 1.12,
-    "range_worst_s": 3.14
+    "range_mean_s": 0.79,
+    "range_worst_s": 1.31,
+    "range_known_failed": 1
   },
   "craft3d": {
     "commit": "c7cab24f8953",

@@ -240,7 +240,7 @@ the wheels' seats; the formula checks run in every view. The fits are therefore 
   with its rim and on its spacer with its hub, and each spacer on the bearing's inner ring, with no end play (wheel 4
   moved 3 mm along its shaft, wheel 2's spacer 3 mm short and wheel 4's hub 3 mm short, tried, fail them). Each pair of bearings lies on its shaft
   seats and in its housing bores; the bearing bores' axes lie m (z1 + z2) / 2 apart with the teeth counted, measured
-  between the axes (`between`, as a centre distance: 132.5 and 177.5 mm at the defaults), within 0.01 mm (a bore
+  between the axes (`between`, as a centre distance: 132.5 and 177.5 mm with Show at Closed, where the check applies), within 0.01 mm (a bore
   moved 0.05 mm, tried, fails it); wheel 2 clears the output shaft and pinion 3
   the input shaft by at least 5 mm; the wheels clear the housing by at least 9 mm (designed for 11 mm at an 8 mm wall;
   the measure's proven bound runs about 1 mm under what it finds on these faces). In *Closed* and *Machined parts* the
@@ -268,7 +268,14 @@ bore sits on its seat, and where the shaft's keyway is centred exactly on its ax
 touch from an overlap. This is a known limitation of the release (its notes, *Known limitations*), owed in 3DCraft
 ([J-073](../../3DCRAFT-FEEDBACK.md#j-073-a-wheels-clearance-on-its-shaft-cannot-be-measured-where-the-keyway-lies-exactly-on-the-shafts-axis));
 3DCraft 0.1.x answered *touch* there. The point is listed in `meta.json` (`range_known`), and the check fails if it
-passes one day or if any other point fails; other settings of the range can meet the same limit. By hand (`param.set`), these far points pass every
+passes one day or if any other point fails; other settings of the range can meet the same limit.
+
+*If your form shows one of those two checks as "cannot be measured"*, in *Machined parts*: the model is right there.
+Each wheel's bore sits on its seat by design, and *Wheel 2's bore sits on its seat, no play* and *Wheel 4's bore sits
+on its seat, no play* pass at that point; only the overlap check cannot answer. At a finer document tolerance
+(0.001 mm) the same point answers *touch*; this Jig keeps its tolerance of 0.01 mm.
+
+By hand (`param.set`), these far points pass every
 assertion that applies: ratio 8 at 1500 rpm, uniform, 42CrMo4, 0.5 kW, 8 mm wall, in *Closed* and *Castings*; ratio 8
 at 500 rpm, heavy shocks, 42CrMo4, at its limit of 17.9 kW, with an 8 mm wall in *Closed* and a 16 mm wall in
 *Castings*; ratio 25 at 500 rpm, heavy shocks, C45, at its limit of 8.4 kW with a 16 mm wall, in *Closed* and
