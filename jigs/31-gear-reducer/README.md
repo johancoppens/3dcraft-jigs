@@ -270,9 +270,9 @@ touch from an overlap. This is a known limitation of the release (its notes, *Kn
 3DCraft 0.1.x answered *touch* there. The point is listed in `meta.json` (`range_known`), and the check fails if it
 passes one day or if any other point fails; other settings of the range can meet the same limit.
 
-*If your form shows one of those two checks as "cannot be measured"*, in *Machined parts*: the model is right there.
-Each wheel's bore sits on its seat by design, and *Wheel 2's bore sits on its seat, no play* and *Wheel 4's bore sits
-on its seat, no play* pass at that point; only the overlap check cannot answer. At a finer document tolerance
+*If your form shows one of those two checks as "cannot be measured"* in *Machined parts*, and *Wheel 2's bore sits on
+its seat, no play* and *Wheel 4's bore sits on its seat, no play* pass, as they do at the listed point, the model is
+right: each wheel's bore sits on its seat by design, and only the overlap check cannot answer. At a finer document tolerance
 (0.001 mm) the same point answers *touch*; this Jig keeps its tolerance of 0.01 mm.
 
 By hand (`param.set`), these far points pass every
