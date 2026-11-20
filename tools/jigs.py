@@ -566,7 +566,8 @@ def prove_range(jig, rebuilt, scratch, meta):
               f"check-range: {len(times) - listed} of {len(times)} points passed")
     notes = [f"{passed} in {seconds:.0f} s, slowest {stats['range_worst_s']} s, "
              f"{stats['range_unproven']} with unproven assertions"
-             + (f"; {listed} fail only as range_known lists them ({feedback}): {known['reason']}" if listed else "")]
+             + (f"; {listed} {'fails' if listed == 1 else 'fail'} only as range_known lists them ({feedback}): "
+                f"{known['reason']}" if listed else "")]
     return [], notes, stats
 
 
@@ -611,6 +612,9 @@ def cmd_check(ids, quick):
                                 f"for {tier}" + (" (busy machine: re-measure at a quiet moment)" if busy else ""))
                         if range_stats != meta.get("stats", {}) and range_stats:
                             meta.setdefault("stats", {}).update(range_stats)
+                            if "range_known_failed" not in range_stats:
+                                # No range_known any more: its count goes with it, as stats are merged.
+                                meta["stats"].pop("range_known_failed", None)
                             write_meta(jig, meta)
                     if (directory / "press.json").is_file():
                         # bendcheck runs craft3d-cli through run_cli (the same caps); the whole proof is bounded too.
