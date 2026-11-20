@@ -28,7 +28,8 @@ rebuilt there and passes its full check, the range, the exports and, for the two
 except at the range points two Jigs list under `range_known` in their `meta.json` (AGENTS.md section 4.7), granted
 for a limit of 3DCraft that the developer decided to carry: J-072 (rc-wing, 8 of 133 points) and J-073 (gear-reducer,
 1 of 104, a known limitation of the release). Every reproducer under `findings/` was run on 0.1.3 and 0.2.0: J-018,
-J-024, J-025 and J-035 are fixed, J-033 partly, J-034 is answered by a new option; every other reproducer answers as
+J-024 and J-035 are fixed, J-025's reproducer is fixed but not the welded box's own case, J-033 is fixed in part,
+J-034 is answered by a new option; every other reproducer answers as
 it did on 0.1.3. Three Jigs are rebuilt to use the release: the orrery and the gear reducer check centre distances
 between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-024). J-072 and J-073 are new.
 
@@ -60,7 +61,7 @@ between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-02
 | J-022 | Bug | A named set of bodies as `of` works for `extent` but `area` says it names nothing | polyhedron-net | The set is given as a query. |
 | J-023 | Bug | A face cut in two by a boolean counts as one face (see F-141) | geodesic-dome, joint-drawer | Counts are taken of something else. |
 | J-024 | Bug | **Fixed in 0.2.0:** A sketch arc's radius drifts below its value after re-solves, and `radius: {min}` has no tolerance | cubesat | The bound is written 0.001 mm under the standard's. |
-| J-025 | Bug | **Fixed in 0.2.0:** `overlap` cannot decide plates that touch at zero clearance after `param.set` (see F-130) | welded-box | The overlap checks are off at 0 clearance. |
+| J-025 | Bug | **Reproducer fixed in 0.2.0, the Jig's case not:** `overlap` cannot decide plates that touch at zero clearance after `param.set` (see F-130) | welded-box | The overlap checks are off at 0 clearance. |
 | J-026 | Bug | `overlap` errors on a feature switched off by `when` instead of skipping it | rack-cabinet, wooden-stair | The bodies are given by a query, or the assertion is split. |
 | J-027 | Bug (proof weakness) | The extent of a swept body is not proven to the tolerance, and a sweep's path length cannot be read (see F-117, F-122) | jansen-leg | The step length is checked within 0.005 mm plus 50 millionths of it. |
 | J-028 | Bug | A feature switched off by `when` still takes its source body, so alternatives cannot share a source | tensegrity-table | One chain of features per alternative. |
@@ -287,7 +288,7 @@ between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-02
 - **What happens, and what should:** After a `param.set`, an `overlap` assertion between a web and a flange that touch errors "two points closer together than the tolerance can tell apart (at the edge of tolerance)". Touching plates should be told apart from overlapping ones.
 - **Reproducer:** `findings/J-025-overlap-touching-plates/repro.json` (173 steps of the Jig)
 - **Workaround and impact:** The overlap assertions are switched off at zero clearance.
-- **Status:** fixed in 3DCraft 0.2.0 (`c7cab24f`): after the `param.set` the overlap assertion passes, where 0.1.3 could not tell ("two points closer together than the tolerance can tell apart"). The welded box keeps its overlap checks off at zero clearance; that is unchanged (2026-11-19).
+- **Status:** the reproducer is fixed in 3DCraft 0.2.0 (`c7cab24f`): after the `param.set` the overlap assertion passes, where 0.1.3 could not tell ("two points closer together than the tolerance can tell apart"). The bug itself still holds elsewhere: the welded box with its overlap checks switched on at zero clearance fails its range check at 0.2.0 at 4 of 109 points (corners at a fit clearance of 0 mm), each with *No two plates overlap* answering "two points closer together than the tolerance can tell apart (at the edge of tolerance)". So the Jig keeps its workaround, the overlap checks off at zero clearance (2026-11-19).
 
 ## J-026: `overlap` errors on a feature switched off by `when` instead of skipping it
 
@@ -621,7 +622,8 @@ between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-02
   (`clearance` of the spars and the ribs at least 0 mm) cannot be measured: "their nearest places found are 0.0499997457
   mm apart, but only 0 mm is proven, within twice the tolerance, where the kernel tells clear from touch and overlap, and
   it could not: boolean does not support this: marching an intersection curve stalled (the surfaces are nearly tangent
-  along it, or one of them has a crease)". The nearest places lie 0.05 mm apart at a slot floor (the glue gap) or 0.027
+  along it, or one of them has a crease)" at seven of them, and "… two points closer together than the tolerance can
+  tell apart (at the edge of tolerance)" at the eighth (point 102). The nearest places lie 0.05 mm apart at a slot floor (the glue gap) or 0.027
   to 0.031 mm apart at a slot wall (the spar's fit), at a document tolerance of 0.01 mm; `measure.distance` finds the
   same gap and proves 0. 3DCraft 0.1.x passed these points without proving the gap either: it took a gap found above
   twice the tolerance as clear and never asked the kernel. Since 0.2.0 a gap proven only to 0 asks the kernel (the fix
@@ -650,7 +652,7 @@ between axes (`between`), and the CubeSat counts its rail's rounds at 1 mm (J-02
   keyway's slot is centred exactly on the shaft's axis; the shaft then has one more edge and vertex, and the contact
   check cannot place a curve that lies exactly on that face's border. 3DCraft writes it up as owed: the release notes
   of 0.2.0 (*Known limitations*) and `docs/design/booleans.md` › *Contact refused where a curve lies exactly on a
-  face's border* (2026-11-19, on 3DCraft's branch after 0.2.0), which says that a reduction to two bodies and one
+  face's border* (2026-11-19, at the tag v0.2.0), which says that a reduction to two bodies and one
   command, made from this Jig, is kept in 3DCraft's workshop.
 - **Reproducer:** `findings/J-073-contact-curve-on-face-border/repro.json`, run with `--new
   '{"units":"mm","tolerance":0.01}' --keep-going` (the Jig's script, then the point and the two clearances; its README

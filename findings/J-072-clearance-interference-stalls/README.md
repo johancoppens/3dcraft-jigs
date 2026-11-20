@@ -32,4 +32,6 @@ mm) the script answers `clear`, with 0.00015 mm proven.
 
 At the 8 points of the range check where it happens (listed in the Jig's `meta.json`, `range_known`), the nearest
 places are 0.05 mm apart at a slot floor, or 0.027 to 0.031 mm at a slot wall: the spar's fit in its slot, which the
-Jig's own assertion 9 holds to its designed value.
+Jig's own assertion 9 holds to its designed value. The kernel's reason is "marching an intersection curve stalled" at
+seven of them; at point 102 it is "two points closer together than the tolerance can tell apart (at the edge of
+tolerance)".
