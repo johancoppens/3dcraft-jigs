@@ -95,7 +95,7 @@
     "result": "pass"
   },
   "range_known": {
-    "reason": "A limit of 3DCraft 0.2.0, written up as owed in 3DCraft (the contact check where a curve lies exactly on a face's border; the interference check that stalls on these bodies), not a fault of the Jig; decided by the developer on 2026-11-19.",
+    "reason": "A limit of 3DCraft 0.2.0, not a fault of the Jig: the gap between a spar and the ribs, found 0.027 to 0.05 mm, is proven only to 0 mm, and the kernel's interference check that 0.2.0 then asks cannot tell these bodies apart (\"marching an intersection curve stalled\" at seven points, \"two points closer together than the tolerance can tell apart\" at one); 0.1.x passed them without proving the gap. Decided by the developer on 2026-11-19.",
     "found_by": "tools/jigs.py check: craft3d-cli check-range --samples 32 --seed 1 --max-corners 64 (133 points: the defaults, 64 of the 4096 corners, 36 choices, 32 random points); other settings of the range can meet the same limit",
     "points": [
       {
@@ -116,7 +116,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -137,7 +137,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -158,7 +158,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -179,7 +179,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -200,7 +200,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -221,7 +221,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -242,7 +242,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       },
       {
@@ -263,7 +263,7 @@
         "assertions": [
           "Spars clear of the ribs"
         ],
-        "problem": "cannot be measured",
+        "problem": "cannot be measured: whether",
         "feedback": "J-072"
       }
     ]
@@ -282,7 +282,8 @@
     "range_points": 133,
     "range_unproven": 0,
     "range_mean_s": 0.69,
-    "range_worst_s": 1.92
+    "range_worst_s": 1.89,
+    "range_known_failed": 8
   },
   "craft3d": {
     "commit": "c7cab24f8953",
